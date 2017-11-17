@@ -193,6 +193,17 @@ function vGlobais(){
 	}
 }
 
+function geraTipoOpcao($abreviatura,$select = 0){
+	global $wpdb;
+	$sql = "SELECT * FROM sc_tipo WHERE abreviatura = '$abreviatura' ORDER BY tipo ASC";
+	$query = $wpdb->get_results($sql,ARRAY_A);
+	for($i = 0; $i < count($query); $i++){
+		echo "<option value='".$query[$i]['id_tipo']."' >".$query[$i]['tipo']."</option>";
+	}		
+
+}
+	
+
 function editais($usuario,$id = NULL){
 	global $wpdb;
 	$editais = array();

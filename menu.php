@@ -32,43 +32,47 @@
     <div class="container-fluid">
       <div class="row">
         <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
-          <ul class="nav nav-pills flex-column">
+
+		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="index.php">Início <span class="sr-only">(current)</span></a>
+            </li>
+		</ul>
+	
+
+		<?php 
+		if(isset($_GET['p']) AND $_GET['p'] == 'inserir'){
+		
+		?>
+		  <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Informações</a>
+            </li>
+		  <li class="nav-item">
+              <a class="nav-link" href="ocorrencias.php">Ocorrências</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="editais.php">Editais</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="inscricoes.php">Inscrições / Avaliações</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Export</a>
+              <a class="nav-link" href="#">Uploads</a>
             </li>
           </ul>
+		<?php 
+		}
+		?>
 
-          <ul class="nav nav-pills flex-column">
+
+		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="#">Nav item</a>
+              <a class="nav-link" href="evento.php">Meus Eventos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Nav item again</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">One more nav</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Another nav item</a>
-            </li>
+              <a class="nav-link" href="evento.php?p=inserir">Inserir Evento</a>
+		    </li>
           </ul>
 
+
+
           <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Nav item again</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">One more nav</a>
-            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="../wp-login.php?action=logout">Sair</a>
             </li>
