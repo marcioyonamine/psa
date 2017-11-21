@@ -4,4 +4,4 @@
 //error_reporting(E_ALL ^ E_WARNING);  
 date_default_timezone_set("America/Sao_Paulo");
 
-$site_title = "Sistema de Avaliação de Editais e Chamamentos da Secretaria de Cultura de Santo André";
+$site_title = "Sistema de Informação e Indicadores da Secretaria de Cultura de Santo André";

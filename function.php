@@ -167,11 +167,6 @@ function noResend(){
 }
 
 function vGlobais(){
-	echo "SERVER";
-	echo "<pre>";
-	var_dump($_SERVER);
-	echo "</pre>";
-
 	if(isset($_POST)){
 		echo "POST";
 		echo "<pre>";
@@ -191,6 +186,12 @@ function vGlobais(){
 		var_dump($_SESSION);
 		echo "</pre>";	
 	}
+
+	echo "SERVER";
+	echo "<pre>";
+	var_dump($_SERVER);
+	echo "</pre>";
+
 }
 
 function geraTipoOpcao($abreviatura,$select = 0){
@@ -198,7 +199,11 @@ function geraTipoOpcao($abreviatura,$select = 0){
 	$sql = "SELECT * FROM sc_tipo WHERE abreviatura = '$abreviatura' ORDER BY tipo ASC";
 	$query = $wpdb->get_results($sql,ARRAY_A);
 	for($i = 0; $i < count($query); $i++){
-		echo "<option value='".$query[$i]['id_tipo']."' >".$query[$i]['tipo']."</option>";
+		if($select == $query[$i]['id_tipo']){
+			echo "<option value='".$query[$i]['id_tipo']."' selected >".$query[$i]['tipo']."</option>";
+		}else{
+			echo "<option value='".$query[$i]['id_tipo']."' >".$query[$i]['tipo']."</option>";
+		}
 	}		
 
 }

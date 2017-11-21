@@ -29,5 +29,6 @@ require "function.php";
 
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
-  </head>
+ <script src="jquery-3.2.1.js"></script>
+	</head>
   

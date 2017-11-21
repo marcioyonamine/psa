@@ -41,7 +41,7 @@
 	
 
 		<?php 
-		if(isset($_GET['p']) AND $_GET['p'] == 'inserir'){
+		if(isset($_GET['p']) AND $_GET['p'] == 'editar'){
 		
 		?>
 		  <ul class="nav nav-pills flex-column">
