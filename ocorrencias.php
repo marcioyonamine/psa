@@ -5,6 +5,7 @@ if(isset($_GET['p'])){
 }else{
 	$p = 'inicio';	
 }
+session_start(); // carrega a sessão
 
 ?>
 
@@ -21,9 +22,54 @@ case "inicio": ?>
     <div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h1>Meus Eventos</h1>
+					<h3>Meus Eventos - Ocorrência</h3>
+					<?php
+					// listar o evento;
+					$evento = evento($_SESSION['idEvento']);
+					?>
+					<h1><?php echo $evento['titulo']; ?></h1>
 				</div>
         </div>
+		          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Título</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT idEvento FROM sc_evento ORDER BY idEvento DESC";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				for($i = 0; $i < count($res); $i++){
+					$evento = evento($res[$i]['idEvento']);
+					
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['idEvento']; ?></td>
+					  <td><?php echo $evento['titulo']; ?></td>
+					  <td><?php echo $evento['programa']; ?></td>
+					  <td><?php echo $evento['projeto']; ?></td>
+					  <td>	
+							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+							</form>
+							<?php 
+					  
+					  ?></td>
+					</tr>
+				<?php } // fim do for?>	
+				
+              </tbody>
+            </table>
+          </div>
+
     </div>
 </section>
 
@@ -34,57 +80,90 @@ break;
  case "inserir":
  ?>
  
+    <link href="jquery-ui.css" rel="stylesheet">
+ <script src="jquery-ui.js"></script>
+ <script src="mask.js"></script>
+ <script src="maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+
+
+
 <section id="contact" class="home-section bg-white">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="text-hide">
-					<h2>Inserir ocorrência</h2>
-					<p> </p>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h3>Meus Eventos - Ocorrência - Inserir</h3>
+					<?php
+					// listar o evento;
+					$evento = evento($_SESSION['idEvento']);
+					?>
+					<h1><?php echo $evento['titulo']; ?></h1>
 				</div>
-			</div>
+        </div>
+			
 		</div>
 		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form">
-        <div class='col-sm-6'>
+
+		<form class="form-horizontal" action="?p=editar" method="POST" role="form">
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+				<div class="col-md-offset-2 col-md-8">
+					<label>Data de Início:</label>
+                    <input type='text' class="form-control calendario" name="data_inicio"/>
+				</div>
+			</div>
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Data de Encerramento (se for data única, não preencher):</label>
+                    <input type='text' class="form-control calendario" name="data_final"/>
                 </div>
             </div>
-        </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<label>Dias da semana</label>
-							<input type="checkbox" id="diaespecial" />
-							<div class='other' name='other' title='other' style='display:none;'>
-								<input type="checkbox">
-								<input type="checkbox">
-							</div>
-						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-2">
+
+           <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Selecione apenas se existr Data de Encerramento</label>
+					<p>
+                    <input type='checkbox' name="domingo"/> Dom | 
+                    <input type='checkbox' name="segunda"/> Seg |
+                    <input type='checkbox' name="terca"/> Ter |
+                    <input type='checkbox' name="quarta"/> Qua |
+                    <input type='checkbox' name="quinta"/> Quin |
+                    <input type='checkbox' name="sexta"/> Sex |
+                    <input type='checkbox' name="sabado"/> Sab 
+					</p>
+				</div>
+            </div>
+
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
 							<label>Horário de início</label>
-							<input type="text" name="hora" class="form-control"id="hora" />
+							<input type="text" name="hora" class="form-control hora" />
 						</div> 
 					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><label>Valor do ingresso *</label><input type="text" name="valorIngresso" class="form-control" id="valor" placeholder="Name">
-						</div>
-						<div class=" col-md-6"><label>Duração do evento em minutos *</label>
-							<input type="email" id="duracao" name="duracao" class="form-control" id="" placeholder="Email">
-						</div>
-					</div>
+
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Valor do ingresso * (se for entrada franca, inserir 0)</label>
+			<input type="text" name="valorIngresso" class="form-control valor" >
+			</div>
+			</div>
+			<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<label>Duração do evento em minutos *</label>
+				<input type="text" id="duracao" name="duracao" class="form-control minutos" >
+			</div>
+			</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Sistema de retirada de ingressos</label>
@@ -93,26 +172,23 @@ break;
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Local / instituição *</label>
-							<select class="form-control" name="instituicao" id="inputSubject" ><option>Selecione</option></select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
 							<label>Sala / espaço</label>
-							<select class="form-control" name="local" id="inputSubject" ><?php //echo geraOpcao("ig_local","","") ?></select>
+							<select class="form-control" name="local" id="inputSubject" >
+							<option>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("local") ?>
+							</select>
 						</div>
 					</div>	
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><label>Ingressos disponíveis</label><input type="text" class="form-control" id="" placeholder="">
-						</div>
-						<div class=" col-md-6"><label>Ingressos reservados</label>
-							<input type="email" class="form-control" id="" placeholder="">
+						<div class="col-md-offset-2 col-md-8">
+						<label>Ingressos disponíveis</label>
+						<input type="text" class="form-control" name="ingressos" placeholder="">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<button type="button" class="btn btn-theme btn-lg btn-block">Inserir ocorrência</button>
+						<input type="hidden" name="inserir" value="1" />
+							<button type="submit" class="btn btn-theme btn-lg btn-block">Inserir ocorrência</button>
 						</div>
 					</div>
 				</form>
@@ -121,140 +197,292 @@ break;
 	</div>
 </section>
 
+<?php 	 
+break;	 
+ case "editar":
+
+if(isset($_POST['editar']) OR isset($_POST['inserir'])){ 
+	$data_inicio = exibirDataMysql($_POST["data_inicio"]);
+	$data_final   = exibirDataMysql($_POST["data_final"]);
+	$hora   = $_POST["hora"].":00";
+	$valorIngresso   = dinheiroDeBr($_POST["valorIngresso"]);
+	$duracao   = $_POST["duracao"];
+	$retiradaIngresso   = $_POST["retiradaIngresso"];
+	$local   = $_POST["local"];
+	$ingressos   = $_POST["ingressos"];
+
+	if(isset($_POST["domingo"])){$domingo  = 1; }else{ $domingo  = 0;}
+	if(isset($_POST["segunda"])){$segunda  = 1; }else{ $segunda  = 0;}
+	if(isset($_POST["terca"])){$terca = 1; }else{ $terca  = 0;}
+	if(isset($_POST["quarta"])){$quarta  = 1; }else{ $quarta  = 0;}
+	if(isset($_POST["quinta"])){$quinta  = 1; }else{ $quinta  = 0;}
+	if(isset($_POST["sexta"])){$sexta  = 1; }else{ $sexta  = 0;}
+	if(isset($_POST["sabado"])){$sabado  = 1; }else{ $sabado  = 0;}
+	
+	//colocar if do cara que esqueceu de marcar	
+	
+}
+ 
+if(isset($_POST['inserir'])){
+	global $wpdb;
+	$id_evento = $_SESSION['idEvento'];
+	$sql = "INSERT INTO `sc_ocorrencia` (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`) 
+	VALUES ('$local', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_final', '$hora', '$valorIngresso', '$retiradaIngresso',  '$ingressos',  '$duracao',  '1')";	
+	$res = $wpdb->query($sql);
+	$id_ocorrencia = $wpdb->insert_id;
+	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
+	$ocor = $wpdb->get_row($sql_ocor,ARRAY_A);
+} 
+ 
+if(isset($_POST['editar'])){
+	global $wpdb;
+	$id_ocorrencia = $_POST['editar'];
+	$id_evento = $_SESSION['idEvento'];
+	$sql = "UPDATE `sc_ocorrencia` SET
+	`local` = '$local',
+	`idEvento` = '$id_evento',
+	`segunda` = '$segunda',
+	`terca` =  '$terca',
+	`quarta` = '$quarta',
+	`quinta` = '$quinta',
+	`sexta` = '$sexta',
+	`sabado` = '$sabado',
+	`domingo` = '$domingo',
+	`dataInicio` = '$data_inicio',
+	`dataFinal` = '$data_final',
+	`horaInicio` = '$hora',
+	`valorIngresso` = '$valorIngresso',
+	`retiradaIngresso` = '$retiradaIngresso',
+	`lotacao` = '$ingressos', 
+	`duracao` = '$duracao'
+	WHERE `idOcorrencia` = '$id_ocorrencia'";
+	$res = $wpdb->query($sql);
+	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
+	$ocor = $wpdb->get_row($sql_ocor,ARRAY_A);
+} 
+
+if(isset($_POST['carregar'])){
+	$id_ocorrencia = $_POST['carregar'];
+	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
+	$ocor = $wpdb->get_row($sql_ocor,ARRAY_A);
+
+	
+}
+ 
+ ?>
+ 
+    <link href="jquery-ui.css" rel="stylesheet">
+ <script src="jquery-ui.js"></script>
+ <script src="mask.js"></script>
+ <script src="maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+
+
+
+<section id="contact" class="home-section bg-white">
+	<div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h3>Meus Eventos - Ocorrência - Editar</h3>
+					<?php
+					// listar o evento;
+					$evento = evento($_SESSION['idEvento']);
+					?>
+					<h1><?php echo $evento['titulo']; ?></h1>
+					<p><?php //echo $sql; ?></p>
+				</div>
+        </div>
+			
+		</div>
+		<div class="row">
+
+		<form class="form-horizontal" action="?p=editar" method="POST" role="form">
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Data de Início:</label>
+                    <input type='text' class="form-control calendario" name="data_inicio" value="<?php echo exibirDataBr($ocor['dataInicio']); ?>"/>
+				</div>
+			</div>
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Data de Encerramento (se for data única, não preencher):</label>
+                    <input type='text' class="form-control calendario" name="data_final" value="<?php if($ocor['dataFinal'] != '0000-00-00'){ echo exibirDataBr($ocor['dataFinal']);} ?>"/>
+                </div>
+            </div>
+
+           <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Selecione apenas se existr Data de Encerramento</label>
+					<p>
+                    <input type='checkbox'  name="domingo" <?php if($ocor['domingo'] == 1){ echo "checked";} ?> /> Dom | 
+                    <input type='checkbox' name="segunda" <?php if($ocor['segunda'] == 1){ echo "checked";} ?>/> Seg |
+                    <input type='checkbox' name="terca" <?php if($ocor['terca'] == 1){ echo "checked";} ?>/> Ter |
+                    <input type='checkbox' name="quarta" <?php if($ocor['quarta'] == 1){ echo "checked";} ?>/> Qua |
+                    <input type='checkbox' name="quinta" <?php if($ocor['quinta'] == 1){ echo "checked";} ?>/> Quin |
+                    <input type='checkbox' name="sexta" <?php if($ocor['sexta'] == 1){ echo "checked";} ?>/> Sex |
+                    <input type='checkbox' name="sabado"<?php if($ocor['sabado'] == 1){ echo "checked";} ?> /> Sab 
+					</p>
+				</div>
+            </div>
+
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+							<label>Horário de início</label>
+							<input type="text" name="hora" class="form-control hora" value="<?php echo $ocor['horaInicio']; ?>" />
+						</div> 
+					</div>
+
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Valor do ingresso * (se for entrada franca, inserir 0)</label>
+			<input type="text" name="valorIngresso" class="form-control valor" value="<?php echo dinheiroParaBr($ocor['valorIngresso']); ?>" />
+			</div>
+			</div>
+			<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<label>Duração do evento em minutos *</label>
+				<input type="text" id="duracao" name="duracao" class="form-control minutos" value="<?php echo ($ocor['duracao']); ?>"/>
+			</div>
+			</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Sistema de retirada de ingressos</label>
+							<select class="form-control" name="retiradaIngresso" id="inputSubject" ><option value='0'>Selecione</option></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Sala / espaço</label>
+							<select class="form-control" name="local" id="inputSubject" >
+							<option>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("local",$ocor['local']) ?>
+							</select>
+						</div>
+					</div>	
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+						<label>Ingressos disponíveis</label>
+						<input type="text" class="form-control" name="ingressos" value="<?php echo ($ocor['lotacao']); ?>" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+						<input type="hidden" name="editar" value="<?php echo ($ocor['idOcorrencia']); ?>" />
+						<button type="submit" class="btn btn-theme btn-lg btn-block">Editar ocorrência</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+
 <?php 
 break;
-case "meuseventos":
+case "listar":
+
+if(isset($_POST['apagar'])){
+	global $wpdb;
+	$id = $_POST['apagar'];
+	$sql = "UPDATE sc_ocorrencia SET publicado = '0'";
+	$apagar = $wpdb->query($sql);	
+}
+
+if(isset($_POST['duplicar'])){
+	global $wpdb;
+	$id = $_POST['duplicar'];
+	$sql = "INSERT INTO sc_ocorrencia (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`) 
+	SELECT `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado` FROM sc_ocorrencia WHERE `idOcorrencia` = '$id'";
+	$duplicar = $wpdb->query($sql);
+}
+
+
 ?>
-<h2>Section title</h2>
+
+
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h3>Meus Eventos - Ocorrência - Listar</h3>
+					<?php
+					// listar o evento;
+					$evento = evento($_SESSION['idEvento']);
+					?>
+					<h1><?php echo $evento['titulo']; ?></h1>
+				</div>		
+		</div>
+		
+		<?php 
+				$sel = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$_SESSION['idEvento']."' AND publicado = '1' ORDER BY dataInicio";
+				$ocor = $wpdb->get_results($sel,ARRAY_A);
+		if(count($ocor) > 0){
+		?>
+		
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
+                  <th>Ocorrência</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
+				<?php
+				for($i = 0; $i < count($ocor); $i++){
+					$ocorrencia = ocorrencia($ocor[$i]['idOcorrencia']);
+				?>
+				<tr>
+                  <td><?php 
+				  echo $ocorrencia['tipo']."<br />".$ocorrencia['data']."<br />".$ocorrencia['local'];
+				  
+				  ?></td>
+                  <td>
+					<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+					<input type="hidden" name="carregar" value="<?php echo $ocor[$i]['idOcorrencia']; ?>" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+					</form>
+				 </td>
+                  <td>
+					<form method="POST" action="?p=listar" class="form-horizontal" role="form">
+					<input type="hidden" name="duplicar" value="<?php echo $ocor[$i]['idOcorrencia']; ?>" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Duplicar">
+					</form>
+				</td>
+                  <td>
+					<form method="POST" action="?p=listar" class="form-horizontal" role="form">
+					<input type="hidden" name="apagar" value="<?php echo $res[$i]['idEvento']; ?>" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
+					</form>
+				</td>
                 </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
+				<?php } ?>
+
+				</tbody>
             </table>
           </div>
+		<?php } else { ?>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+				<p> Não há ocorrências cadastradas </p>
+				</div>		
+		</div>
 
-
+		
+		<?php } ?>
 <?php 
 break;
 } // fim da switch p

@@ -142,7 +142,25 @@
 		  
 		  
           <h2>Importa espaço</h2>
+		  <?php 
+		  global $wpdb;
+		  $sql = "SELECT * FROM mapas WHERE tipo = '2'";
+		  $res = $wpdb->get_results($sql,ARRAY_A);
+		  for($i = 0; $i < count($res); $i++){
+			  $espaco = $res[$i]['valor'];
+			  $dados = array('mapas' => $res[$i]['id_mapas']);
+			  $json = json_encode($dados);
+			  $sql_ins = "INSERT INTO `sc_tipo` (`id_tipo`, `tipo`, `descricao`, `abreviatura`) 
+			  VALUES (NULL, '$espaco', '$json', 'local')";
+			  $insert = $wpdb->query($sql_ins);
+				var_dump($insert);
+				echo $sql_ins."<br />";		
+			  
+			  
+		  }
 		  
+		  
+		  ?>
 		  
           <!-- <div class="table-responsive">
             <table class="table table-striped">

@@ -41,21 +41,33 @@
 	
 
 		<?php 
-		if(isset($_GET['p']) AND $_GET['p'] == 'editar'){
+		if((isset($_GET['p']) AND $_GET['p'] == 'editar') OR isset($_SESSION['idEvento'])){
 		
 		?>
 		  <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="#">Informações</a>
+              <a class="nav-link" href="evento.php?p=editar">Informações</a>
             </li>
 		  <li class="nav-item">
-              <a class="nav-link" href="ocorrencias.php">Ocorrências</a>
+              <a class="nav-link" href="ocorrencias.php?p=inserir">Inserir Ocorrências</a>
             </li>
-            <li class="nav-item">
+	  <li class="nav-item">
+              <a class="nav-link" href="ocorrencias.php?p=listar">Listar Ocorrências</a>
+            </li>
+        
+	<li class="nav-item">
               <a class="nav-link" href="#">Uploads</a>
             </li>
-          </ul>
-		<?php 
+	<li class="nav-item">
+              <a class="nav-link" href="#">Contrato</a>
+            </li>
+	<li class="nav-item">
+              <a class="nav-link" href="#">Enviar</a>
+            </li>
+
+			</ul>
+
+		  <?php 
 		}
 		?>
 

@@ -16,7 +16,11 @@ if(isset($_GET['p'])){
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
  switch($p){
-case "inicio": ?>
+case "inicio": 
+if(isset($_SESSION['idEvento'])){
+	unset($_SESSION['idEvento']);
+}
+?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">    
@@ -24,7 +28,47 @@ case "inicio": ?>
 					<h1>Meus Eventos</h1>
 				</div>
         </div>
-    </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Título</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT idEvento FROM sc_evento ORDER BY idEvento DESC";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				for($i = 0; $i < count($res); $i++){
+					$evento = evento($res[$i]['idEvento']);
+					
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['idEvento']; ?></td>
+					  <td><?php echo $evento['titulo']; ?></td>
+					  <td><?php echo $evento['programa']; ?></td>
+					  <td><?php echo $evento['projeto']; ?></td>
+					  <td>	
+							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+							</form>
+							<?php 
+					  
+					  ?></td>
+					</tr>
+				<?php } // fim do for?>	
+				
+              </tbody>
+            </table>
+          </div>
+
+		</div>
 </section>
 
  
@@ -32,6 +76,10 @@ case "inicio": ?>
 <?php 	 
 break;	 
  case "inserir":
+ if(isset($_SESSION['idEvento'])){
+	unset($_SESSION['idEvento']);
+}
+
  ?>
 
  <script type="application/javascript">
@@ -197,31 +245,47 @@ break;
 break;
 case "editar":
 
+	global $wpdb;	
 	session_start();
+	
+	if(isset($_SESSION['idEvento'])){
+		$id = $_SESSION['idEvento'];
+		$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
+		$evento = $wpdb->get_row($sql_select,ARRAY_A);
+	}
 
-	$nomeEvento = $_POST["nomeEvento"];
-	$programa    = $_POST["programa"];
-	$linguagem    = $_POST["linguagem"];
-	$tipo_evento = $_POST["tipo_evento"];
-	$projeto = $_POST["projeto"];
-	$nomeResponsavel    = $_POST["nomeResponsavel"];
-	$suplente    = $_POST["suplente"];
-	$autor    = $_POST["autor"];
-	$nomeGrupo    = $_POST["nomeGrupo"];
-	$fichaTecnica    = $_POST["fichaTecnica"];
-	$faixaEtaria    = $_POST["faixaEtaria"];
-	$sinopse    = $_POST["sinopse"];
-	$releaseCom    = $_POST["releaseCom"];
-	$linksCom    = $_POST["linksCom"];
-	if(isset($_POST['subEvento'])){
-		$subEvento = $_POST['subEvento'];
-	}else{
-		$subEvento = NULL;
+	if(isset($_POST['atualizar']) OR isset($_POST['inserir'])){
+		$nomeEvento = addslashes($_POST["nomeEvento"]);
+		$programa    = $_POST["programa"];
+		$linguagem    = $_POST["linguagem"];
+		$tipo_evento = $_POST["tipo_evento"];
+		$projeto = $_POST["projeto"];
+		$nomeResponsavel    = $_POST["nomeResponsavel"];
+		$suplente    = $_POST["suplente"];
+		$autor    = addslashes($_POST["autor"]);
+		$nomeGrupo    = addslashes($_POST["nomeGrupo"]);
+		$fichaTecnica    = addslashes($_POST["fichaTecnica"]);
+		$faixaEtaria    = $_POST["faixaEtaria"];
+		$sinopse    = addslashes($_POST["sinopse"]);
+		$releaseCom    = addslashes($_POST["releaseCom"]);
+		$linksCom    = $_POST["linksCom"];
+		if(isset($_POST['subEvento'])){
+			$subEvento = $_POST['subEvento'];
+		}else{
+			$subEvento = NULL;
+		}
+	}
+	
+	if(isset($_POST['carregar'])){
+		$id = $_POST['carregar'];
+		$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
+		$evento = $wpdb->get_row($sql_select,ARRAY_A);	
+		$_SESSION['idEvento'] = $id;
 	}
 	
 	$idUser = $user->ID;
 	
-	global $wpdb;	
+
 	// Inserir evento
 	if(isset($_POST['inserir'])){
 		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`) 
@@ -231,6 +295,7 @@ case "editar":
 			$id = $wpdb->insert_id;
 			$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
 			$evento = $wpdb->get_row($sql_select,ARRAY_A);
+			$_SESSION['idEvento'] = $evento['idEvento'];
 			
 		}else{
 			$mensage = "Erro ao inserir".var_dump($ins);
@@ -262,6 +327,8 @@ case "editar":
 		$atual = $wpdb->query($sql_atualizar);
 		$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$atualizar'";
 		$evento = $wpdb->get_row($sql_select,ARRAY_A);
+		$_SESSION['idEvento'] = $evento['idEvento'];
+		
 		if($atual == 1){
 			$mensagem = "Evento atualizado com sucesso.";
 		}else{
@@ -269,7 +336,9 @@ case "editar":
 		}
 
 	}
+	
 
+	
 	
 ?>
  <script type="application/javascript">
@@ -422,7 +491,6 @@ case "editar":
 						<div class="col-md-offset-2">
 							<input type="hidden" name="atualizar" value="<?php echo $evento['idEvento']; ?>" />
 							<?php 
-							$_SESSION['idEvento'] = $evento['idEvento'];
 							?>
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar">
 						</div>

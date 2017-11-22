@@ -250,25 +250,125 @@ function editais($usuario,$id = NULL){
 		
 		// lista criterios
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 	
 	return $editais;
-	
-	
+
 
 }
+	
+	
+function tipo($id){
+	global $wpdb;
+	$sql = "SELECT * FROM sc_tipo WHERE id_tipo = '$id'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	return $res;
+
+}
+	
+	
+function evento($id){
+
+	global $wpdb;
+
+	$sql =  "SELECT * FROM sc_evento WHERE idEvento = '$id'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	/*
+	echo "<pre>";
+	var_dump($programa);
+	echo "</pre>";
+
+	*/
+	$programa = tipo($res['idTipo']);
+	
+	$projeto = tipo($res['idProjeto']);
+	$linguagem = tipo($res['idLinguagem']);
+
+	
+	$evento = array(
+		'titulo' => $res['nomeEvento'],
+		'programa' => $programa['tipo'],
+		'projeto' => $projeto['tipo'],
+		'linguagem' => $linguagem['tipo'],
+		'responsavel' => '',
+		'autor' => $res['autor'],
+		'grupo' => $res['nomeGrupo'],
+		'ficha_tecnica' => $res['fichaTecnica'],
+		'sinopse' => $res['sinopse'],
+		'release' => $res['releaseCom'],
+		'status' => '',
+		'usuario' => '',
+		'sub' => '',
+		'envio' => '',
+		'periodo' => '',
+		'local' => '',
+		'faixa_etaria' => '',
+		'valor_entrada' => '',
+		'imagem' => ''
+	);
+
+	return $evento;
+}
+	
+function ocorrencia($id){
+	global $wpdb;
+	$oc = $wpdb->get_row("SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id'",ARRAY_A);
+	if(($oc['dataInicio'] == $oc['dataFinal']) OR
+		$oc['dataFinal'] == '' OR
+		$oc['dataFinal'] == NULL OR
+		$oc['dataFinal'] == '0000-00-00' 
+		){
+			$tipo = "Evento de Data Única";	
+			$data =  exibirDataBr($oc['dataInicio'])." às ".substr($oc['horaInicio'],0,-3)." (".$oc['duracao']." minutos)";
+			
+	}else if($oc['dataInicio'] != $oc['dataFinal'] ){
+		$tipo = "Evento de temporada";
+		$s = " ";
+		if($oc['segunda'] == 1){
+			$s .= "segunda, ";		
+		}
+		if($oc['terca'] == 1){
+			$s .= "terca, ";		
+		}
+		if($oc['quarta'] == 1){
+			$s .= "quarta, ";		
+		}
+		if($oc['quinta'] == 1){
+			$s .= "quinta, ";		
+		}
+		if($oc['sexta'] == 1){
+			$s .= "sexta, ";		
+		}
+		if($oc['domingo'] == 1){
+			$s .= "sabado, ";		
+		}
+		if($oc['domingo'] == 1){
+			$s .= "domingo, ";		
+		}
+
+		
+		if($s != " "){
+			$sem = "( ".substr($s,0,-2)." )";
+		}
+
+		$data = "De ".exibirDataBr($oc['dataInicio'])." a ".exibirDataBr($oc['dataFinal'])." às ".substr($oc['horaInicio'],0,-3)." (".$oc['duracao']." minutos)<br />".$sem;	
+		
+		
+	}
+	
+	$local = tipo($oc['local']);
+	
+	$ocorrencia = array(
+		'tipo' => $tipo,
+		'data' =>  $data,
+		'local' => $local['tipo']
+	);
+	
+	return $ocorrencia;
+	
+}	
+
 
 
 
