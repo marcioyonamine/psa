@@ -2,41 +2,17 @@
 
   <body>
   
-  <?php include "menu.php"; ?>
+  <?php include "menu/inicio.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-          <h1>Dashboard</h1>
+          <h1>Ambiente teste</h1>
 
 		  
 		  
 		  
-		  
-         <!-- <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <div class="text-muted">Something else</div>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </section>
-			<div>
 			<?php 
 			/*
-
+			echo "<h1>Teste decode json</h1>";
 			$teste = recuperaDados("ava_edital","1","id");
 			echo "<pre>";
 			var_dump($teste);
@@ -47,13 +23,6 @@
 			var_dump($json);
 			echo "</pre>";
 			
-			global $wpdb;
-			$teste2 = "SELECT * FROM ava_fase WHERE edital = '1'";
-			$result = $wpdb->get_results($teste2);
-			echo "ava_fase";
-			echo "<pre>";
-			var_dump($result);
-			echo "</pre>";
 			
 			?>
 			<br />
@@ -110,7 +79,6 @@
 			}									
 									
 			*/
-
 			
 			/*
 			echo "<pre>";
@@ -136,14 +104,19 @@
 			*/
 		
 		?>
+		  
+          <h2>Lista Usuários</h2>
+		<?php
+			$blogusers = get_users( 'role=administrator' );
+			// Array of WP_User objects.
+			echo "<pre>";
+			var_dump($blogusers);
+			echo "</pre>";
 			
-			
-			</div>-->	
-		  
-		  
-          <h2>Importa espaço</h2>
-		  
-		  
+			foreach ( $blogusers as $user ) {
+				echo '<p>' . esc_html( $user->user_email ) . '</p>';
+			}
+		  ?>
           <!-- <div class="table-responsive">
             <table class="table table-striped">
               <thead>

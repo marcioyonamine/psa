@@ -12,7 +12,7 @@ session_start(); // carrega a sessão
 
   <body>
   
-  <?php include "menu.php"; ?>
+  <?php include "menu/evento.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
@@ -80,10 +80,10 @@ break;
  case "inserir":
  ?>
  
-    <link href="jquery-ui.css" rel="stylesheet">
- <script src="jquery-ui.js"></script>
- <script src="mask.js"></script>
- <script src="maskMoney.js"></script> 
+    <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
  <script>
 $(function() {
     $( ".calendario" ).datepicker();
@@ -112,9 +112,10 @@ $(function() {
         </div>
 			
 		</div>
-		<div class="row">
 
-		<form class="form-horizontal" action="?p=editar" method="POST" role="form">
+		<div class="row">
+		<form class="formocor" action="?p=editar" method="POST" role="form">
+
             <div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<label>Data de Início:</label>
@@ -193,8 +194,7 @@ $(function() {
 					</div>
 				</form>
 			</div>
-		</div>
-	</div>
+
 </section>
 
 <?php 	 
@@ -203,7 +203,11 @@ break;
 
 if(isset($_POST['editar']) OR isset($_POST['inserir'])){ 
 	$data_inicio = exibirDataMysql($_POST["data_inicio"]);
-	$data_final   = exibirDataMysql($_POST["data_final"]);
+	if($_POST["data_final"] != ''){
+		$data_final   = exibirDataMysql($_POST["data_final"]);
+	}else{
+		$data_final = '0000-00-00';
+	}
 	$hora   = $_POST["hora"].":00";
 	$valorIngresso   = dinheiroDeBr($_POST["valorIngresso"]);
 	$duracao   = $_POST["duracao"];
@@ -271,10 +275,10 @@ if(isset($_POST['carregar'])){
  
  ?>
  
-    <link href="jquery-ui.css" rel="stylesheet">
- <script src="jquery-ui.js"></script>
- <script src="mask.js"></script>
- <script src="maskMoney.js"></script> 
+    <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
  <script>
 $(function() {
     $( ".calendario" ).datepicker();
@@ -397,7 +401,7 @@ case "listar":
 if(isset($_POST['apagar'])){
 	global $wpdb;
 	$id = $_POST['apagar'];
-	$sql = "UPDATE sc_ocorrencia SET publicado = '0'";
+	$sql = "UPDATE sc_ocorrencia SET publicado = '0' WHERE id = '$id'";
 	$apagar = $wpdb->query($sql);	
 }
 

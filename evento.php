@@ -11,7 +11,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu.php"; ?>
+  <?php include "menu/evento.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
@@ -91,7 +91,7 @@ break;
 			{
 				$('#projeto').hide();
 				$('.carregando').show();
-				$.getJSON('projeto.ajax.php?programa=',{programa: $(this).val(), ajax: 'true'}, function(j)
+				$.getJSON('inc/projeto.ajax.php?programa=',{programa: $(this).val(), ajax: 'true'}, function(j)
 				{
 					var options = '<option value="0"></option>';	
 					for (var i = 0; i < j.length; i++)
@@ -166,7 +166,8 @@ break;
 						<div class="col-md-offset-2">
 							<label>Primeiro responsável (Fiscal)</label>
 							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
-								<option value="1"></option>	
+								<option value="0"></option>
+								<?php geraOpcaoUsuario();	?>							
 							</select>	                
 						</div>
 					</div>
@@ -174,8 +175,10 @@ break;
 						<div class="col-md-offset-2">
 							<label>Segundo responsável (Suplente)</label>
 							<select class="form-control" name="suplente" id="inputSubject" >
-								<option value="1"></option>
-							</select>	
+								<option value="0"></option>
+								<?php geraOpcaoUsuario();	?>							
+
+								</select>	
 						</div>
 					</div>
 					<div class="form-group">
@@ -350,7 +353,7 @@ case "editar":
 			{
 				$('#projeto').hide();
 				$('.carregando').show();
-				$.getJSON('projeto.ajax.php?programa=',{programa: $(this).val(), ajax: 'true'}, function(j)
+				$.getJSON('inc/projeto.ajax.php?programa=',{programa: $(this).val(), ajax: 'true'}, function(j)
 				{
 					var options = '<option value="0"></option>';	
 					for (var i = 0; i < j.length; i++)
@@ -426,16 +429,20 @@ case "editar":
 						<div class="col-md-offset-2">
 							<label>Primeiro responsável (Fiscal)</label>
 							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
-								<option value="1"></option>	
-							</select>	                
+								<option value="0"></option>	
+								<?php geraOpcaoUsuario($evento['idResponsavel'])	?>							
+
+								</select>	                
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Segundo responsável (Suplente)</label>
 							<select class="form-control" name="suplente" id="inputSubject" >
-								<option value="1"></option>
-							</select>	
+								<option value="0"></option>
+								<?php geraOpcaoUsuario($evento['idSuplente'])	?>							
+
+								</select>	
 						</div>
 					</div>
 					<div class="form-group">

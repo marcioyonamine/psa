@@ -1,6 +1,8 @@
 
+
+
 <?php 
-echo "<div style='padding-left:25%;'>";
+echo "<div class='variaveis' >";
 if($user->ID == '1'){
 	vGlobais();
 }

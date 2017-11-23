@@ -1,6 +1,5 @@
 <?php 
-//Carrega WP
-
+//Carrega WP como FW
 require_once("../wp-load.php");
 $user = wp_get_current_user();
 if(!is_user_logged_in()): // Impede acesso de pessoas não autorizadas
@@ -10,7 +9,7 @@ if(!is_user_logged_in()): // Impede acesso de pessoas não autorizadas
 	  header("location: /");
 endif;
 //Carrega os arquivos de funções
-require "function.php";
+require "inc/function.php";
 
 ?>
 <!DOCTYPE html>
@@ -26,9 +25,10 @@ require "function.php";
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/scpsa.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
- <script src="jquery-3.2.1.js"></script>
+    <link href="css/dashboard.css" rel="stylesheet">
+ <script src="js/jquery-3.2.1.js"></script>
 	</head>
   

@@ -7,9 +7,6 @@ error_reporting(E_ALL);
 
 include "globals.php";
 
-
-
-
 function converterObjParaArray($data) { //função que transforma objeto vindo do json em array
     if(is_object($data)) {
         $data = get_object_vars($data);
@@ -350,6 +347,8 @@ function ocorrencia($id){
 		
 		if($s != " "){
 			$sem = "( ".substr($s,0,-2)." )";
+		}else{
+			$sem = "";
 		}
 
 		$data = "De ".exibirDataBr($oc['dataInicio'])." a ".exibirDataBr($oc['dataFinal'])." às ".substr($oc['horaInicio'],0,-3)." (".$oc['duracao']." minutos)<br />".$sem;	
@@ -369,6 +368,24 @@ function ocorrencia($id){
 	
 }	
 
+function geraOpcaoUsuario($select = NULL, $role = NULL){
+	if($role == NULL){
+		$x = '';
+	}else{
+		$x = "'role=$role'";
+	}
+	$blogusers = get_users( $x );
+	// Array of WP_User objects.
+	foreach ( $blogusers as $user ) {
+		if($user->ID == $select){
+			echo '<option value="'.esc_html( $user->ID ).'" selected>' . esc_html( $user->display_name ) . '</option>';
+		}else{	
+			echo '<option value="'.esc_html( $user->ID ).'">' . esc_html( $user->display_name ) . '</option>';
+			
+		}
+	}	
+	
+}
 
 
 
