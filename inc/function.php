@@ -28,6 +28,13 @@ function nocache(){
 	
 }
 
+function checar($id){
+	if($id == 1){
+		echo " checked ";		
+	}
+}
+
+
 function saudacao(){ 
 	$hora = date('H');
 	if(($hora > 12) AND ($hora <= 18)){
@@ -184,6 +191,15 @@ function vGlobais(){
 		echo "</pre>";	
 	}
 
+	if(isset($_FILES)){
+		echo "FILES";
+		echo "<pre>";
+		var_dump($_FILES);
+		echo "</pre>";	
+		
+		
+	}
+	
 	echo "SERVER";
 	echo "<pre>";
 	var_dump($_SERVER);
@@ -384,6 +400,26 @@ function geraOpcaoUsuario($select = NULL, $role = NULL){
 			
 		}
 	}	
+	
+}
+
+function geraOpcaoDotacao($id = NULL){
+	global $wpdb;
+	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '2017'";
+	$res = $wpdb->get_results($sql_orc,ARRAY_A);
+	echo "<pre>";
+	var_dump(($res));
+	echo "</pre>";
+	for($i = 0; $i < count($res) ; $i++){
+		if($res[$i]['id'] == $id){
+			echo "<option value = '".$res[$i]['id']."' selected >".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
+			//echo "<option>selected</option>";
+		}else{
+			echo "<option value = '".$res[$i]['id']."' >".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
+			//echo "<option>non-selected</option>";
+		}	
+	
+	}
 	
 }
 

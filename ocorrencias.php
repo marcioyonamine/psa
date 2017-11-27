@@ -5,14 +5,14 @@ if(isset($_GET['p'])){
 }else{
 	$p = 'inicio';	
 }
-session_start(); // carrega a sessão
+//session_start(); // carrega a sessão
 
 ?>
 
 
   <body>
   
-  <?php include "menu/evento.php"; ?>
+  <?php include "menu/me_evento.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
@@ -80,7 +80,7 @@ break;
  case "inserir":
  ?>
  
-    <link href="css/jquery-ui.css" rel="stylesheet">
+  <link href="css/jquery-ui.css" rel="stylesheet">
  <script src="js/jquery-ui.js"></script>
  <script src="js/mask.js"></script>
  <script src="js/maskMoney.js"></script> 
@@ -105,7 +105,7 @@ $(function() {
 					<h3>Meus Eventos - Ocorrência - Inserir</h3>
 					<?php
 					// listar o evento;
-					$evento = evento($_SESSION['idEvento']);
+					$evento = evento($_SESSION['id']);
 					?>
 					<h1><?php echo $evento['titulo']; ?></h1>
 				</div>
@@ -229,7 +229,7 @@ if(isset($_POST['editar']) OR isset($_POST['inserir'])){
  
 if(isset($_POST['inserir'])){
 	global $wpdb;
-	$id_evento = $_SESSION['idEvento'];
+	$id_evento = $_SESSION['id'];
 	$sql = "INSERT INTO `sc_ocorrencia` (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`) 
 	VALUES ('$local', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_final', '$hora', '$valorIngresso', '$retiradaIngresso',  '$ingressos',  '$duracao',  '1')";	
 	$res = $wpdb->query($sql);
@@ -241,7 +241,7 @@ if(isset($_POST['inserir'])){
 if(isset($_POST['editar'])){
 	global $wpdb;
 	$id_ocorrencia = $_POST['editar'];
-	$id_evento = $_SESSION['idEvento'];
+	$id_evento = $_SESSION['id'];
 	$sql = "UPDATE `sc_ocorrencia` SET
 	`local` = '$local',
 	`idEvento` = '$id_evento',
@@ -300,7 +300,7 @@ $(function() {
 					<h3>Meus Eventos - Ocorrência - Editar</h3>
 					<?php
 					// listar o evento;
-					$evento = evento($_SESSION['idEvento']);
+					$evento = evento($_SESSION['id']);
 					?>
 					<h1><?php echo $evento['titulo']; ?></h1>
 					<p><?php //echo $sql; ?></p>
@@ -422,14 +422,14 @@ if(isset($_POST['duplicar'])){
 					<h3>Meus Eventos - Ocorrência - Listar</h3>
 					<?php
 					// listar o evento;
-					$evento = evento($_SESSION['idEvento']);
+					$evento = evento($_SESSION['id']);
 					?>
 					<h1><?php echo $evento['titulo']; ?></h1>
 				</div>		
 		</div>
 		
 		<?php 
-				$sel = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$_SESSION['idEvento']."' AND publicado = '1' ORDER BY dataInicio";
+				$sel = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$_SESSION['id']."' AND publicado = '1' ORDER BY dataInicio";
 				$ocor = $wpdb->get_results($sel,ARRAY_A);
 		if(count($ocor) > 0){
 		?>
@@ -468,7 +468,7 @@ if(isset($_POST['duplicar'])){
 				</td>
                   <td>
 					<form method="POST" action="?p=listar" class="form-horizontal" role="form">
-					<input type="hidden" name="apagar" value="<?php echo $res[$i]['idEvento']; ?>" />
+					<input type="hidden" name="apagar" value="<?php echo $res[$i]['id']; ?>" />
 					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
 					</form>
 				</td>

@@ -17,7 +17,7 @@
               <a class="nav-link" href="evento.php">Eventos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.php">Atividades</a>
+              <a class="nav-link" href="atividade.php">Atividades</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="index.php">Orçamento</a>

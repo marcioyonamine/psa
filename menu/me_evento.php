@@ -13,7 +13,7 @@
 	
 
 		<?php 
-		if((isset($_GET['p']) AND $_GET['p'] == 'editar') OR isset($_SESSION['idEvento'])){
+		if((isset($_GET['p']) AND $_GET['p'] == 'editar') OR isset($_SESSION['id'])){
 		
 		?>
 		  <ul class="nav nav-pills flex-column">
@@ -28,10 +28,14 @@
             </li>
         
 	<li class="nav-item">
-              <a class="nav-link" href="#">Uploads</a>
+              <a class="nav-link" href="arquivo.php">Listar Arquivos</a>
             </li>
+
 	<li class="nav-item">
-              <a class="nav-link" href="#">Contrato</a>
+              <a class="nav-link" href="arquivo.php?p=inserir">Insere Arquivos</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link" href="contratacao.php">Contratação</a>
             </li>
 	<li class="nav-item">
               <a class="nav-link" href="#">Enviar</a>

@@ -12,7 +12,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu/me_evento.php"; ?>
+  <?php include "menu/evento.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
@@ -126,11 +126,6 @@ break;
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<input type="checkbox" name="planejamento" id="subEvento" <?php //checar($campo['subEvento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>
-						</div>
-					</div>
-				<div class="form-group">
-						<div class="col-md-offset-2">
 							<label>Nome do Evento *</label>
 							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value=""/>
 						</div> 
@@ -187,7 +182,11 @@ break;
 								</select>	
 						</div>
 					</div>
-
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="checkbox" name="subEvento" id="subEvento" <?php //checar($campo['subEvento']) ?>/><label style="padding:0 10px 0 5px;"> Haverá evento(s) complementar(es) (sub-evento)?</label>
+						</div>
+					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Autor*</label>
@@ -278,7 +277,6 @@ case "editar":
 		}else{
 			$subEvento = NULL;
 		}
-		if(isset($_POST['planejamento'])) : $planejamento = 1; else: $planejamento = NULL; endif;
 	}
 	
 	if(isset($_POST['carregar'])){
@@ -293,9 +291,8 @@ case "editar":
 
 	// Inserir evento
 	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento')";		
-		$ins = $wpdb->query($sql);
+		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`) 
+		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL)";		$ins = $wpdb->query($sql);
 		if($ins){
 			$mensagem = "Inserido com sucesso";
 			$id = $wpdb->insert_id;
@@ -327,7 +324,6 @@ case "editar":
 		`sinopse` = '$sinopse',
 		`releaseCom` = '$releaseCom',
 		`linksCom` = '$linksCom',
-		`planejamento` = '$planejamento',
 		`subEvento` = '$subEvento'
 		WHERE `idEvento` = '$atualizar';
 		";
@@ -384,17 +380,11 @@ case "editar":
                     <h3>Evento - Informações Gerais</h3>
                     <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
 
-			</div>
+	</div>
 		</div> 
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<input type="checkbox" name="planejamento" id="subEvento" <?php checar($evento['planejamento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>
-						</div>
-					</div>
-
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Nome do Evento *</label>
@@ -453,6 +443,11 @@ case "editar":
 								<?php geraOpcaoUsuario($evento['idSuplente'])	?>							
 
 								</select>	
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="checkbox" name="subEvento" id="subEvento" <?php //checar($campo['subEvento']) ?>/><label style="padding:0 10px 0 5px;"> Haverá evento(s) complementar(es) (sub-evento)?</label>
 						</div>
 					</div>
 					<div class="form-group">
