@@ -6,7 +6,11 @@
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
-
+		<?php 
+		$x = orcamento(14,'2017-11-18');
+		var_dump($x);
+		
+		?>
 		  
 		  
 		  
@@ -104,7 +108,12 @@
 			*/
 		
 		?>
+		  <h2>Insere datas na Agenda</h2>
 		  
+		  <?php 
+			atualizarAgenda($_GET['id']);
+		  
+		  ?>		  
           <h2>Lista Usuários</h2>
 		<?php
 			$blogusers = get_users( 'role=administrator' );
@@ -117,6 +126,8 @@
 				echo '<p>' . esc_html( $user->user_email ) . '</p>';
 			}
 		  ?>
+		  
+
           <!-- <div class="table-responsive">
             <table class="table table-striped">
               <thead>

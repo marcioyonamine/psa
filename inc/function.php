@@ -318,7 +318,8 @@ function evento($id){
 		'local' => '',
 		'faixa_etaria' => '',
 		'valor_entrada' => '',
-		'imagem' => ''
+		'imagem' => '',
+		'planejamento' => $res['planejamento']
 	);
 
 	return $evento;
@@ -403,19 +404,19 @@ function geraOpcaoUsuario($select = NULL, $role = NULL){
 	
 }
 
-function geraOpcaoDotacao($id = NULL){
+function geraOpcaoDotacao($ano_base,$id = NULL){
 	global $wpdb;
-	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '2017'";
+	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '$ano_base'";
 	$res = $wpdb->get_results($sql_orc,ARRAY_A);
 	echo "<pre>";
 	var_dump(($res));
 	echo "</pre>";
 	for($i = 0; $i < count($res) ; $i++){
 		if($res[$i]['id'] == $id){
-			echo "<option value = '".$res[$i]['id']."' selected >".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
+			echo "<option value = '".$res[$i]['id']."' selected >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
 			//echo "<option>selected</option>";
 		}else{
-			echo "<option value = '".$res[$i]['id']."' >".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
+			echo "<option value = '".$res[$i]['id']."' >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
 			//echo "<option>non-selected</option>";
 		}	
 	
@@ -423,5 +424,147 @@ function geraOpcaoDotacao($id = NULL){
 	
 }
 
+function verificaDataAgenda($data,$id,$hora,$local){
+	global $wpdb;
+	$sel = "SELECT idAgenda FROM sc_agenda WHERE data = '$data' AND hora = '$hora' AND idLocal = '$local' AND idEvento = '$id'";
+	$res = $wpdb->get_results($sel,ARRAY_A);
+	$num = $wpdb->num_rows;
+	echo $sel."<br />";
+
+	return $num;
+}
+
+function insereAgenda($data,$id,$hora,$local){
+	$ver = verificaDataAgenda($data,$id,$hora,$local);
+	if($ver == 0){
+		global $wpdb;
+		$sql_ins = "INSERT INTO `sc_agenda` (`idEvento`, `data`, `hora`, `idLocal`) 
+					VALUES ('$id', '$data', '$hora', '$local')"; 			
+		$insere = $wpdb->query($sql_ins);
+		//var_dump($insere)."<br />";
+		return $wpdb->insert_id;
+
+		}
+}
+
+function atualizarAgenda($id){ //01
+	global $wpdb;
+	$sql = "SELECT * FROM sc_ocorrencia WHERE idEvento = '$id' AND publicado = '1'";
+	$res = $wpdb->get_results($sql,ARRAY_A);
+	if(count($res) > 0){ //02
+		for($i = 0; $i < count($res); $i++){ //03
+			if($res[$i]['dataFinal'] != '0000-00-00'){ // temporada //04
+				$di = $res[$i]['dataInicio'];
+				while(strtotime($di) <= strtotime($res[$i]['dataFinal'])){
+					$n = numeroSemana($di);
+					echo $di."<br />";
+					if($n == 0 AND $res[$i]['domingo'] == 1){
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+					}
+								
+					if($n == 1 AND $res[$i]['segunda'] == 1){
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+						
+					}					
+					if($n == 2 AND $res[$i]['terca'] == 1){
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+						
+					}					
+					if($n == 3 AND $res[$i]['quarta'] == 1){
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+						
+					}					
+					if($n == 4 AND $res[$i]['quinta'] == 1){
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+						
+					}					
+					if($n == 5 AND $res[$i]['sexta'] == 1){
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+						
+					}					
+					if($n == 6 AND $res[$i]['sabado'] == 1){
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+					}					
+					$di = somarDatas($di,"+1");
+				}	
+			}else{ // data única //04
+						$x = insereAgenda($res[$i]['dataInicio'],$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						echo $x;
+
+			}
+			
+		}//03
+	}	
+} //01 
+
+function orcamento($id,$fim = NULL,$inicio = NULL){
+	if($fim == NULL){
+		$fim = date('Y')."-12-31";
+	}
+	if($inicio == NULL){
+		$inicio = date('Y')."-01-01";
+	}
+	
+	
+	global $wpdb;
+	$sel = "SELECT valor,dotacao,descricao FROM sc_orcamento WHERE id = '$id'";
+	$val = $wpdb->get_row($sel,ARRAY_A);
+	
+	// Contigenciado (286)
+	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '286' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data";
+	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
+	$valor_cont = 0;
+	for($i = 0; $i < count($cont); $i++){
+		$valor_cont = $valor_cont + $cont[$i]['valor'];	
+	}
+	
+	// Descontigenciado (287)
+	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '287' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data";
+	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
+	$valor_desc = 0;
+	for($i = 0; $i < count($cont); $i++){
+		$valor_desc = $valor_desc + $cont[$i]['valor'];	
+	}
+	
+
+	// Suplemento (288)
+	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '288' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data";
+	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
+	$valor_supl = 0;
+	for($i = 0; $i < count($cont); $i++){
+		$valor_supl = $valor_supl + $cont[$i]['valor'];	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	$dotacao = array(
+	'descricao' => $val['descricao'],
+	'dotacao' => $val['dotacao'],
+	'total' => 	$val['valor'],
+	'contigenciado' => $valor_cont,
+	'descontigenciado' => $valor_desc,
+	'suplementado' => $valor_supl	
+	);
+	
+	
+	return $dotacao;
+	
+	
+	
 
 
+	
+
+}

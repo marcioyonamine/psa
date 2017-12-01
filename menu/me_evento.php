@@ -38,7 +38,7 @@
               <a class="nav-link" href="contratacao.php">Contratação</a>
             </li>
 	<li class="nav-item">
-              <a class="nav-link" href="#">Enviar</a>
+              <a class="nav-link" href="enviar.php">Enviar</a>
             </li>
 
 			</ul>
