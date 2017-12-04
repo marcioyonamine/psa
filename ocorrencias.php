@@ -413,6 +413,10 @@ if(isset($_POST['duplicar'])){
 	$duplicar = $wpdb->query($sql);
 }
 
+if(isset($_POST['agenda'])){
+	atualizarAgenda($_POST['agenda']);	
+	
+}
 
 ?>
 
@@ -477,8 +481,21 @@ if(isset($_POST['duplicar'])){
 
 				</tbody>
             </table>
+			
+			<form class="form-horizontal" action="?p=listar" method="POST" role="form">
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					
+                   <input type="hidden" name="agenda" value="<?php echo $_SESSION['id']; ?>" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Atualizar Agenda">
+				</div>
+			</div>
+			
           </div>
-		<?php } else { ?>
+			</form>
+			</div>
+
+		  <?php } else { ?>
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 				<p> Não há ocorrências cadastradas </p>

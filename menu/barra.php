@@ -11,7 +11,7 @@
             <a class="nav-link" href="index.php">Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="calendario/">Calendário/agenda</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>

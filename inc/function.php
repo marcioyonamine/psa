@@ -435,20 +435,21 @@ function verificaDataAgenda($data,$id,$hora,$local){
 }
 
 function insereAgenda($data,$id,$hora,$local){
-	$ver = verificaDataAgenda($data,$id,$hora,$local);
-	if($ver == 0){
 		global $wpdb;
+		
+		// limpa a ocorrencia na agenda
 		$sql_ins = "INSERT INTO `sc_agenda` (`idEvento`, `data`, `hora`, `idLocal`) 
 					VALUES ('$id', '$data', '$hora', '$local')"; 			
 		$insere = $wpdb->query($sql_ins);
 		//var_dump($insere)."<br />";
 		return $wpdb->insert_id;
 
-		}
 }
 
 function atualizarAgenda($id){ //01
 	global $wpdb;
+	$sql_limpa =  "DELETE FROM `sc_agenda` WHERE idEvento = '$id'";
+	$limpa = $wpdb->query($sql_limpa);
 	$sql = "SELECT * FROM sc_ocorrencia WHERE idEvento = '$id' AND publicado = '1'";
 	$res = $wpdb->get_results($sql,ARRAY_A);
 	if(count($res) > 0){ //02
@@ -460,43 +461,43 @@ function atualizarAgenda($id){ //01
 					echo $di."<br />";
 					if($n == 0 AND $res[$i]['domingo'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 					}
 								
 					if($n == 1 AND $res[$i]['segunda'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 						
 					}					
 					if($n == 2 AND $res[$i]['terca'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 						
 					}					
 					if($n == 3 AND $res[$i]['quarta'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 						
 					}					
 					if($n == 4 AND $res[$i]['quinta'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 						
 					}					
 					if($n == 5 AND $res[$i]['sexta'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 						
 					}					
 					if($n == 6 AND $res[$i]['sabado'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 					}					
 					$di = somarDatas($di,"+1");
 				}	
 			}else{ // data única //04
 						$x = insereAgenda($res[$i]['dataInicio'],$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						echo $x;
+						//echo $x;
 
 			}
 			
