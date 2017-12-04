@@ -429,7 +429,7 @@ function verificaDataAgenda($data,$id,$hora,$local){
 	$sel = "SELECT idAgenda FROM sc_agenda WHERE data = '$data' AND hora = '$hora' AND idLocal = '$local' AND idEvento = '$id'";
 	$res = $wpdb->get_results($sel,ARRAY_A);
 	$num = $wpdb->num_rows;
-	echo $sel."<br />";
+	//echo $sel."<br />";
 
 	return $num;
 }
