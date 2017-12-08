@@ -34,7 +34,7 @@ if(isset($_SESSION['id'])){
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Ficha</th>
+				<th>Ficha</th>
                   <th>Projeto</th>
                   <th>Dotação</th>
                   <th>Descricao</th>
@@ -68,7 +68,6 @@ if(isset($_SESSION['id'])){
 					  ?></td>
 					</tr>
 				<?php } // fim do for?>	
-				
               </tbody>
             </table>
           </div>
@@ -129,40 +128,53 @@ break;
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2">
+							<label>Unidade</label>
+							<select class="form-control" name="unidade" id="projeto" >
+							<?php geraTipoOpcao('unidade'); ?>
+								</select>
+						</div>
+					</div>
+				<div class="form-group">
+						<div class="col-md-offset-2">
 							<label>Projeto *</label>
-							<input type="text" name="projeto" class="form-control" id="inputSubject" value="<?php echo $orcamento['projeto']; ?>"/>
+							<input type="text" name="projeto" class="form-control" id="inputSubject" />
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Ficha *</label>
-							<input type="text" name="ficha" class="form-control" id="inputSubject" value="<?php echo $orcamento['ficha']; ?>"/>
+							<input type="text" name="ficha" class="form-control" id="inputSubject" />
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Dotação *</label>
-							<input type="text" name="dotacao" class="form-control" id="inputSubject" value="<?php echo $orcamento['dotacao']; ?>"/>
+							<input type="text" name="dotacao" class="form-control" id="inputSubject" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Descricao *</label>
-							<input type="text" name="descricao" class="form-control" id="inputSubject" value="<?php echo $orcamento['descricao']; ?>"/>
+							<input type="text" name="descricao" class="form-control" id="inputSubject" />
 						</div>
 					</div>
-
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Natureza *</label>
+							<input type="text" name="natureza" class="form-control" id="inputSubject" />
+						</div>
+					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Fonte</label>
-							<select class="form-control" name="natureza" id="projeto" >
-								<option value="1" <?php checado($orcamento['fonte'],array(1)); ?>>1</option>							
-								<option value="2" <?php checado($orcamento['fonte'],array(2)); ?>>2</option>							
-								<option value="3" <?php checado($orcamento['fonte'],array(3)); ?>>3</option>							
-								<option value="4" <?php checado($orcamento['fonte'],array(4)); ?>>4</option>							
-								<option value="5" <?php checado($orcamento['fonte'],array(5)); ?>>5</option>							
-								<option value="6" <?php checado($orcamento['fonte'],array(6)); ?>>6</option>							
+							<select class="form-control" name="fonte" id="projeto" >
+								<option value="1" >1</option>							
+								<option value="2" >2</option>							
+								<option value="3" >3</option>							
+								<option value="4" >4</option>							
+								<option value="5" >5</option>							
+								<option value="6" >6</option>							
 
 								</select>
 						</div>
@@ -170,29 +182,29 @@ break;
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Valor</label>
-							<input type="text" name="valor" class="form-control" id="inputSubject" value="<?php echo dinheiroParaBr($orcamento['valor']); ?>"/>
+							<input type="text" name="valor" class="form-control" id="inputSubject" />
 						</div>
 					</div>
 				<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Ano Base</label>
-							<input type="text" name="valor" class="form-control" id="inputSubject" value="<?php echo $orcamento['ano_base']; ?>"/>
+							<input type="text" name="ano" class="form-control" id="inputSubject" value="2018" />
 						</div> 
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Observação</label>
-							<textarea name="autor" class="form-control" rows="10" ><?php echo $orcamento['obs']; ?></textarea>
+							<textarea name="autor" class="form-control" rows="10" ></textarea>
 						</div> 
 					</div>
 		
 						<div class="form-group">
 						<div class="col-md-offset-2">
-							<input type="hidden" name="atualizar" value="<?php echo $orcamento['idEvento']; ?>" />
+							<input type="hidden" name="inserir" value="1" />
 							<?php 
 							?>
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir">
 						</div>
 					</div>
 				</form>
@@ -206,8 +218,51 @@ break;
 <?php 
 break;
 case "editar":
-
 	global $wpdb;	
+
+	if((isset($_POST['inserir'])) OR (isset($_POST['atualizar']))){
+	 $projeto = $_POST["projeto"];
+	  $ficha  = $_POST["ficha"];
+	  $dotacao = $_POST["dotacao"];
+	  $descricao  = $_POST["descricao"];
+	  $natureza   = $_POST["natureza"];
+	  $fonte   = $_POST["fonte"];
+		$unidade = $_POST['unidade'];
+	  $valor  = dinheiroDeBr($_POST["valor"]);
+	  $ano_base  = $_POST["ano"];
+	  $obs  = addslashes($_POST["autor"]);
+	}
+	$idUser = $user->ID;
+	
+	if(isset($_POST['inserir'])){
+		$sql = "INSERT INTO `sc_orcamento` (`projeto`, `ficha`, `unidade`, `dotacao`, `descricao`, `natureza`, `fonte`,  `valor`, `obs`, `publicado`, `idUsuario`, `ano_base`) 
+		VALUES ('$projeto','$ficha', '$unidade', '$dotacao', '$descricao', '$natureza', '$fonte', '$valor', '$obs', '1', '$idUser', '$ano_base')";	
+		$r = $wpdb->query($sql);
+		$orcamento =  recuperaDados('sc_orcamento',$wpdb->insert_id,'id');	
+		
+	}
+
+	if(isset($_POST['atualizar'])){
+		$idOrc = $_POST['atualizar'];
+		$sql = "UPDATE sc_orcamento SET
+		`projeto` = '$projeto', 
+		`ficha` = '$ficha', 
+		`dotacao` = '$dotacao', 
+		`descricao` = '$descricao', 
+		`natureza` = '$natureza', 
+		`fonte` = '$fonte',  
+		`valor`= '$valor', 
+		`obs` = '$obs', 
+		`unidade` = '$unidade', 
+		`idUsuario` =  '$idUser', 
+		`ano_base` = '$ano_base'
+		WHERE id = '$idOrc'
+		"; 	
+		echo $sql;
+		$r = $wpdb->query($sql);
+		$orcamento =  recuperaDados('sc_orcamento',$idOrc,'id');	
+	}
+ 
 	if(isset($_POST['carregar'])){
 		$orcamento =  recuperaDados('sc_orcamento',$_POST['carregar'],'id');	
 	}
@@ -255,6 +310,26 @@ case "editar":
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+					<!-- Verificar com a área
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Visualizar?</label>
+							<select class="form-control" name="visualizar" id="projeto" >
+							<option value='0'></option>
+							<option value='1'></option>
+							
+							</select>
+						</div>
+					</div>-->
+
+				<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Unidade</label>
+							<select class="form-control" name="unidade" id="projeto" >
+							<?php geraTipoOpcao('unidade',$orcamento['unidade']); ?>
+								</select>
+						</div>
+					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Projeto *</label>
@@ -276,6 +351,13 @@ case "editar":
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
+							<label>Natureza *</label>
+							<input type="text" name="natureza" class="form-control" id="inputSubject" value="<?php echo $orcamento['natureza']; ?>"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-offset-2">
 							<label>Descricao *</label>
 							<input type="text" name="descricao" class="form-control" id="inputSubject" value="<?php echo $orcamento['descricao']; ?>"/>
 						</div>
@@ -284,7 +366,7 @@ case "editar":
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Fonte</label>
-							<select class="form-control" name="natureza" id="projeto" >
+							<select class="form-control" name="fonte" id="projeto" >
 								<option value="1" <?php checado($orcamento['fonte'],array(1)); ?>>1</option>							
 								<option value="2" <?php checado($orcamento['fonte'],array(2)); ?>>2</option>							
 								<option value="3" <?php checado($orcamento['fonte'],array(3)); ?>>3</option>							
@@ -304,7 +386,7 @@ case "editar":
 				<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Ano Base</label>
-							<input type="text" name="valor" class="form-control" id="inputSubject" value="<?php echo $orcamento['ano_base']; ?>"/>
+							<input type="text" name="ano" class="form-control" id="inputSubject" value="<?php echo $orcamento['ano_base']; ?>"/>
 						</div> 
 					</div>
 
@@ -317,7 +399,7 @@ case "editar":
 		
 						<div class="form-group">
 						<div class="col-md-offset-2">
-							<input type="hidden" name="atualizar" value="<?php echo $orcamento['idEvento']; ?>" />
+							<input type="hidden" name="atualizar" value="<?php echo $orcamento['id']; ?>" />
 							<?php 
 							?>
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar">
@@ -382,7 +464,7 @@ $(function() {
 							<label>Dotação</label>
 							<select class="form-control" name="dotacao" id="inputSubject" >
 							<option>Escolha uma opção</option>
-							<?php echo geraOpcaoDotacao('2017'); ?>
+							<?php echo geraOpcaoDotacao('2018'); ?>
 							</select>
 						</div>
 					</div>	
@@ -562,6 +644,7 @@ case "mov_listar":
 				  </tr>
               </thead>
               <tbody>
+
 				<?php 
 				global $wpdb;
 				$sql_list =  "SELECT * FROM sc_mov_orc ORDER BY data DESC";
@@ -586,7 +669,7 @@ case "mov_listar":
 					  ?></td>
 					</tr>
 				<?php } // fim do for?>	
-				
+
               </tbody>
             </table>
           </div>
@@ -596,11 +679,39 @@ case "mov_listar":
 <?php 
 break;
 case "visaogeral": 
+
+if(isset($_GET['unidade']) AND $_GET['unidade'] != 0 ){
+	$unidade = " AND unidade ='".$_GET['unidade']."' ";	
+}else{
+	$unidade = "";
+}
+
+if(isset($_GET['fonte']) AND $_GET['fonte'] != 0 ){
+	$fonte = " AND fonte ='".$_GET['fonte']."' ";	
+}else{
+	$fonte = "";
+}
+
+
 if(isset($_GET['ano'])){
 	$ano = " AND ano_base = '".$_GET['ano']."' ";	
 }else{
-	$ano = " AND ano_base = '".date('Y')."' ";	
+	$ano = " AND ano_base = '2018' ";	
 }
+
+if(isset($_GET['projeto']) AND $_GET['projeto'] != 0 ){
+	$projeto = " AND projeto = '".$_GET['projeto']."' ";	
+}else{
+	$projeto = "";	
+}
+
+if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
+	$ficha = " AND ficha = '".$_GET['ficha']."' ";	
+}else{
+	$ficha = "";	
+}
+
+//filtros projeto e ficha
 ?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
@@ -609,25 +720,68 @@ if(isset($_GET['ano'])){
 					<h1>Dotações</h1>
 				</div>
         </div>
+		<h3>Filtro</h3>
+		<div class="col-md-offset-1 col-md-10">
+			<form method="GET" action="orcamento.php?p=visaogeral&ano=2018" class="form-horizontal" role="form">
+				<div class="form-group">
+					<div class="col-md-offset-2">
+							<label>Unidade *</label>
+							<select class="form-control" name="unidade" id="inputSubject" >
+							<option value='0'>Escolha uma opção</option>
+							<?php echo geraTipoOpcao('unidade',$_GET['unidade']); ?>
+							<option value='0'>Todas as unidades</option>
+							</select>
+					</div>
+					</div>		
+				<div class="form-group">
+					<div class="col-md-offset-2">
+							<label>Fonte *</label>
+							<select class="form-control" name="fonte" id="inputSubject" >
+							<option value= '0'>Escolha uma opção</option>
+							<option <?php echo select(1,$_GET['fonte']) ?> >1</option>
+							<option <?php echo select(2,$_GET['fonte']) ?> >2</option>
+							<option <?php echo select(3,$_GET['fonte']) ?> >3</option>
+							<option <?php echo select(4,$_GET['fonte']) ?> >4</option>
+							<option <?php echo select(5,$_GET['fonte']) ?> >5</option>
+							<option <?php echo select(6,$_GET['fonte']) ?> >6</option>
+							<option value= '0'>Todas as opções</option>
+
+							</select>
+					</div>
+					</div>		
+
+					<div class="form-group">
+					<div class="col-md-offset-2">
+						<input type="submit" class="btn btn-theme btn-sm btn-block" value="Aplicar">
+							</form>
+							</select>
+					</div>
+			</div>		
+		
+		</form>			
+		</div>		
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-					  <th>#</th>
+					  
 				<th>Dotação</th>
                   <th>Val Ini</th>
                   <th>Val Con</th>
                   <th>Val Des</th>
                   <th>Val Sup</th>
-                  <th>Val Res</th>
-                  <th>Val Total</th>
+                  <th>Val Lib</th>
+				  <th>Val Pla</th>	
+                  <th>Saldo Lib</th> <!-- O saldo Planejado é o Saldo Liberado - Valor Planejado -->
+                  <th>Saldo Pla</th>
 
 				  </tr>
               </thead>
               <tbody>
+			  <form method="POST" action="?" />
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT id FROM sc_orcamento WHERE publicado = '1' $ano ORDER BY id ASC";
+				$sql_list =  "SELECT id FROM sc_orcamento WHERE publicado = '1' $ano $unidade $fonte $projeto $ficha ORDER BY id ASC";
 				//echo $sql_list;
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				$total_orc = 0;
@@ -642,15 +796,17 @@ if(isset($_GET['ano'])){
 					$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'];
 					?>
 					<tr>
-					  <td><?php echo $res[$i]['id']; ?></td>
-					  <td title="<?php echo $orc['descricao']; ?>"><?php echo $orc['dotacao']; ?></td>
+
+					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
 					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
 					  <td><?php //echo $orc['total']; ?></td>
+					  <td><?php //echo $orc['total']; ?></td>
 					  <td><?php echo dinheiroParaBr($total); ?></td>
-					  <td>	
+						<td></td>
+	<td>	
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
@@ -672,18 +828,90 @@ if(isset($_GET['ano'])){
 					
 				} // fim do for?>	
 				<tr>
-						<td></<td>
 					  <td>TOTAL:</td>
 					  <td><?php echo dinheiroParaBr($total_orc); ?></td>
 					  <td><?php echo dinheiroParaBr($total_con); ?></td>
 					  <td><?php echo dinheiroParaBr($total_des); ?></td>
 					  <td><?php echo dinheiroParaBr($total_sup); ?></td>
 					  <td><?php //echo $orc['total']; ?></td>
+					  <td><?php //echo $orc['total']; ?></td>
 					  <td><?php echo dinheiroParaBr($total_tot); ?></td>
 					  <td>	
-					  
-					  </td>
+					   </td>
+						<td></td>
 				
+				</tr>
+				<?php echo $sql_list; ?>
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+
+<?php 
+break;
+case 'historico':
+$id_hist = $_GET['id'];
+$historico = orcamento($id_hist);
+?>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Movimentação Orçamentária - Histórico</h1>
+					<h3><?php echo $historico['visualizacao']." / ".$historico['descricao'];?> </h3>
+				</div>
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+					  <th>Data</th>
+				<th>Tipo</th>
+				<th>Título</th>
+                  <th>Descrição</th>
+                  <th>Valor</th>
+				  </tr>
+              </thead>
+              <tbody>
+			  <tr>
+			  <td></td>
+			  <td>Inicial</td>
+			  <td>Orçamento aprovado</td>
+			  <td></td>
+			  <td><?php echo dinheiroParaBr($historico['total']);?></td>
+
+			  </tr>
+			  
+				<?php 
+						
+				for($i = 0; $i < count($historico['historico']); $i++){
+					$tipo = tipo($historico['historico'][$i]['tipo']);
+					if($historico['historico'][$i]['tipo'] == 286){
+						$valor = "(".dinheiroParaBr($historico['historico'][$i]['valor']).")";
+					}else{
+						$valor = dinheiroParaBr($historico['historico'][$i]['valor']);
+					}
+					?>
+					<tr>
+					  <td><?php echo exibirDataBr($historico['historico'][$i]['data']); ?></td>
+					  <td><?php echo  $tipo['tipo']; ?></td>
+					  <td><?php echo $historico['historico'][$i]['titulo']; ?></td>
+					  <td><?php echo $historico['historico'][$i]['descricao']; ?></td>
+					  <td><?php echo $valor; ?></td>
+
+					  </tr>
+				<?php 
+					
+					
+				} // fim do for?>	
+				<tr>
+						<td><td>
+					  <td></td>
+								  <td>Total em <?php echo date('d/m/Y') ?></td>
+					  <td><?php echo dinheiroParaBr($historico['total'] - $historico['contigenciado'] + $historico['descontigenciado'] + $historico['suplementado']); ?></td>
+	
 				</tr>
 				
               </tbody>
@@ -692,7 +920,6 @@ if(isset($_GET['ano'])){
 
 		</div>
 </section>
-
 
 <?php 
 break;

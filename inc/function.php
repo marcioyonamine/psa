@@ -515,7 +515,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	
 	
 	global $wpdb;
-	$sel = "SELECT valor,dotacao,descricao FROM sc_orcamento WHERE id = '$id'";
+	$sel = "SELECT valor,dotacao,descricao, projeto, ficha FROM sc_orcamento WHERE id = '$id'";
 	$val = $wpdb->get_row($sel,ARRAY_A);
 	
 	// Contigenciado (286)
@@ -543,7 +543,9 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 		$valor_supl = $valor_supl + $cont[$i]['valor'];	
 	}
 	
-	
+	// Histórico
+	$sel_hist = "SELECT titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data ORDER BY data ASC";
+	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 	
 	
 	
@@ -556,16 +558,36 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'total' => 	$val['valor'],
 	'contigenciado' => $valor_cont,
 	'descontigenciado' => $valor_desc,
-	'suplementado' => $valor_supl	
+	'suplementado' => $valor_supl,
+	'historico' => $hist,
+	'visualizacao' => $val['projeto']." / ".$val['ficha'] //colocar natureza (importar de novo)
 	);
 	
 	
 	return $dotacao;
 	
-	
-	
-
-
-	
-
 }
+
+/* Funções para Pedidos de Contratação */
+
+function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determinado pedido
+
+	global $wpdb;
+
+	switch($tipo){
+		case 'evento':
+		default:
+			$sql = "SELECT idPedidoContratacao FROM sc_contratacao WHERE idEvento = '$id'";
+		break;
+		case 'atividade' :
+			$sql = "SELECT idPedidoContratacao FROM sc_contratacao WHERE idAtividade = '$id'";
+		break;		
+	}
+	$res = $wpdb->get_results($sql,ARRAY_A);
+	return $res;
+	
+}
+
+
+
+/* Fim das Funções para Pedidos de Contratação */
