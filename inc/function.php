@@ -297,7 +297,7 @@ function evento($id){
 	
 	$projeto = tipo($res['idProjeto']);
 	$linguagem = tipo($res['idLinguagem']);
-
+	$tipo_evento = tipo($res["idTipo"]);
 	
 	$evento = array(
 		'titulo' => $res['nomeEvento'],
@@ -319,7 +319,8 @@ function evento($id){
 		'faixa_etaria' => '',
 		'valor_entrada' => '',
 		'imagem' => '',
-		'planejamento' => $res['planejamento']
+		'planejamento' => $res['planejamento'],
+		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento']
 	);
 
 	return $evento;
@@ -632,6 +633,80 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 	
 }
 
+function periodo($id){ //retorna o período
+	global $wpdb;
+	$sql = "SELECT dataInicio, dataFinal FROM sc_ocorrencia WHERE publicado = '1' AND idEvento = '$id' ORDER BY dataInicio ASC";
+	$res = $wpdb->get_results($sql,ARRAY_A);
+
+	$x = array();
+	if(count($res) == 0){ // não há ocorrências registradas
+		$x['bool'] = FALSE;
+		$x['legivel'] = "Não há ocorrências cadastradas.";
+	}
+	else if(count($res) == 1 AND $res[0]['dataFinal'] == '0000-00-00'){ // Evento de data única
+		$x['bool'] = TRUE;
+		$x['inicio'] = $res[0]['dataInicio'];
+		$x['final'] = $res[0]['dataInicio'];
+		$x['legivel'] = exibirDataBr($res[0]['dataInicio']);
+	}else{ // temporadas ou multiplas ocorrencias
+		if(count($res) == 1){ // se for apenas uma ocorrência
+			$x['bool'] = TRUE;
+			$x['inicio'] = $res[0]['dataInicio'];
+			$x['final'] = $res[0]['dataFinal'];
+			$x['legivel'] = exibirDataBr($res[0]['dataInicio'])." a ".exibirDataBr($res[0]['dataFinal']) ;
+		}else{ // comparar datas
+			$x['bool'] = TRUE;
+			$x['inicio'] = $res[0]['dataInicio'];
+			
+			$data = $res[0]['dataInicio'];
+			for($i = 0; $i < count($res); $i++){
+				if(strtotime($data) <= strtotime($res[$i]['dataInicio'])){
+					$data = $res[$i]['dataInicio'];
+				}
+				if(strtotime($data) <= strtotime($res[$i]['dataFinal'])){
+					$data = $res[$i]['dataFinal'];
+				}
+			
+			}
+			$x['final'] = $data;
+			$x['legivel'] = exibirDataBr($res[0]['dataInicio'])." a ".exibirDataBr($data) ;	
+					
+			
+			
+			
+			
+			
+			
+		}
+		
+		
+	}
+	
+	
+	
+	return $x;
+
+}
+
+
+
+
+function retornaPedido($id){
+	global $wpdb;
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
+	$objeto = evento($res['idEvento']);
+	$periodo = periodo($res['idEvento']);
+	
+	
+	$x = array();
+	$x['nome'] = $pessoa['nome'];
+	$x['objeto'] = $objeto['objeto'];	
+	$x['periodo'] = $periodo['legivel'];
+	return $x;
+	
+}
 
 
 /* Fim das Funções para Pedidos de Contratação */

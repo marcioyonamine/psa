@@ -198,12 +198,9 @@ if(isset($_POST['inserir_pj'])){
         </div>
 		<?php 
 		// se existe pedido, listar
-		$peds = listaPedidos($_SESSION['id'],$_SESSION['entidade']);
-		if(count($peds) > 0){
 		
 		?>
 		
-<section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">    
         </div>
@@ -212,24 +209,31 @@ if(isset($_POST['inserir_pj'])){
               <thead>
                 <tr>
                   <th>Número</th>
-                  <th>Tipo</th>
+                  <th>Pessoa</th>
                   <th>Nome / Razão Social</th>
-                  <th>CPF / CNPJ</th>
+                  <th>Objeto</th>
+				  <th>Período</th>
 				  <th>Valor</th>
-				  <th></th>
 				  <th></th>
 
 				  </tr>
               </thead>
               <tbody>
 				<?php 
+				$sql_seleciona = "SELECT * FROM sc_contratacao";
+				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
+				
+				
 				for($i = 0; $i < count($peds); $i++){
+					$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
+					//var_dump($pedido);
 					?>
 					<tr>
 					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
-					  <td><?php echo $peds[$i]['tipo']; ?></td>
-					  <td><?php echo $peds[$i]['nome']; ?></td>
-					  <td><?php echo $peds[$i]['cpf_cnpj']; ?></td>
+					  <td><?php echo $peds[$i]['tipoPessoa']; ?></td>
+					  <td><?php echo $pedido['nome']; ?></td>
+					  <td><?php echo $pedido['objeto']; ?></td>
+					  <td><?php echo $pedido['periodo']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
 					  <td>	
 							<form method="POST" action="?p=editar_pedido" class="form-horizontal" role="form">
@@ -255,33 +259,6 @@ if(isset($_POST['inserir_pj'])){
             </table>
           </div>
 
-		</div>
-</section>		
-		<?php 
-		// se não existir, exibir
-		}else{
-		?>
-        <div class="row">    
-				<div class="col-md-offset-2 col-md-8">
-					<center><h3>Não há pedidos de contratação.</h3></center>
-			
-				</div>
-        </div
-		<div class="form-group">
-						<div class="col-md-offset-2">
-						<br /><br />
-						<center>
-							<a class="btn btn-lg btn-primary" href="?p=busca_pf" role="button">Pessoa Física</a>
-							<a class="btn btn-lg btn-primary" href="?p=busca_pj" role="button">Pessoa Jurídica</a>
-						</center>			
-						</div>
-					</div>
-
-		<?php 
-		// fim do if existir pedido
-		}
-		?>
-		
 		
 		
 </div>

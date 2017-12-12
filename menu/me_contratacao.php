@@ -32,9 +32,7 @@
               <a class="nav-link" href="contratacao.php?p=busca_pj">Insere Contratação PJ</a>
             </li>
 
-			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=inserir&t=orc">Insere Orçamento</a>
-            </li>
+			
 			
 			</ul>
 

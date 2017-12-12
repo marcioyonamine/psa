@@ -47,9 +47,14 @@ case "inicio":
 				<?php 
 				$id = $_SESSION['id'];
 				$entidade = $_SESSION['entidade'];
-
+				if(isset($_GET['tipo'])){
+					$tipo = " AND tipo = '".$_GET['tipo']."'";
+					$id = $_GET['id'];
+				}else{
+					$tipo = " AND tipo = '301'"	;				
+				}
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_arquivo WHERE id = '$id' AND entidade = '$entidade' AND publicado = '1' ORDER BY id DESC";
+				$sql_list =  "SELECT * FROM sc_arquivo WHERE id = '$id' AND entidade = '$entidade' AND publicado = '1' $tipo ORDER BY id DESC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['id']);
@@ -141,6 +146,13 @@ break;
 					global $wpdb;
 					$entidade = $_SESSION['entidade'];
 					$id = $_SESSION['id'];
+					$tipo = 301; // evento
+					if(isset($_GET['tipo'])){
+						$tipo = $_GET['tipo'];  //outros tipos
+						$id = $_GET['tipo'];
+					}
+
+
 					$tipo = '';
 					$usuario = $user->ID;
 					$sql = "INSERT INTO `sc_arquivo` (`idArquivo`, `id`, `entidade`, `tipo`, `arquivo`, `datatime`, `usuario`, `publicado`) 
@@ -169,7 +181,7 @@ break;
 ?>
 					<br />
 					<div class = "center">
-						<form method='POST' enctype='multipart/form-data'>
+						<form method='POST' enctype='multipart/form-data' action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
 							<p><input type='file' name='arquivo[]'></p>
 							<p><input type='file' name='arquivo[]'></p>
 							<p><input type='file' name='arquivo[]'></p>

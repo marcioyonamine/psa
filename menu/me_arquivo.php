@@ -13,6 +13,9 @@
 	
 
 		<?php 
+		// evento
+		if(!isset($_GET['tipo'])){ // se for evento
+
 		if((isset($_GET['p']) AND $_GET['p'] == 'editar') OR isset($_SESSION['id'])){
 		
 		?>
@@ -45,8 +48,47 @@
 		    </li>
           </ul>
 
+		<?php }else{ //se não for
+				
+				switch ($_GET['tipo']){
+				
+					case 299: //pj
+					?>
+					
+					<?php
+					break;		
+					case 300: //pf
+					?>
+					
+					<?php
+					break;		
+					case 302: //contrato
+					?>
+		  <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo $_SESSION['entidade']; ?>.php?p=editar">Voltar</a>
+            </li>
+        
+	<li class="nav-item">
+              <a class="nav-link" href="arquivo.php">Listar Arquivos</a>
+            </li>
 
+	<li class="nav-item">
+              <a class="nav-link" href="arquivo.php?p=inserir">Insere Arquivos</a>
+            </li>
 
+			</ul>					
+					
+					
+					
+					
+					
+				<?php 	
+				}	
+		?>
+		<?php } ?>
+		
+		
           <ul class="nav nav-pills flex-column">
 
             <li class="nav-item">
