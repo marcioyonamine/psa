@@ -20,26 +20,28 @@
             <li class="nav-item">
               <a class="nav-link" href="evento.php?p=editar">Informações</a>
             </li>
-		  <li class="nav-item">
-              <a class="nav-link" href="ocorrencias.php?p=inserir">Inserir Ocorrências</a>
-            </li>
 	  <li class="nav-item">
               <a class="nav-link" href="ocorrencias.php?p=listar">Listar Ocorrências</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="ocorrencias.php?p=inserir">Inserir Ocorrências</a>
+            </li>
+
         
 	<li class="nav-item">
               <a class="nav-link" href="arquivo.php">Listar Arquivos</a>
             </li>
 
 	<li class="nav-item">
-              <a class="nav-link" href="arquivo.php?p=inserir">Insere Arquivos</a>
+              <a class="nav-link" href="arquivo.php?p=inserir">Inserir Arquivos</a>
             </li>
 			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php">Contratação</a>
+              <a class="nav-link" href="contratacao.php">Pedidos de Contratação</a>
             </li>
+
 	<li class="nav-item">
-              <a class="nav-link" href="enviar.php">Enviar</a>
-            </li>
+		<a class="nav-link" href="enviar.php">Enviar</a>
+   </li>
 
 			</ul>
 

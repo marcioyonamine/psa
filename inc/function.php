@@ -570,6 +570,28 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 
 /* Funções para Pedidos de Contratação */
 
+
+function retornaPessoa($id,$tipo){
+	global $wpdb;
+	$x = array();
+	if($tipo == 1){
+		$sql = "SELECT Nome, CPF FROM sc_pf WHERE Id_PessoaFisica = '$id'";
+		$res = $wpdb->get_row($sql,ARRAY_A);	
+		$x['nome'] = $res['Nome'];
+		$x['cpf_cnpj'] = $res['CPF'];
+		
+	}else{
+		$sql = "SELECT RazaoSocial, CNPJ FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
+		$res = $wpdb->get_row($sql,ARRAY_A);	
+		$x['nome'] = $res['RazaoSocial'];
+		$x['cpf_cnpj'] = $res['CNPJ'];
+
+	}
+	return $x;
+
+}
+
+
 function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determinado pedido
 
 	global $wpdb;
@@ -577,14 +599,36 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 	switch($tipo){
 		case 'evento':
 		default:
-			$sql = "SELECT idPedidoContratacao FROM sc_contratacao WHERE idEvento = '$id'";
+			$sql = "SELECT idPedidoContratacao, tipoPessoa, idPessoa, valor FROM sc_contratacao WHERE idEvento = '$id' AND publicado = '1'";
 		break;
 		case 'atividade' :
-			$sql = "SELECT idPedidoContratacao FROM sc_contratacao WHERE idAtividade = '$id'";
+			$sql = "SELECT idPedidoContratacao, tipoPessoa, idPessoa, valor FROM sc_contratacao WHERE idAtividade = '$id' AND publicado = '1'";
 		break;		
 	}
 	$res = $wpdb->get_results($sql,ARRAY_A);
-	return $res;
+	$pedido = array();
+	for($i = 0; $i < count($res); $i++){
+		if($res[$i]['tipoPessoa'] == 1){
+			$tipo = "Pessoa Física";
+			$pessoa = retornaPessoa($res[$i]['idPessoa'],1);
+			
+			
+		}else{
+			$tipo = "Pessoa Jurídica";
+			$pessoa = retornaPessoa($res[$i]['idPessoa'],2);
+		}
+		$pedido[$i] = array(
+		'idPedidoContratacao' => $res[$i]['idPedidoContratacao'],
+		'tipo' => $tipo,
+		'nome' => $pessoa['nome'],
+		'valor' => $res[$i]['valor'],
+		'cpf_cnpj' => $pessoa['cpf_cnpj']
+		);
+	
+	}
+
+
+	return $pedido;	
 	
 }
 

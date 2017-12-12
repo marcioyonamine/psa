@@ -26,17 +26,12 @@
             </li>
 
 			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=inserir&t=apf">Insere Contratação Artística Pessoa Física</a>
+              <a class="nav-link" href="contratacao.php?p=busca_pf">Insere Contratação PF</a>
             </li>
 			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=inserir&t=apj">Insere Contratação Artística Pessoa Jurídica</a>
+              <a class="nav-link" href="contratacao.php?p=busca_pj">Insere Contratação PJ</a>
             </li>
-			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=inserir&t=pf">Insere Contratação Comum Pessoa Física</a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=inserir&t=pj">Insere Contratação Comum Pessoa Jurídica</a>
-            </li>
+
 			<li class="nav-item">
               <a class="nav-link" href="contratacao.php?p=inserir&t=orc">Insere Orçamento</a>
             </li>

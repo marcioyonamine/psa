@@ -7,8 +7,12 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
 		<?php 
-		$x = orcamento(14,'2017-11-18');
+		$x = retornaPessoa(2,1);
+		
 		var_dump($x);
+
+		//$x = orcamento(14,'2017-11-18');
+		//var_dump($x);
 		
 		?>
 		  
