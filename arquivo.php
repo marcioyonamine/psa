@@ -55,6 +55,7 @@ case "inicio":
 				}
 				global $wpdb;
 				$sql_list =  "SELECT * FROM sc_arquivo WHERE id = '$id' AND entidade = '$entidade' AND publicado = '1' $tipo ORDER BY id DESC";
+				//echo $sql_list;
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['id']);
@@ -146,18 +147,19 @@ break;
 					global $wpdb;
 					$entidade = $_SESSION['entidade'];
 					$id = $_SESSION['id'];
-					$tipo = 301; // evento
+					$tipo2 = 301; // evento
 					if(isset($_GET['tipo'])){
-						$tipo = $_GET['tipo'];  //outros tipos
-						$id = $_GET['tipo'];
+						$tipo2 = $_GET['tipo'];  //outros tipos
+						$id = $_GET['id'];
 					}
 
 
 					$tipo = '';
 					$usuario = $user->ID;
 					$sql = "INSERT INTO `sc_arquivo` (`idArquivo`, `id`, `entidade`, `tipo`, `arquivo`, `datatime`, `usuario`, `publicado`) 
-					VALUES (NULL, $id, '$entidade', '$tipo', '$arquivo_base', '$data', '$usuario', '1')";
+					VALUES (NULL, $id, '$entidade', '$tipo2', '$arquivo_base', '$data', '$usuario', '1')";
 					$wpdb->query($sql);
+					
 					if( !move_uploaded_file( $arquivoTmp, $arquivo ) )
 					{
 						$msg[$i] = 'Erro no upload do arquivo '.$i;
