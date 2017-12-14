@@ -1165,6 +1165,7 @@ break;
 	$justificativa =   $_POST["justificativa"];
 	$parecer =   $_POST["parecer"];
 	$observacao =   $_POST["observacao"];
+	$liberado = $_POST['liberado'];
 	
 	$sql_atualiza = "UPDATE sc_contratacao SET
 	integrantesGrupo = '$integrantes',
@@ -1173,6 +1174,7 @@ break;
 	dotacao = '$dotacao',
 	justificativa = '$justificativa',
 	parecerArtistico = '$parecer',
+	liberado = '$liberado',
 	observacao = '$observacao'
 	WHERE idPedidoContratacao = '$id_pedido'";
 	$res = $wpdb->query($sql_atualiza);
@@ -1200,6 +1202,18 @@ break;
 						<div class="col-12">
 						<p> Informações da Contratação </p>	
 						</div>
+					</div>
+					<br />
+						<div class="row">
+						<div class="col-12">
+							<select class="form-control" name="liberado" id="inputSubject" >
+							<option value="0" <?php echo select(0,$pedido['liberado'])?>>Em análise</option>
+							<option value="1" <?php echo select(1,$pedido['liberado'])?>>Liberado</option>
+							<option value="2" <?php echo select(2,$pedido['liberado'])?>>Não liberado</option>
+
+							</select>	
+                            
+                            </div>
 					</div>
 					<br />
 						<div class="row">

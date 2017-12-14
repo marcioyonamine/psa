@@ -22,6 +22,10 @@
             <li class="nav-item">
               <a class="nav-link" href="orcamento.php">Orçamento</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contrato.php">Contratos</a>
+            </li>
+
 		</ul>
 
 		<ul class="nav nav-pills flex-column">

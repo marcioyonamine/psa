@@ -548,8 +548,13 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	$sel_hist = "SELECT titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data ORDER BY data ASC";
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 	
-	
-	
+	// liberado
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado = '1'";
+	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
+	$valor_lib = 0;
+	for($i = 0; $i < count($lib); $i++){
+		$valor_lib = $valor_lib + $lib[$i]['valor'];	
+	}		
 	
 	
 	
@@ -561,7 +566,10 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'descontigenciado' => $valor_desc,
 	'suplementado' => $valor_supl,
 	'historico' => $hist,
-	'visualizacao' => $val['projeto']." / ".$val['ficha'] //colocar natureza (importar de novo)
+	'visualizacao' => $val['projeto']." / ".$val['ficha'], //colocar natureza (importar de novo)
+	'liberado' => $valor_lib,
+	'planejado' => '' 
+
 	);
 	
 	
@@ -708,5 +716,14 @@ function retornaPedido($id){
 	
 }
 
+function opcoes($id,$entidade){
+	global $wpdb;
+	$sql = "SELECT * FROM sc_opcoes WHERE entidade = '$entidade' AND id_entidade = '$id'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	$json = json_decode($res['opcao']);
+	return $json;
+}
+
 
 /* Fim das Funções para Pedidos de Contratação */
+

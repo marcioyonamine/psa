@@ -782,7 +782,6 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				<?php 
 				global $wpdb;
 				$sql_list =  "SELECT id FROM sc_orcamento WHERE publicado = '1' $ano $unidade $fonte $projeto $ficha ORDER BY id ASC";
-				//echo $sql_list;
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				$total_orc = 0;
 				$total_con = 0;
@@ -793,8 +792,32 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
-					$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'];
+					$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'];
+					
+					if($i % 20 == 0 AND $i != 0){
 					?>
+					               <tr>
+					  
+				<th>Dotação</th>
+                  <th>Val Ini</th>
+                  <th>Val Con</th>
+                  <th>Val Des</th>
+                  <th>Val Sup</th>
+                  <th>Val Lib</th>
+				  <th>Val Pla</th>	
+                  <th>Saldo Lib</th> <!-- O saldo Planejado é o Saldo Liberado - Valor Planejado -->
+                  <th>Saldo Pla</th>
+                  <th></th>
+
+				  </tr>
+					
+					
+					
+					<?php
+					}else{
+					
+					?>
+                    
 					<tr>
 
 					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
@@ -802,7 +825,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
-					  <td><?php //echo $orc['total']; ?></td>
+					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
 					  <td><?php //echo $orc['total']; ?></td>
 					  <td><?php echo dinheiroParaBr($total); ?></td>
 						<td></td>
@@ -815,7 +838,10 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  
 					  ?></td>
 					</tr>
+                    
+                    
 				<?php 
+					}
 				$total_orc = $total_orc + $orc['total'];
 				$total_con = $total_con + $orc['contigenciado'];
 				$total_des = $total_des + $orc['descontigenciado'];
@@ -841,8 +867,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 						<td></td>
 				
 				</tr>
-				<?php echo $sql_list; ?>
-              </tbody>
+				</tbody>
             </table>
           </div>
 
