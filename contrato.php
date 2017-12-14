@@ -1270,8 +1270,8 @@ break;
 					</div>
 					<br />
 
-					<div class="form-group">
-						<div class="col-md-offset-2">
+					<div class="row">
+						<div class="col-12">
 							<input type="hidden" name="atualizar_pedido" value="<?php echo $id_pedido; ?>" />
 							<?php 
 							?>
@@ -1280,8 +1280,9 @@ break;
 					</div>
 				</form>
 				<form action="arquivo.php?p=inserir&tipo=302&id=<?php echo $id_pedido; ?>" method="post">
-					<div class="form-group">
-						<div class="col-md-offset-2">
+				<br />
+					<div class="row">
+						<div class="col-12">
 							<input type="hidden" name="atualizar_pedido" value="<?php echo $id_pedido; ?>" />
 							<?php 
 							?>
@@ -1289,8 +1290,27 @@ break;
 						</div>
 					</div>
 				</form>
-
-				</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=303&id=<?php echo $id_pedido?>" target="_blank">Criar Folha de Rosto de Processo</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=304&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=306&id=<?php echo $id_pedido?>" target="_blank">Gerencia de Compras</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=307&id=<?php echo $id_pedido?>" target="_blank">Ordenador de Despesa</a>
+						</div>
+					</div>
+			</div>
 		</div>
 	</div>
 </section>	

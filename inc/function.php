@@ -96,6 +96,39 @@ function checado($x,$array){
 	}
 }
 
+function valorPorExtenso($valor=0)
+	{
+		//retorna um valor por extenso
+		$singular = array("centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão");
+		$plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões","quatrilhões");
+		$c = array("", "cem", "duzentos", "trezentos", "quatrocentos","quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
+		$d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta","sessenta", "setenta", "oitenta", "noventa");
+		$d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze","dezesseis", "dezesete", "dezoito", "dezenove");
+		$u = array("", "um", "dois", "três", "quatro", "cinco", "seis","sete", "oito", "nove");
+		$z=0;
+		$valor = number_format($valor, 2, ".", ".");
+		$inteiro = explode(".", $valor);
+		for($i=0;$i<count($inteiro);$i++)
+			for($ii=strlen($inteiro[$i]);$ii<3;$ii++)
+				$inteiro[$i] = "0".$inteiro[$i];
+		$rt = "";
+		// $fim identifica onde que deve se dar junção de centenas por "e" ou por "," ;) 
+		$fim = count($inteiro) - ($inteiro[count($inteiro)-1] > 0 ? 1 : 2);
+		for ($i=0;$i<count($inteiro);$i++)
+		{
+			$valor = $inteiro[$i];
+			$rc = (($valor > 100) && ($valor < 200)) ? "cento" : $c[$valor[0]];
+			$rd = ($valor[1] < 2) ? "" : $d[$valor[1]];
+			$ru = ($valor > 0) ? (($valor[1] == 1) ? $d10[$valor[2]] : $u[$valor[2]]) : "";
+			$r = $rc.(($rc && ($rd || $ru)) ? " e " : "").$rd.(($rd && $ru) ? " e " : "").$ru;
+			$t = count($inteiro)-1-$i;
+			$r .= $r ? " ".($valor > 1 ? $plural[$t] : $singular[$t]) : "";
+			if ($valor == "000")$z++; elseif ($z > 0) $z--;
+			if (($t==1) && ($z>0) && ($inteiro[0] > 0)) $r .= (($z>1) ? " de " : "").$plural[$t]; 
+			if ($r) $rt = $rt . ((($i > 0) && ($i <= $fim) && ($inteiro[0] > 0) && ($z < 1)) ? ( ($i < $fim) ? ", " : " e ") : " ") . $r;
+		}
+		return($rt ? $rt : "zero");
+	}
 
 
 function select($id,$sel){
@@ -585,19 +618,22 @@ function retornaPessoa($id,$tipo){
 	global $wpdb;
 	$x = array();
 	if($tipo == 1){
-		$sql = "SELECT Nome, CPF FROM sc_pf WHERE Id_PessoaFisica = '$id'";
+		$sql = "SELECT Nome, CPF, Email, codBanco, agencia, conta FROM sc_pf WHERE Id_PessoaFisica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$x['nome'] = $res['Nome'];
 		$x['cpf_cnpj'] = $res['CPF'];
 		$x['tipoPessoa'] = "Pessoa Física";
+		$x['email'] = $res['Email'];
+		$x['banco'] = "Banco: ".$res['codBanco']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
 		
 	}else{
-		$sql = "SELECT RazaoSocial, CNPJ FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
+		$sql = "SELECT RazaoSocial, CNPJ, Email, codBanco, agencia, conta FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$x['nome'] = $res['RazaoSocial'];
 		$x['cpf_cnpj'] = $res['CNPJ'];
 		$x['tipoPessoa'] = "Pessoa Jurídica";
-
+		$x['email'] = $res['Email'];
+		$x['banco'] = "Banco: ".$res['codBanco']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
 	}
 	return $x;
 
@@ -711,7 +747,7 @@ function opcaoDados($tipo,$id){
 
 function retornaPedido($id){
 	global $wpdb;
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
@@ -745,7 +781,11 @@ function retornaPedido($id){
 	$x['local'] = $local;
 	$x['tipo'] = $objeto['tipo'];
 	$x['end'] = $end;
-	
+	$x['email'] = $pessoa['email'];
+	$x['valor'] = dinheiroParaBr($res['valor']);
+	$x['valor_extenso'] = valorPorExtenso($res['valor']);
+	$x['forma_pagamento'] = $res['formaPagamento'];
+	$x['banco'] = $pessoa['banco'];
 	return $x;
 	
 }
