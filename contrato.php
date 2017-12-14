@@ -10,7 +10,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu/me_contratacao.php"; ?>
+  <?php include "menu/me_contrato.php"; ?>
       <link href="css/jquery-ui.css" rel="stylesheet">
  <script src="js/jquery-ui.js"></script>
  <script src="js/mask.js"></script>

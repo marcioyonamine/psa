@@ -7,7 +7,7 @@
 
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="index.php">Início <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="#">Módulo Evento <span class="sr-only">(current)</span></a>
             </li>
 		</ul>
 	
@@ -52,10 +52,10 @@
 
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="evento.php">Meus Eventos</a>
+              <a class="nav-link" href="evento.php">Listar Meus Eventos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=inserir">Inserir Evento</a>
+              <a class="nav-link" href="evento.php?p=inserir">Inserir Novo Evento</a>
 		    </li>
           </ul>
 

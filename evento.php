@@ -516,8 +516,60 @@ case "editar":
 
 <?php 
 break;
-case "meuseventos":
+case "enviar":
+$event = evento($_SESSION['id']);
 ?>
+
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1><?php echo $event['nomeEvento']; ?></h1>
+				</div>
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Título</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT idEvento FROM sc_evento ORDER BY idEvento DESC";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				for($i = 0; $i < count($res); $i++){
+					$evento = evento($res[$i]['idEvento']);
+					
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['idEvento']; ?></td>
+					  <td><?php echo $evento['titulo']; ?></td>
+					  <td><?php echo $evento['programa']; ?></td>
+					  <td><?php echo $evento['projeto']; ?></td>
+					  <td>	
+							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+							</form>
+							<?php 
+					  
+					  ?></td>
+					</tr>
+				<?php } // fim do for?>	
+				
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+
 <?php 
 break;
 } // fim da switch p

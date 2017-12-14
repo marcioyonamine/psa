@@ -275,7 +275,7 @@ if(isset($_POST['carregar'])){
  
  ?>
  
-    <link href="css/jquery-ui.css" rel="stylesheet">
+ <link href="css/jquery-ui.css" rel="stylesheet">
  <script src="js/jquery-ui.js"></script>
  <script src="js/mask.js"></script>
  <script src="js/maskMoney.js"></script> 
@@ -310,7 +310,7 @@ $(function() {
 		</div>
 		<div class="row">
 
-		<form class="form-horizontal" action="?p=editar" method="POST" role="form">
+		<form class="formocor" action="?p=editar" method="POST" role="form">
             <div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<label>Data de Início:</label>
@@ -389,8 +389,7 @@ $(function() {
 					</div>
 				</form>
 			</div>
-		</div>
-	</div>
+
 </section>
 
 

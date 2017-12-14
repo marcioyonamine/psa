@@ -320,7 +320,8 @@ function evento($id){
 		'valor_entrada' => '',
 		'imagem' => '',
 		'planejamento' => $res['planejamento'],
-		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento']
+		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
+		'tipo' => $tipo_evento['tipo']
 	);
 
 	return $evento;
@@ -407,7 +408,7 @@ function geraOpcaoUsuario($select = NULL, $role = NULL){
 
 function geraOpcaoDotacao($ano_base,$id = NULL){
 	global $wpdb;
-	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '$ano_base'";
+	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '$ano_base' AND valor <> '0.00'";
 	$res = $wpdb->get_results($sql_orc,ARRAY_A);
 	echo "<pre>";
 	var_dump(($res));
@@ -588,12 +589,14 @@ function retornaPessoa($id,$tipo){
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$x['nome'] = $res['Nome'];
 		$x['cpf_cnpj'] = $res['CPF'];
+		$x['tipoPessoa'] = "Pessoa Física";
 		
 	}else{
 		$sql = "SELECT RazaoSocial, CNPJ FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$x['nome'] = $res['RazaoSocial'];
 		$x['cpf_cnpj'] = $res['CNPJ'];
+		$x['tipoPessoa'] = "Pessoa Jurídica";
 
 	}
 	return $x;
@@ -697,21 +700,52 @@ function periodo($id){ //retorna o período
 }
 
 
+function opcaoDados($tipo,$id){
+	global $wpdb;
+	$sql = "SELECT opcao FROM sc_opcoes WHERE entidade = '$tipo' AND id_entidade = '$id'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	return json_decode($res['opcao'],true);
+	
+}
 
 
 function retornaPedido($id){
 	global $wpdb;
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
 	$periodo = periodo($res['idEvento']);
-	
+	$usuario = get_userdata($res['idResponsavel']);
+	$metausuario = opcaoDados("usuario",4);
+	$dot = recuperaDados("sc_orcamento",$res['dotacao'],"id");
+	$local = retornaLocais($res['idEvento']);
+	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
 	
 	$x = array();
 	$x['nome'] = $pessoa['nome'];
 	$x['objeto'] = $objeto['objeto'];	
+	$x['autor'] = $objeto['autor'];
 	$x['periodo'] = $periodo['legivel'];
+	$x['usuario'] = $usuario->first_name." ".$usuario->last_name;
+	$x['area'] = $metausuario['departamento'];
+	$x['cargo'] = $metausuario['funcao'];
+	$x['tipoPessoa'] = $pessoa['tipoPessoa'];
+	$x['nome_razaosocial'] = $pessoa['nome'];
+	$x['cpf_cnpj'] = $pessoa['cpf_cnpj'];
+	$x['cr'] = $metausuario['cr'];
+	$x['cod_dotacao'] = $dot['dotacao'];
+	$x['ficha'] = $dot['ficha'];
+	$x['projeto'] = $dot['projeto'];
+	$x['despesa'] = "";
+	$x['fonte'] = $dot['fonte'];
+	$x['telefone'] = $metausuario['telefone'];
+	$x['conta_corrente'] = "";
+	$x['contato_telefone'] = $metausuario['telefone'];
+	$x['local'] = $local;
+	$x['tipo'] = $objeto['tipo'];
+	$x['end'] = $end;
+	
 	return $x;
 	
 }
@@ -724,6 +758,64 @@ function opcoes($id,$entidade){
 	return $json;
 }
 
+function retornaLocais($idEvento){
+	global $wpdb;
+	$sql = "SELECT DISTINCT local FROM sc_ocorrencia WHERE publicado = '1' AND idEvento = '$idEvento'";
+	$res = $wpdb->get_results($sql,ARRAY_A);
+	$x = "";
+	for($i = 0; $i < count($res) ; $i++){
+		$t = tipo($res[$i]['local']);
+		$x .= $t['tipo'].",";
+	
+	}
+	return  substr($x, 0, -1);
+	
+}
+
+function retornaCEP($cep){
+		$url = "https://viacep.com.br/ws/".$cep."/json/";
+		$ch = curl_init($url);
+		$page = curl_exec($ch);
+		$dec = json_decode($page,true);
+		$dados = array();
+		$dados['rua']     = $dec['logradouro'];
+		$dados['bairro']  = $dec['bairro'];
+		$dados['cidade']  = $dec['localidade'];
+		$dados['estado']  = $dec['uf'];	
+		var_dump($dec);
+		return $dados;
+
+}
+
+
+function retornaEndereco($tipo,$pessoa){
+	global $wpdb;
+	switch ($tipo){
+		case 1:
+		$sql = "SELECT CEP, Numero, Complemento FROM sc_pf WHERE Id_PessoaFisica = '$pessoa' ";
+		$res = $wpdb->get_row($sql,ARRAY_A);
+		$dados = retornaCEP($res['CEP']);
+		
+		$end = $dados['rua'].", ".$res['Numero']." - ".$res['Complemento']. "<br />".$dados['bairro']. " " .$dados['cidade']. " / ".$dados['estado'];
+		
+		return $end;
+		
+		break;		
+
+		case 2:
+		$sql = "SELECT CEP, Numero, Complemento FROM sc_pj WHERE Id_PessoaJuridica = '$pessoa' ";
+		$res = $wpdb->get_row($sql,ARRAY_A);
+		$dados = retornaCEP($res['CEP']);
+		
+		$end = $dados['rua'].", ".$res['Numero']." - ".$res['Complemento']. "<br />".$dados['bairro']. " " .$dados['cidade']. " / ".$dados['estado'];
+		
+		return $end;
+		
+		break;
+		
+	}
+	
+}
 
 /* Fim das Funções para Pedidos de Contratação */
 

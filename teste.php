@@ -2,15 +2,19 @@
 
   <body>
   
-  <?php include "menu/inicio.php"; ?>
+  <?php include "menu/me_inicio.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
 		<?php 
-		$x = retornaPessoa(2,1);
+		$x = opcaoDados("usuario",4);
 		
+		echo "<pre>";
 		var_dump($x);
-
+		echo "</pre>";
+		
+		echo $x['departamento'];
+			
 		//$x = orcamento(14,'2017-11-18');
 		//var_dump($x);
 		
