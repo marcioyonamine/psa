@@ -43,7 +43,8 @@ if(isset($_SESSION['id'])){
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT idEvento FROM sc_evento ORDER BY idEvento DESC";
+				$idUser = $user->ID;
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE idUsuario = '$idUser' ORDER BY idEvento DESC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
