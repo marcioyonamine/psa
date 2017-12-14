@@ -773,7 +773,7 @@ function retornaLocais($idEvento){
 }
 
 function retornaCEP($cep){
-		$url = "https://viacep.com.br/ws/".$cep."/json/";
+/*		$url = "https://viacep.com.br/ws/".$cep."/json/";
 		$ch = curl_init($url);
 		$page = curl_exec($ch);
 		$dec = json_decode($page,true);
@@ -784,7 +784,7 @@ function retornaCEP($cep){
 		$dados['estado']  = $dec['uf'];	
 		var_dump($dec);
 		return $dados;
-
+*/
 }
 
 
