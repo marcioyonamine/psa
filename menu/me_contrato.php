@@ -29,10 +29,16 @@
 		if((isset($_GET['p']) AND $_GET['p'] == 'editar_pedido')){
 			if(isset($_POST['editar_pedido'])){
 				$id_pedido = $_POST['editar_pedido'];
-
-				
+				$json = "{";
+				foreach($_POST as $chave=>$valor){
+						$$chave = $valor;
+						$json .= '"'.$chave.'": "'.$valor.'",';
+				}
+				$json = substr($json,0,-1)."}";	
 			}
-		
+		//echo $json;
+		$json_array = json_decode($json,true);
+		//var_dump($json_array);
 		?>
 		  <ul class="nav nav-pills flex-column">
             <li class="nav-item">
