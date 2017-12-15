@@ -754,7 +754,7 @@ function retornaPedido($id){
 	$periodo = periodo($res['idEvento']);
 	$usuario = get_userdata($res['idResponsavel']);
 	$metausuario = opcaoDados("usuario",4);
-	$dot = recuperaDados("sc_orcamento",$res['dotacao'],"id");
+	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
 	$local = retornaLocais($res['idEvento']);
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
 	
@@ -770,11 +770,11 @@ function retornaPedido($id){
 	$x['nome_razaosocial'] = $pessoa['nome'];
 	$x['cpf_cnpj'] = $pessoa['cpf_cnpj'];
 	$x['cr'] = $metausuario['cr'];
-	$x['cod_dotacao'] = $dot['dotacao'];
-	$x['ficha'] = $dot['ficha'];
-	$x['projeto'] = $dot['projeto'];
+	$x['cod_dotacao'] = $dotac['dotacao'];
+	$x['ficha'] = $dotac['ficha'];
+	$x['projeto'] = $dotadc['projeto'];
 	$x['despesa'] = "";
-	$x['fonte'] = $dot['fonte'];
+	$x['fonte'] = $dotac['fonte'];
 	$x['telefone'] = $metausuario['telefone'];
 	$x['conta_corrente'] = "";
 	$x['contato_telefone'] = $metausuario['telefone'];
@@ -854,6 +854,32 @@ function retornaEndereco($tipo,$pessoa){
 		break;
 		
 	}
+	
+}
+
+function checklist($json){
+		
+		$j = '{
+			"verba": "",
+			"justificativa": "",
+			"autorizacao": "",
+			"resp_fiscal": "",
+			"proposta" : "",
+			"nepostismo": "",
+			"prazo_exec": "",
+			"prazo_paga": "",
+			"rg":"",
+			"cpf":"",
+			"inss":"",
+			"procuracao":"",
+			"cdn": "",
+			"contrato_social":"",
+			"cnpj":"",
+			"atestado_currilo":"",
+			"critica_reconhecida":"",
+			"outros":""
+			
+		}';
 	
 }
 

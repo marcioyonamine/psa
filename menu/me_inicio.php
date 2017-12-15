@@ -7,7 +7,7 @@
 
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link">Selecione o Módulo de Trabalho</a>
+<a class="nav-link active" href="#">Selecione o Módulo <span class="sr-only">(current)</span></a>
             </li>
 		</ul>
 

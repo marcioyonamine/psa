@@ -7,39 +7,101 @@
 
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="index.php">Início <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="#">Módulo Contratos <span class="sr-only">(current)</span></a>
             </li>
 		</ul>
 	
 
-		<?php 
-		if((isset($_GET['p']) AND $_GET['p'] == 'editar') OR isset($_SESSION['id'])){
-		
-		?>
 		  <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo $_SESSION['entidade']; ?>.php?p=editar">Voltar</a>
-            </li>
         
 			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php">Listar Contratações</a>
+              <a class="nav-link" href="contrato.php">Listar Contratações</a>
             </li>
 
-			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=busca_pf">Insere Contratação PF</a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=busca_pj">Insere Contratação PJ</a>
-            </li>
 
 			
 			
 			</ul>
 
+		
+		
+		<?php 
+		if((isset($_GET['p']) AND $_GET['p'] == 'editar_pedido')){
+			if(isset($_POST['editar_pedido'])){
+				$id_pedido = $_POST['editar_pedido'];
+
+				
+			}
+		
+		?>
+		  <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Checklist</a>
+            </li>
+        <form action="?p=editar_pedido" method="POST">
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="verba" /> Verba suficiente</a></p>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="justificativa" /> Justificativa da área requisitante</a></p>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="autorizacao" /> Autorização do Secretário</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="resp_fiscal" /> Declaração de LRF</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="proposta" /> Proposta de Trabalho</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="nepostismo" /> Declaracão de Nepotismo</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="prazo_exec" /> Prazo de execução</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="prazo_paga" /> Prazo de pagamento</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="rg" /> RG</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="cpf" /> CPF</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="inss" /> Cartão INSS/PIS</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="procuracao" /> Procuração dos Representados</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="cnd" /> CND/FGTS/CNDT/Cert. Estadual/Municipal/SN</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="contrato_social" /> Contrato Social</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="cnpj" /> CNPJ</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="atestado_curriculo" /> Atestados e currículos</a>
+            </li>
+			<li class="nav-item">
+				<p class="nav-link" href="#" /><input type="checkbox" name="critica_reconhecida" /> Material da crítica</a>
+            </li>
+			<li class="nav-item">
+				<input type="hidden" name="editar_pedido" value="<?php echo $id_pedido; ?>" />
+				<p class="nav-link" href="#" /><input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar Checklist" ></p>
+            </li>
+			
+			
+			</ul>
+</form>
+
 		  <?php 
 		}
 		?>
-
 
 
 
