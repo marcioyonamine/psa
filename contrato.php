@@ -220,7 +220,7 @@ if(isset($_POST['inserir_pj'])){
               </thead>
               <tbody>
 				<?php 
-				$sql_seleciona = "SELECT * FROM sc_contratacao";
+				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' ORDER BY idPedidoContratacao DESC";
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
 				
 				

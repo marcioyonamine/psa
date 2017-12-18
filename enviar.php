@@ -11,7 +11,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu/me_contratacao.php"; ?>
+  <?php include "menu/me_evento.php"; ?>
       <link href="css/jquery-ui.css" rel="stylesheet">
  <script src="js/jquery-ui.js"></script>
  <script src="js/mask.js"></script>
@@ -32,6 +32,8 @@ $(function() {
  <?php 
  switch($p){
 case "inicio": //Lista as contratações
+$evento = evento($_SESSION['id']);
+
 ?>
 
 <section id="contact" class="home-section bg-white">
@@ -39,6 +41,7 @@ case "inicio": //Lista as contratações
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Enviar / Finalizar</h1>
+					<h2><?php echo $evento['objeto'];?></h2>
 				</div>
         </div>
 		<?php 
@@ -49,6 +52,106 @@ case "inicio": //Lista as contratações
 			
 			$evento = evento($_SESSION['id']);
 			?>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			<h3>Dados do Evento</h3>
+			<p>Programa: <?php echo $evento['programa']; ?></p>
+			<p>Projeto: <?php echo $evento['projeto']; ?></p>
+			<p>Linguagem principal: <?php echo $evento['linguagem']; ?></p>
+			<p>Responsável: <?php echo $evento['responsavel']; ?></p>
+			<p>Autor/Artista: <?php echo $evento['autor']; ?></p>
+			<p>Ficha técnica: <?php echo $evento['grupo']; ?></p>
+			<p>Classificação etária: <?php echo $evento['faixa_etaria']; ?></p>
+			<p>Sinopse: <br /><?php echo $evento['sinopse']; ?></p>
+			<p>Release: <br /><?php echo $evento['release']; ?></p>
+			<p>Links: <?php //echo $evento['links']; ?></p>
+			<p>Ocorrências:<br /> <?php
+			$sql_lista_ocorrencia = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$_SESSION['id']."' AND publicado = '1'";
+			$res = $wpdb->get_results($sql_lista_ocorrencia,ARRAY_A);
+			if(count($res)){
+				for($i = 0; $i < count($res); $i++){
+					$ocorrencia = ocorrencia($res[$i]['idOcorrencia']);
+					echo $ocorrencia['tipo']."<br />";
+					echo $ocorrencia['data']."<br />";
+					echo $ocorrencia['local']."<br /><br />";
+					
+					}
+				
+			}else{
+				echo "Não há ocorrências cadastradas.";
+				
+			}
+
+
+			//echo $evento['']; ?></p>
+			<p>Arquivos:<br /> <?php $arquivo = listaArquivos("evento",$_SESSION['id']); 
+		
+			for($i = 0; $i < count($arquivo); $i++){
+				echo "<a href='upload/".$arquivo[$i]['arquivo']."' target='_blank' >".$arquivo[$i]['arquivo']."</a><br />";	
+				
+			}
+			
+			
+			
+			?></p>
+	
+			</div>
+		</div>  
+		
+
+		<?php /*
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			<h3>Dados de Contratação</h3>
+			<p>Programa: <?php echo $evento['']; ?></p>
+			<p>Projeto: <?php echo $evento['']; ?></p>
+			<p>Linguagem principal: <?php echo $evento['']; ?></p>
+			<p>Tipo de evento: <?php echo $evento['']; ?></p>
+			<p>Responsável: <?php echo $evento['']; ?></p>
+			<p>Autor/Artista: <?php echo $evento['']; ?></p>
+			<p>Ficha técnica: <?php echo $evento['']; ?></p>
+			<p>Classificação etária: <?php echo $evento['']; ?></p>
+			<p>Sinopse: <?php echo $evento['']; ?></p>
+			<p>Release: <?php echo $evento['']; ?></p>
+			<p>Links: <?php echo $evento['']; ?></p>
+			<p>Ocorrências: <?php echo $evento['']; ?></p>
+			<p>Arquivos: <?php echo $evento['']; ?></p>
+	
+			</div>
+		</div>  		
+		*/	?>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			<h3>Pendências</h3>
+			<?php $pendencia = verificaEvento($_SESSION['id']);
+			if($pendencia['erros'] == 0){
+				echo "<p>Não há pendencias.</p>";
+				
+			}
+			
+			
+			echo "<p>".$pendencia['relatorio']."</p>";
+			?>
+
+			</div>
+		</div>  		
+
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			<?php if($evento['planejamento'] == 1){ ?>
+			<form action="?" method="POST" class="form-horizontal">
+			<input type="submit" class="btn btn-theme btn-lg btn-block" name="agenda" value="Atualizar Agenda" />
+			</form>
+
+			<?php } ?>
+			</div>
+		</div>  
+			
+			
+			
+			
+			
+			
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<?php if($evento['planejamento'] == 1){ ?>

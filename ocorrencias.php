@@ -400,7 +400,7 @@ case "listar":
 if(isset($_POST['apagar'])){
 	global $wpdb;
 	$id = $_POST['apagar'];
-	$sql = "UPDATE sc_ocorrencia SET publicado = '0' WHERE id = '$id'";
+	$sql = "UPDATE sc_ocorrencia SET publicado = '0' WHERE idOcorrencia = '$id'";
 	$apagar = $wpdb->query($sql);	
 }
 

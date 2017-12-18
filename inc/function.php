@@ -326,7 +326,7 @@ function evento($id){
 	echo "</pre>";
 
 	*/
-	$programa = tipo($res['idTipo']);
+	$programa = tipo($res['idPrograma']);
 	
 	$projeto = tipo($res['idProjeto']);
 	$linguagem = tipo($res['idLinguagem']);
@@ -991,6 +991,15 @@ function verificaEvento($idEvento){
 	
 	
 }
+
+function listaArquivos($entidade,$id){
+	global $wpdb;
+	$sql = "SELECT arquivo FROM sc_arquivo WHERE entidade ='$entidade' AND id = '$id' AND publicado = '1'";
+	$res = $wpdb->get_results($sql,ARRAY_A);
+	return $res;
+	
+}
+
 
 /* Fim das Funções para Pedidos de Contratação */
 
