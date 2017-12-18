@@ -7,13 +7,13 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
 		<?php 
-		$x = opcaoDados("usuario",4);
+		$x = verificaEvento(1);
 		
 		echo "<pre>";
 		var_dump($x);
 		echo "</pre>";
 		
-		echo $x['departamento'];
+		//echo $x['departamento'];
 			
 		//$x = orcamento(14,'2017-11-18');
 		//var_dump($x);
@@ -114,7 +114,7 @@
 		var_dump($edital);
 		echo "</pre>";
 			*/
-		
+		/*
 		?>
 		  <h2>Insere datas na Agenda</h2>
 		  
@@ -133,7 +133,8 @@
 			foreach ( $blogusers as $user ) {
 				echo '<p>' . esc_html( $user->user_email ) . '</p>';
 			}
-		  ?>
+			*/
+			?>
 		  
 
           <!-- <div class="table-responsive">

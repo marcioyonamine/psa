@@ -331,13 +331,15 @@ function evento($id){
 	$projeto = tipo($res['idProjeto']);
 	$linguagem = tipo($res['idLinguagem']);
 	$tipo_evento = tipo($res["idTipo"]);
+	$usuario = get_userdata($res['idResponsavel']);
+	$etaria = tipo($res['faixaEtaria']);
 	
 	$evento = array(
 		'titulo' => $res['nomeEvento'],
 		'programa' => $programa['tipo'],
 		'projeto' => $projeto['tipo'],
 		'linguagem' => $linguagem['tipo'],
-		'responsavel' => '',
+		'responsavel' => $usuario->first_name." ".$usuario->last_name,
 		'autor' => $res['autor'],
 		'grupo' => $res['nomeGrupo'],
 		'ficha_tecnica' => $res['fichaTecnica'],
@@ -349,7 +351,7 @@ function evento($id){
 		'envio' => '',
 		'periodo' => '',
 		'local' => '',
-		'faixa_etaria' => '',
+		'faixa_etaria' => $etaria['tipo'],
 		'valor_entrada' => '',
 		'imagem' => '',
 		'planejamento' => $res['planejamento'],
@@ -362,7 +364,11 @@ function evento($id){
 	
 function ocorrencia($id){
 	global $wpdb;
+	
+	
 	$oc = $wpdb->get_row("SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id'",ARRAY_A);
+	
+	
 	if(($oc['dataInicio'] == $oc['dataFinal']) OR
 		$oc['dataFinal'] == '' OR
 		$oc['dataFinal'] == NULL OR
@@ -757,6 +763,7 @@ function retornaPedido($id){
 	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
 	$local = retornaLocais($res['idEvento']);
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
+
 	
 	$x = array();
 	$x['nome'] = $pessoa['nome'];
@@ -772,7 +779,7 @@ function retornaPedido($id){
 	$x['cr'] = $metausuario['cr'];
 	$x['cod_dotacao'] = $dotac['dotacao'];
 	$x['ficha'] = $dotac['ficha'];
-	$x['projeto'] = $dotadc['projeto'];
+	$x['projeto'] = $dotac['projeto'];
 	$x['despesa'] = "";
 	$x['fonte'] = $dotac['fonte'];
 	$x['telefone'] = $metausuario['telefone'];
@@ -880,6 +887,108 @@ function checklist($json){
 			"outros":""
 			
 		}';
+	
+}
+
+function verificaEvento($idEvento){
+	/*
+	Evento 
+	Campos obrigatórios sc_evento:
+		Nome do Evento
+		Programa
+		Projeto
+		Linguagem
+		Tipo de Evento
+		Responsável
+		Autor
+		Classificação
+		Sinopse
+	
+	
+	
+	Ocorrência
+	Campos obrigatórios sc_ocorrencia:
+		Data 
+		Se data final
+			Dias da semana
+		horário
+		local
+		
+	
+	Se existir contratação
+		Campos obrigatórios
+		Valor
+		Dotação
+		Justificativa
+		Parecer Artístico
+	*/
+	$relatorio = "";
+	$r = 0;
+	$evento = evento($idEvento);
+	
+	
+	if($evento['titulo'] == "" OR $evento['titulo'] == NULL){
+		$relatorio .= "O evento não possui título.<br />";
+		$r++;	
+	}
+
+	if($evento['programa'] == "" OR $evento['programa'] == NULL){
+		$relatorio .= "Não foi determinado um programa.<br />";
+		$r++;	
+	}
+
+	if($evento['projeto'] == "" OR $evento['projeto'] == NULL){
+		$relatorio .= "Não foi determinado um projeto.<br />";
+		$r++;	
+	}
+
+	if($evento['linguagem'] == "" OR $evento['linguagem'] == ""){
+		$relatorio .= "Não foi determinado uma linguagem.<br />";
+		$r++;	
+	}
+
+	if($evento['responsavel'] == "" OR $evento['responsavel'] == ""){
+		$relatorio .= "O evento não possui responsável.<br />";
+		$r++;	
+	}
+
+	if($evento['autor'] == "" OR $evento['autor'] == ""){
+		$relatorio .= "O evento não possui um autor.<br />";
+		$r++;	
+	}	
+
+	
+	if($evento['faixa_etaria'] == "" OR $evento['faixa_etaria'] == ""){
+		$relatorio .= "O evento não possui uma classificação etária.<br />";
+		$r++;	
+	}
+
+	if($evento['sinopse'] == "" OR $evento['sinopse'] == ""){
+		$relatorio .= "O evento não possui uma sinopse.<br />";
+		$r++;	
+	}
+
+	//Ocorrencias
+	$ocorrencias = periodo($idEvento);
+	if($ocorrencias['bool'] == FALSE){
+		$relatorio .= "O evento não possui ocorrências.<br />";
+		$r++;	
+	}
+
+	$pedidos = listaPedidos($idEvento,'evento');	
+	if(count($pedidos) > 0){
+		$relatorio .= "O evento possui pedidos de contratação.<br />";
+	}else{
+		$relatorio .= "O evento não possui pedidos de contratação.<br />";
+		
+	}
+	
+	
+	$x['relatorio'] = $relatorio;
+	$x['erros'] = $r;
+	return $x;
+		
+	
 	
 }
 
