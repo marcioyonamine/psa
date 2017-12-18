@@ -258,7 +258,7 @@ case "editar":
 		`ano_base` = '$ano_base'
 		WHERE id = '$idOrc'
 		"; 	
-		echo $sql;
+		//echo $sql;
 		$r = $wpdb->query($sql);
 		$orcamento =  recuperaDados('sc_orcamento',$idOrc,'id');	
 	}
@@ -687,10 +687,13 @@ if(isset($_GET['unidade']) AND $_GET['unidade'] != 0 ){
 }
 
 if(isset($_GET['fonte']) AND $_GET['fonte'] != 0 ){
-	$fonte = " AND fonte ='".$_GET['fonte']."' ";	
+	$fonte = " AND fonte ='".$_GET['fonte']."' ";
+	$fonte_option = $_GET['fonte']; 	
 }else{
 	$fonte = "";
-}
+	$fonte_option = 0; 	
+
+	}
 
 
 if(isset($_GET['ano'])){
@@ -738,12 +741,12 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 							<label>Fonte *</label>
 							<select class="form-control" name="fonte" id="inputSubject" >
 							<option value= '0'>Escolha uma opção</option>
-							<option <?php echo select(1,$_GET['fonte']) ?> >1</option>
-							<option <?php echo select(2,$_GET['fonte']) ?> >2</option>
-							<option <?php echo select(3,$_GET['fonte']) ?> >3</option>
-							<option <?php echo select(4,$_GET['fonte']) ?> >4</option>
-							<option <?php echo select(5,$_GET['fonte']) ?> >5</option>
-							<option <?php echo select(6,$_GET['fonte']) ?> >6</option>
+							<option <?php echo select(1,$fonte_option) ?> >1</option>
+							<option <?php echo select(2,$fonte_option) ?> >2</option>
+							<option <?php echo select(3,$fonte_option) ?> >3</option>
+							<option <?php echo select(4,$fonte_option) ?> >4</option>
+							<option <?php echo select(5,$fonte_option) ?> >5</option>
+							<option <?php echo select(6,$fonte_option) ?> >6</option>
 							<option value= '0'>Todas as opções</option>
 
 							</select>
