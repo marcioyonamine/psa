@@ -220,7 +220,7 @@ if(isset($_POST['inserir_pj'])){
               </thead>
               <tbody>
 				<?php 
-				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' ORDER BY idPedidoContratacao DESC";
+				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL)ORDER BY idPedidoContratacao DESC";
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
 				
 				
@@ -1158,27 +1158,56 @@ break;
 
  if(isset($_POST['atualizar_pedido'])){
 	$id_pedido = $_POST['atualizar_pedido'];
-	$integrantes =  $_POST["integrantes"];
-	$valor =  dinheiroDeBr($_POST["valor"]);
-	$forma_pagamento =   $_POST["forma_pagamento"];
-	$dotacao =   $_POST["dotacao"];
-	$justificativa =   $_POST["justificativa"];
-	$parecer =   $_POST["parecer"];
-	$observacao =   $_POST["observacao"];
-	$liberado = $_POST['liberado'];
+
+	if($_POST['data_liberado'] != ""){
+		$liberado = exibirDataMysql($_POST['data_liberado']);
+	}else{
+		$liberado = '0000-00-00';
+	}
+	if($_POST['data_empenhado'] != ""){
+		$empenhado = exibirDataMysql($_POST['data_empenhado']);
+	}else{
+		$empenhado = '0000-00-00';	
+	}
 	
+	$valor =  dinheiroDeBr($_POST["valor"]);
+	$dotacao =   $_POST["dotacao"];
+	$observacao =   $_POST["observacao"];
+	$n_liberacao = $_POST['n_liberacao'];
+
 	$sql_atualiza = "UPDATE sc_contratacao SET
-	integrantesGrupo = '$integrantes',
 	valor = '$valor',
-	formaPagamento = '$forma_pagamento',
 	dotacao = '$dotacao',
-	justificativa = '$justificativa',
-	parecerArtistico = '$parecer',
 	liberado = '$liberado',
+	empenhado = '$empenhado',
+	nLiberacao = '$n_liberacao',
 	observacao = '$observacao'
 	WHERE idPedidoContratacao = '$id_pedido'";
 	$res = $wpdb->query($sql_atualiza);
- }
+	$mensagem = $res;
+
+	if($res == 1 AND $_POST['data_liberado'] != ""){ // verifica se é necessário criar uma movimentação 
+		$sql = "SELECT id FROM sc_mov_orc WHERE tipo = '306' AND idPedido = '$id_pedido'";
+		$sel = $wpdb->get_results($sql,ARRAY_A);
+		$mensagem = $sql;
+		$pedido = retornaPedido($id_pedido);
+		$titulo = $pedido['objeto'];
+		$descricao = "";
+		$idUsuario = $user->ID;
+		if(count($sel) > 0){ // atualiza
+			$id_mov = $sel[0]['id'];
+			$upd = "UPDATE sc_mov_orc SET data = '$liberado', valor = '$valor', titulo = '$titulo' WHERE id = '$id_mov'";
+			$updwp = $wpdb->query($upd);
+			
+			
+		}else{ //cria
+
+			$ins = "INSERT INTO `sc_mov_orc` (`titulo`, `tipo`, `idOrc`, `idPedido`, `data`, `valor`, `descricao`, `idUsuario`, `publicado`) VALUES ('$titulo', '306',  '$dotacao', '$id_pedido', '$liberado', '$valor', '$descricao', '$idUsuario', '1');";
+			$inswp = $wpdb->query($ins);
+			$mensagem = $inswp;
+		}
+	}
+}
  
  
  
@@ -1205,25 +1234,31 @@ break;
 					</div>
 					<br />
 						<div class="row">
-						<div class="col-12">
-							<select class="form-control" name="liberado" id="inputSubject" >
-							<option value="0" <?php echo select(0,$pedido['liberado'])?>>Em análise</option>
-							<option value="1" <?php echo select(1,$pedido['liberado'])?>>Liberado</option>
-							<option value="2" <?php echo select(2,$pedido['liberado'])?>>Não liberado</option>
-
-							</select>	
-                            
-                            </div>
-					</div>
+						<div class="col-6">
+						<label>Data da Liberação </label>
+						<input type="text" name="data_liberado" class="form-control calendario" value="<?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?>">
+                         </div>
+						<div class="col-6">
+				<label>Data do Empenho </label>
+						<input type="text" name="data_empenhado" class="form-control calendario" value="<?php if($pedido['empenhado'] != '0000-00-00'){echo exibirDataBr($pedido['empenhado']);} ?>">					
+                         </div>
+						 </div>
 					<br />
-						<div class="row">
+					
+					<!--	<div class="row">
 						<div class="col-12">
 							<label>Integrantes do Grupo </label>
 								<textarea name="integrantes" class="form-control" rows="10" ><?php echo $pedido['integrantesGrupo']; ?></textarea>					
 						</div>
 					</div>
-					<br />
-					
+					<br />-->
+					<div class="row">
+						<div class="col-12">
+							<label>Número de liberação</label>
+							<input type="text" name="n_liberacao" class="form-control" id="inputSubject" value="<?php echo $pedido['nLiberacao']; ?>" />
+						</div>
+					</div>
+					<br />					
 					<div class="row">
 						<div class="col-12">
 							<label>Valor *</label>
@@ -1231,13 +1266,13 @@ break;
 						</div>
 					</div>
 					<br />
-					<div class="row">
+					<!--<div class="row">
 						<div class="col-12">
 							<label>Forma de Pagamento / Valor da Prestação de Serviço:</label>
 								<textarea name="forma_pagamento" class="form-control" rows="10" ><?php echo $pedido['formaPagamento']; ?></textarea>					
 						</div>
 					</div>
-					<br />
+					<br />-->
 					<div class="row">
 						<div class="col-12">
 						<label>Dotação</label>
@@ -1248,6 +1283,7 @@ break;
 						</div>
 					</div>
 					<br />
+					<!--
 					<div class="row">
 						<div class="col-12">
 							<label>Justificativa:</label>
@@ -1261,7 +1297,7 @@ break;
 								<textarea name="parecer" class="form-control" rows="10" ><?php echo $pedido['parecerArtistico']; ?></textarea>					
 						</div>
 					</div>
-					<br />
+					<br />-->
 					<div class="row">
 						<div class="col-12">
 							<label>Observação:</label>
@@ -1290,6 +1326,7 @@ break;
 						</div>
 					</div>
 				</form>
+				<!--
 					<div class="row">
 						<div class="col-12">
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=303&id=<?php echo $id_pedido?>" target="_blank">Criar Folha de Rosto de Processo</a>
@@ -1309,7 +1346,7 @@ break;
 						<div class="col-12">
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=307&id=<?php echo $id_pedido?>" target="_blank">Ordenador de Despesa</a>
 						</div>
-					</div>
+					</div>-->
 			</div>
 		</div>
 	</div>

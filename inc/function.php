@@ -333,6 +333,8 @@ function evento($id){
 	$tipo_evento = tipo($res["idTipo"]);
 	$usuario = get_userdata($res['idResponsavel']);
 	$etaria = tipo($res['faixaEtaria']);
+	$periodo = periodo($res['idEvento']);
+	$status = retornaStatus($res['idEvento']);
 	
 	$evento = array(
 		'titulo' => $res['nomeEvento'],
@@ -345,18 +347,19 @@ function evento($id){
 		'ficha_tecnica' => $res['fichaTecnica'],
 		'sinopse' => $res['sinopse'],
 		'release' => $res['releaseCom'],
-		'status' => '',
+		'status' => $status['status'],
 		'usuario' => '',
 		'sub' => '',
 		'envio' => '',
-		'periodo' => '',
+		'periodo' => $periodo,
 		'local' => '',
 		'faixa_etaria' => $etaria['tipo'],
 		'valor_entrada' => '',
 		'imagem' => '',
 		'planejamento' => $res['planejamento'],
 		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
-		'tipo' => $tipo_evento['tipo']
+		'tipo' => $tipo_evento['tipo'],
+		'data_envio' => $res['dataEnvio']
 	);
 
 	return $evento;
@@ -753,7 +756,7 @@ function opcaoDados($tipo,$id){
 
 function retornaPedido($id){
 	global $wpdb;
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
@@ -763,7 +766,13 @@ function retornaPedido($id){
 	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
 	$local = retornaLocais($res['idEvento']);
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
-
+	$status = "Em análise";
+	if('0000-00-00' != $res['empenhado']){
+		$status = 'Empenhado';
+	}else if('0000-00-00' != $res['liberado']){
+		$status = 'Liberado';
+	}
+	
 	
 	$x = array();
 	$x['nome'] = $pessoa['nome'];
@@ -793,6 +802,9 @@ function retornaPedido($id){
 	$x['valor_extenso'] = valorPorExtenso($res['valor']);
 	$x['forma_pagamento'] = $res['formaPagamento'];
 	$x['banco'] = $pessoa['banco'];
+	$x['liberado'] = $res['liberado'];
+	$x['empenhado'] = $res['empenhado'];
+	$x['status'] = $status;
 	return $x;
 	
 }
@@ -861,32 +873,6 @@ function retornaEndereco($tipo,$pessoa){
 		break;
 		
 	}
-	
-}
-
-function checklist($json){
-		
-		$j = '{
-			"verba": "",
-			"justificativa": "",
-			"autorizacao": "",
-			"resp_fiscal": "",
-			"proposta" : "",
-			"nepostismo": "",
-			"prazo_exec": "",
-			"prazo_paga": "",
-			"rg":"",
-			"cpf":"",
-			"inss":"",
-			"procuracao":"",
-			"cdn": "",
-			"contrato_social":"",
-			"cnpj":"",
-			"atestado_currilo":"",
-			"critica_reconhecida":"",
-			"outros":""
-			
-		}';
 	
 }
 
@@ -977,9 +963,17 @@ function verificaEvento($idEvento){
 
 	$pedidos = listaPedidos($idEvento,'evento');	
 	if(count($pedidos) > 0){
-		$relatorio .= "O evento possui pedidos de contratação.<br />";
+		//$relatorio .= "O evento possui pedidos de contratação.<br />";
+		$ped = retornaPedido($pedidos[$i]['idPedidoContratacao']);
+		
+		
+		
+		
+		
+		
+		
 	}else{
-		$relatorio .= "O evento não possui pedidos de contratação.<br />";
+		//$relatorio .= "O evento não possui pedidos de contratação.<br />";
 		
 	}
 	
@@ -1000,6 +994,33 @@ function listaArquivos($entidade,$id){
 	
 }
 
+function retornaStatus($idEvento){
+	global $wpdb;
+	$sql = "SELECT dataEnvio FROM sc_evento WHERE idEvento = '$idEvento' AND planejamento = '0'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	if($res['dataEnvio'] == NULL){ // evento em elaboração
+		$x['status'] = 'Em elaboração';
+	}else{ // enviado
+		$pedidos = listaPedidos($idEvento,'evento');	
+		if(count($pedidos) == 0){ //Não há pedidos
+			$x['pedido'] = NULL;						
+		}else{
+			for($i = 0; $i < count($pedidos); $i++){
+				
+				
+			}
+			
+		}
+		
+		
+		
+		
+		
+	}
+	return $x;
+	
+	
+}
 
 /* Fim das Funções para Pedidos de Contratação */
 

@@ -100,8 +100,13 @@ if(isset($_POST['insere_pedido_pf'])){
 		$evento = $_SESSION['id'];
 		$pessoa = 1;
 		$id_pessoa = $_POST['insere_pedido_pf'];
+		if($_SESSION['entidade'] == 'evento'){
 		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`,  `publicado`) 
 		VALUES ('$evento', '1', '$id_pessoa', '1')";
+		}else{
+		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idAtividade`, `tipoPessoa`, `idPessoa`,  `publicado`) 
+		VALUES ('$evento', '1', '$id_pessoa', '1')";
+		}
 		$query_pedido = $wpdb->query($sql_insere_pedido);
 		if($wpdb->insert_id > 0){
 			$mensagem = '<div class="alert alert-success">Pedido criado com sucesso.</div>';
@@ -1188,6 +1193,7 @@ break;
 	$justificativa =   $_POST["justificativa"];
 	$parecer =   $_POST["parecer"];
 	$observacao =   $_POST["observacao"];
+	$processo =   $_POST["processo"];
 	
 	$sql_atualiza = "UPDATE sc_contratacao SET
 	integrantesGrupo = '$integrantes',
@@ -1196,6 +1202,7 @@ break;
 	dotacao = '$dotacao',
 	justificativa = '$justificativa',
 	parecerArtistico = '$parecer',
+	nProcesso = '$processo',
 	observacao = '$observacao'
 	WHERE idPedidoContratacao = '$id_pedido'";
 	$res = $wpdb->query($sql_atualiza);
@@ -1225,6 +1232,13 @@ break;
 						</div>
 					</div>
 					<br />
+					<div class="row">
+						<div class="col-12">
+							<label>Número de Processo</label>
+							<input type="text" name="processo" class="form-control" id="inputSubject" value="<?php echo $pedido['nProcesso']; ?>" />
+						</div>
+					</div>					
+					
 						<div class="row">
 						<div class="col-12">
 							<label>Integrantes do Grupo </label>
@@ -1297,6 +1311,28 @@ break;
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Anexar arquivos ao Pedido">
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=303&id=<?php echo $id_pedido?>" target="_blank">Criar Folha de Rosto de Processo</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=304&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=306&id=<?php echo $id_pedido?>" target="_blank">Gerencia de Compras</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=307&id=<?php echo $id_pedido?>" target="_blank">Ordenador de Despesa</a>
+						</div>
+					</div>					
+					
 				</form>
 
 				</div>

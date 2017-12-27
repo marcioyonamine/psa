@@ -53,8 +53,8 @@ if(isset($_SESSION['id'])){
 					<tr>
 					  <td><?php echo $res[$i]['idEvento']; ?></td>
 					  <td><?php echo $evento['titulo']; ?></td>
-					  <td><?php echo $evento['programa']; ?></td>
-					  <td><?php echo $evento['projeto']; ?></td>
+					  <td><?php echo $evento['periodo']['legivel']; ?></td>
+					  <td><?php echo $evento['status']; ?></td>
 					  <td>	
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />

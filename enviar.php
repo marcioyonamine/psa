@@ -31,8 +31,26 @@ $(function() {
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
  switch($p){
-case "inicio": //Lista as contratações
+case "inicio": 
 $evento = evento($_SESSION['id']);
+
+if(isset($_POST['enviar'])){  // envia
+	// muda status de dataEnvio para hoje
+	// atualiza a agenda
+	$idEvento = $_SESSION['id'];
+	$hoje = date("Y-m-d");
+	global $wpdb;
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
+	$upd = $wpdb->query($sql_enviar);
+	if($upd == 1){
+		atualizarAgenda($idEvento);
+	}else{
+	
+	}
+	
+}
+
+
 
 ?>
 
@@ -40,10 +58,29 @@ $evento = evento($_SESSION['id']);
     <div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h1>Enviar / Finalizar</h1>
-					<h2><?php echo $evento['objeto'];?></h2>
+				<h3>Enviar / Finalizar </h3>
+					<h1><?php echo $evento['objeto'];?></h1>
+					<h2><?php echo $sql_enviar; ?></h2>
 				</div>
         </div>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+				<p>Confira todas as informações.</p>
+				<p>Ao enviar o evento, você disponibiliza as informações para todos os usuários do sistema:</p>
+				<ul>
+				<li>Se houver alguma contratação, a área financeira inicia a liberação da verba; </li>
+				<li>A comunicação inicia seus trabalhos de divulgação; </li>
+				<li>Os espaços e a produção iniciam seus planejamentos e pré-produção; </li>
+				<li>Se não houver contratação, as informações já são disponibilizadas no CulturAZ. </li>
+
+				</ul>
+				<p>Se houver alguma pendência, o sistema não permitirá o envio.</p>
+				</div>
+        </div>
+		<br /><br />
+		
+		
+		
 		<?php 
 		if(isset($_SESSION['entidade'])){
 		//verifica se todos os campos obrigatórios foram atualizados
@@ -118,19 +155,35 @@ $evento = evento($_SESSION['id']);
 			<p>Arquivos: <?php echo $evento['']; ?></p>
 	
 			</div>
-		</div>  		
+		</div>  	
+		
 		*/	?>
+		<br /><br />
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<h3>Pendências</h3>
 			<?php $pendencia = verificaEvento($_SESSION['id']);
 			if($pendencia['erros'] == 0){
 				echo "<p>Não há pendencias.</p>";
+				if($evento['data_envio'] == NULL){
+				?>
 				
+				
+			<form action="?" method="POST" class="form-horizontal">
+			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Enviar/Finalizar" />
+			</form>	
+			
+				<?php }else{
+				echo "<h4>Evento enviado ao sistema.</h4>";	
+					
+				}
+				
+			}else{
+				echo "<p>".$pendencia['relatorio']."</p>";		
 			}
 			
 			
-			echo "<p>".$pendencia['relatorio']."</p>";
+
 			?>
 
 			</div>
