@@ -794,6 +794,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_res = 0;
 				$total_tot = 0;
 				$total_pla = 0;
+				$total_lib = 0;
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
