@@ -665,7 +665,9 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'visualizacao' => $val['projeto']." / ".$val['ficha'], //colocar natureza (importar de novo)
 	'natureza' => $val['natureza']." / ".$val['fonte'],	
 	'liberado' => $valor_lib,
-	'planejado' => $valor_pla 
+	'planejado' => $valor_pla,
+	'teste' => $pla_pf;
+	'teste2' = > $pla_pj;
 
 	);
 	
