@@ -623,7 +623,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 	
 	// liberado
-	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado = '1'";
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '1'";
 	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
 	$valor_lib = 0;
 	for($i = 0; $i < count($lib); $i++){
@@ -633,6 +633,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	//planejado 
 	$valor_pla_pf = 0;
 	$valor_pla_pj = 0;
+	
 	$sql_pla_pf = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '1' AND idPessoa IN (SELECT DISTINCT Id_PessoaFisica FROM sc_pf WHERE CPF = '000.000.000-00') AND publicado = '1'";
 	$pla_pf = $wpdb->get_results($sql_pla_pf,ARRAY_A);
 	if(count($pla_pf) > 0){
@@ -643,10 +644,10 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	
 	
 	$sql_pla_pj = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '2' AND idPessoa IN (SELECT DISTINCT Id_PessoaJuridica FROM sc_pj WHERE CNPJ = '00.000.000/0000-00') AND publicado = '1'";
-	$pla_pj = $wpdb->get_results($sql_pla_pf,ARRAY_A);
+	$pla_pj = $wpdb->get_results($sql_pla_pj,ARRAY_A);
 	if(count($pla_pj) > 0){
-		for($k = 0; $i < count($pla_pj); $k++){
-			$valor_pla_pj = $valor_pla_j + $pla_pj[$k]['valor'];	
+		for($k = 0; $k < count($pla_pj); $k++){
+			$valor_pla_pj = $valor_pla_pj + $pla_pj[$k]['valor'];	
 		}
 	}
 	
