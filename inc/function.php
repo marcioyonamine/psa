@@ -633,7 +633,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	//planejado 
 	$valor_pla_pf = 0;
 	$valor_pla_pj = 0;
-	$sql_pla_pf = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '1' AND idPessoa IN (SELECT Id_PessoaFisica FROM sc_pf WHERE CPF = '000.000.000-00') AND publicado = '1'";
+	$sql_pla_pf = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '1' AND idPessoa IN (SELECT DISTINCT Id_PessoaFisica FROM sc_pf WHERE CPF = '000.000.000-00') AND publicado = '1'";
 	$pla_pf = $wpdb->get_results($sql_pla_pf,ARRAY_A);
 	if(count($pla_pf) > 0){
 		for($i = 0; $i < count($pla_pf); $i++){
@@ -642,7 +642,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	}
 	
 	
-	$sql_pla_pj = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '2' AND idPessoa IN (SELECT Id_PessoaJuridica FROM sc_pj WHERE CNPJ = '00.000.000/0000-00') AND publicado = '1'";
+	$sql_pla_pj = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '2' AND idPessoa IN (SELECT DISTINCT Id_PessoaJuridica FROM sc_pj WHERE CNPJ = '00.000.000/0000-00') AND publicado = '1'";
 	$pla_pj = $wpdb->get_results($sql_pla_pf,ARRAY_A);
 	if(count($pla_pj) > 0){
 		for($k = 0; $i < count($pla_pj); $k++){
@@ -666,7 +666,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'visualizacao' => $val['projeto']." / ".$val['ficha'], //colocar natureza (importar de novo)
 	'natureza' => $val['natureza']." / ".$val['fonte'],	
 	'liberado' => $valor_lib,
-	'planejado' => $valor_pla,
+	'planejado' => $valor_pla_pf + $valor_pla_pj,
 	'teste' => $pla_pf,
 	'teste2' => $pla_pj
 
