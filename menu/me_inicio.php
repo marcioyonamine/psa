@@ -13,18 +13,17 @@
 
 		
 		<ul class="nav nav-pills flex-column">
+			<?php 
+			$per = opcaoDados('usuario',$user->ID);
+			
+			for($i = 0; $i < count($per['modulos']) ; $i++){
+				?>
             <li class="nav-item">
-              <a class="nav-link" href="evento.php">Eventos</a>
+              <a class="nav-link" href="<?php echo $per['modulos'][$i]; ?>.php"><?php echo $per['modulos'][$i]; ?></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="atividade.php">Atividades</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="orcamento.php">Orçamento</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contrato.php">Contratos</a>
-            </li>
+				<?php 
+			}
+			?>
 
 		</ul>
 

@@ -1056,7 +1056,9 @@ function retornaStatus($idEvento){
 	global $wpdb;
 	$sql = "SELECT dataEnvio FROM sc_evento WHERE idEvento = '$idEvento' AND planejamento = '0'";
 	$res = $wpdb->get_row($sql,ARRAY_A);
-	$x = "Em plan";
+	$x = array(
+		'status' => ''
+	);
 	if($res['dataEnvio'] == NULL){ // evento em elaboração
 		$x['status'] = 'Em elaboração';
 	}else{ // enviado
@@ -1080,6 +1082,8 @@ function retornaStatus($idEvento){
 	
 	
 }
+
+
 
 /* Fim das Funções para Pedidos de Contratação */
 

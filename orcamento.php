@@ -800,7 +800,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					$orc = orcamento($res[$i]['id']);
 					$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'];
 					
-					if($i % 20 == 0 AND $i != 0){
+					if($i % 10 == 0 AND $i != 0){
 					?>
 					               <tr>
 					  

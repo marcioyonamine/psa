@@ -7,11 +7,11 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
 		<?php 
-		$x = verificaEvento(1);
+		$tipo = 'usuario';
+		$id = 1;
+		$x = opcaoDados($tipo,$id);
 		
-		echo "<pre>";
 		var_dump($x);
-		echo "</pre>";
 		
 		//echo $x['departamento'];
 			

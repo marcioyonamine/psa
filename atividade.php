@@ -21,6 +21,14 @@ case "inicio":
 if(isset($_SESSION['id'])){
 	unset($_SESSION['id']);
 }
+
+if(isset($_POST['apagar'])){
+	$id = $_POST['apagar'];
+	$sql = "UPDATE sc_atividade SET publicado = '0' WHERE id = '$id'";
+	$query = $wpdb->query($sql);
+	
+	
+}
 ?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
@@ -38,12 +46,13 @@ if(isset($_SESSION['id'])){
                   <th>Programa</th>
                   <th>Projeto</th>
                   <th></th>
+                   <th></th>
                 </tr>
               </thead>
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_atividade ORDER BY id DESC";
+				$sql_list =  "SELECT * FROM sc_atividade WHERE publicado = '1' ORDER BY id DESC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = atividade($res[$i]['id']);
@@ -62,7 +71,15 @@ if(isset($_SESSION['id'])){
 							<?php 
 					  
 					  ?></td>
-					</tr>
+					  <td>	
+							<form method="POST" action="?" class="form-horizontal" role="form">
+							<input type="hidden" name="apagar" value="<?php echo $res[$i]['id']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
+							</form>
+							<?php 
+					  
+					  ?></td>
+					  </tr>
 				<?php } // fim do for?>	
 				
               </tbody>

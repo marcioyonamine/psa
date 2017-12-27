@@ -1175,6 +1175,7 @@ break;
 	$observacao =   $_POST["observacao"];
 	$n_liberacao = $_POST['n_liberacao'];
 
+	
 	$sql_atualiza = "UPDATE sc_contratacao SET
 	valor = '$valor',
 	dotacao = '$dotacao',
