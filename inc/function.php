@@ -255,56 +255,6 @@ function geraTipoOpcao($abreviatura,$select = 0){
 }
 	
 
-function editais($usuario,$id = NULL){
-	global $wpdb;
-	$editais = array();
-	
-	if($id != NULL){
-		$filtro = " AND id = '$id' ";		
-	}else{
-		$filtro =  "";	
-	}
-	$sql = "SELECT id, edital, id_mapas, avaliadores, fases FROM ava_edital WHERE publicado = '1' AND edital <> '' $filtro ";
-	$res = $wpdb->get_results($sql);
-	for($i = 0; $i < count($res); $i++){
-		$editais[$i]['id'] = $res[$i]->id;
-		$editais[$i]['titulo'] = $res[$i]->edital;	
-		$editais[$i]['mapas'] = $res[$i]->id_mapas;
-		$editais[$i]['fases']['quantidade'] = $res[$i]->fases;
-		
-		// lista as fases
-		$sql_fase = "SELECT edital, fase, peso, inicio, fim FROM ava_fase WHERE edital = '".$editais[$i]['id']."'";
-		$res_fase = $wpdb->get_results($sql_fase);
-		
-		
-		for($k = 0; $k < count($res_fase); $k++){
-			$editais[$i]['fases'][$k]['fase'] ['numero']= $res_fase[$k]->fase;
-			$editais[$i]['fases'][$k]['fase']['peso'] = $res_fase[$k]->peso;
-			$editais[$i]['fases'][$k]['fase']['inicio'] = $res_fase[$k]->inicio;
-			$editais[$i]['fases'][$k]['fase']['fim'] = $res_fase[$k]->fim;
-			$fim =  $res_fase[$k]->fim;
-		}
-		
-		
-		if(count($res_fase) == 0){
-				$editais[$i]['periodo'] = "Não há fases cadastradas.";
-		}else{
-				$editais[$i]['periodo'] = "De ".exibirDataBr($editais[$i]['fases'][0]['fase']['inicio'])." a ".exibirDataBr($editais[$i]['fases'][count($res_fase) -1]['fase']['fim']);
-			
-		}
-		
-		
-		// lista criterios
-		
-	}
-	
-	
-	return $editais;
-
-
-}
-	
-	
 function tipo($id){
 	global $wpdb;
 	$sql = "SELECT * FROM sc_tipo WHERE id_tipo = '$id'";
@@ -481,7 +431,7 @@ function geraOpcaoUsuario($select = NULL, $role = NULL){
 
 function geraOpcaoDotacao($ano_base,$id = NULL){
 	global $wpdb;
-	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '$ano_base' AND valor <> '0.00'";
+	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '$ano_base' AND valor <> '0.00' AND publicado = '1'";
 	$res = $wpdb->get_results($sql_orc,ARRAY_A);
 	echo "<pre>";
 	var_dump(($res));
@@ -619,11 +569,11 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	}
 	
 	// Histórico
-	$sel_hist = "SELECT titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data ORDER BY data ASC";
+	$sel_hist = "SELECT titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC";
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 	
 	// liberado
-	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00'";
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND publicado = '1'";
 	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
 	$valor_lib = 0;
 	for($i = 0; $i < count($lib); $i++){
@@ -1081,6 +1031,67 @@ function retornaStatus($idEvento){
 	return $x;
 	
 	
+}
+
+function editais($usuario,$id = NULL){
+	global $wpdb;
+	$editais = array();
+	
+	if($id != NULL){
+		$filtro = " AND id = '$id' ";		
+	}else{
+		$filtro =  "";	
+	}
+	$sql = "SELECT id, edital, id_mapas, avaliadores, fases FROM ava_edital WHERE publicado = '1' AND edital <> '' $filtro ";
+	$res = $wpdb->get_results($sql);
+	for($i = 0; $i < count($res); $i++){
+		$editais[$i]['id'] = $res[$i]->id;
+		$editais[$i]['titulo'] = $res[$i]->edital;	
+		$editais[$i]['mapas'] = $res[$i]->id_mapas;
+		$editais[$i]['fases']['quantidade'] = $res[$i]->fases;
+		
+		// lista as fases
+		$sql_fase = "SELECT edital, fase, peso, inicio, fim FROM ava_fase WHERE edital = '".$editais[$i]['id']."'";
+		$res_fase = $wpdb->get_results($sql_fase);
+		
+		
+		for($k = 0; $k < count($res_fase); $k++){
+			$editais[$i]['fases'][$k]['fase'] ['numero']= $res_fase[$k]->fase;
+			$editais[$i]['fases'][$k]['fase']['peso'] = $res_fase[$k]->peso;
+			$editais[$i]['fases'][$k]['fase']['inicio'] = $res_fase[$k]->inicio;
+			$editais[$i]['fases'][$k]['fase']['fim'] = $res_fase[$k]->fim;
+			$fim =  $res_fase[$k]->fim;
+		}
+		
+		
+		if(count($res_fase) == 0){
+				$editais[$i]['periodo'] = "Não há fases cadastradas.";
+		}else{
+				$editais[$i]['periodo'] = "De ".exibirDataBr($editais[$i]['fases'][0]['fase']['inicio'])." a ".exibirDataBr($editais[$i]['fases'][count($res_fase) -1]['fase']['fim']);
+			
+		}
+		
+		
+		// lista criterios
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	return $editais;
+	
+	
+
 }
 
 

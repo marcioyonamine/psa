@@ -2,7 +2,7 @@
 
   <body>
   
-  <?php include "menu.php"; ?>
+  <?php include "menu/menu_editais.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Inscrições</h1>
@@ -45,7 +45,7 @@
 				?>	
     			 <tr>
 				 <td><?php echo $i; ?></td>
-                  <td><?php echo $res_json['Número']; ?></td>
+                  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($res_json['Número'],3); ?>" target="_blank" ><?php echo $res_json['Número']; ?> </a></td>
                   <td><?php echo $res_json['Agente responsável pela inscrição']; ?></td>
                   <td><?php echo $edital[0]['titulo']; ?></td>
                   <td><?php echo $edital[0]['periodo']; ?></td>

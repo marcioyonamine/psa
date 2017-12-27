@@ -13,6 +13,41 @@
 		
 		var_dump($x);
 		
+		//algoritmo de sorteio 
+$numero_inicial = 2;
+$numero_final = 220;
+$numero_grupo = 4;
+$numero_quantidade = ($numero_final - $numero_inicial)/$numero_grupo;
+
+$input = array();
+
+
+for($i = $numero_inicial; $i <= $numero_final; $i++){
+	array_push($input,$i);		
+}
+
+$grupo = array();
+
+for($w = 1;$w <= $numero_grupo; $w++){
+$grupo[$w] = array();
+	for($k = $numero_inicial; $k <= $numero_quantidade; $k++){
+		$rand_keys = array_rand($input, 1);
+		array_push($grupo[$w],$rand_keys);
+		$newArr = array();
+		foreach($input as $value)
+		{
+			if( $value != $rand_keys )
+			{
+				array_push($newArr, $value);
+			}
+			$input = $newArr;
+		}
+	}
+}
+echo "<pre>";
+var_dump($grupo);
+echo "</pre>";
+		
 		//echo $x['departamento'];
 			
 		//$x = orcamento(14,'2017-11-18');

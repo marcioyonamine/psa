@@ -26,6 +26,10 @@ if(isset($_POST['apagar'])){
 	$id = $_POST['apagar'];
 	$sql = "UPDATE sc_atividade SET publicado = '0' WHERE id = '$id'";
 	$query = $wpdb->query($sql);
+	if($query == 1){
+		$sql_sel = "UPDATE sc_contratacao SET publicado = '0' WHERE idAtividade = '$id'";
+		$query_sel = $wpdb->query($sql_sel);
+	}
 	
 	
 }
