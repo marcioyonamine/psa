@@ -768,7 +768,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
               <thead>
                 <tr>
 					  
-				<th>Dotação</th>
+				<th width='10%'>Proj/Fic</th>
+				<th width='10%'>Nat/Fon</th>
                   <th>Val Ini</th>
                   <th>Val Con</th>
                   <th>Val Des</th>
@@ -792,6 +793,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_sup = 0;
 				$total_res = 0;
 				$total_tot = 0;
+				$total_pla = 0;
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
@@ -801,8 +803,9 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					?>
 					               <tr>
 					  
-				<th>Dotação</th>
-                  <th>Val Ini</th>
+				<th width='10%'>Proj/Fic</th>
+				<th width='10%'>Nat/Fon</th>
+				<th>Val Ini</th>
                   <th>Val Con</th>
                   <th>Val Des</th>
                   <th>Val Sup</th>
@@ -824,22 +827,23 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					<tr>
 
 					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
+					  <td><?php echo $orc['natureza']; ?></td>
 					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
-					  <td><?php //echo $orc['total']; ?></td>
+					  <td><?php echo dinheiroParaBr($orc['planejado']) ?></td>
 					  <td><?php echo dinheiroParaBr($total); ?></td>
-						<td></td>
-	<td>	
+						<td><?php echo dinheiroParaBr($total - $orc['planejado']); ?></td>
+	<!--<td>	
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
 							</form>
 							<?php 
 					  
-					  ?></td>
+					  ?></td>-->
 					</tr>
                     
                     
@@ -849,6 +853,9 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_con = $total_con + $orc['contigenciado'];
 				$total_des = $total_des + $orc['descontigenciado'];
 				$total_sup = $total_sup + $orc['suplementado'];
+				$total_lib = $total_lib + $orc['liberado'];
+				$total_pla = $total_pla + $orc['planejado'];
+				
 				//$total_res = $total_res;
 				$total_tot = $total_tot + $total;					
 					
@@ -858,15 +865,15 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				} // fim do for?>	
 				<tr>
 					  <td>TOTAL:</td>
+					  <td></td>
 					  <td><?php echo dinheiroParaBr($total_orc); ?></td>
 					  <td><?php echo dinheiroParaBr($total_con); ?></td>
 					  <td><?php echo dinheiroParaBr($total_des); ?></td>
 					  <td><?php echo dinheiroParaBr($total_sup); ?></td>
-					  <td><?php //echo $orc['total']; ?></td>
-					  <td><?php //echo $orc['total']; ?></td>
+					  <td><?php echo dinheiroParaBr($total_lib); ?></td>
+					  <td><?php echo dinheiroParaBr($total_pla); ?></td>
 					  <td><?php echo dinheiroParaBr($total_tot); ?></td>
-					  <td>	
-					   </td>
+					  <td><?php echo dinheiroParaBr($total_tot - $total_pla); ?></td>
 						<td></td>
 				
 				</tr>

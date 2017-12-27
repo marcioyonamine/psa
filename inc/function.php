@@ -590,7 +590,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	
 	
 	global $wpdb;
-	$sel = "SELECT valor,dotacao,descricao, projeto, ficha FROM sc_orcamento WHERE id = '$id'";
+	$sel = "SELECT valor,dotacao,descricao, projeto, ficha, natureza, fonte FROM sc_orcamento WHERE id = '$id'";
 	$val = $wpdb->get_row($sel,ARRAY_A);
 	
 	// Contigenciado (286)
@@ -628,7 +628,26 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	$valor_lib = 0;
 	for($i = 0; $i < count($lib); $i++){
 		$valor_lib = $valor_lib + $lib[$i]['valor'];	
-	}		
+	}
+
+	//planejado 
+	$valor_pla = 0;
+	
+	$sql_pla_pf = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '1' AND idPessoa IN (SELECT Id_PessoaFisica FROM sc_pf WHERE CPF = '000.000.000-00') AND publicado = '1'";
+	$pla_pf = $wpdb->get_results($sql_pla_pf,ARRAY_A);
+	for($i = 0; $i < count($pla_pf); $i++){
+		$valor_pla = $valor_pla + $pla_pf[$i]['valor'];	
+	}
+	
+	
+	$sql_pla_pj = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '2' AND idPessoa IN (SELECT Id_PessoaJuridica FROM sc_pj WHERE CNPJ = '00.000.000/0000-00') AND publicado = '1'";
+	$pla_pj = $wpdb->get_results($sql_pla_pf,ARRAY_A);
+	for($i = 0; $i < count($pla_pj); $i++){
+		$valor_pla = $valor_pla + $pla_pj[$i]['valor'];	
+	}
+	
+	
+	
 	
 	
 	
@@ -641,8 +660,9 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'suplementado' => $valor_supl,
 	'historico' => $hist,
 	'visualizacao' => $val['projeto']." / ".$val['ficha'], //colocar natureza (importar de novo)
+	'natureza' => $val['natureza']." / ".$val['fonte'],	
 	'liberado' => $valor_lib,
-	'planejado' => '' 
+	'planejado' => $valor_pla 
 
 	);
 	
