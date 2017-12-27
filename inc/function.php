@@ -364,6 +364,37 @@ function evento($id){
 
 	return $evento;
 }
+
+function atividade($id){
+
+	global $wpdb;
+
+	$sql =  "SELECT * FROM sc_atividade WHERE id = '$id'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	/*
+	echo "<pre>";
+	var_dump($programa);
+	echo "</pre>";
+
+	*/
+	$programa = tipo($res['idPrograma']);
+	$projeto = tipo($res['idProjeto']);
+	$usuario = get_userdata($res['idRes']);
+	//$status = retornaStatus($res['idEvento']);
+	
+	$evento = array(
+		'titulo' => $res['titulo'],
+		'programa' => $programa['tipo'],
+		'projeto' => $projeto['tipo'],
+		'responsavel' => $usuario->first_name." ".$usuario->last_name,
+		//'status' => $status['status'],
+		'usuario' => ''
+	);
+
+	return $evento;
+}
+
+
 	
 function ocorrencia($id){
 	global $wpdb;
@@ -998,6 +1029,7 @@ function retornaStatus($idEvento){
 	global $wpdb;
 	$sql = "SELECT dataEnvio FROM sc_evento WHERE idEvento = '$idEvento' AND planejamento = '0'";
 	$res = $wpdb->get_row($sql,ARRAY_A);
+	$x = "Em plan";
 	if($res['dataEnvio'] == NULL){ // evento em elaboração
 		$x['status'] = 'Em elaboração';
 	}else{ // enviado

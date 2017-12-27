@@ -18,8 +18,8 @@ if(isset($_GET['p'])){
  <?php 
  switch($p){
 case "inicio": 
-if(isset($_SESSION['idEvento'])){
-	unset($_SESSION['idEvento']);
+if(isset($_SESSION['id'])){
+	unset($_SESSION['id']);
 }
 ?>
 <section id="contact" class="home-section bg-white">
@@ -35,8 +35,8 @@ if(isset($_SESSION['idEvento'])){
                 <tr>
                   <th>#</th>
                   <th>Atividade</th>
+                  <th>Programa</th>
                   <th>Projeto</th>
-                  <th>Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -46,14 +46,14 @@ if(isset($_SESSION['idEvento'])){
 				$sql_list =  "SELECT * FROM sc_atividade ORDER BY id DESC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
-					$evento = evento($res[$i]['id']);
+					$evento = atividade($res[$i]['id']);
 					
 					?>
 					<tr>
 					  <td><?php echo $res[$i]['id']; ?></td>
 					  <td><?php echo $res[$i]['titulo']; ?></td>
-					  <td><?php echo $res[$i]['idPrograma']; ?></td>
-					  <td><?php echo $res[$i]['idProjeto']; ?></td>
+					  <td><?php echo $evento['programa']; ?></td>
+					  <td><?php echo $evento['projeto']; ?></td>
 					  <td>	
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id']; ?>" />
