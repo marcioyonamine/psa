@@ -632,18 +632,21 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 
 	//planejado 
 	$valor_pla = 0;
-	
 	$sql_pla_pf = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '1' AND idPessoa IN (SELECT Id_PessoaFisica FROM sc_pf WHERE CPF = '000.000.000-00') AND publicado = '1'";
 	$pla_pf = $wpdb->get_results($sql_pla_pf,ARRAY_A);
-	for($i = 0; $i < count($pla_pf); $i++){
-		$valor_pla = $valor_pla + $pla_pf[$i]['valor'];	
+	if(count($pla_pf) > 0){
+		for($i = 0; $i < count($pla_pf); $i++){
+			$valor_pla = $valor_pla + $pla_pf[$i]['valor'];	
+		}
 	}
 	
 	
 	$sql_pla_pj = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '2' AND idPessoa IN (SELECT Id_PessoaJuridica FROM sc_pj WHERE CNPJ = '00.000.000/0000-00') AND publicado = '1'";
 	$pla_pj = $wpdb->get_results($sql_pla_pf,ARRAY_A);
-	for($i = 0; $i < count($pla_pj); $i++){
-		$valor_pla = $valor_pla + $pla_pj[$i]['valor'];	
+	if(count($pla_pj) > 0){
+		for($k = 0; $i < count($pla_pj); $k++){
+			$valor_pla = $valor_pla + $pla_pj[$k]['valor'];	
+		}
 	}
 	
 	
