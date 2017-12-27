@@ -122,8 +122,13 @@ if(isset($_POST['insere_pedido_pj'])){
 		$evento = $_SESSION['id'];
 		$pessoa = 2;
 		$id_pessoa = $_POST['insere_pedido_pj'];
+		if($_SESSION['entidade'] == 'evento'){
 		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`,  `publicado`) 
 		VALUES ('$evento', '2', '$id_pessoa', '1')";
+		}else{
+		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idAtividade`, `tipoPessoa`, `idPessoa`,  `publicado`) 
+		VALUES ('$evento', '2', '$id_pessoa', '1')";
+		}
 		$query_pedido = $wpdb->query($sql_insere_pedido);
 		if($wpdb->insert_id > 0){
 			$mensagem = '<div class="alert alert-success">Pedido criado com sucesso.</div>';
