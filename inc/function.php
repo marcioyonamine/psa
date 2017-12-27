@@ -667,7 +667,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'liberado' => $valor_lib,
 	'planejado' => $valor_pla,
 	'teste' => $pla_pf,
-	'teste2' = > $pla_pj
+	'teste2' => $pla_pj
 
 	);
 	
