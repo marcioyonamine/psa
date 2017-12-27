@@ -666,8 +666,8 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'natureza' => $val['natureza']." / ".$val['fonte'],	
 	'liberado' => $valor_lib,
 	'planejado' => $valor_pla,
-	'teste' => $pla_pf;
-	'teste2' = > $pla_pj;
+	'teste' => $pla_pf,
+	'teste2' = > $pla_pj
 
 	);
 	
