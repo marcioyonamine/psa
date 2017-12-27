@@ -623,7 +623,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 	
 	// liberado
-	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '1'";
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00'";
 	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
 	$valor_lib = 0;
 	for($i = 0; $i < count($lib); $i++){
