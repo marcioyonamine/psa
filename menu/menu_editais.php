@@ -14,10 +14,13 @@
             <li class="nav-item">
               <a class="nav-link" href="inscricoes.php">Inscrições / Avaliações</a>
             </li>
+
             
           </ul>
 
          
+
+
 
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">

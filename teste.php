@@ -44,9 +44,20 @@ $grupo[$w] = array();
 		}
 	}
 }
+
+$x = json_encode($grupo);
+
+$sql_insert_grupo = "UPDATE ava_edital SET avaliadores = '$x' WHERE id_mapas = '273'";
+$insert = $wpdb->query($sql_insert_grupo);
+
+
 echo "<pre>";
 var_dump($grupo);
 echo "</pre>";
+
+
+		
+		
 		
 		//echo $x['departamento'];
 			

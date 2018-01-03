@@ -14,27 +14,7 @@
 
 			<div>
 			
-			<?php 
-			/*
-			$teste = recuperaDados("ava_edital","1","id");
-			echo "<pre>";
-			var_dump($teste);
-			echo "</pre>";
-			echo "<br />";
-			$json =  json_decode($teste['avaliadores']);
-			echo "<pre>";
-			var_dump($json);
-			echo "</pre>";
-			
-			global $wpdb;
-			$teste2 = "SELECT * FROM ava_fase WHERE edital = '1'";
-			$result = $wpdb->get_results($teste2);
-			echo "ava_fase";
-			echo "<pre>";
-			var_dump($result);
-			echo "</pre>";
-			*/
-			?>
+
 			<br />
 			<?php 
 			require_once dirname(__FILE__) . '/classes/PHPExcel.php';
@@ -64,6 +44,8 @@
 			$highestRow = $sheet->getHighestRow(); 
 			$highestColumn = $sheet->getHighestColumn();
 			
+			echo "Linhas:  ".$highestRow;
+			
 			$matriz = array();
 			
 			//  Loop through each row of the worksheet in turn
@@ -85,16 +67,21 @@
 				}
 			
 
-				
+			/*	
 			echo "<pre>";
 			var_dump($matriz);
 			echo "</pre>";
+			*/
+			
 			
 			global $wpdb;
-			$json = json_encode($matriz,JSON_UNESCAPED_UNICODE);		
+			$json = addslashes(json_encode($matriz,JSON_UNESCAPED_UNICODE));		
 			$sql = "INSERT INTO `ava_inscricao` (`id`, `id_mapas`, `inscricao`, `edital`, `aprovado`, `descricao`) 
 			VALUES (NULL, '', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
-			$wpdb->query($sql);	
+			$insert = $wpdb->query($sql);
+			if($insert == FALSE){
+				echo $sql."<br /><br />";
+			}
 			
 			}									
 									

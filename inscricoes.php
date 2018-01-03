@@ -8,51 +8,67 @@
           <h1>Inscrições</h1>
 
 
-          <h2>Section title</h2>
-		<div><select>
+          <p>Para ter acesso aos detalhes dos projetos, é necessário que esteja logado no CulturAZ e que faça parte da equipe de pareceristas.</p>
+		<!--<div><select>
 		<option></option>
 		<input class="btn btn-sm btn-default" type="submit" value="Filtrar" />
-		</select></div>
+		</select></div>-->
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-					<th>#</th>
-                  <th>ID MAPAS</th>
-                  <th>Proponente</th>
-                  <th>Edital</th>
-                  <th>Período de Avaliação</th>
-                  <th></th>
-                </tr>
+					<th>CulturAZ</th>
+					<th>Título</th>
+                    <th>Proponente</th>
+					<th>Cat</th>
+                  <th>Área</th>
+                  <th>Valor</th>
+                  <th>Nota</th>
+					<th></th>
+				  </tr>
               </thead>
               <tbody>
 				<?php 
 				global $wpdb;
-				$res = $wpdb->get_results("SELECT * FROM ava_inscricao");
+				$tipo = 'usuario';
+				$id = 1;
+				$x = opcaoDados($tipo,$id);
+				$g = $x['edital'][1];
 				
+				$edital =  editais("",19);
+
+				
+				$sql_sel_ins = "SELECT avaliadores FROM ava_edital WHERE id_mapas = '273'";
+				$sel = $wpdb->get_row($sql_sel_ins,ARRAY_A);
+
+				$res = json_decode($sel['avaliadores'],true);
+				$inscritos = $res[$g];
 				//var_dump($res);
-				for($i = 0; $i < count($res); $i++){ 
-				$res_json = converterObjParaArray(json_decode(($res[$i]->descricao)));
-				/*
-				echo "<pre>";
-				var_dump($res_json);
-				echo "</pre>";
-				*/
-				
-				//var_dump($edital);
-				if(isset($res_json['Número'])){
-					$edital = editais("",$res[0]->edital);
+				for($i = 0; $i < count($res[$g]); $i++){
+					$id_insc = $res[$g][$i];
+					$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$id_insc'";	
+					$json = $wpdb->get_row($sel,ARRAY_A);	
+					$res_json = converterObjParaArray(json_decode(($json['descricao'])));
+
+
 				?>	
     			 <tr>
-				 <td><?php echo $i; ?></td>
-                  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($res_json['Número'],3); ?>" target="_blank" ><?php echo $res_json['Número']; ?> </a></td>
+                  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($json['inscricao'],3); ?>" target="_blank" ><?php echo $json['inscricao']; ?> </a></td>
+
+                  <td><?php echo $res_json['3.1 - Título']; ?></td>
                   <td><?php echo $res_json['Agente responsável pela inscrição']; ?></td>
-                  <td><?php echo $edital[0]['titulo']; ?></td>
-                  <td><?php echo $edital[0]['periodo']; ?></td>
-                  <td></td>
+				<td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
+                  <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
+                  <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
+				  <td></td>
+                  <td>
+				  <form method="POST" action="avaliacao.php" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $json['inscricao']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Avaliar">
+							</form></td>
 					</tr>
 				<?php 
-				}
+
 				} ?>	
 
 
