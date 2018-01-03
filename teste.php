@@ -54,6 +54,10 @@ $insert = $wpdb->query($sql_insert_grupo);
 echo "<pre>";
 var_dump($grupo);
 echo "</pre>";
+
+
+		
+		
 		
 		//echo $x['departamento'];
 			
