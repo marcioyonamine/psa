@@ -28,6 +28,7 @@
               <tbody>
 				<?php 
 				global $wpdb;
+				
 				$res = $wpdb->get_results("SELECT * FROM ava_inscricao");
 				
 				//var_dump($res);
