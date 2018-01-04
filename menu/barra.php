@@ -13,18 +13,18 @@
           <li class="nav-item">
             <a class="nav-link" href="calendario/">Calendário/agenda</a>
           </li>
-          <li class="nav-item">
+         <!-- <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Help</a>
-          </li>
+          </li> -->
 		</ul>
         <form class="form-inline mt-2 mt-md-0">
 		   <a class="navbar-brand" style="color:white;" > Olá, <?php echo $user->display_name; ?></a>
         		
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <!--  <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
         </form>
       </div>
     </nav>

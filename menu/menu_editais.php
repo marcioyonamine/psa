@@ -12,10 +12,14 @@
               <a class="nav-link" href="editais.php">Editais</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="inscricoes.php">Inscrições / Avaliações</a>
+              <a class="nav-link" href="inscricoes.php">Inscrições Selecionadas / Avaliações</a>
             </li>
-
-            
+            <li class="nav-item">
+              <a class="nav-link" href="inscricoes.php?p=all"> Todas as Inscrições (Consulta)</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="http://culturaz.santoandre.sp.gov.br/autenticacao/" target="_blanck"> Login CulturAZ</a>
+            </li>           
           </ul>
 
          
