@@ -1174,3 +1174,27 @@ function moduloAritimetica($numero){
 	}
 }
 
+function retornaCriterio($id){
+	global $wpdb;
+	$sql = "SELECT * FROM ava_criterios WHERE id = '$id'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	return $res;
+}
+
+function valorNotaMax($inscricao,$usuario){
+	global $wpdb;
+	$sql = "SELECT nota,criterio FROM ava_nota WHERE inscricao = '$inscricao' AND usuario = '$usuario'";
+	$res = $wpdb->get_results($sql,ARRAY_A);
+	for($i = 0;$i < count($res); $i++){
+		$nota = $res[$i]['nota'];
+		$x = retornaCriterio($res[$i]['criterio']);
+		$corte = $x['nota_maxima'];
+		if($nota > $corte){
+			$sql_update = "UPDATE ava_nota SET nota = '$corte' WHERE inscricao = '$inscricao' AND usuario = '$usuario' AND criterio = '".$res[$i]['criterio']."'";
+			$wpdb->query($sql_update);
+		}
+	}
+	
+	
+}
+

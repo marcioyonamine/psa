@@ -32,6 +32,10 @@ if(isset($_POST['gravar'])){
 		$mensagem = "Notas atualizadas";
 	}
 	
+	// passa função de valor máximo
+	valorNotaMax($inscricao,$usuario);
+	
+	
 	if($_POST['obs'] != ""){
 		$sql_sel_obs = "SELECT id FROM ava_anotacao WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."'";
 		$res_obs = $wpdb->get_row($sql_sel_obs,ARRAY_A);
@@ -43,11 +47,11 @@ if(isset($_POST['gravar'])){
 			$res_ins_obs = $wpdb->query($sql_ins_obs);
 			
 		}
-		
 	}
-	
-	
 }
+
+
+
 ?>
 
 
@@ -85,7 +89,7 @@ $(function() {
 				?>	
                 <tr>
                   <td><?php echo $res[$i]['criterio']?></td>
-					<td><input type="text" class="form-control nota" name="<?php echo $res[$i]['id']; ?>" value="<?php echo retornaNota($inscricao,$res[$i]['id'],$user->ID); ?>"></td>
+					<td><input type="text" class="form-control nota" name="<?php echo $res[$i]['id']; ?>" value="<?php echo retornaNota($inscricao,$res[$i]['id'],$user->ID); ?>" max='3' min = '1'></td>
 				  </tr>
 				  
 				<?php } ?>

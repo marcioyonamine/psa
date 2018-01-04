@@ -69,7 +69,7 @@ $(function() {
 				$edital =  editais("",19);
 				
 				if(isset($_GET['filtro'])){
-					$filtro = "ORDER BY nota, filtro DESC";
+					$filtro = "ORDER BY nota DESC, filtro ASC";
 				}else{
 					$filtro = "ORDER BY nota DESC";
 				}
