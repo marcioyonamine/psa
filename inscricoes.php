@@ -73,7 +73,7 @@ switch($p){
 				<td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
                   <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
-				  <td></td>
+				  <td><?php echo somaNotas($json['inscricao'],$user->ID); ?></td>
                   <td>
 				  <form method="POST" action="avaliacao.php" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $json['inscricao']; ?>" />

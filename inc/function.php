@@ -1033,6 +1033,15 @@ function retornaStatus($idEvento){
 	
 }
 
+
+
+
+
+/* Fim das Funções para Pedidos de Contratação */
+
+
+/* Editais */
+
 function editais($usuario,$id = NULL){
 	global $wpdb;
 	$editais = array();
@@ -1095,6 +1104,29 @@ function editais($usuario,$id = NULL){
 }
 
 
+function retornaNota($criterio,$usuario){
+	global $wpdb;
+	$sql = "SELECT nota FROM ava_nota WHERE usuario = '$usuario' AND criterio = '$criterio'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	if(count($res) > 0){
+		return $res['nota'];
+	}else{
+		return 0;
+	}
+	
+}
 
-/* Fim das Funções para Pedidos de Contratação */
+function somaNotas($inscricao,$usuario){
+	global $wpdb;
+	$sql_soma = "SELECT nota FROM `ava_nota` WHERE inscricao = '$inscricao' AND usuario ='$usuario'";
+	$res = $wpdb->get_results($sql_soma,ARRAY_A);
+	$total = 0;
+	if(count($res) > 0){
+		for($i = 0; $i < count($res); $i++){
+			$total = $total + $res[$i]['nota'];			
+		} 
+	}
+	return $total;
+}
+
 
