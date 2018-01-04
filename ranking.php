@@ -67,8 +67,14 @@ $(function() {
 				$g = $x['edital'][1];
 				
 				$edital =  editais("",19);
+				
+				if(isset($_GET['filtro'])){
+					$filtro = "ORDER BY nota, filtro DESC";
+				}else{
+					$filtro = "ORDER BY nota DESC";
+				}
 
-				$ranking = "SELECT inscricao FROM ava_ranking WHERE edital = '".$_GET['edital']."' ORDER BY nota DESC";
+				$ranking = "SELECT inscricao FROM ava_ranking WHERE edital = '".$_GET['edital']."' $filtro ";
 				$res = $wpdb->get_results($ranking,ARRAY_A);
 				
 				//var_dump($res);
@@ -90,10 +96,7 @@ $(function() {
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
 				  <td><?php echo somaNotas($json['inscricao'],$user->ID); ?></td>
                   <td>
-				  <form method="POST" action="avaliacao.php" class="form-horizontal" role="form">
-							<input type="hidden" name="carregar" value="<?php echo $json['inscricao']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Avaliar">
-							</form></td>
+				  </td>
 					</tr>
 				<?php 
 

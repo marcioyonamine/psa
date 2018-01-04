@@ -1138,7 +1138,7 @@ function retornaAnotacao($inscricao,$usuario){
 
 function atualizaNota($inscricao){
 	global $wpdb;
-	$nota = 0;	
+	$nota_total = 0;	
 	
 	// seleciona os pareceridas
 	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao'";
@@ -1147,20 +1147,30 @@ function atualizaNota($inscricao){
 	
 	if($numero != 0){
 	
-	// seleciona todas as notas
-	$sql_notas = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao'";
-	$query_notas = $wpdb->get_results($sql_notas,ARRAY_A);
-	for($i = 0; $i < count($query_notas); $i++){
-		$nota = $nota + $query_notas[$i]['nota'];
+		for($k = 0; $k < $numero; $k++){
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$i]['usuario']);		
+			$nota_total = $nota_total + $nota[$k];
+		}
+	
+	$nota_total = $nota_total/$numero;
+	$discrepancia = 0;
+	if($numero == 2){
+		$discrepancia = moduloAritimetica($nota[0] - $nota[1]);
 	}
 	
-	$nota = $nota/$numero;
 	
 	
 	//atualiza ranking
-	$update_ranking = "UPDATE ava_ranking SET nota = '$nota' WHERE inscricao = '$inscricao'";
+	$update_ranking = "UPDATE ava_ranking SET nota = '$nota', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
 	$wpdb->query($update_ranking);
 	}
 }
 
+function moduloAritimetica($numero){
+	if($numero < 0){
+		return $numero*(-1);
+	}else{
+		return $numero;
+	}
+}
 
