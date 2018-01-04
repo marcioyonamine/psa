@@ -1161,7 +1161,7 @@ function atualizaNota($inscricao){
 	
 	
 	//atualiza ranking
-	$update_ranking = "UPDATE ava_ranking SET nota = '$nota', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
+	$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
 	$wpdb->query($update_ranking);
 	}
 }
