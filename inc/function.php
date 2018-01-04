@@ -1104,9 +1104,9 @@ function editais($usuario,$id = NULL){
 }
 
 
-function retornaNota($criterio,$usuario){
+function retornaNota($inscricao,$criterio,$usuario){
 	global $wpdb;
-	$sql = "SELECT nota FROM ava_nota WHERE usuario = '$usuario' AND criterio = '$criterio'";
+	$sql = "SELECT nota FROM ava_nota WHERE usuario = '$usuario' AND criterio = '$criterio' AND inscricao = '$inscricao'";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	if(count($res) > 0){
 		return $res['nota'];
@@ -1127,6 +1127,40 @@ function somaNotas($inscricao,$usuario){
 		} 
 	}
 	return $total;
+}
+
+function retornaAnotacao($inscricao,$usuario){
+	global $wpdb;
+	$sql_sel_obs = "SELECT anotacao FROM ava_anotacao WHERE usuario = '".$usuario."' AND inscricao = '".$inscricao."'";
+	$res_obs = $wpdb->get_row($sql_sel_obs,ARRAY_A);
+	return $res_obs['anotacao'];
+}
+
+function atualizaNota($inscricao){
+	global $wpdb;
+	$nota = 0;	
+	
+	// seleciona os pareceridas
+	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao'";
+	$query_pareceristas = $wpdb->get_results($sql_pareceristas,ARRAY_A);
+	$numero = count($query_pareceristas);
+	
+	if($numero != 0){
+	
+	// seleciona todas as notas
+	$sql_notas = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao'";
+	$query_notas = $wpdb->get_results($sql_notas,ARRAY_A);
+	for($i = 0; $i < count($query_notas); $i++){
+		$nota = $nota + $query_notas[$i]['nota'];
+	}
+	
+	$nota = $nota/$numero;
+	
+	
+	//atualiza ranking
+	$update_ranking = "UPDATE ava_ranking SET nota = '$nota' WHERE inscricao = '$inscricao'";
+	$wpdb->query($update_ranking);
+	}
 }
 
 

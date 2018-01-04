@@ -107,6 +107,7 @@ case 'all':
             <table class="table table-striped">
               <thead>
                 <tr>
+					<th>#</th>
 					<th>CulturAZ</th>
 					<th>Título</th>
                     <th>Proponente</th>
@@ -141,6 +142,7 @@ case 'all':
 
 				?>	
     			 <tr>
+				 <td><?php echo $i+1; ?></td>
                   <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($json['inscricao'],3); ?>" target="_blank" ><?php echo $json['inscricao']; ?> </a></td>
 
                   <td><?php echo $res_json['3.1 - Título']; ?></td>
