@@ -1194,7 +1194,37 @@ function valorNotaMax($inscricao,$usuario){
 			$wpdb->query($sql_update);
 		}
 	}
-	
-	
 }
 
+function nota($inscricao){
+	global $wpdb;
+	$nota_total = 0;	
+	$x = array();
+	
+	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao'";
+	$query_pareceristas = $wpdb->get_results($sql_pareceristas,ARRAY_A);
+	$numero = count($query_pareceristas);
+	
+	if($numero != 0){
+	
+		for($k = 0; $k < $numero; $k++){
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario']);		
+			$nota_total = $nota_total + $nota[$k];
+			$x['pareceristas'][$k]['usuario'] = $query_pareceristas[$k]['usuario'];
+			$x['pareceristas'][$k]['nota'] = $nota[$k];
+		}
+	
+	$nota_total = $nota_total/$numero;
+	$discrepancia = 0;
+
+	if($numero == 2){
+		$discrepancia = moduloAritimetica($nota[0] - $nota[1]);
+	
+	}
+
+	$x['media'] = $nota_total;
+
+	return $x;
+	
+}
+}

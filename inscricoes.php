@@ -114,8 +114,9 @@ case 'all':
 					<th>Cat</th>
                   <th>Área</th>
                   <th>Valor</th>
-                  <th>Nota</th>
-
+                  <th>N1</th>
+                  <th>N2</th>
+                  <th>NM</th>
 				  </tr>
               </thead>
               <tbody>
@@ -127,6 +128,7 @@ case 'all':
 				$g = $x['edital'][1];
 				
 				$edital =  editais("",19);
+				$pag = 20;
 
 				
 				$sql_sel_ins = "SELECT inscricao FROM ava_inscricao";
@@ -138,8 +140,11 @@ case 'all':
 					$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$id_insc'";	
 					$json = $wpdb->get_row($sel,ARRAY_A);	
 					$res_json = converterObjParaArray(json_decode(($json['descricao'])));
-
-
+					$nota = nota($id_insc);
+					//var_dump($nota);
+					
+					if($i%$pag != 0 OR $i == 0){
+					
 				?>	
     			 <tr>
 				 <td><?php echo $i+1; ?></td>
@@ -147,13 +152,47 @@ case 'all':
 
                   <td><?php echo $res_json['3.1 - Título']; ?></td>
                   <td><?php echo $res_json['Agente responsável pela inscrição']; ?></td>
-				<td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
+				  <td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
                   <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
-				  <td></td>
-                  
+				  <td><?php if(isset($nota['pareceristas'][0])){echo $nota['pareceristas'][0]['nota'];}?></td>
+				  <td><?php if(isset($nota['pareceristas'][1])){echo $nota['pareceristas'][1]['nota'];}?></td>
+				  <td><?php if(isset($nota['media'])){echo $nota['media'];}?></td>
+                 
 					</tr>
-				<?php 
+				<?php }else{
+
+					?>
+                <tr>
+					<th>#</th>
+					<th>CulturAZ</th>
+					<th>Título</th>
+                    <th>Proponente</th>
+					<th>Cat</th>
+                  <th>Área</th>
+                  <th>Valor</th>
+                  <th>N1</th>
+                  <th>N2</th>
+                  <th>NM</th>
+				  </tr>
+
+				<tr>
+				 <td><?php echo $i+1; ?></td>
+                  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($json['inscricao'],3); ?>" target="_blank" ><?php echo $json['inscricao']; ?> </a></td>
+
+                  <td><?php echo $res_json['3.1 - Título']; ?></td>
+                  <td><?php echo $res_json['Agente responsável pela inscrição']; ?></td>
+				  <td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
+                  <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
+                  <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
+				  <td><?php if(isset($nota['pareceristas'][0])){echo $nota['pareceristas'][0]['nota'];}?></td>
+				  <td><?php if(isset($nota['pareceristas'][1])){echo $nota['pareceristas'][1]['nota'];}?></td>
+				  <td><?php if(isset($nota['media'])){echo $nota['media'];}?></td>
+                 
+					</tr>
+					
+					
+				<?php	}
 
 				} ?>	
 

@@ -65,6 +65,18 @@ $(function() {
 	$( ".nota" ).mask("9.9");
 });
   </script>
+<script language="javascript">
+function verificachars(){
+var objeto = form1.obs.value
+
+ if(objeto.length > 600){
+  alert("O limite da observação é de 600 caracteres.");
+  return(false)
+ }
+
+}
+</script>
+  
   <?php include "menu/menu_editais.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
@@ -80,7 +92,7 @@ $(function() {
                 </tr>
               </thead>
               <tbody>
-			  <form method="POST" action="?" class="form-horizontal" role="form">
+			  <form method="POST" action="?" class="form-horizontal" role="form" name="form1">
 				<?php 
 				
 				$sql = "SELECT * FROM ava_criterios WHERE edital = '273'";
@@ -98,7 +110,7 @@ $(function() {
 									<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Observação</label>
-							<textarea name="obs" class="form-control" rows="10" ><?php echo retornaAnotacao($inscricao,$user->ID); ?></textarea>
+							<textarea name="obs" class="form-control" rows="10" OnKeyUp="return verificachars()" ><?php echo retornaAnotacao($inscricao,$user->ID); ?></textarea>
 						</div> 
 					</div>
 				</td>

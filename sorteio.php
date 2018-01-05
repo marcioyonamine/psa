@@ -16,9 +16,11 @@
 		
 		var_dump($x);
 		
+		$id_mapas = $_GET['id_mapas'];
+		
 		//algoritmo de sorteio 
 
-		$sel_pes = "SELECT * FROM ava_inscricao WHERE edital = '19'";
+		$sel_pes = "SELECT * FROM ava_inscricao WHERE id_mapas = '$id_mapas'";
 		$res_sel = $wpdb->get_results($sel_pes,ARRAY_A);
 		$total = count($res_sel);
 		

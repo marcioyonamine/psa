@@ -13,10 +13,10 @@
           <li class="nav-item">
             <a class="nav-link" href="calendario/">Calendário/agenda</a>
           </li>
-         <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+         <li class="nav-item">
+            <a class="nav-link" href="../wp-admin">WP-Admin</a>
           </li>
-          <li class="nav-item">
+         <!-- <li class="nav-item">
             <a class="nav-link" href="#">Help</a>
           </li> -->
 		</ul>
