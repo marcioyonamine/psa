@@ -44,7 +44,7 @@ switch($p){
 				<?php 
 				global $wpdb;
 				$tipo = 'usuario';
-				$id = 1;
+				$id = $user->ID;
 				$x = opcaoDados($tipo,$id);
 				$g = $x['edital'][1];
 				
