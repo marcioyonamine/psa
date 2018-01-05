@@ -60,13 +60,55 @@ if(isset($_GET['id_mapas'])){
 
 
   
-		  
+
+<?php 
+break;
+case 'relatorio_edital':  
+
+if(isset($_GET['edital'])){
+	$edital = $_GET['edital'];
+}else{
+	echo "Não há edital selecionado.<br />";
+}
+
+if(isset($_GET['user'])){
+	$user = $_GET['user'];
+}else{
+	echo "Não há usuário selecionado.<br />";
+}
+
+if(isset($user) AND isset($edital)){
+	
+	
+}else{ ?>
+
+<form method="POST" action="?" class="form-horizontal" role="form">
+ <div class="container">
+    <div class="row">    
+		<div class="col-md-offset-2 col-md-8">
+		<label>Edital</label>
+		<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value=""/>
+		</div>
+     </div>
+</div>
+</form>
+
+<?php 
+}
+?>  
 <?php 
 //break;
 //case '':  
 ?>		  
-
-
+<!--
+					 <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Não há Edital indicado</h1>
+				</div>
+        </div>
+		</div>
+-->
 <?php 
 break;
 }//fim da switch
