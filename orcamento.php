@@ -817,7 +817,18 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
                   <th></th>
 
 				  </tr>
-					
+						<tr>
+
+					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
+					  <td><?php echo $orc['natureza']; ?></td>
+					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
+					  <td><?php echo dinheiroParaBr($total); ?></td>
+					  <td><?php echo dinheiroParaBr($total - $orc['planejado']); ?></td>				
 					
 					
 					<?php
