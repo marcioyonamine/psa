@@ -16,7 +16,7 @@ switch($p){
 	case "inicio":
 	$edital =  273;
 	$aval = verificaAvaliacao($user->ID,$edital);
-	var_dump($aval);
+	//var_dump($aval);
 ?>
 
   
