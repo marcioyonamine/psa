@@ -623,6 +623,25 @@ $(function() {
 <?php 
 break;
 case "mov_listar":
+if(isset($_POST['deletar'])){
+	$mensagem = "Teste 123";
+	global $wpdb;
+	$id = $_POST['deletar'];
+	$sql_del = "UPDATE sc_mov_orc SET publicado = '0' WHERE id = '$id'";
+	$upd = $wpdb->query($sql_del);
+	if($upd == 1){
+		$mensagem = "<div class='alert alert-success'>
+  <strong>Movimentação deletada com sucesso.</strong>
+</div>"	;
+	}else{
+		$mensagem = "<div class='alert alert-warning'>
+  <strong>Erro.Tente novamente.</strong>
+</div>"	;
+		
+	}
+	
+}
+
 ?>
 
 <section id="contact" class="home-section bg-white">
@@ -630,30 +649,37 @@ case "mov_listar":
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Movimentações Orçamentárias</h1>
+					<?php if(isset($mensagem)){echo $mensagem;}?>
 				</div>
+				
         </div>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
+				<th>#</th>
                   <th>Data</th>
                   <th>Título</th>
                   <th>Dotação</th>
                   <th>Tipo</th>
                   <th>Valor</th>
+				  <th></th>
+				  <th></th>
 				  </tr>
               </thead>
               <tbody>
 
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_mov_orc ORDER BY data DESC";
+				$sql_list =  "SELECT * FROM sc_mov_orc WHERE publicado = '1' ORDER BY data DESC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$dot = recuperaDados("sc_orcamento",$res[$i]['idOrc'],"id");
 					$tipo = tipo($res[$i]['tipo']);
 					?>
 					<tr>
+					 <td><?php echo $res[$i]['id']; ?></td>
+
 					  <td><?php echo exibirDataBr($res[$i]['data']); ?></td>
 					  <td><?php echo $res[$i]['titulo']; ?></td>
 					  <td><?php echo $dot['dotacao'] ?></td>
@@ -667,7 +693,15 @@ case "mov_listar":
 							<?php 
 					  
 					  ?></td>
-					</tr>
+					  <td>
+							<form method="POST" action="?p=mov_listar" class="form-horizontal" role="form">
+							<input type="hidden" name="deletar" value="<?php echo $res[$i]['id']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Deletar">
+							</form>
+
+						</td>
+
+					  </tr>
 				<?php } // fim do for?>	
 
               </tbody>
@@ -914,6 +948,7 @@ $historico = orcamento($id_hist);
             <table class="table table-striped">
               <thead>
                 <tr>
+				<th>#</th>
 					  <th>Data</th>
 				<th>Tipo</th>
 				<th>Título</th>
@@ -942,6 +977,7 @@ $historico = orcamento($id_hist);
 					}
 					?>
 					<tr>
+						<td><?php echo $historico['historico'][$i]['id']; ?></td>
 					  <td><?php echo exibirDataBr($historico['historico'][$i]['data']); ?></td>
 					  <td><?php echo  $tipo['tipo']; ?></td>
 					  <td><?php echo $historico['historico'][$i]['titulo']; ?></td>

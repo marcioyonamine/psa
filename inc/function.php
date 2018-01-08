@@ -544,7 +544,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	$val = $wpdb->get_row($sel,ARRAY_A);
 	
 	// Contigenciado (286)
-	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '286' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data";
+	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '286' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1'" ;
 	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
 	$valor_cont = 0;
 	for($i = 0; $i < count($cont); $i++){
@@ -552,7 +552,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	}
 	
 	// Descontigenciado (287)
-	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '287' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data";
+	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '287' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1'";
 	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
 	$valor_desc = 0;
 	for($i = 0; $i < count($cont); $i++){
@@ -561,7 +561,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	
 
 	// Suplemento (288)
-	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '288' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data";
+	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '288' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1'";
 	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
 	$valor_supl = 0;
 	for($i = 0; $i < count($cont); $i++){
@@ -569,7 +569,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	}
 	
 	// Histórico
-	$sel_hist = "SELECT titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC";
+	$sel_hist = "SELECT id, titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC ";
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 	
 	// liberado
