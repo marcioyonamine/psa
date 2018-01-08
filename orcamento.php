@@ -1161,70 +1161,275 @@ $(function() {
 
 <?php 
 break;
-case "plan_edita":
+case "listaprograma":
 
 ?>
+  <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Programas</h1>
+					<p><?php if(isset($mensagem)){echo $mensagem;}?></p>
+				</div>
+        </div>
+
+		<div class="col-md-offset-1 col-md-10">
+		
+		</div>		
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+					  
+                  <th>Título</th>
+				  <th></th>
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'programa'";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				
+				for($i = 0; $i < count($res); $i++){
+					$json = json_decode($res[$i]['descricao'],true);
+					$programa = tipo($json['programa']);
+					$plan = retornaPlanejamento($res[$i]['id_tipo']);
+				?>
+				<tr>
+					
+					  <td><?php echo $res[$i]['tipo']; ?><?php //var_dump($orc); ?></td>
+
+					<form method="POST" action="?p=planejamento" class="form-horizontal" role="form">
+						<td>	
+
+							<input type="hidden" name="atualiza" value="<?php echo $res[$i]['id_tipo']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar">
+							</form>					  
+							</td>
+					</tr>		
+		
+				<?php } ?>		
+
+				</tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+<?php 
+break;
+case "listaprojeto":
+
+?>
+  <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Projetos</h1>
+					<p><?php if(isset($mensagem)){echo $mensagem;}?></p>
+				</div>
+        </div>
+
+		<div class="col-md-offset-1 col-md-10">
+		
+		</div>		
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+					  
+                  <th>Projeto</th>
+                  <th>Programa</th>
+				  <th></th>
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto'";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				
+				for($i = 0; $i < count($res); $i++){
+					$json = json_decode($res[$i]['descricao'],true);
+					$programa = tipo($json['programa']);
+					$plan = retornaPlanejamento($res[$i]['id_tipo']);
+				?>
+				<tr>
+					
+					  <td><?php echo $res[$i]['tipo']; ?><?php //var_dump($orc); ?></td>
+					  <td><?php echo $programa['tipo']; //var_dump($json); ?></td>
+					<form method="POST" action="?p=editaprojeto" class="form-horizontal" role="form">
+
+						<td>	
+
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id_tipo']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar">
+							</form>					  
+							</td>
+					</tr>		
+		
+				<?php } ?>		
+
+				</tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+<?php 
+break;
+case "editaprojeto":
+
+if(isset($_POST['carregar'])){
+	$projeto = tipo($_POST['carregar']);
+	$pro_json = json_decode($projeto['descricao'],true);
+	var_dump($pro_json);
+}
+
+if(isset($_POST['editaprojeto'])){
+	$id = $_POST['editaprojeto'];
+	$titulo = $_POST['titulo'];
+	$programa = $_POST['programa'];
+	$inicio = exibirDataMysql($_POST['inicio']);
+	$fim = exibirDataMysql($_POST['fim']);
+	$responsavel = $_POST['responsavel'];
+	$descricao = $_POST['descricao'];
+	$json = array(
+	"programa" => "$programa",
+	"inicio" => "$inicio",
+	"responsavel" => "$responsavel",
+	"fim" => "$fim",
+	"descricao" => "$descricao"
+	);
+	$des = json_encode($json);
+	$sql_upd = "UPDATE sc_tipo SET
+	tipo = '$titulo',
+	descricao = '$des'
+	WHERE id_tipo = '$id';	
+	";
+	$upd = $wpdb->query($sql_upd);
+		$projeto = tipo($id);
+	$pro_json = json_decode($projeto['descricao'],true);
+	
+}
+
+?>
+    <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+
+
+
+</script>
  <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
 
-                    <h3>Movimentação Orçamentária</h3>
-                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
+                    <h3>Projeto:</h3>
+                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?>
+					
+					<?php var_dump($pro_json)?></h4>
 
 			</div>
 		</div> 
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?p=mov_editar" class="form-horizontal" role="form">
+				<form method="POST" action="?p=editaprojeto" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Titulo *</label>
-							<input type="text" name="titulo" class="form-control" id="inputSubject" value="<?php echo $mov['titulo'] ?>" />
+							<input type="text" name="titulo" class="form-control" id="inputSubject" value="<?php echo $projeto['tipo'] ?>" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<label>Tipo de movimentação</label>
-							<select class="form-control" name="tipo" id="inputSubject" >
+							<label>Programa</label>
+							<select class="form-control" name="programa" id="inputSubject" >
 							<option value='0'>Escolha uma opção</option>
-							<?php echo geraTipoOpcao("mov_orc",$mov['tipo']) ?>
+							<?php echo geraTipoOpcao("programa",$pro_json['programa']) ?>
 							</select>
 						</div>
 					</div>	
+	
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<label>Dotação</label>
-							<select class="form-control" name="dotacao" id="inputSubject" >
-							<option value='0'>Escolha uma opção</option>
-							<?php echo geraOpcaoDotacao('2017',$mov['dotacao']); ?>
-							</select>
-						</div>
-					</div>	
+							<label>Início *</label>
+							<input type="text" name="inicio" class="form-control calendario"   value="<?php echo exibirDataBr($pro_json['inicio']) ?>"/>
+							
+							</div>
+						</div>					
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<label>Valor *</label>
-							<input type="text" name="valor" class="form-control valor" id="inputSubject"  value="<?php echo dinheiroParaBr($mov['valor']) ?>" />
+							<label>Fim *</label>
+							<input type="text" name="fim" class="form-control calendario"   value="<?php echo exibirDataBr($pro_json['fim']) ?>"/>
+							
+							</div>
+						</div>					
+					<div class="form-group">
+								<div class="col-md-offset-2">
+							<label>Responsável</label>
+							<select class="form-control" name="responsavel" id="inputSubject" >
+								<option value="0"></option>
+								<?php geraOpcaoUsuario($pro_json['responsavel']);	?>							
+							</select>	                
 						</div>
 					</div>
-					<div class="form-group">
+						<div class="form-group">
 						<div class="col-md-offset-2">
-							<label>Data *</label>
-							<input type="text" name="data" class="form-control calendario"   value="<?php echo exibirDataBr($mov['data']) ?>"/>
-						</div>
-					</div>					
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Descição / Observação*</label>
-							<textarea name="descricao" class="form-control" rows="10" ><?php echo $mov['descricao'] ?></textarea>
+							<label>Descrição *</label>
+							<textarea name="descricao" class="form-control" rows="10" ><?php echo $pro_json['descricao'] ?></textarea>
 						</div> 
 					</div>	
 						<div class="form-group">
 						<div class="col-md-offset-2">
-							<input type="hidden" name="mov_editar" value="<?php echo $mov['id'] ?>" />
+							<input type="hidden" name="editaprojeto" value="<?php echo $projeto['id_tipo'] ?>" />
 							<?php 
 							?>
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir Movimentação">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar Projeto">
 						</div>
 					</div>
 				</form>
@@ -1232,6 +1437,15 @@ case "plan_edita":
 		</div>
 	</div>
 </section>
+<?php 
+break;
+case "editaprograma":
+
+?>
+
+
+
+
 
 <?php 
 break;

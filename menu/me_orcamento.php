@@ -33,8 +33,12 @@
 	  <li class="nav-item">
               <a class="nav-link" href="orcamento.php?p=listar">Listar Dotações</a>
             </li>
-        
-
+  	  <li class="nav-item">
+              <a class="nav-link" href="orcamento.php?p=planejamento">Planejamento</a>
+            </li>      
+  	  <li class="nav-item">
+              <a class="nav-link" href="orcamento.php?p=listaprojeto">Projetos</a>
+            </li> 
 
 			</ul>
 
