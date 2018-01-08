@@ -34,8 +34,9 @@ if(isset($_SESSION['id'])){
             <table class="table table-striped">
               <thead>
                 <tr>
-				<th>Ficha</th>
                   <th>Projeto</th>
+				<th>Ficha</th>
+
                   <th>Dotação</th>
                   <th>Descricao</th>
                   <th>Valor</th>
@@ -46,14 +47,15 @@ if(isset($_SESSION['id'])){
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_orcamento ORDER BY projeto DESC";
+				$sql_list =  "SELECT * FROM sc_orcamento ORDER BY projeto ASC, ficha ASC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					
 					?>
 					<tr>
-					  <td><?php echo $res[$i]['ficha']; ?></td>
 					  <td><?php echo $res[$i]['projeto']; ?></td>
+					<td><?php echo $res[$i]['ficha']; ?></td>
+
 					  <td><?php echo $res[$i]['dotacao']; ?></td>
 					  <td><?php echo $res[$i]['descricao']; ?></td>
 					  <td><?php echo dinheiroParaBr($res[$i]['valor']); ?></td>
@@ -819,7 +821,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 			  <form method="POST" action="?" />
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT id FROM sc_orcamento WHERE publicado = '1' $ano $unidade $fonte $projeto $ficha ORDER BY id ASC";
+				$sql_list =  "SELECT id FROM sc_orcamento WHERE publicado = '1' $ano $unidade $fonte $projeto $ficha ORDER BY projeto ASC, ficha ASC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				$total_orc = 0;
 				$total_con = 0;
@@ -949,7 +951,7 @@ $historico = orcamento($id_hist);
               <thead>
                 <tr>
 				<th>#</th>
-					  <th>Data</th>
+			  <th>Data</th>
 				<th>Tipo</th>
 				<th>Título</th>
                   <th>Descrição</th>
@@ -961,6 +963,7 @@ $historico = orcamento($id_hist);
 			  <td></td>
 			  <td>Inicial</td>
 			  <td>Orçamento aprovado</td>
+			  <td></td>
 			  <td></td>
 			  <td><?php echo dinheiroParaBr($historico['total']);?></td>
 
@@ -977,19 +980,19 @@ $historico = orcamento($id_hist);
 					}
 					?>
 					<tr>
-						<td><?php echo $historico['historico'][$i]['id']; ?></td>
+					  <td><?php echo $historico['historico'][$i]['id']; ?></td>
 					  <td><?php echo exibirDataBr($historico['historico'][$i]['data']); ?></td>
 					  <td><?php echo  $tipo['tipo']; ?></td>
 					  <td><?php echo $historico['historico'][$i]['titulo']; ?></td>
 					  <td><?php echo $historico['historico'][$i]['descricao']; ?></td>
 					  <td><?php echo $valor; ?></td>
-
 					  </tr>
 				<?php 
 					
 					
 				} // fim do for?>	
 				<tr>
+				<td></td>
 						<td><td>
 					  <td></td>
 								  <td>Total em <?php echo date('d/m/Y') ?></td>
