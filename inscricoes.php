@@ -14,6 +14,9 @@ if(isset($_GET['p'])){
 
 switch($p){
 	case "inicio":
+	$edital =  273;
+	$aval = verificaAvaliacao($user->ID,$edital);
+	var_dump($aval);
 ?>
 
   
@@ -22,6 +25,9 @@ switch($p){
 
 
           <p>Para ter acesso aos detalhes dos projetos, é necessário que esteja logado no CulturAZ e que faça parte da equipe de pareceristas. <a href="http://culturaz.santoandre.sp.gov.br/autenticacao/" target="_blanck">Clique para logar</a></p>
+		  <p>
+		  Você tem <strong><?php echo $aval['zeradas']?></strong> inscrições zerada(s) ou sem avaliação e <strong><?php echo $aval['anotacao']?></strong> com o campo observação em branco.
+		  </p>
 		<!--<div><select>
 		<option></option>
 		<input class="btn btn-sm btn-default" type="submit" value="Filtrar" />

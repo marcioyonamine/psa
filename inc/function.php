@@ -1226,5 +1226,55 @@ function nota($inscricao){
 
 	return $x;
 	
+	}
 }
+
+function retornaNotaTotal($inscricao,$usuario){
+	global $wpdb;
+	$nota = 0;
+	$sql = "SELECT nota FROM ava_nota WHERE usuario = '$usuario' AND inscricao ='$inscricao'";
+	$res = $wpdb->get_results($sql,ARRAY_A);
+	for($i = 0; $i < count($res); $i++){
+		$nota = $nota + $res[$i]['nota'];
+		
+	}
+	return $nota;
+	
+	
 }
+
+
+function verificaAvaliacao($usuario,$edital){
+	global $wpdb;
+	$anotacao = 0;
+	$zeradas = 0;
+	$matriz = array();
+	
+	$tipo = 'usuario';
+	$id = $usuario;
+	$x = opcaoDados($tipo,$id);
+	$g = $x['edital'][1];
+	$sql_sel_ins = "SELECT avaliadores FROM ava_edital WHERE id_mapas = '$edital'";
+	$sel = $wpdb->get_row($sql_sel_ins,ARRAY_A);
+	$res = json_decode($sel['avaliadores'],true);
+	$inscritos = $res[$g];
+
+	for($i = 0; $i < count($res[$g]); $i++){ //roda as notas das inscrições
+		$id_insc = $res[$g][$i];
+		$y = retornaAnotacao($id_insc,$usuario);
+		if($y == NULL OR $y == ""){
+			$anotacao++;
+		}
+		$k = retornaNotaTotal($id_insc,$usuario);
+		if($k == 0){
+			$zeradas = $zeradas + 1;
+		}
+	}
+
+	$matriz['zeradas'] = $zeradas;
+	$matriz['anotacao'] = $anotacao;
+	
+	return $matriz;
+		
+}
+
