@@ -15,22 +15,41 @@ if(isset($_POST['gravar'])){
 			if(is_numeric($value) OR $value == ""){
 				$sql_atualiza = "UPDATE ava_nota SET nota = '$value' WHERE usuario = '$usuario' AND criterio = '$key' AND inscricao = '$inscricao'";
 				$ins = $wpdb->query($sql_atualiza);
+				if($ins == 1){
+					 $mensagem = "<div class='alert alert-success'>
+  <strong>Notas lançadas.</strong>
+</div>"	;
+				}else{
+					$mensagem = "<div class='alert alert-warning'>
+  <strong>Erro.Tente novamente.</strong>
+</div>"	;
+				}
 			}
 		}
 	
 		atualizaNota($inscricao);
-		$mensagem = "Notas lançadas";
+
 		
-	}else{ // não existe, atualiza
+	}else{ // não existe, insere
 	 	foreach($_POST as $key => $value){
 			if((is_numeric($value) OR $value == "")){
 			$sql_insere = "INSERT INTO `ava_nota` (`id`, `usuario`, `inscricao`, `nota`, `criterio`) VALUES (NULL, '$usuario', '$inscricao', '$value', '$key');";
-				$ins = $wpdb->query($sql_insere);
+			$ins = $wpdb->query($sql_insere);
+				if($ins == 1){
+					 $mensagem = "<div class='alert alert-success'>
+  <strong>Notas lançadas.</strong>
+</div>"	;
+				}else{
+					$mensagem = "<div class='alert alert-warning'>
+  <strong>Erro.Tente novamente.</strong>
+</div>"	;			
+			
 			}
 		}
 		atualizaNota($inscricao);	
-		$mensagem = "Notas atualizadas";
-	}
+		
+		}
+		}
 	
 	// passa função de valor máximo
 	valorNotaMax($inscricao,$usuario);
@@ -81,6 +100,7 @@ var objeto = form1.obs.value
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Avaliação</h1>
+		  <?php if(isset($mensagem)){ echo $mensagem; } ?>
 		<h2><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($inscricao,3); ?>" target="_blank" ><?php echo $inscricao; ?> </a></h2>	
           <h2></h2>
           <div class="table-responsive">
