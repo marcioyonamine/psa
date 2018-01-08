@@ -47,7 +47,7 @@ if(isset($_SESSION['id'])){
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_orcamento ORDER BY projeto ASC, ficha ASC";
+				$sql_list =  "SELECT * FROM sc_orcamento WHERE planejamento = '0' ORDER BY projeto ASC, ficha ASC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					
@@ -508,6 +508,11 @@ $(function() {
 break;
 case "mov_editar":
 
+if(isset($_POST['carregar'])){
+	$id_orc = $_POST['carregar'];
+	$mov = $wpdb->get_row("SELECT * FROM sc_mov_orc WHERE id =  '$id_orc'",ARRAY_A);
+}
+
 if(isset($_POST['mov_inserir']) OR isset($_POST['mov_editar']) ){
   $titulo = addslashes($_POST["titulo"]);
   $tipo = $_POST["tipo"];
@@ -532,6 +537,28 @@ if(isset($_POST['mov_inserir'])){
 	
 }
 
+if(isset($_POST['mov_editar'])){
+	$id_orc = $_POST['mov_editar'];
+	global $wpdb;
+	$idUsuario = $user->ID;
+	$sql = "UPDATE `sc_mov_orc` SET
+	`titulo` = '$titulo', 
+	`tipo` = '$tipo', 
+	`idOrc` = '$dotacao', 
+	`data` = '$data', 
+	`valor` = '$valor', 
+	`descricao` = '$descricao', 
+	`idUsuario` = '$idUsuario'
+	WHERE id = '$id_orc'";
+	$ins = $wpdb->query($sql);
+	if($ins == 1){
+		$mensagem = "<div class='alert alert-success'><strong>Movimentação atualizada.</strong> </div>"	;
+	}else{
+		$mensagem =  "<div class='alert alert-warning'><strong>$sql.</strong> </div>";
+	}
+	$mov = $wpdb->get_row("SELECT * FROM sc_mov_orc WHERE id =  '$id_orc'",ARRAY_A);
+	
+}
 
 
 ?>
@@ -614,7 +641,7 @@ $(function() {
 							<input type="hidden" name="mov_editar" value="<?php echo $mov['id'] ?>" />
 							<?php 
 							?>
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir Movimentação">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar Movimentação">
 						</div>
 					</div>
 				</form>
@@ -662,7 +689,7 @@ if(isset($_POST['deletar'])){
 				<th>#</th>
                   <th>Data</th>
                   <th>Título</th>
-                  <th>Dotação</th>
+                  <th>Pro/Fic/Ele</th>
                   <th>Tipo</th>
                   <th>Valor</th>
 				  <th></th>
@@ -688,7 +715,7 @@ if(isset($_POST['deletar'])){
 					  <td><?php echo $tipo['tipo']; ?></td>
 					  <td><?php echo dinheiroParaBr($res[$i]['valor']); ?></td>
 					  <td>	
-							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<form method="POST" action="?p=mov_editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
 							</form>
@@ -1005,6 +1032,205 @@ $historico = orcamento($id_hist);
           </div>
 
 		</div>
+</section>
+
+<?php 
+break;
+case "planejamento":
+
+if(isset($_POST['atualiza'])){
+	$idPlan = $_POST['atualiza'];
+	$valor = dinheiroDeBr($_POST['valor']);
+	$dotacao = $_POST['dotacao'];
+	
+	$ver = retornaPlanejamento($idPlan);
+	if($ver['bool'] == FALSE){ // insere
+		$sql_ins = "INSERT INTO `sc_orcamento` (`valor`,`planejamento`, `idPai`) VALUES ('$valor','$idPlan','$dotacao')";
+		$ins = $wpdb->query($sql_ins);
+		if($ins == 1){
+					 $mensagem = "<div class='alert alert-success'>
+  <strong>Planejamento atualizado.</strong>
+</div>"	;
+				}else{
+					$mensagem = "<div class='alert alert-warning'>
+  <strong>Erro.Tente novamente.</strong>
+</div>"	;
+				}
+		
+	}else{ // atualiza
+		$sql_ins = "UPDATE `sc_orcamento` SET `valor` = '$valor',
+		`idPai` = '$dotacao'  
+		WHERE planejamento = '$idPlan'";
+		$ins = $wpdb->query($sql_ins);
+		if($ins == 1){
+					 $mensagem = "<div class='alert alert-success'>
+  <strong>Planejamento atualizado.</strong>
+</div>"	;
+				}else{
+					$mensagem = "<div class='alert alert-warning'>
+  <strong>Erro.Tente novamente.</strong>
+</div>"	;
+				}
+	}
+	
+	//verifica se existe
+	
+}
+
+
+?>
+  <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Planejamento</h1>
+					<p><?php if(isset($mensagem)){echo $mensagem;}?></p>
+				</div>
+        </div>
+
+		<div class="col-md-offset-1 col-md-10">
+		
+		</div>		
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+					  
+                  <th>Projeto</th>
+                  <th>Programa</th>
+                  <th width="15%">Valor</th>
+				  <th>Dotação</th>
+				  <th></th>
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto'";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				
+				for($i = 0; $i < count($res); $i++){
+					$json = json_decode($res[$i]['descricao'],true);
+					$programa = tipo($json['programa']);
+					$plan = retornaPlanejamento($res[$i]['id_tipo']);
+				?>
+				<tr>
+					
+					  <td><?php echo $res[$i]['tipo']; ?><?php //var_dump($orc); ?></td>
+					  <td><?php echo $programa['tipo']; //var_dump($json); ?></td>
+					<form method="POST" action="?p=planejamento" class="form-horizontal" role="form">
+					  <td><?php //var_dump($plan); ?><input type="text" name="valor" class="form-control valor"   value="<?php echo dinheiroParaBr($plan['valor']); ?>"/></td>	
+					  <td>					
+						
+							<select class="form-control" name="dotacao" id="inputSubject" >
+							<option value="NULL">Escolha uma opção</option>
+							<?php echo geraOpcaoDotacao('2018',$plan['dotacao']); ?>
+							</select>			
+						</td>		
+						<td>	
+
+							<input type="hidden" name="atualiza" value="<?php echo $res[$i]['id_tipo']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Atualiza">
+							</form>					  
+							</td>
+					</tr>		
+		
+				<?php } ?>		
+
+				</tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+
+<?php 
+break;
+case "plan_edita":
+
+?>
+ <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+
+                    <h3>Movimentação Orçamentária</h3>
+                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
+
+			</div>
+		</div> 
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="?p=mov_editar" class="form-horizontal" role="form">
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Titulo *</label>
+							<input type="text" name="titulo" class="form-control" id="inputSubject" value="<?php echo $mov['titulo'] ?>" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Tipo de movimentação</label>
+							<select class="form-control" name="tipo" id="inputSubject" >
+							<option value='0'>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("mov_orc",$mov['tipo']) ?>
+							</select>
+						</div>
+					</div>	
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Dotação</label>
+							<select class="form-control" name="dotacao" id="inputSubject" >
+							<option value='0'>Escolha uma opção</option>
+							<?php echo geraOpcaoDotacao('2017',$mov['dotacao']); ?>
+							</select>
+						</div>
+					</div>	
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Valor *</label>
+							<input type="text" name="valor" class="form-control valor" id="inputSubject"  value="<?php echo dinheiroParaBr($mov['valor']) ?>" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Data *</label>
+							<input type="text" name="data" class="form-control calendario"   value="<?php echo exibirDataBr($mov['data']) ?>"/>
+						</div>
+					</div>					
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Descição / Observação*</label>
+							<textarea name="descricao" class="form-control" rows="10" ><?php echo $mov['descricao'] ?></textarea>
+						</div> 
+					</div>	
+						<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="mov_editar" value="<?php echo $mov['id'] ?>" />
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir Movimentação">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </section>
 
 <?php 

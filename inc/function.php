@@ -431,17 +431,17 @@ function geraOpcaoUsuario($select = NULL, $role = NULL){
 
 function geraOpcaoDotacao($ano_base,$id = NULL){
 	global $wpdb;
-	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '$ano_base' AND valor <> '0.00' AND publicado = '1'";
+	$sql_orc = "SELECT * FROM sc_orcamento WHERE ano_base = '$ano_base' AND valor <> '0.00' AND publicado = '1' ORDER BY ficha ASC, projeto ASC";
 	$res = $wpdb->get_results($sql_orc,ARRAY_A);
 	echo "<pre>";
 	var_dump(($res));
 	echo "</pre>";
 	for($i = 0; $i < count($res) ; $i++){
 		if($res[$i]['id'] == $id){
-			echo "<option value = '".$res[$i]['id']."' selected >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
+			echo "<option value = '".$res[$i]['id']."' selected >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['projeto']."/".$res[$i]['ficha'].")</option>";
 			//echo "<option>selected</option>";
 		}else{
-			echo "<option value = '".$res[$i]['id']."' >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['dotacao'].")</option>";
+			echo "<option value = '".$res[$i]['id']."' >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['projeto']."/".$res[$i]['ficha'].")</option>";
 			//echo "<option>non-selected</option>";
 		}	
 	
@@ -1276,5 +1276,24 @@ function verificaAvaliacao($usuario,$edital){
 	
 	return $matriz;
 		
+}
+
+function retornaPlanejamento($idPlan){
+	global $wpdb;
+	$x = array();
+	$x['bool'] = FALSE;
+	$x['dotacao'] = 0;
+	$x['valor'] = 0;	
+	$sql_ver = "SELECT id, valor, idPai FROM sc_orcamento WHERE planejamento = '$idPlan'";
+	//echo $sql_ver;
+	$res_ver = $wpdb->get_results($sql_ver,ARRAY_A);
+	if(count($res_ver) > 0){
+		$x['bool'] = TRUE;
+		$x['dotacao'] = $res_ver[0]['idPai'];
+		$x['valor'] = $res_ver[0]['valor'];
+	}
+	
+	return $x;
+
 }
 

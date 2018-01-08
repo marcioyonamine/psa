@@ -7,52 +7,40 @@ if(isset($_POST['carregar'])){
 
 if(isset($_POST['gravar'])){
 	$inscricao = $_POST['carregar'];
-	$sql_verifica = "SELECT id FROM ava_nota WHERE inscricao = '$inscricao' AND usuario = '".$user->ID."'";
-	$res = $wpdb->get_results($sql_verifica,ARRAY_A);
 	$usuario = $user->ID;
-	if(count($res) > 0){ // existe, atualiza
-	 	foreach($_POST as $key => $value){
-			if(is_numeric($value) OR $value == ""){
-				$sql_atualiza = "UPDATE ava_nota SET nota = '$value' WHERE usuario = '$usuario' AND criterio = '$key' AND inscricao = '$inscricao'";
-				$ins = $wpdb->query($sql_atualiza);
-				if($ins == 1){
-					 $mensagem = "<div class='alert alert-success'>
-  <strong>Notas lançadas.</strong>
-</div>"	;
-				}else{
-					$mensagem = "<div class='alert alert-warning'>
-  <strong>Erro.Tente novamente.</strong>
-</div>"	;
-				}
+	$contador = 0;
+	 foreach($_POST as $key => $value){
+		if(is_numeric($value) OR $value == ""){
+				$sql_verifica = "SELECT id FROM ava_nota WHERE inscricao = '$inscricao' AND usuario = '".$user->ID."' AND criterio = '$key'";
+				$res = $wpdb->get_results($sql_verifica,ARRAY_A);
+					if(count($res) == 0){
+						$sql_insere = "INSERT INTO `ava_nota` (`id`, `usuario`, `inscricao`, `nota`, `criterio`) VALUES (NULL, '$usuario', '$inscricao', '$value', '$key')";
+						$ins = $wpdb->query($sql_insere);
+						if($ins == 1){
+							$contador++;
+						}
+					}else{
+				
+						$sql_atualiza = "UPDATE ava_nota SET nota = '$value' WHERE usuario = '$usuario' AND criterio = '$key' AND inscricao = '$inscricao'";
+						$ins = $wpdb->query($sql_atualiza);
+						if($ins == 1){
+							$contador++;
+						}
+					}
+					if($contador > 0){
+						$mensagem = "<div class='alert alert-success'><strong>Notas lançadas.</strong> </div>"	;
+					}else{
+						$mensagem = "<div class='alert alert-warning'><strong>Não há lançamentos novos.</strong></div>"	;
+					}
+				atualizaNota($inscricao);
 			}
 		}
-	
-		atualizaNota($inscricao);
-
-		
-	}else{ // não existe, insere
-	 	foreach($_POST as $key => $value){
-			if((is_numeric($value) OR $value == "")){
-			$sql_insere = "INSERT INTO `ava_nota` (`id`, `usuario`, `inscricao`, `nota`, `criterio`) VALUES (NULL, '$usuario', '$inscricao', '$value', '$key');";
-			$ins = $wpdb->query($sql_insere);
-				if($ins == 1){
-					 $mensagem = "<div class='alert alert-success'>
-  <strong>Notas lançadas.</strong>
-</div>"	;
-				}else{
-					$mensagem = "<div class='alert alert-warning'>
-  <strong>Erro.Tente novamente.</strong>
-</div>"	;			
-			
-			}
-		}
-		atualizaNota($inscricao);	
-		
-		}
-		}
-	
 	// passa função de valor máximo
 	valorNotaMax($inscricao,$usuario);
+
+		
+	
+
 	
 	
 	if($_POST['obs'] != ""){
@@ -67,7 +55,7 @@ if(isset($_POST['gravar'])){
 			
 		}
 	}
-}
+	}
 
 
 
