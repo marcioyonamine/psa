@@ -709,7 +709,7 @@ if(isset($_POST['deletar'])){
 				<th>#</th>
                   <th>Data</th>
                   <th>Título</th>
-                  <th>Pro/Fic/Ele</th>
+                  <th>Projeto/Ficha/Natureza</th>
                   <th>Tipo</th>
                   <th>Valor</th>
 				  <th></th>
@@ -731,7 +731,7 @@ if(isset($_POST['deletar'])){
 
 					  <td><?php echo exibirDataBr($res[$i]['data']); ?></td>
 					  <td><?php echo $res[$i]['titulo']; ?></td>
-					  <td><?php echo $dot['dotacao'] ?></td>
+					  <td><?php echo $dot['projeto']." / ".$dot['ficha']." / ".$dot['natureza']; ?></td>
 					  <td><?php echo $tipo['tipo']; ?></td>
 					  <td><?php echo dinheiroParaBr($res[$i]['valor']); ?></td>
 					  <td>	
