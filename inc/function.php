@@ -581,9 +581,11 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	}
 
 	//planejado 
+	
 	$valor_pla_pf = 0;
 	$valor_pla_pj = 0;
-	
+	$valor_pla = 0;
+	/*
 	$sql_pla_pf = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '1' AND idPessoa IN (SELECT DISTINCT Id_PessoaFisica FROM sc_pf WHERE CPF = '000.000.000-00') AND publicado = '1'";
 	$pla_pf = $wpdb->get_results($sql_pla_pf,ARRAY_A);
 	if(count($pla_pf) > 0){
@@ -591,8 +593,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 			$valor_pla_pf = $valor_pla_pf + $pla_pf[$i]['valor'];	
 		}
 	}
-	
-	
+
 	$sql_pla_pj = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND tipoPessoa =  '2' AND idPessoa IN (SELECT DISTINCT Id_PessoaJuridica FROM sc_pj WHERE CNPJ = '00.000.000/0000-00') AND publicado = '1'";
 	$pla_pj = $wpdb->get_results($sql_pla_pj,ARRAY_A);
 	if(count($pla_pj) > 0){
@@ -600,10 +601,17 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 			$valor_pla_pj = $valor_pla_pj + $pla_pj[$k]['valor'];	
 		}
 	}
+
 	
+	*/
 	
-	
-	
+	$sql_pla = "SELECT valor FROM sc_orcamento WHERE idPai = '$id'";
+	$pla = $wpdb->get_results($sql_pla,ARRAY_A);
+	if(count($pla) > 0){
+		for($i = 0; $i < count($pla); $i++){
+			$valor_pla = $valor_pla + $pla[$i]['valor'];	
+		}
+	}
 	
 	
 	$dotacao = array(
@@ -617,9 +625,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'visualizacao' => $val['projeto']." / ".$val['ficha'], //colocar natureza (importar de novo)
 	'natureza' => $val['natureza']." / ".$val['fonte'],	
 	'liberado' => $valor_lib,
-	'planejado' => $valor_pla_pf + $valor_pla_pj,
-	'teste' => $pla_pf,
-	'teste2' => $pla_pj
+	'planejado' => $valor_pla,
 
 	);
 	
@@ -1295,5 +1301,12 @@ function retornaPlanejamento($idPlan){
 	
 	return $x;
 
+}
+
+/* funções css */
+
+function alerta($string,$tipo){ 
+	// success, info, warning, danger
+	return '<div class="alert alert-'.$tipo.'">'.$string.'</div>';
 }
 

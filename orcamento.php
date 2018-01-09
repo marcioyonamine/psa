@@ -240,6 +240,11 @@ case "editar":
 		$sql = "INSERT INTO `sc_orcamento` (`projeto`, `ficha`, `unidade`, `dotacao`, `descricao`, `natureza`, `fonte`,  `valor`, `obs`, `publicado`, `idUsuario`, `ano_base`) 
 		VALUES ('$projeto','$ficha', '$unidade', '$dotacao', '$descricao', '$natureza', '$fonte', '$valor', '$obs', '1', '$idUser', '$ano_base')";	
 		$r = $wpdb->query($sql);
+		if($r == 1){
+			$mensagem = alerta("Dotação inserida com sucesso.","sucess");	
+		}else{
+			$mensagem = alerta("Erro. Tente novamente.","warning");				
+		}
 		$orcamento =  recuperaDados('sc_orcamento',$wpdb->insert_id,'id');	
 		
 	}
@@ -262,6 +267,12 @@ case "editar":
 		"; 	
 		//echo $sql;
 		$r = $wpdb->query($sql);
+		if($r == 1){
+			$mensagem = alerta("Dotação inserida com sucesso.","sucess");	
+		}else{
+			$mensagem = alerta("Erro. Tente novamente.","warning");				
+		}
+
 		$orcamento =  recuperaDados('sc_orcamento',$idOrc,'id');	
 	}
  
@@ -466,7 +477,14 @@ $(function() {
 							<label>Dotação</label>
 							<select class="form-control" name="dotacao" id="inputSubject" >
 							<option>Escolha uma opção</option>
-							<?php echo geraOpcaoDotacao('2018'); ?>
+							<?php 
+							if(isset($_POST['id'])){
+								echo geraOpcaoDotacao('2018',$_POST['id']); 
+							}else{
+								echo geraOpcaoDotacao('2018'); 
+							}	
+							?>
+							
 							</select>
 						</div>
 					</div>	
@@ -533,6 +551,12 @@ if(isset($_POST['mov_inserir'])){
 		VALUES ('$titulo', '$tipo', '$dotacao', '$data', '$valor', '$descricao', '$idUsuario', '1')";
 	$ins = $wpdb->query($sql);
 	$id_orc = $wpdb->insert_id;
+	if($ins == 1){
+			$mensagem = alerta("Movimentação inserida com sucesso.","sucess");	
+		}else{
+			$mensagem = alerta("Erro. Tente novamente.","warning");				
+		}
+
 	$mov = $wpdb->get_row("SELECT * FROM sc_mov_orc WHERE id =  '$id_orc'",ARRAY_A);
 	
 }
@@ -552,9 +576,9 @@ if(isset($_POST['mov_editar'])){
 	WHERE id = '$id_orc'";
 	$ins = $wpdb->query($sql);
 	if($ins == 1){
-		$mensagem = "<div class='alert alert-success'><strong>Movimentação atualizada.</strong> </div>"	;
+		$mensagem = alerta("Movimentação inserida com sucesso.","sucess");	
 	}else{
-		$mensagem =  "<div class='alert alert-warning'><strong>$sql.</strong> </div>";
+		$mensagem =  alerta("Erro. Tente novamente.","warning");	
 	}
 	$mov = $wpdb->get_row("SELECT * FROM sc_mov_orc WHERE id =  '$id_orc'",ARRAY_A);
 	
@@ -614,7 +638,7 @@ $(function() {
 							<label>Dotação</label>
 							<select class="form-control" name="dotacao" id="inputSubject" >
 							<option value='0'>Escolha uma opção</option>
-							<?php echo geraOpcaoDotacao('2017',$mov['dotacao']); ?>
+							<?php echo geraOpcaoDotacao('2018',$mov['dotacao']); ?>
 							</select>
 						</div>
 					</div>	
@@ -659,13 +683,9 @@ if(isset($_POST['deletar'])){
 	$sql_del = "UPDATE sc_mov_orc SET publicado = '0' WHERE id = '$id'";
 	$upd = $wpdb->query($sql_del);
 	if($upd == 1){
-		$mensagem = "<div class='alert alert-success'>
-  <strong>Movimentação deletada com sucesso.</strong>
-</div>"	;
+		$mensagem = alerta("Movimentação deletada com sucesso.","success");	
 	}else{
-		$mensagem = "<div class='alert alert-warning'>
-  <strong>Erro.Tente novamente.</strong>
-</div>"	;
+		$mensagem = alerta("Erro. Tente novamente.","warning");	
 		
 	}
 	
@@ -1026,11 +1046,20 @@ $historico = orcamento($id_hist);
 					  <td><?php echo dinheiroParaBr($historico['total'] - $historico['contigenciado'] + $historico['descontigenciado'] + $historico['suplementado']); ?></td>
 	
 				</tr>
-				
+								<tr><td colspan="6">		
+				<form method="POST" action="?p=mov_inserir" class="form-horizontal" role="form" name="form1">
+				<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" >
+				<input type="submit" class="btn btn-theme btn-lg btn-block"  name="gravar" value="Inserir movimentação">
+				</td>
+				  </form>
+				  </tr>
               </tbody>
             </table>
           </div>
 
+		  
+		  
+		  
 		</div>
 </section>
 
@@ -1048,13 +1077,10 @@ if(isset($_POST['atualiza'])){
 		$sql_ins = "INSERT INTO `sc_orcamento` (`valor`,`planejamento`, `idPai`) VALUES ('$valor','$idPlan','$dotacao')";
 		$ins = $wpdb->query($sql_ins);
 		if($ins == 1){
-					 $mensagem = "<div class='alert alert-success'>
-  <strong>Planejamento atualizado.</strong>
-</div>"	;
+			$mensagem = alerta("Planejamento atualizado.","success");	
+
 				}else{
-					$mensagem = "<div class='alert alert-warning'>
-  <strong>Erro.Tente novamente.</strong>
-</div>"	;
+			$mensagem = alerta("Erro. Tente novamente","warning");	
 				}
 		
 	}else{ // atualiza
@@ -1063,18 +1089,11 @@ if(isset($_POST['atualiza'])){
 		WHERE planejamento = '$idPlan'";
 		$ins = $wpdb->query($sql_ins);
 		if($ins == 1){
-					 $mensagem = "<div class='alert alert-success'>
-  <strong>Planejamento atualizado.</strong>
-</div>"	;
-				}else{
-					$mensagem = "<div class='alert alert-warning'>
-  <strong>Erro.Tente novamente.</strong>
-</div>"	;
-				}
+			$mensagem = alerta("Planejamento atualizado.","success");
+		}else{
+			$mensagem = alerta("Erro. Tente novamente","warning");	
+		}
 	}
-	
-	//verifica se existe
-	
 }
 
 
@@ -1150,7 +1169,7 @@ $(function() {
 							</td>
 					</tr>		
 		
-				<?php } ?>		
+				<?php } ?>
 
 				</tbody>
             </table>
@@ -1162,6 +1181,8 @@ $(function() {
 <?php 
 break;
 case "listaprograma":
+
+
 
 ?>
   <link href="css/jquery-ui.css" rel="stylesheet">
@@ -1236,6 +1257,41 @@ $(function() {
 break;
 case "listaprojeto":
 
+if(isset($_POST['inserir'])){
+	$titulo = $_POST['titulo'];
+	$programa = $_POST['programa'];
+	$inicio = (date("Y-m-d"));
+	$fim = (date("Y-m-d"));
+	$responsavel = "";
+	$descricao = "";
+	$json = array(
+	"programa" => "$programa",
+	"inicio" => "$inicio",
+	"responsavel" => "$responsavel",
+	"fim" => "$fim",
+	"descricao" => "$descricao"
+	);
+	$des = json_encode($json);
+	$sql_upd = "INSERT INTO `sc_tipo` (`id_tipo`, `tipo`, `descricao`, `abreviatura`) VALUES (NULL, '$titulo', '$des', 'projeto')";
+	$upd = $wpdb->query($sql_upd);
+	if($upd == 1){
+		$mensagem = alerta("Inserido com sucesso.","success");
+	}else{
+		$mensagem = alerta("Não inserido. Tente novamente.","warning");
+	}
+}
+
+if(isset($_POST['deleta'])){
+	$deleta = $_POST['deleta'];
+	$sql = "DELETE FROM sc_tipo WHERE id_tipo = '$deleta'";
+	$del = $wpdb->query($sql);
+	if($del == 1){
+		$mensagem = alerta("Deletado com sucesso.","success");
+	}else{
+		$mensagem = alerta("Não deletado Tente novamente. $sql","info");
+	}	
+}
+
 ?>
   <link href="css/jquery-ui.css" rel="stylesheet">
  <script src="js/jquery-ui.js"></script>
@@ -1261,6 +1317,7 @@ $(function() {
 				</div>
         </div>
 
+
 		<div class="col-md-offset-1 col-md-10">
 		
 		</div>		
@@ -1272,10 +1329,33 @@ $(function() {
                   <th>Projeto</th>
                   <th>Programa</th>
 				  <th></th>
+				  <th></th>
 				  </tr>
               </thead>
               <tbody>
-				<?php 
+				<tr>
+				<form method="POST" action="?p=listaprojeto" class="form-horizontal" role="form">
+				<td>
+				<input type="text" name="titulo" class="form-control" id="inputSubject" />
+				</td>
+				<td>
+				<select class="form-control" name="programa" id="inputSubject" >
+					<option value='0'>Escolha uma opção</option>
+					<?php echo geraTipoOpcao("programa") ?>
+				</select>			
+				</td>
+				<td>
+				
+					<input type="hidden" name="inserir" value="1" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Inserir">
+					</form>
+					</td>
+				<td></td>
+
+				</tr>
+
+
+			  <?php 
 				global $wpdb;
 				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto'";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
@@ -1289,15 +1369,22 @@ $(function() {
 					
 					  <td><?php echo $res[$i]['tipo']; ?><?php //var_dump($orc); ?></td>
 					  <td><?php echo $programa['tipo']; //var_dump($json); ?></td>
-					<form method="POST" action="?p=editaprojeto" class="form-horizontal" role="form">
+				
 
 						<td>	
-
+							<form method="POST" action="?p=editaprojeto" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id_tipo']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar">
 							</form>					  
 							</td>
-					</tr>		
+						<td>	
+							<form method="POST" action="?p=listaprojeto" class="form-horizontal" role="form">
+							<input type="hidden" name="deleta" value="<?php echo $res[$i]['id_tipo']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Deletar">
+							</form>					  
+							</td>
+		
+						</tr>		
 		
 				<?php } ?>		
 
@@ -1314,7 +1401,7 @@ case "editaprojeto":
 if(isset($_POST['carregar'])){
 	$projeto = tipo($_POST['carregar']);
 	$pro_json = json_decode($projeto['descricao'],true);
-	var_dump($pro_json);
+	//var_dump($pro_json);
 }
 
 if(isset($_POST['editaprojeto'])){
@@ -1339,7 +1426,13 @@ if(isset($_POST['editaprojeto'])){
 	WHERE id_tipo = '$id';	
 	";
 	$upd = $wpdb->query($sql_upd);
-		$projeto = tipo($id);
+	if($upd == 1){
+		$mensagem = alerta("Atualizado com sucesso.","success");
+	}else{
+		$mensagem = alerta("Não atualizado. Tente novamente.","alert");
+	}
+	
+	$projeto = tipo($id);
 	$pro_json = json_decode($projeto['descricao'],true);
 	
 }
@@ -1369,10 +1462,10 @@ $(function() {
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
 
-                    <h3>Projeto:</h3>
-                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?>
+                    <h2>Projeto</h2>
+                    <?php if(isset($mensagem)){ echo $mensagem;} ?>
 					
-					<?php var_dump($pro_json)?></h4>
+					
 
 			</div>
 		</div> 
