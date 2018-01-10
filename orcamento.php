@@ -1096,7 +1096,7 @@ if(isset($_POST['atualiza'])){
 	
 	$ver = retornaPlanejamento($idPlan);
 	if($ver['bool'] == FALSE){ // insere
-		$sql_ins = "INSERT INTO `sc_orcamento` (`valor`,`planejamento`, `idPai`) VALUES ('$valor','$idPlan','$dotacao')";
+		$sql_ins = "INSERT INTO `sc_orcamento` (`valor`,`planejamento`, `idPai`, `publicado`) VALUES ('$valor','$idPlan','$dotacao','1')";
 		$ins = $wpdb->query($sql_ins);
 		if($ins == 1){
 			$mensagem = alerta("Planejamento atualizado.","success");	
@@ -1116,6 +1116,17 @@ if(isset($_POST['atualiza'])){
 			$mensagem = alerta("Erro. Tente novamente","warning");	
 		}
 	}
+}
+
+if(isset($_POST['apagar'])){
+	$id = $_POST['apagar'];
+	$sql_upd = "UPDATE sc_tipo SET publicado = '1' WHERE id_tipo = '$id' AND abreviatura = 'projeto'";
+	$ins = $wpdb->query($sql_upd);
+		if($ins == 1){
+			$mensagem = alerta("Projeto apagdo.","success");
+		}else{
+			$mensagem = alerta("Erro. Tente novamente","warning");	
+		}
 }
 
 
@@ -1157,6 +1168,7 @@ $(function() {
                   <th width="15%">Valor</th>
 				  <th>Dotação</th>
 				  <th></th>
+				  <th></th>
 				  </tr>
               </thead>
               <tbody>
@@ -1188,6 +1200,12 @@ $(function() {
 							<input type="hidden" name="atualiza" value="<?php echo $res[$i]['id_tipo']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Atualiza">
 							</form>					  
+							</td>
+							<td>
+							<form method="POST" action="?p=planejamento" class="form-horizontal" role="form">
+							<input type="hidden" name="apagar" value="<?php echo $res[$i]['id_tipo']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
+							</form>
 							</td>
 					</tr>		
 		
