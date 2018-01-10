@@ -242,7 +242,7 @@ function vGlobais(){
 
 function geraTipoOpcao($abreviatura,$select = 0){
 	global $wpdb;
-	$sql = "SELECT * FROM sc_tipo WHERE abreviatura = '$abreviatura' ORDER BY tipo ASC";
+	$sql = "SELECT * FROM sc_tipo WHERE abreviatura = '$abreviatura' AND publicado = '1' ORDER BY tipo ASC";
 	$query = $wpdb->get_results($sql,ARRAY_A);
 	for($i = 0; $i < count($query); $i++){
 		if($select == $query[$i]['id_tipo']){
@@ -309,7 +309,7 @@ function evento($id){
 		'planejamento' => $res['planejamento'],
 		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
 		'tipo' => $tipo_evento['tipo'],
-		'data_envio' => $res['dataEnvio']
+		'dataEnvio' => $res['dataEnvio']
 	);
 
 	return $evento;
@@ -770,7 +770,7 @@ function opcaoDados($tipo,$id){
 
 function retornaPedido($id){
 	global $wpdb;
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
@@ -786,7 +786,11 @@ function retornaPedido($id){
 	}else if('0000-00-00' != $res['liberado']){
 		$status = 'Liberado';
 	}
-	
+	if($pessoa['tipoPessoa'] == 1){
+		$pes = "Física";
+	}else{
+		$pes = "Jurídica";
+	}
 	
 	$x = array();
 	$x['nome'] = $pessoa['nome'];
@@ -797,6 +801,7 @@ function retornaPedido($id){
 	$x['area'] = $metausuario['departamento'];
 	$x['cargo'] = $metausuario['funcao'];
 	$x['tipoPessoa'] = $pessoa['tipoPessoa'];
+	$x['pessoa'] = $pes;
 	$x['nome_razaosocial'] = $pessoa['nome'];
 	$x['cpf_cnpj'] = $pessoa['cpf_cnpj'];
 	$x['cr'] = $metausuario['cr'];
@@ -819,6 +824,7 @@ function retornaPedido($id){
 	$x['liberado'] = $res['liberado'];
 	$x['empenhado'] = $res['empenhado'];
 	$x['status'] = $status;
+	$x['parcelas'] = $res['parcelas'];
 	return $x;
 	
 }
@@ -827,7 +833,7 @@ function opcoes($id,$entidade){
 	global $wpdb;
 	$sql = "SELECT * FROM sc_opcoes WHERE entidade = '$entidade' AND id_entidade = '$id'";
 	$res = $wpdb->get_row($sql,ARRAY_A);
-	$json = json_decode($res['opcao']);
+	$json = json_decode($res['opcao'],true);
 	return $json;
 }
 
@@ -886,6 +892,22 @@ function retornaEndereco($tipo,$pessoa){
 		
 		break;
 		
+	}
+	
+}
+
+function parcela($id){
+	global $wpdb;
+	$sel = "SELECT * FROM sc_parcela WHERE idPedidoContratacao = '$id'";
+	$res = $wpdb->get_results($sel,ARRAY_A);
+	if(count($res) == 0){
+		return NULL;
+	}else{
+		for($i = 0; $i < count($res); $i++){
+			$x[$i+1] = $res[$i];
+		}
+		
+		return $x;
 	}
 	
 }
@@ -978,7 +1000,7 @@ function verificaEvento($idEvento){
 	$pedidos = listaPedidos($idEvento,'evento');	
 	if(count($pedidos) > 0){
 		//$relatorio .= "O evento possui pedidos de contratação.<br />";
-		$ped = retornaPedido($pedidos[$i]['idPedidoContratacao']);
+		//$ped = retornaPedido($pedidos[$i]['idPedidoContratacao']);
 		
 		
 		
@@ -1005,7 +1027,6 @@ function listaArquivos($entidade,$id){
 	$sql = "SELECT arquivo FROM sc_arquivo WHERE entidade ='$entidade' AND id = '$id' AND publicado = '1'";
 	$res = $wpdb->get_results($sql,ARRAY_A);
 	return $res;
-	
 }
 
 function retornaStatus($idEvento){
@@ -1018,21 +1039,7 @@ function retornaStatus($idEvento){
 	if($res['dataEnvio'] == NULL){ // evento em elaboração
 		$x['status'] = 'Em elaboração';
 	}else{ // enviado
-		$pedidos = listaPedidos($idEvento,'evento');	
-		if(count($pedidos) == 0){ //Não há pedidos
-			$x['pedido'] = NULL;						
-		}else{
-			for($i = 0; $i < count($pedidos); $i++){
-				
-				
-			}
-			
-		}
-		
-		
-		
-		
-		
+		$x['status'] = 'Publicado';		
 	}
 	return $x;
 	

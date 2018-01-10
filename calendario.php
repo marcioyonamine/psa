@@ -1,36 +1,13 @@
-<?php 
-/*
-Calendário para os eventos Pré-CulturAZ
 
-+ Listar filtros (quais?)
-+ Aplicar cores
-+ 
+<body>
+<?php include "header.php"; ?>
 
-*/
-//Carrega WP como FW
-require_once("../../wp-load.php");;
-$user = wp_get_current_user();
-if(!is_user_logged_in()): // Impede acesso de pessoas não autorizadas
-      /*** REMEMBER THE PAGE TO RETURN TO ONCE LOGGED IN ***/
-	  $_SESSION["return_to"] = $_SERVER['REQUEST_URI'];
-      /*** REDIRECT TO LOGIN PAGE ***/
-	  header("location: /");
-endif;
-//Carrega os arquivos de funções
-require "../inc/function.php";
-?>
-
-<?php //require_once("../../wp-load.php"); ?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8' />
-<link href='fullcalendar.min.css' rel='stylesheet' />
-<link href='fullcalendar.print.min.css' rel='stylesheet' media='print' />
-<script src='lib/moment.min.js'></script>
-<script src='lib/jquery.min.js'></script>
-<script src='fullcalendar.min.js'></script>
-<script src='locale/pt-br.js'></script>
+<link href='calendario/fullcalendar.min.css' rel='stylesheet' />
+<link href='calendario/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src='calendario/lib/moment.min.js'></script>
+<script src='calendario/lib/jquery.min.js'></script>
+<script src='calendario/fullcalendar.min.js'></script>
+<script src='calendario/locale/pt-br.js'></script>
 <script>
 
 	$(document).ready(function() {
@@ -73,6 +50,8 @@ require "../inc/function.php";
 		padding: 0;
 		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 		font-size: 14px;
+		font-color: white;
+		
 	}
 
 	#calendar {
@@ -81,12 +60,9 @@ require "../inc/function.php";
 	}
 
 </style>
-</head>
-<body>
-<?php include "../menu/barra.php"; ?>
-
 
 	<div id='calendar'></div>
-<?php var_dump();?>
-</body>
-</html>
+
+<?php 
+include "footer.php";
+?>

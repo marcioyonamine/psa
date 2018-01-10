@@ -18,6 +18,23 @@ if(isset($_GET['p'])){
  <?php 
  switch($p){
 case "inicio": 
+if(isset($_POST['enviar'])){  // envia
+	// muda status de dataEnvio para hoje
+	// atualiza a agenda
+	$idEvento = $_SESSION['id'];
+	$hoje = date("Y-m-d H:i:s");
+	global $wpdb;
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
+	$upd = $wpdb->query($sql_enviar);
+	if($upd == 1){
+		atualizarAgenda($idEvento);
+		$mensagem = alerta("Evento enviado com sucesso.","success");
+	}else{
+		$mensagem = alerta("Erro. Tente novamente.","warning");
+	
+	}
+	
+}
 if(isset($_SESSION['id'])){
 	unset($_SESSION['id']);
 }
@@ -27,6 +44,7 @@ if(isset($_SESSION['id'])){
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Meus Eventos</h1>
+					<?php if(isset($mensagem)){echo $mensagem;}?>
 				</div>
         </div>
           <div class="table-responsive">
@@ -44,7 +62,7 @@ if(isset($_SESSION['id'])){
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
-				$sql_list =  "SELECT idEvento FROM sc_evento WHERE idUsuario = '$idUser' ORDER BY idEvento DESC";
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE idUsuario = '$idUser' AND publicado = '1' ORDER BY idEvento DESC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
@@ -55,13 +73,13 @@ if(isset($_SESSION['id'])){
 					  <td><?php echo $evento['titulo']; ?></td>
 					  <td><?php echo $evento['periodo']['legivel']; ?></td>
 					  <td><?php echo $evento['status']; ?></td>
-					  <td>	
+					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
 							</form>
 							<?php 
-					  
+							}
 					  ?></td>
 					</tr>
 				<?php } // fim do for?>	

@@ -230,7 +230,7 @@ if(isset($_POST['inserir_pj'])){
 					?>
 					<tr>
 					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
-					  <td><?php echo $peds[$i]['tipoPessoa']; ?></td>
+					  <td><?php echo $pedido['tipoPessoa']; ?></td>
 					  <td><?php echo $pedido['nome']; ?></td>
 					  <td><?php echo $pedido['objeto']; ?></td>
 					  <td><?php echo $pedido['periodo']; ?></td>

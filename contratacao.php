@@ -1198,6 +1198,7 @@ break;
 	$justificativa =   $_POST["justificativa"];
 	$parecer =   $_POST["parecer"];
 	$observacao =   $_POST["observacao"];
+	$parcelas =   $_POST["parcelas"];
 	$processo =   $_POST["processo"];
 	
 	$sql_atualiza = "UPDATE sc_contratacao SET
@@ -1208,6 +1209,7 @@ break;
 	justificativa = '$justificativa',
 	parecerArtistico = '$parecer',
 	nProcesso = '$processo',
+	parcelas = '$parcelas',
 	observacao = '$observacao'
 	WHERE idPedidoContratacao = '$id_pedido'";
 	$res = $wpdb->query($sql_atualiza);
@@ -1259,6 +1261,28 @@ break;
 						</div>
 					</div>
 					<br />
+					<div class="row">
+						<div class="col-12">
+						<label>Parcelas *</label>
+							<select class="form-control" name="parcelas" id="inputSubject" >
+							<?php for($i = 1; $i <= 10; $i++){ ?>
+							<option value='<?php echo $i ?>' <?php if( $i == $pedido['parcelas'] ){ echo " selected"; } ?>><?php echo $i ?> parcela(s)</option>
+							<?php } ?>
+							</select>		
+						</div>
+					</div>
+					<br />
+					<?php if($pedido['parcelas'] > 0){?>
+					<div class="row">
+						<div class="col-12">
+						<a href="?p=parcela&id=<?php echo $id_pedido; ?>" class="btn btn-primary btn-block" role="button">Editar parcelas</a>	
+						</div>
+					</div>
+					<br />
+					
+					<?php } ?>
+					
+					
 					<div class="row">
 						<div class="col-12">
 							<label>Forma de Pagamento / Valor da Prestação de Serviço:</label>
@@ -1345,6 +1369,154 @@ break;
 	</div>
 </section>	
 
+ <?php 
+ break;
+ case "parcela":
+ $id = $_GET['id'];
+ 
+ $parcela = parcela($id);
+ if($parcela == NULL){
+	for($i = 1; $i <= 10; $i++){
+		$data = date("Y-m-d");
+		$sql_ins = "INSERT INTO sc_parcela (idPedidoContratacao, numero, inicio, fim, comprobatorio) VALUES ('$id','$i','$data','$data','$data')";
+		$res = $wpdb->query($sql_ins);
+	} 
+	$parcela = parcela($id);
+	
+ }
+ 
+ 
+
+ if(isset($_POST['atualizar'])){
+	 $array_json = array();
+
+ foreach($_POST['inicio'] as $key => $value){
+		 //echo $key." - ".$value."<br />";
+		 if($value != ""){
+			$array_json[$key+1]['inicio'] = exibirDataMysql($value);
+		 }else{
+			$array_json[$key+1]['inicio'] = date('Y-m-d');
+		 }	
+	 }
+	 foreach($_POST['fim'] as $key => $value){
+		 //echo $key." - ".$value."<br />";
+		 if($value != ""){
+			$array_json[$key+1]['fim'] = exibirDataMysql($value);
+		 }else{
+			$array_json[$key+1]['fim'] = date('Y-m-d');
+		}	
+	}
+	 foreach($_POST['comprobatoria'] as $key => $value){
+		 //echo $key." - ".$value."<br />";
+		 if($value != ""){
+			$array_json[$key+1]['comprobatoria'] = exibirDataMysql($value);
+		 }else{
+			$array_json[$key+1]['comprobatoria'] = date('Y-m-d');
+		}	
+	 }
+	 foreach($_POST['valor'] as $key => $value){
+		 if($value == ""){
+			$array_json[$key+1]['valor'] = 0;
+		 }else{
+			$array_json[$key+1]['valor'] = dinheiroDeBr($value);
+
+		}	
+	}
+
+	for($i = 1; $i <= count($array_json); $i++){
+		$sql_upd = "UPDATE sc_parcela SET 
+		inicio = '".$array_json[$i]['inicio']."',
+		fim = '".$array_json[$i]['fim']."',
+		comprobatorio = '".$array_json[$i]['comprobatoria']."',
+		valor = '".$array_json[$i]['valor']."'
+		WHERE numero = '$i' AND idPedidoContratacao = '".$id."'";
+		$upd = $wpdb->query($sql_upd);
+		if($upd != 1){
+			//echo $sql_upd."<br />";
+		}
+	}
+		$parcela = parcela($id);
+	 
+	 
+ }
+
+ ?>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Editar Parcela</h1>
+					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
+				</div>
+        </div>
+		<?php 
+		// se existe pedido, listar
+		
+		?>
+		
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Número</th>
+                  <th>Período Inicio</th>
+                  <th>Período Fim</th>
+                  <th>Data comprobatória</th>
+				  <th>Valor</th>
+				  <th></th>
+				  <th></th>
+
+				  </tr>
+              </thead>
+              <tbody>
+			  <form method="POST" action="?p=parcela&id=<?php echo $_GET['id']; ?>" class="form-horizontal" role="form">
+				<?php 
+				$pedido = retornaPedido($_GET['id']);
+
+				for($i = 1; $i <= $pedido['parcelas']; $i++){
+					?>
+					
+					<tr>
+					  <td><?php echo $i ?></td>
+					  <td><input type="text" name="inicio[]" class="form-control calendario" value="<?php echo exibirDataBr($parcela[$i]['inicio']); ?>" /></td>
+					  <td><input type="text" name="fim[]" class="form-control calendario" value="<?php echo exibirDataBr($parcela[$i]['fim']); ?>" /></td>
+					  <td><input type="text" name="comprobatoria[]" class="form-control calendario"  value="<?php echo exibirDataBr($parcela[$i]['comprobatorio']); ?>" /></td>
+					  <td><input type="text" name="valor[]" class="form-control valor"  value="<?php echo dinheiroParaBr($parcela[$i]['valor']); ?>" /></td>
+					  <td>	
+					  
+					  </td>
+					  <td>	
+					</td>
+
+					  </tr>
+				<?php } // fim do for?>
+					<tr>
+					<td colspan="6">
+					<input type="hidden" name="atualizar" value="<?php echo $_GET['id']; ?>" />
+					<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+					</td>
+					</tr>
+					</form>
+				                <tr>
+                  <th></th>
+                  <th>Valor da Proposta</th>
+                  <th></th>
+                  <th>Soma das Parcelas</th>
+				  <th></th>
+				  <th>Status</th>
+				  <th></th>
+
+				  </tr>
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>	
  
  
 <?php 

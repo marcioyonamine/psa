@@ -34,21 +34,7 @@ $(function() {
 case "inicio": 
 $evento = evento($_SESSION['id']);
 
-if(isset($_POST['enviar'])){  // envia
-	// muda status de dataEnvio para hoje
-	// atualiza a agenda
-	$idEvento = $_SESSION['id'];
-	$hoje = date("Y-m-d");
-	global $wpdb;
-	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
-	$upd = $wpdb->query($sql_enviar);
-	if($upd == 1){
-		atualizarAgenda($idEvento);
-	}else{
-	
-	}
-	
-}
+
 
 
 
@@ -60,7 +46,7 @@ if(isset($_POST['enviar'])){  // envia
 				<div class="col-md-offset-2 col-md-8">
 				<h3>Enviar / Finalizar </h3>
 					<h1><?php echo $evento['objeto'];?></h1>
-					<h2><?php echo $sql_enviar; ?></h2>
+					<h2><?php if(isset($mensagem)){echo $mensagem;} ?></h2>
 				</div>
         </div>
         <div class="row">    
@@ -165,11 +151,11 @@ if(isset($_POST['enviar'])){  // envia
 			<?php $pendencia = verificaEvento($_SESSION['id']);
 			if($pendencia['erros'] == 0){
 				echo "<p>Não há pendencias.</p>";
-				if($evento['data_envio'] == NULL){
+				if($evento['dataEnvio'] == NULL){
 				?>
 				
 				
-			<form action="?" method="POST" class="form-horizontal">
+			<form action="evento.php" method="POST" class="form-horizontal">
 			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Enviar/Finalizar" />
 			</form>	
 			

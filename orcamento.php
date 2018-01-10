@@ -1140,7 +1140,7 @@ $(function() {
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto'";
+				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto' AND publicado = '1'";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
@@ -1224,7 +1224,7 @@ $(function() {
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'programa'";
+				$sql_list =  "SELECT * FROM sc_tipo WHERE publicado = '1' WHERE abreviatura = 'programa'";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
@@ -1283,7 +1283,7 @@ if(isset($_POST['inserir'])){
 
 if(isset($_POST['deleta'])){
 	$deleta = $_POST['deleta'];
-	$sql = "DELETE FROM sc_tipo WHERE id_tipo = '$deleta'";
+	$sql = "UPDATE sc_tipo SET publicado = '0' WHERE id_tipo = '$deleta'";
 	$del = $wpdb->query($sql);
 	if($del == 1){
 		$mensagem = alerta("Deletado com sucesso.","success");
@@ -1357,7 +1357,7 @@ $(function() {
 
 			  <?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto'";
+				$sql_list =  "SELECT * FROM sc_tipo WHERE publicado = '1' AND abreviatura = 'projeto' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
