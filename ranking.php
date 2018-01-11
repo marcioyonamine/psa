@@ -69,13 +69,14 @@ $(function() {
 				$edital =  editais("",19);
 				
 				if(isset($_GET['order'])){
-					$filtro = "ORDER BY nota DESC, filtro ASC";
+					$order = "ORDER BY nota DESC, filtro ASC";
 				}else{
-					$filtro = "ORDER BY nota DESC";
+					$order = "ORDER BY nota DESC";
 				}
-
 				if(isset($_GET['filtro'])){
-					$filtro = "AND filtro = '$filtro'";
+					$filtro = "AND filtro LIKE '".$_GET['filtro']."'";
+				//var_dump($_GET['filtro']);
+
 				}else{
 					$filtro = "";
 				}
