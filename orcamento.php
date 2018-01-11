@@ -1243,7 +1243,7 @@ $(function() {
 							</select>			
 						</td>		
 						<td>	
-						<td><textarea name="obs"><?php echo $plan['obs']; ?></textarea></td>
+						<td><textarea class="form-control" name="obs" cols="120"><?php echo $plan['obs']; ?></textarea></td>
 						<td>
 							<input type="hidden" name="atualiza" value="<?php echo $res[$i]['id_tipo']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Atualiza">
@@ -1507,7 +1507,7 @@ if(isset($_POST['editaprojeto'])){
 	"fim" => "$fim",
 	"descricao" => "$descricao"
 	);
-	$des = json_encode($json);
+	$des = json_encode($json,JSON_UNESCAPED_UNICODE );
 	$sql_upd = "UPDATE sc_tipo SET
 	tipo = '$titulo',
 	descricao = '$des'

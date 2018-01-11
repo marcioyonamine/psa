@@ -16,6 +16,7 @@ switch($p){
 	case "inicio":
 	$edital =  273;
 	$aval = verificaAvaliacao($user->ID,$edital);
+	var_dump($aval);
 	//var_dump($aval);
 ?>
 
@@ -26,6 +27,7 @@ switch($p){
 
           <p>Para ter acesso aos detalhes dos projetos, é necessário que esteja logado no CulturAZ e que faça parte da equipe de pareceristas. <a href="http://culturaz.santoandre.sp.gov.br/autenticacao/" target="_blanck">Clique para logar</a></p>
 		  <p>
+		  <?php if(count($aval) != 0) {?>
 		  Você tem <strong><?php echo $aval['zeradas']?></strong> inscrições zerada(s) ou sem avaliação e <strong><?php echo $aval['anotacao']?></strong> com o campo observação em branco.
 		  </p>
 		<!--<div><select>
@@ -94,7 +96,12 @@ switch($p){
 				</tbody>
             </table>
           </div>
-
+		  
+		  <?php }else{ ?>
+ <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+          <h1>Não há inscrições para avaliar.</h1>
+		  </main>
+		  <?php } ?>
 <?php 
 break;
 case 'all':
