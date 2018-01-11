@@ -1174,7 +1174,7 @@ $(function() {
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto' AND publicado = '1'";
+				$sql_list =  "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto' AND publicado = '1' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
