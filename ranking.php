@@ -74,7 +74,7 @@ $(function() {
 					$filtro = "ORDER BY nota DESC";
 				}
 
-				$ranking = "SELECT inscricao FROM ava_ranking WHERE edital = '".$_GET['edital']."' $filtro ";
+				$ranking = "SELECT inscricao, nota FROM ava_ranking WHERE edital = '".$_GET['edital']."' $filtro ";
 				$res = $wpdb->get_results($ranking,ARRAY_A);
 				
 				//var_dump($res);
@@ -94,7 +94,7 @@ $(function() {
 				<td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
                   <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
-				  <td><?php echo somaNotas($json['inscricao'],$user->ID); ?></td>
+				  <td><?php echo $res[$i]['nota']; ?></td>
                   <td>
 				  </td>
 					</tr>
