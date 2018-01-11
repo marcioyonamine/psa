@@ -1312,7 +1312,7 @@ if(isset($_POST['inserir'])){
 	"descricao" => "$descricao"
 	);
 	$des = json_encode($json);
-	$sql_upd = "INSERT INTO `sc_tipo` (`id_tipo`, `tipo`, `descricao`, `abreviatura`) VALUES (NULL, '$titulo', '$des', 'projeto')";
+	$sql_upd = "INSERT INTO `sc_tipo` (`id_tipo`, `tipo`, `descricao`, `abreviatura`, `publicado`) VALUES (NULL, '$titulo', '$des', 'projeto', '1')";
 	$upd = $wpdb->query($sql_upd);
 	if($upd == 1){
 		$mensagem = alerta("Inserido com sucesso.","success");

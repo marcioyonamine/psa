@@ -194,7 +194,7 @@ function gravarLog($log, $idUsuario){ //grava na tabela ig_log os inserts e upda
 		$mysqli = bancoMysqli();
 		$mysqli->query($sql);
 }
-
+/*
 	function diasemana($data)
 	{
 		$ano =  substr("$data", 0, 4);
@@ -223,7 +223,7 @@ function diasemanaint($data)
 		
 		return $diasemana;
 	}
-	
+*/	
 function noResend(){
 	$p1 = $_SERVER["HTTP_REFERER"];
 	$p2 = $_SERVER["QUERY_STRING"];
@@ -291,7 +291,7 @@ function tipo($id){
 
 }
 
-
+/*
 function proxQuinta($data){ // em Y-m-d
 	$data = diasemanaint($data_se);
 	if($data_se == 4{
@@ -306,7 +306,7 @@ function proxQuinta($data){ // em Y-m-d
 	
 	
 }
-	
+*/	
 	
 function evento($id){
 
