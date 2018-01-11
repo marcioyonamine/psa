@@ -220,12 +220,16 @@ if(isset($_POST['inserir_pj'])){
               </thead>
               <tbody>
 				<?php 
-				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL)ORDER BY idPedidoContratacao DESC";
+				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL) OR idAtividade <> '0') ORDER BY idPedidoContratacao DESC";
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
 				
 				
 				for($i = 0; $i < count($peds); $i++){
-					$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
+					if($peds[$i]['idEvento'] != 0 AND $peds[$i]['idEvento'] != NULL){
+						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
+					}else{
+						$pedido = atividade($peds[$i]['idAtividade']);
+					}
 					//var_dump($pedido);
 					?>
 					<tr>
@@ -263,6 +267,12 @@ if(isset($_POST['inserir_pj'])){
 		
 </div>
 </section>
+
+<?php 
+break;
+	case "listativ":
+?>
+
 
 <?php 
 break;

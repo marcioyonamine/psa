@@ -308,6 +308,10 @@ function proxQuinta($data){ // em Y-m-d
 }
 */	
 	
+
+	
+	
+	
 function evento($id){
 
 	global $wpdb;
@@ -329,6 +333,8 @@ function evento($id){
 	$etaria = tipo($res['faixaEtaria']);
 	$periodo = periodo($res['idEvento']);
 	$status = retornaStatus($res['idEvento']);
+	
+	
 	
 	$evento = array(
 		'titulo' => $res['nomeEvento'],
@@ -378,6 +384,10 @@ function atividade($id){
 	
 	$evento = array(
 		'titulo' => $res['titulo'],
+		'nome' => $res['titulo'],
+		'objeto' => $res['titulo'],
+		'periodo' => exibirDataBr($res['periodo_inicio'])." a ".exibirDataBr($res['periodo_fim']), 
+		'tipoPessoa' => 'Pessoa jurídica',
 		'programa' => $programa['tipo'],
 		'projeto' => $projeto['tipo'],
 		'responsavel' => $usuario->first_name." ".$usuario->last_name,
@@ -720,6 +730,8 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 			$sql = "SELECT idPedidoContratacao, tipoPessoa, idPessoa, valor FROM sc_contratacao WHERE idAtividade = '$id' AND publicado = '1'";
 		break;		
 	}
+	
+	
 	$res = $wpdb->get_results($sql,ARRAY_A);
 	$pedido = array();
 	for($i = 0; $i < count($res); $i++){
@@ -1342,14 +1354,16 @@ function retornaPlanejamento($idPlan){
 	$x = array();
 	$x['bool'] = FALSE;
 	$x['dotacao'] = 0;
-	$x['valor'] = 0;	
-	$sql_ver = "SELECT id, valor, idPai FROM sc_orcamento WHERE planejamento = '$idPlan'";
+	$x['valor'] = 0;
+	$x['obs'] = "";	
+	$sql_ver = "SELECT id, valor, idPai, obs FROM sc_orcamento WHERE planejamento = '$idPlan'";
 	//echo $sql_ver;
 	$res_ver = $wpdb->get_results($sql_ver,ARRAY_A);
 	if(count($res_ver) > 0){
 		$x['bool'] = TRUE;
 		$x['dotacao'] = $res_ver[0]['idPai'];
 		$x['valor'] = $res_ver[0]['valor'];
+		$x['obs'] = $res_ver[0]['obs'];
 	}
 	
 	return $x;

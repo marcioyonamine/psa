@@ -1075,9 +1075,53 @@ $historico = orcamento($id_hist);
 				</td>
 				  </form>
 				  </tr>
+
+<tr>
+<td colspan="6"></td>
+</tr>
+<tr>
+<td colspan="6"><h3>Valores Planejados<h3></td>
+</tr>
+                <tr>
+				<th>#</th>
+			  <th>Projeto</th>
+				<th>Programa</th>
+				<th>Observação</th>
+                  <th>Valor</th>
+				  </tr>
+			<?php 
+			$sql_list_pla = "SELECT * FROM sc_orcamento WHERE idPai = '$id_hist'";
+			$res_pla = $wpdb->get_results($sql_list_pla,ARRAY_A);	
+			$total_planejado = 0;
+			for($i = 0; $i < count($res_pla); $i++){	
+				$projeto = tipo($res_pla[$i]['planejamento']);
+				
+				
+			?>
+	<tr>
+	<td></td>
+	<td>
+		<?php echo $projeto['tipo']; ?>
+	</td>
+	<td>Programa</td>
+
+	<td><?php echo $res_pla[$i]['obs'] ?></td>
+	<td><?php echo dinheiroParaBr($res_pla[$i]['valor']); $total_planejado = $total_planejado + $res_pla[$i]['valor'] ?></td>
+	</tr>
+			<?php } ?>
+<tr>
+<td><td>
+
+
+<td>Total Planejado:<td>
+<td><?php echo dinheiroParaBr($total_planejado); ?><td>
+
+</tr>
+
+			
               </tbody>
             </table>
-          </div>
+			</div>
 
 		  
 		  
@@ -1093,10 +1137,11 @@ if(isset($_POST['atualiza'])){
 	$idPlan = $_POST['atualiza'];
 	$valor = dinheiroDeBr($_POST['valor']);
 	$dotacao = $_POST['dotacao'];
+	$obs = $_POST['obs'];
 	
 	$ver = retornaPlanejamento($idPlan);
 	if($ver['bool'] == FALSE){ // insere
-		$sql_ins = "INSERT INTO `sc_orcamento` (`valor`,`planejamento`, `idPai`, `publicado`) VALUES ('$valor','$idPlan','$dotacao','1')";
+		$sql_ins = "INSERT INTO `sc_orcamento` (`valor`,`planejamento`, `idPai`, `publicado`, `obs`) VALUES ('$valor','$idPlan','$dotacao','1','$obs')";
 		$ins = $wpdb->query($sql_ins);
 		if($ins == 1){
 			$mensagem = alerta("Planejamento atualizado.","success");	
@@ -1107,7 +1152,8 @@ if(isset($_POST['atualiza'])){
 		
 	}else{ // atualiza
 		$sql_ins = "UPDATE `sc_orcamento` SET `valor` = '$valor',
-		`idPai` = '$dotacao'  
+		`idPai` = '$dotacao' ,
+		`obs` = '$obs' 
 		WHERE planejamento = '$idPlan'";
 		$ins = $wpdb->query($sql_ins);
 		if($ins == 1){
@@ -1169,6 +1215,7 @@ $(function() {
 				  <th>Dotação</th>
 				  <th></th>
 				  <th></th>
+				  <th></th>
 				  </tr>
               </thead>
               <tbody>
@@ -1196,7 +1243,8 @@ $(function() {
 							</select>			
 						</td>		
 						<td>	
-
+						<td><textarea name="obs"><?php echo $plan['obs']; ?></textarea></td>
+						<td>
 							<input type="hidden" name="atualiza" value="<?php echo $res[$i]['id_tipo']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Atualiza">
 							</form>					  
