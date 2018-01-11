@@ -68,13 +68,21 @@ $(function() {
 				
 				$edital =  editais("",19);
 				
-				if(isset($_GET['filtro'])){
+				if(isset($_GET['order'])){
 					$filtro = "ORDER BY nota DESC, filtro ASC";
 				}else{
 					$filtro = "ORDER BY nota DESC";
 				}
 
-				$ranking = "SELECT inscricao, nota FROM ava_ranking WHERE edital = '".$_GET['edital']."' $filtro ";
+				if(isset($_GET['filtro'])){
+					$filtro = "AND filtro = '$filtro'";
+				}else{
+					$filtro = "";
+				}
+				
+				
+
+				$ranking = "SELECT inscricao, nota FROM ava_ranking WHERE edital = '".$_GET['edital']."' $filtro  $order";
 				$res = $wpdb->get_results($ranking,ARRAY_A);
 				
 				//var_dump($res);
