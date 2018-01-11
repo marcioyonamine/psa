@@ -365,6 +365,8 @@ function evento($id){
 	return $evento;
 }
 
+
+
 function atividade($id){
 
 	global $wpdb;

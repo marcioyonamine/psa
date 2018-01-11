@@ -1095,15 +1095,15 @@ $historico = orcamento($id_hist);
 			$total_planejado = 0;
 			for($i = 0; $i < count($res_pla); $i++){	
 				$projeto = tipo($res_pla[$i]['planejamento']);
-				
-				
+				$pro_json = json_decode($projeto['descricao'],true);
+				$programa = tipo($pro_json['programa']);
 			?>
 	<tr>
 	<td></td>
 	<td>
 		<?php echo $projeto['tipo']; ?>
 	</td>
-	<td>Programa</td>
+	<td><?php echo $programa['tipo']; ?></td>
 
 	<td><?php echo $res_pla[$i]['obs'] ?></td>
 	<td><?php echo dinheiroParaBr($res_pla[$i]['valor']); $total_planejado = $total_planejado + $res_pla[$i]['valor'] ?></td>
