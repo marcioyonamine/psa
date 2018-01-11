@@ -45,7 +45,11 @@ $(function() {
 		  $sel = "SELECT DISTINCT filtro FROM ava_ranking ORDER BY filtro ASC";
 		  $res_fil = $wpdb->get_results($sel,ARRAY_A);
 		  for($i = 0; $i < count($res_fil); $i++){
-			  echo "<a href='ranking.php?edital=".$_GET['edital']."&filtro=".$res_fil[$i]['filtro']."' >".$res_fil[$i]['filtro']."</a> |  ";
+			  if($_GET['filtro'] != $res_fil[$i]['filtro']){
+				echo "<a href='ranking.php?edital=".$_GET['edital']."&filtro=".$res_fil[$i]['filtro']."' >".$res_fil[$i]['filtro']."</a> |  ";
+			  }else{
+				  echo $res_fil[$i]['filtro']." | ";
+			  }
 		  }
 		  ?>
 		  
