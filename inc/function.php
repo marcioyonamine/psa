@@ -494,10 +494,10 @@ function geraOpcaoDotacao($ano_base,$id = NULL){
 	echo "</pre>";
 	for($i = 0; $i < count($res) ; $i++){
 		if($res[$i]['id'] == $id){
-			echo "<option value = '".$res[$i]['id']."' selected >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['projeto']."/".$res[$i]['ficha'].")</option>";
+			echo "<option value = '".$res[$i]['id']."' selected > ".$res[$i]['projeto']."/".$res[$i]['ficha']." - ".$res[$i]['descricao']." </option>";
 			//echo "<option>selected</option>";
 		}else{
-			echo "<option value = '".$res[$i]['id']."' >(".$res[$i]['id'].") ".$res[$i]['descricao']." (".$res[$i]['projeto']."/".$res[$i]['ficha'].")</option>";
+			echo "<option value = '".$res[$i]['id']."' > ".$res[$i]['projeto']."/".$res[$i]['ficha']." - ".$res[$i]['descricao']." </option>";
 			//echo "<option>non-selected</option>";
 		}	
 	

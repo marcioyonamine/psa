@@ -67,6 +67,7 @@ $(function() {
             <table class="table table-striped">
               <thead>
                 <tr>
+				<th>#</th>
 					<th>CulturAZ</th>
 					<th>Título</th>
                     <th>Proponente</th>
@@ -106,6 +107,7 @@ $(function() {
 				$res = $wpdb->get_results($ranking,ARRAY_A);
 				
 				//var_dump($res);
+				$k = 1;
 				for($i = 0; $i < count($res); $i++){
 					$id_insc = $res[$i]['inscricao'];
 					$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$id_insc'";	
@@ -115,6 +117,7 @@ $(function() {
 
 				?>	
     			 <tr>
+				 <td><?php echo $k;?></td>
                   <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($json['inscricao'],3); ?>" target="_blank" ><?php echo $json['inscricao']; ?> </a></td>
 
                   <td><?php echo $res_json['3.1 - Título']; ?></td>
@@ -127,7 +130,7 @@ $(function() {
 				  </td>
 					</tr>
 				<?php 
-
+					$k++;
 				} ?>	
 
 
