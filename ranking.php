@@ -42,10 +42,15 @@ $(function() {
           <p>Para ter acesso aos detalhes dos projetos, é necessário que esteja logado no CulturAZ e que faça parte da equipe de pareceristas. <a href="http://culturaz.santoandre.sp.gov.br/autenticacao/" target="_blanck">Clique para logar</a></p>
 		  <p>
 		  <?php 
+		  if(isset($_GET['filtro'])){
+			  $f = $_GET['filtro'];
+		  }else{
+			  $f = '0';
+		  }
 		  $sel = "SELECT DISTINCT filtro FROM ava_ranking ORDER BY filtro ASC";
 		  $res_fil = $wpdb->get_results($sel,ARRAY_A);
 		  for($i = 0; $i < count($res_fil); $i++){
-			  if($_GET['filtro'] != $res_fil[$i]['filtro']){
+			  if($f != $res_fil[$i]['filtro']){
 				echo "<a href='ranking.php?edital=".$_GET['edital']."&filtro=".$res_fil[$i]['filtro']."' >".$res_fil[$i]['filtro']."</a> |  ";
 			  }else{
 				  echo $res_fil[$i]['filtro']." | ";
