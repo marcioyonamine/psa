@@ -195,7 +195,35 @@ function gravarLog($log, $idUsuario){ //grava na tabela ig_log os inserts e upda
 		$mysqli->query($sql);
 }
 
+	function diasemana($data)
+	{
+		$ano =  substr("$data", 0, 4);
+		$mes =  substr("$data", 5, -3);
+		$dia =  substr("$data", 8, 9);
+		$diasemana = date("w", mktime(0,0,0,$mes,$dia,$ano) );
+		switch($diasemana)
+		{
+			case"0": $diasemana = "Domingo";       break;
+			case"1": $diasemana = "Segunda-Feira"; break;
+			case"2": $diasemana = "Terça-Feira";   break;
+			case"3": $diasemana = "Quarta-Feira";  break;
+			case"4": $diasemana = "Quinta-Feira";  break;
+			case"5": $diasemana = "Sexta-Feira";   break;
+			case"6": $diasemana = "Sábado";        break;
+		}
+		return "$diasemana";
+	}
 
+function diasemanaint($data)
+	{
+		$ano =  substr("$data", 0, 4);
+		$mes =  substr("$data", 5, -3);
+		$dia =  substr("$data", 8, 9);
+		$diasemana = date("w", mktime(0,0,0,$mes,$dia,$ano) );
+		
+		return $diasemana;
+	}
+	
 function noResend(){
 	$p1 = $_SERVER["HTTP_REFERER"];
 	$p2 = $_SERVER["QUERY_STRING"];
@@ -261,6 +289,22 @@ function tipo($id){
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	return $res;
 
+}
+
+
+function proxQuinta($data){ // em Y-m-d
+	$data = diasemanaint($data_se);
+	if($data_se == 4{
+		return $data;
+	}else{
+		while($data_se != 4){
+			$data = somarDatas($data,"4");
+		}
+
+	
+	}
+	
+	
 }
 	
 	
@@ -911,6 +955,8 @@ function parcela($id){
 	}
 	
 }
+
+
 
 function verificaEvento($idEvento){
 	/*
