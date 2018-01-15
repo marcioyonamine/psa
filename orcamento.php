@@ -1090,7 +1090,7 @@ $historico = orcamento($id_hist);
                   <th>Valor</th>
 				  </tr>
 			<?php 
-			$sql_list_pla = "SELECT * FROM sc_orcamento WHERE idPai = '$id_hist' AND publicado = '1'";
+			$sql_list_pla = "SELECT * FROM sc_orcamento, sc_tipo  WHERE idPai = '$id_hist' AND sc_orcamento.publicado = '1' AND sc_tipo.publicado ='1' AND sc_tipo.tipo = sc_orcamento.planejamento";
 			$res_pla = $wpdb->get_results($sql_list_pla,ARRAY_A);	
 			$total_planejado = 0;
 			for($i = 0; $i < count($res_pla); $i++){	
