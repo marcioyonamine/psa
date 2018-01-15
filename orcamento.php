@@ -1106,7 +1106,10 @@ $historico = orcamento($id_hist);
 	<td><?php echo $programa['tipo']; ?></td>
 
 	<td><?php echo $res_pla[$i]['obs'] ?></td>
-	<td><?php echo dinheiroParaBr($res_pla[$i]['valor']); $total_planejado = $total_planejado + $res_pla[$i]['valor'] ?></td>
+	<td>
+	
+	
+	<?php echo dinheiroParaBr($res_pla[$i]['valor']); $total_planejado = $total_planejado + $res_pla[$i]['valor'] ?></td>
 	</tr>
 			<?php } ?>
 <tr>
@@ -1117,7 +1120,14 @@ $historico = orcamento($id_hist);
 <td><?php echo dinheiroParaBr($total_planejado); ?><td>
 
 </tr>
+<tr>
+<td><td>
 
+
+<td>Total a planejar:<td>
+<td><?php echo dinheiroParaBr(($historico['total'] - $historico['contigenciado'] + $historico['descontigenciado'] + $historico['suplementado']) - $total_planejado); ?><td>
+
+</tr>
 			
               </tbody>
             </table>
