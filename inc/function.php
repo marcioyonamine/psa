@@ -662,7 +662,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	*/
 	
 	//$sql_pla = "SELECT valor FROM sc_orcamento WHERE idPai = '$id' AND publicado = '1'";
-	$sql_pla = "SELECT * FROM sc_orcamento, sc_tipo  WHERE idPai = '$id_hist' AND sc_orcamento.publicado = '1' AND sc_tipo.publicado ='1' AND sc_tipo.id_tipo = sc_orcamento.planejamento";
+	$sql_pla = "SELECT * FROM sc_orcamento, sc_tipo  WHERE idPai = '$id' AND sc_orcamento.publicado = '1' AND sc_tipo.publicado ='1' AND sc_tipo.id_tipo = sc_orcamento.planejamento";
 	$pla = $wpdb->get_results($sql_pla,ARRAY_A);
 	if(count($pla) > 0){
 		for($i = 0; $i < count($pla); $i++){
