@@ -64,12 +64,12 @@ switch($p){
 
 				$res = json_decode($sel['avaliadores'],true);
 				$inscritos = $res[$g];
-				//var_dump($res);
+				var_dump($res);
 				for($i = 0; $i < count($res[$g]); $i++){
 					$id_insc = $res[$g][$i];
 					$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$id_insc'";	
 					$json = $wpdb->get_row($sel,ARRAY_A);	
-					$res_json = converterObjParaArray(json_decode(($json['descricao'])));
+					$res_json = json_decode($json['descricao'],true);
 
 
 				?>	
@@ -81,7 +81,7 @@ switch($p){
 				<td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
                   <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
-				  <td><?php echo somaNotas($json['inscricao'],$user->ID); ?></td>
+				  <td><?php echo somaNotas($json['inscricao'],$user->ID,273); ?></td>
                   <td>
 				  <form method="POST" action="avaliacao.php" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $json['inscricao']; ?>" />

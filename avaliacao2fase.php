@@ -32,25 +32,28 @@ if(isset($_POST['gravar'])){
 					}else{
 						$mensagem = "<div class='alert alert-warning'><strong>Não há lançamentos novos.</strong></div>"	;
 					}
-				atualizaNota($inscricao);
+				
 			}
 		}
 	// passa função de valor máximo
+	atualizaNota2Fase($inscricao);
 	valorNotaMax($inscricao,$usuario);
 
 		
-	
+	$sql_filtro = "UPDATE ava_ranking SET filtro = '".$_POST['categoria']."' WHERE edital = '273' AND inscricao = '$inscricao'";
+	$wpdb->query($sql_filtro);
+	//echo $sql_filtro;
 
 	
 	
 	if($_POST['obs'] != ""){
-		$sql_sel_obs = "SELECT id FROM ava_anotacao WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."'";
+		$sql_sel_obs = "SELECT id FROM ava_anotacao WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."' AND edital = '274'";
 		$res_obs = $wpdb->get_row($sql_sel_obs,ARRAY_A);
 		if(count($res_obs) > 0){ // atualiza
-			$sql_up_obs = "UPDATE ava_anotacao SET anotacao = '".addslashes($_POST['obs'])."' WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."'";
+			$sql_up_obs = "UPDATE ava_anotacao SET anotacao = '".addslashes($_POST['obs'])."' WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."' AND edital = '274'";
 			$res_up_obs = $wpdb->query($sql_up_obs);
 		}else{ //insere
-			$sql_ins_obs = "INSERT INTO `ava_anotacao` (`id`, `usuario`, `inscricao`, `anotacao`) VALUES (NULL, '".$user->ID."', '".$inscricao."', '".addslashes($_POST['obs'])."');";
+			$sql_ins_obs = "INSERT INTO `ava_anotacao` (`id`, `usuario`, `inscricao`, `anotacao`, `edital`) VALUES (NULL, '".$user->ID."', '".$inscricao."', '".addslashes($_POST['obs'])."','274');";
 			$res_ins_obs = $wpdb->query($sql_ins_obs);
 			
 		}
@@ -102,23 +105,23 @@ var objeto = form1.obs.value
               <tbody>
 			  <form method="POST" action="?" class="form-horizontal" role="form" name="form1">
 				<?php 
-				
+
 				$sql = "SELECT * FROM ava_criterios WHERE edital = '274'";
 				$res = $wpdb->get_results($sql,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 				?>	
                 <tr>
                   <td><?php echo $res[$i]['criterio']?></td>
-					<td><input type="text" class="form-control nota" name="<?php echo $res[$i]['id']; ?>" value="<?php echo retornaNota($inscricao,$res[$i]['id'],$user->ID); ?>" ></td>
+					<td><input type="text" class="form-control nota" name="<?php echo $res[$i]['id']; ?>" value="<?php echo retornaNota($inscricao,$res[$i]['id'],$user->ID,'274'); ?>" ></td>
 				  </tr>
 				  
 				<?php } ?>
 				<tr>
 				<td>Categoria Original</td>
 				<td><?php 
-				$sel = "SELECT filtro FROM ava_ranking WHERE inscricao = '$inscricao'";	
+				$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$inscricao'";	
 					$json = $wpdb->get_row($sel,ARRAY_A);	
-					
+					$res_json = json_decode($json['descricao'],true);
 				?><?php  echo $res_json['3.2 - Categoria']; ?></td>
 				</tr>
 				<tr>
@@ -126,10 +129,21 @@ var objeto = form1.obs.value
 				<td><?php 
 				$sql_cat = "SELECT DISTINCT filtro FROM ava_ranking ORDER BY filtro ASC";
 				$res_cat = $wpdb->get_results($sql_cat,ARRAY_A);
+				$sql_cat_sel = "SELECT filtro FROM ava_ranking WHERE inscricao = '$inscricao'";
+				$res_cat_sel = $wpdb->get_row($sql_cat_sel,ARRAY_A);
+				echo "<select name='categoria' class='form-control' >";
 				for($k = 0; $k < count($res_cat); $k++){
-					if($res_cat[$k]['filtro'] == 
+					if($res_cat[$k]['filtro'] == $res_cat_sel['filtro']){
+
+						echo "<option value='".$res_cat[$k]['filtro']."' selected>".$res_cat[$k]['filtro']."</option>";
+					}else{
+						echo "<option value='".$res_cat[$k]['filtro']."'>".$res_cat[$k]['filtro']."</option>";
+						
+					}
 					
 				}
+				echo "</select>";
+				
 				
 				
 				?></td>
@@ -140,7 +154,7 @@ var objeto = form1.obs.value
 									<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Observação</label>
-							<textarea name="obs" class="form-control" rows="10" OnKeyUp="return verificachars()" ><?php echo retornaAnotacao($inscricao,$user->ID); ?></textarea>
+							<textarea name="obs" class="form-control" rows="10" OnKeyUp="return verificachars()" ><?php echo retornaAnotacao($inscricao,$user->ID,'274'); ?></textarea>
 						</div> 
 					</div>
 				</td>

@@ -30,7 +30,7 @@ if(isset($_POST['apagar'])){
 	if($upd == 1){
 		$mensagem = alerta("Dotação apagada com sucesso.","success");
 	}else{
-		$mensagem = alerta("Erro. ","warning");
+		$mensagem = alerta("Erro [1]. ","warning");
 	}
 	
 }
@@ -265,7 +265,7 @@ case "editar":
 		if($r == 1){
 			$mensagem = alerta("Dotação inserida com sucesso.","sucess");	
 		}else{
-			$mensagem = alerta("Erro. Tente novamente.","warning");				
+			$mensagem = alerta("Erro[2]. Tente novamente.","warning");				
 		}
 		$orcamento =  recuperaDados('sc_orcamento',$wpdb->insert_id,'id');	
 		
@@ -292,7 +292,7 @@ case "editar":
 		if($r == 1){
 			$mensagem = alerta("Dotação inserida com sucesso.","sucess");	
 		}else{
-			$mensagem = alerta("Erro. Tente novamente.","warning");				
+			$mensagem = alerta("Erro[3]. Tente novamente.","warning");				
 		}
 
 		$orcamento =  recuperaDados('sc_orcamento',$idOrc,'id');	
@@ -576,7 +576,7 @@ if(isset($_POST['mov_inserir'])){
 	if($ins == 1){
 			$mensagem = alerta("Movimentação inserida com sucesso.","sucess");	
 		}else{
-			$mensagem = alerta("Erro. Tente novamente.","warning");				
+			$mensagem = alerta("Erro[4]. Tente novamente.","warning");				
 		}
 
 	$mov = $wpdb->get_row("SELECT * FROM sc_mov_orc WHERE id =  '$id_orc'",ARRAY_A);
@@ -598,7 +598,7 @@ if(isset($_POST['mov_editar'])){
 	WHERE id = '$id_orc'";
 	$ins = $wpdb->query($sql);
 	if($ins == 1){
-		$mensagem = alerta("Movimentação inserida com sucesso.","sucess");	
+		$mensagem = alerta("Movimentação atualizada com sucesso.","sucess");	
 	}else{
 		$mensagem =  alerta("Erro. Tente novamente.","warning");	
 	}

@@ -1190,9 +1190,9 @@ function retornaNota($inscricao,$criterio,$usuario){
 	
 }
 
-function somaNotas($inscricao,$usuario){
+function somaNotas($inscricao,$usuario,$edital){
 	global $wpdb;
-	$sql_soma = "SELECT nota FROM `ava_nota` WHERE inscricao = '$inscricao' AND usuario ='$usuario'";
+	$sql_soma = "SELECT nota FROM `ava_nota` WHERE inscricao = '$inscricao' AND usuario ='$usuario' AND edital ='$edital'";
 	$res = $wpdb->get_results($sql_soma,ARRAY_A);
 	$total = 0;
 	if(count($res) > 0){
@@ -1203,9 +1203,9 @@ function somaNotas($inscricao,$usuario){
 	return $total;
 }
 
-function retornaAnotacao($inscricao,$usuario){
+function retornaAnotacao($inscricao,$usuario,$edital = NULL){
 	global $wpdb;
-	$sql_sel_obs = "SELECT anotacao FROM ava_anotacao WHERE usuario = '".$usuario."' AND inscricao = '".$inscricao."'";
+	$sql_sel_obs = "SELECT anotacao FROM ava_anotacao WHERE usuario = '".$usuario."' AND inscricao = '".$inscricao."' AND edital = '$edital'";
 	$res_obs = $wpdb->get_row($sql_sel_obs,ARRAY_A);
 	return $res_obs['anotacao'];
 }
@@ -1222,7 +1222,7 @@ function atualizaNota($inscricao){
 	if($numero != 0){
 	
 		for($k = 0; $k < $numero; $k++){
-			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario']);		
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],273);		
 			$nota_total = $nota_total + $nota[$k];
 		}
 	
@@ -1237,6 +1237,44 @@ function atualizaNota($inscricao){
 	//atualiza ranking
 	$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
 	$wpdb->query($update_ranking);
+	}
+}
+
+function atualizaNota2Fase($inscricao){
+	global $wpdb;
+	$nota_total = 0;	
+	
+	// seleciona os pareceridas
+	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '273'";
+	$query_pareceristas = $wpdb->get_results($sql_pareceristas,ARRAY_A);
+	$numero = count($query_pareceristas);
+	if($numero != 0){
+	
+		for($k = 0; $k < $numero; $k++){
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],'273');		
+			$nota_total = $nota_total + $nota[$k];
+		}
+	
+	$nota_total = $nota_total/$numero;
+	$discrepancia = 0;
+	if($numero == 2){
+		$discrepancia = moduloAritimetica($nota[0] - $nota[1]);
+	}
+	
+	$sql_2fase = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '274'";
+	$res_2fase = $wpdb->get_row($sql_2fase,ARRAY_A);
+		
+	
+	if(count($res_2fase) > 0){
+		$nota_total = $nota_total + $res_2fase['nota'];
+	}
+	
+
+	
+	//atualiza ranking
+	$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
+	$wpdb->query($update_ranking);
+	
 	}
 }
 
@@ -1282,7 +1320,7 @@ function nota($inscricao){
 	if($numero != 0){
 	
 		for($k = 0; $k < $numero; $k++){
-			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario']);		
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],273);		
 			$nota_total = $nota_total + $nota[$k];
 			$x['pareceristas'][$k]['usuario'] = $query_pareceristas[$k]['usuario'];
 			$x['pareceristas'][$k]['nota'] = $nota[$k];
@@ -1303,10 +1341,10 @@ function nota($inscricao){
 	}
 }
 
-function retornaNotaTotal($inscricao,$usuario){
+function retornaNotaTotal($inscricao,$usuario,$edital){
 	global $wpdb;
 	$nota = 0;
-	$sql = "SELECT nota FROM ava_nota WHERE usuario = '$usuario' AND inscricao ='$inscricao'";
+	$sql = "SELECT nota FROM ava_nota WHERE usuario = '$usuario' AND inscricao ='$inscricao' AND edital = '$edital'";
 	$res = $wpdb->get_results($sql,ARRAY_A);
 	for($i = 0; $i < count($res); $i++){
 		$nota = $nota + $res[$i]['nota'];
@@ -1339,7 +1377,7 @@ function verificaAvaliacao($usuario,$edital){
 		if($y == NULL OR $y == ""){
 			$anotacao++;
 		}
-		$k = retornaNotaTotal($id_insc,$usuario);
+		$k = retornaNotaTotal($id_insc,$usuario,$edital);
 		if($k == 0){
 			$zeradas = $zeradas + 1;
 		}
@@ -1372,6 +1410,55 @@ function retornaPlanejamento($idPlan){
 	return $x;
 
 }
+
+function orcamentoTotal($ano){
+	global $wpdb;
+	$sql_list =  "SELECT id FROM sc_orcamento WHERE publicado = '1' AND ano_base = '$ano' ORDER BY projeto ASC, ficha ASC";
+	$res = $wpdb->get_results($sql_list,ARRAY_A);
+	$total_orc = 0;
+	$total_con = 0;
+	$total_des = 0;
+	$total_sup = 0;
+	$total_res = 0;
+	$total_tot = 0;
+	$total_pla = 0;
+	$total_lib = 0;
+		for($i = 0; $i < count($res); $i++){
+		$orc = orcamento($res[$i]['id']);
+			$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'];
+					
+			$total_orc = $total_orc + $orc['total'];
+			$total_con = $total_con + $orc['contigenciado'];
+			$total_des = $total_des + $orc['descontigenciado'];
+			$total_sup = $total_sup + $orc['suplementado'];
+			$total_lib = $total_lib + $orc['liberado'];
+			$total_pla = $total_pla + $orc['planejado'];
+				
+				//$total_res = $total_res;
+			$total_tot = $total_tot + $total;					
+					
+					
+					
+					
+			} // fim do for	
+			
+			$sal_pla = $total_tot - $total_pla;
+		$x = array(
+		'orcamento' => $total_orc,
+		'contigenciado' => $total_con,
+		'descontigenciado' => $total_des,
+		'suplementado' => $total_sup,
+		'liberado' => $total_lib,
+		'planejado' => $total_pla,
+		'total' => $total_tot,
+		'planejado' => $sal_pla,
+		
+		);
+		return $x;
+	
+}
+
+
 
 /* funções css */
 

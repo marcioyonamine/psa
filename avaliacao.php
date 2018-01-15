@@ -69,7 +69,7 @@ if(isset($_POST['gravar'])){
  <script src="js/maskMoney.js"></script> 
  <script>
 $(function() {
-	$( ".nota" ).mask("9.9");
+	$( ".nota" ).mask("99.9");
 });
   </script>
 <script language="javascript">
