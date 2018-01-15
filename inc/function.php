@@ -661,7 +661,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	
 	*/
 	
-	$sql_pla = "SELECT valor FROM sc_orcamento WHERE idPai = '$id'";
+	$sql_pla = "SELECT valor FROM sc_orcamento WHERE idPai = '$id' AND publicado = '1'";
 	$pla = $wpdb->get_results($sql_pla,ARRAY_A);
 	if(count($pla) > 0){
 		for($i = 0; $i < count($pla); $i++){
