@@ -11,9 +11,9 @@
             <li class="nav-item">
               <a class="nav-link" href="editais.php">Editais</a>
             </li>
-            <li class="nav-item">
+            <!--<li class="nav-item">
               <a class="nav-link" href="inscricoes.php">Inscrições Selecionadas / Avaliações</a>
-            </li>
+            </li>-->
             <li class="nav-item">
               <a class="nav-link" href="inscricoes.php?p=all"> Todas as Inscrições (Consulta)</a>
             </li>
