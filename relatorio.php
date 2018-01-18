@@ -121,7 +121,7 @@ $orcamentototal = orcamentoTotal(2018);
 				</tr>
 				<tr>
 				<td>Saldo Planejado</td>
-				<td><?php //echo dinheiroParaBr($orcamento['']); ?></td>
+				<td><?php echo dinheiroParaBr($orcamento['total'] - $orcamento['planejado']); ?></td>
 
 				</tr>				
 				</tbody>
