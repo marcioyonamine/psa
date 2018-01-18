@@ -9,6 +9,11 @@ if(isset($_POST['gravar'])){
 	$inscricao = $_POST['carregar'];
 	$usuario = $user->ID;
 	$contador = 0;
+	if(isset($_POST['revisao'])){
+		$revisao = 1;
+	}else{
+		$revisao = 0;
+	}
 	 foreach($_POST as $key => $value){
 		if(is_numeric($value) OR $value == ""){
 				$sql_verifica = "SELECT id FROM ava_nota WHERE inscricao = '$inscricao' AND usuario = '".$user->ID."' AND criterio = '$key'";
@@ -40,9 +45,8 @@ if(isset($_POST['gravar'])){
 	valorNotaMax($inscricao,$usuario);
 
 		
-	$sql_filtro = "UPDATE ava_ranking SET filtro = '".$_POST['categoria']."' WHERE edital = '273' AND inscricao = '$inscricao'";
+	$sql_filtro = "UPDATE ava_ranking SET filtro = '".$_POST['categoria']."', revisao = '$revisao'  WHERE edital = '273' AND inscricao = '$inscricao'";
 	$wpdb->query($sql_filtro);
-	//echo $sql_filtro;
 
 	
 	
@@ -92,7 +96,7 @@ var objeto = form1.obs.value
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Avaliação</h1>
 		  <?php if(isset($mensagem)){ echo $mensagem; } ?>
-  		  <?php if(isset($rank)){ echo $rank; } ?>
+  		  <?php //if(isset($sql_filtro)){ echo $sql_filtro; } ?>
 		<h2><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($inscricao,3); ?>" target="_blank" ><?php echo $inscricao; ?> </a></h2>	
           <h2></h2>
           <div class="table-responsive">
@@ -113,7 +117,7 @@ var objeto = form1.obs.value
 				?>	
 				<tr>
 				<td>Revisão</td>
-				<td><input type="checkbox" name="revisao" /></td>
+				<td><input type="checkbox" name="revisao" <?php if(retornaCheck($inscricao) == 1){echo "checked";}; ?>/></td>
 				</tr>
                 <tr>
                   <td><?php echo $res[$i]['criterio']?></td>

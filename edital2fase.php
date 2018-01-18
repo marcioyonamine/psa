@@ -56,6 +56,8 @@ $(function() {
 				  echo $res_fil[$i]['filtro']." | ";
 			  }
 		  }
+		  echo "<a href='edital2fase.php?edital=".$_GET['edital']."&revisao=1' >Revisão</a>";
+		  
 		  ?>
 		  
 		  </p>
@@ -101,10 +103,15 @@ $(function() {
 				}else{
 					$filtro = "";
 				}
+				if(isset($_GET['revisao'])){
+					$revisao = "AND revisao = '".$_GET['revisao']."'";
+				}else{
+					$revisao = "";
+				}
 				
 				
 
-				$ranking = "SELECT inscricao, nota FROM ava_ranking WHERE edital = '".$_GET['edital']."' $filtro  $order";
+				$ranking = "SELECT inscricao, nota FROM ava_ranking WHERE edital = '".$_GET['edital']."' $filtro $revisao $order";
 				$res = $wpdb->get_results($ranking,ARRAY_A);
 				
 				//var_dump($res);

@@ -1481,14 +1481,20 @@ function orcamentoTotal($ano){
 		'liberado' => $total_lib,
 		'planejado' => $total_pla,
 		'total' => $total_tot,
-		'planejado' => $sal_pla,
+		'planejado' => $total_pla,
 		
 		);
 		return $x;
 	
 }
 
-
+function retornaCheck($inscricao){
+	global $wpdb;
+	$sql = "SELECT revisao FROM ava_ranking WHERE inscricao = '$inscricao'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	return $res['revisao'];
+	
+}
 
 /* funções css */
 
