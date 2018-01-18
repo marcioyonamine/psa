@@ -130,6 +130,7 @@ case 'all':
                   <th>N1</th>
                   <th>N2</th>
                   <th>NM</th>
+				  <th>Avaliadores</th>
 				  </tr>
               </thead>
               <tbody>
@@ -171,7 +172,7 @@ case 'all':
 				  <td><?php if(isset($nota['pareceristas'][0])){echo $nota['pareceristas'][0]['nota'];}?></td>
 				  <td><?php if(isset($nota['pareceristas'][1])){echo $nota['pareceristas'][1]['nota'];}?></td>
 				  <td><?php if(isset($nota['media'])){echo $nota['media'];}?></td>
-                 
+                 <td><?php echo listarAvaliadores($json['inscricao']); ?></td>
 					</tr>
 				<?php }else{
 

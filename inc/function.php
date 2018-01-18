@@ -1272,7 +1272,7 @@ function atualizaNota2Fase($inscricao){
 
 	
 	//atualiza ranking
-	$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
+	$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total' WHERE inscricao = '$inscricao'";
 	$x = $wpdb->query($update_ranking);
 	if($x){
 		return "Ranking atualizado.";
@@ -1360,6 +1360,24 @@ function retornaNotaTotal($inscricao,$usuario,$edital){
 	
 }
 
+function listarAvaliadores($inscricao){
+	global $wpdb;
+	$nota = "";
+//	$sql = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao'";
+	$sql = "SELECT usuario  FROM `ava_nota` WHERE `inscricao` LIKE '$inscricao' AND `edital` = 273 ORDER BY `nota` DESC";
+
+	//$res = $wpdb->get_results($sql,ARRAY_A);
+	$res_ava = $wpdb->get_results($sql,ARRAY_A);
+	$x = "";	
+	for($i = 0; $i < count($res_ava); $i++){
+		if($x != $res_ava[$i]['usuario']){
+			$wpuser = get_userdata($res_ava[$i]['usuario']);
+			$nota = $nota . $wpuser->first_name." / ";
+			$x = $res_ava[$i]['usuario'];
+		}
+	}
+	return $nota;
+}
 
 function verificaAvaliacao($usuario,$edital){
 	global $wpdb;
