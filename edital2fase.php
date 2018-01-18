@@ -75,7 +75,7 @@ $(function() {
                   <th>Área</th>
                   <th>Valor</th>
                   <th>Nota</th>
-					<th></th>
+					<th>Nota 2 Fase</th>
 				  <th></th>
 				  </tr>
               </thead>
@@ -127,7 +127,9 @@ $(function() {
                   <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
 				  <td><?php echo $res[$i]['nota']; ?></td>
+				  <td><?php echo retornaNota2Fase($json['inscricao']); ?></td>
 				                   <td><?php echo listarAvaliadores($json['inscricao']); ?></td>
+	                   
                   <td>
 				  <form method="POST" action="avaliacao2fase.php" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $json['inscricao']; ?>" />

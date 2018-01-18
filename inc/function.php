@@ -1360,6 +1360,13 @@ function retornaNotaTotal($inscricao,$usuario,$edital){
 	
 }
 
+function retornaNota2Fase($inscricao){
+	global $wpdb;
+	$sql = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '274'";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	return $res['nota'];
+}
+
 function listarAvaliadores($inscricao){
 	global $wpdb;
 	$nota = "";
