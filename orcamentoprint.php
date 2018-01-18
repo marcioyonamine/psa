@@ -252,7 +252,7 @@ var pie = new d3pie("pieChart", {
 	},
 	"size": {
 		"canvasWidth": 900,
-		"pieOuterRadius": "60%"
+		"pieOuterRadius": "65%"
 	},
 	"data": {
 		"sortOrder": "value-desc",
