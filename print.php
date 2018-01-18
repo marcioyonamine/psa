@@ -23,7 +23,7 @@ if(isset($_GET['usuario'])){
                   <th>Área</th>
                   <th>Valor</th>
                   <th width="10%">Nota</th>
-					<th width="25%">Anotações</th>
+					<th width="35%">Anotações</th>
 				  </tr>
               </thead>
               <tbody>
