@@ -111,6 +111,10 @@ var objeto = form1.obs.value
 				$res = $wpdb->get_results($sql,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 				?>	
+				<tr>
+				<td>Revisão</td>
+				<td><input type="checkbox" name="revisao" /></td>
+				</tr>
                 <tr>
                   <td><?php echo $res[$i]['criterio']?></td>
 					<td><input type="text" class="form-control nota" name="<?php echo $res[$i]['id']; ?>" value="<?php echo retornaNota($inscricao,$res[$i]['id'],$user->ID,'274'); ?>" ></td>
