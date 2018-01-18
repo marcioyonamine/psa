@@ -17,7 +17,13 @@ $w = 0;
 body{
 	font-size:10px;
 }
+.pieChart{
+	float: right;
+	
+	
+}
 </style>
+<div>
             <table border= "1" class="table table-striped">
               <thead>
                 <tr>
@@ -67,7 +73,8 @@ body{
 				</tbody>
             </table>
           </div> 
-
+		  </div>
+<div id="pieChart" align="center"></div>
 		
 		
 		
@@ -157,7 +164,7 @@ body{
 									}
 									?></td>				
 				<td><?php  if(isset($orc['projeto'])){echo $orc['projeto']; } ?> / <?php if(isset($orc['ficha'])){echo $orc['ficha'];} ?></td>				
-				<td><?php echo $orc['descricao'] ?></td>				
+				<td><?php  if(isset($orc['descricao'])){echo $orc['descricao']; } ?></td>				
 
 					</tr>
 					<?php } 
@@ -204,3 +211,100 @@ body{
 
 				</tbody>
             </table>
+			<style>
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+</style>
+			<script src="https://d3js.org/d3.v4.js"></script>
+<script src="visual/d3/d3pie.js"></script>
+<script>
+var pie = new d3pie("pieChart", {
+	"header": {
+		"title": {
+			"text": "Planejamento por Programa",
+			"fontSize": 24,
+			"font": "open sans"
+		},
+		"subtitle": {
+			"text": "",
+			"color": "#999999",
+			"fontSize": 12,
+			"font": "open sans"
+		},
+		"titleSubtitlePadding": 9
+	},
+	"footer": {
+		"color": "#999999",
+		"fontSize": 10,
+		"font": "open sans",
+		"location": "bottom-left"
+	},
+	"size": {
+		"canvasWidth": 600,
+		"pieOuterRadius": "60%"
+	},
+	"data": {
+		"sortOrder": "value-desc",
+		"content": [
+		
+		<?php for ($i = 0; $i < count($programa); $i++){ ?>
+			{
+				"label": "<?php echo $programa[$i]['programa']?>",
+				"value": <?php echo $programa[$i]['valor'] ?>,
+				"color": "<?php echo '#' . dechex(rand(256,16777215)) ?>"
+			},
+		<?php } ?>
+
+		]
+	},
+	"labels": {
+		"outer": {
+			"pieDistance": 32
+		},
+		"inner": {
+			"hideWhenLessThanPercentage": 3
+		},
+		"mainLabel": {
+			"fontSize": 11
+		},
+		"percentage": {
+			"color": "#ffffff",
+			"decimalPlaces": 0
+		},
+		"value": {
+			"color": "#adadad",
+			"fontSize": 11
+		},
+		"lines": {
+			"enabled": true
+		},
+		"truncation": {
+			"enabled": true
+		}
+	},
+	"effects": {
+		"pullOutSegmentOnClick": {
+			"effect": "linear",
+			"speed": 400,
+			"size": 8
+		}
+	},
+	"misc": {
+		"gradient": {
+			"enabled": true,
+			"percentage": 100
+		}
+	}
+});
+</script>

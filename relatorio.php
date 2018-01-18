@@ -293,7 +293,7 @@ $orcamentototal = orcamentoTotal(2018);
 </div>
 
 
-
+<script src="js/jquery-3.2.1.js"></script>
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="visual/d3/d3pie.js"></script>
 <script>
@@ -333,90 +333,6 @@ var pie = new d3pie("pieChart", {
 				"color": "<?php echo '#' . dechex(rand(256,16777215)) ?>"
 			},
 		<?php } ?>
-			{
-				"label": "Em planejamento",
-				"value": <?php echo $orcamentototal['planejado']; ?>,
-				"color": "<?php echo '#' . dechex(rand(256,16777215)) ?>"			
-			}
-		]
-	},
-	"labels": {
-		"outer": {
-			"pieDistance": 32
-		},
-		"inner": {
-			"hideWhenLessThanPercentage": 3
-		},
-		"mainLabel": {
-			"fontSize": 11
-		},
-		"percentage": {
-			"color": "#ffffff",
-			"decimalPlaces": 0
-		},
-		"value": {
-			"color": "#adadad",
-			"fontSize": 11
-		},
-		"lines": {
-			"enabled": true
-		},
-		"truncation": {
-			"enabled": true
-		}
-	},
-	"effects": {
-		"pullOutSegmentOnClick": {
-			"effect": "linear",
-			"speed": 400,
-			"size": 8
-		}
-	},
-	"misc": {
-		"gradient": {
-			"enabled": true,
-			"percentage": 100
-		}
-	}
-});
-</script>
-<script>
-var pie = new d3pie("pieChart2", {
-	"header": {
-		"title": {
-			"text": "Planejamento por Projeto",
-			"fontSize": 24,
-			"font": "open sans"
-		},
-		"subtitle": {
-			"text": "",
-			"color": "#999999",
-			"fontSize": 12,
-			"font": "open sans"
-		},
-		"titleSubtitlePadding": 9
-	},
-	"footer": {
-		"color": "#999999",
-		"fontSize": 10,
-		"font": "open sans",
-		"location": "bottom-left"
-	},
-	"size": {
-		"canvasWidth": 600,
-		"pieOuterRadius": "90%"
-	},
-	"data": {
-		"sortOrder": "value-desc",
-		"content": [
-		
-		<?php for ($i = 0; $i < count($projeto); $i++){ ?>
-			{
-				"label": "<?php echo $projeto[$i]['nome']?>",
-				"value": <?php echo $projeto[$i]['valor'] ?>,
-				"color": "<?php echo '#' . dechex(rand(256,16777215)) ?>"
-			},
-		<?php } ?>
 
 		]
 	},
@@ -460,6 +376,7 @@ var pie = new d3pie("pieChart2", {
 	}
 });
 </script>
+
 
 
 <?php 
