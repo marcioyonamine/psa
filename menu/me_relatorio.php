@@ -22,7 +22,7 @@
               <a class="nav-link" href="?p=orcamento">Orçamento</a>
             </li>
 			<li class="nav-item">
-              <a class="nav-link" href="?p=orcamento" target="_blank">Orçamento para impressão</a>
+              <a class="nav-link" href="orcamentoprint.php" target="_blank">Orçamento para impressão</a>
             </li>
 		<!--
 			<li class="nav-item">
