@@ -1176,10 +1176,10 @@ if(isset($_POST['atualiza'])){
 
 if(isset($_POST['apagar'])){
 	$id = $_POST['apagar'];
-	$sql_upd = "UPDATE sc_tipo SET publicado = '1' WHERE id_tipo = '$id' AND abreviatura = 'projeto'";
+	$sql_upd = "UPDATE sc_tipo SET publicado = '0' WHERE id_tipo = '$id' ";
 	$ins = $wpdb->query($sql_upd);
 		if($ins == 1){
-			$mensagem = alerta("Projeto apagdo.","success");
+			$mensagem = alerta("Projeto apagado.","success");
 		}else{
 			$mensagem = alerta("Erro. Tente novamente","warning");	
 		}
