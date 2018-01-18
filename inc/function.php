@@ -1263,7 +1263,7 @@ function atualizaNota2Fase($inscricao){
 	
 	$sql_2fase = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '274'";
 	$res_2fase = $wpdb->get_row($sql_2fase,ARRAY_A);
-		
+	var_dump($res_2fase);	
 	
 	if(count($res_2fase) > 0){
 		$nota_total = $nota_total + $res_2fase['nota'];
@@ -1273,7 +1273,12 @@ function atualizaNota2Fase($inscricao){
 	
 	//atualiza ranking
 	$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
-	$wpdb->query($update_ranking);
+	$x = $wpdb->query($update_ranking);
+	if($x){
+		return "Ranking atualizado.";
+	}else{
+		return "Erro ao atualizar ranking";
+	}
 	
 	}
 }

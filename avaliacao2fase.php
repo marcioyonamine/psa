@@ -36,7 +36,7 @@ if(isset($_POST['gravar'])){
 			}
 		}
 	// passa função de valor máximo
-	atualizaNota2Fase($inscricao);
+	$rank = atualizaNota2Fase($inscricao);
 	valorNotaMax($inscricao,$usuario);
 
 		
@@ -92,6 +92,7 @@ var objeto = form1.obs.value
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Avaliação</h1>
 		  <?php if(isset($mensagem)){ echo $mensagem; } ?>
+  		  <?php if(isset($rank)){ echo $rank; } ?>
 		<h2><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($inscricao,3); ?>" target="_blank" ><?php echo $inscricao; ?> </a></h2>	
           <h2></h2>
           <div class="table-responsive">
