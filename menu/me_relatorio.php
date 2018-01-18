@@ -21,6 +21,9 @@
 			<li class="nav-item">
               <a class="nav-link" href="?p=orcamento">Orçamento</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="?p=orcamento" target="_blank">Orçamento para impressão</a>
+            </li>
 		<!--
 			<li class="nav-item">
               <a class="nav-link" href="contratacao.php?p=busca_pf">Insere Contratação PF</a>

@@ -78,7 +78,7 @@ body{
 				<th width="25%">Programa</th>
 				<th>Projeto</th>
 				<th>Valor</th>
-				<th width="40%">Nota</th>
+				<th width="30%">Nota</th>
 				<th>Responsável</th>
 				<th>Projeto/Ficha</th>
 				<th width="15%">Descrição</th>
@@ -149,8 +149,11 @@ body{
 					<td><?php echo $res_orc['obs']; ?></td>
 									<td><?php 
 									if($pro_json['responsavel'] != NULL){
-									$userwp = get_userdata($pro_json['responsavel']);
-									echo $userwp->first_name."".$userwp->last_name; //var_dump($orc); 
+										$pro_json['responsavel'];
+										$userwp = get_userdata($pro_json['responsavel']);
+										if($userwp){
+										echo $userwp->first_name."".$userwp->last_name; //var_dump($orc); 
+										}
 									}
 									?></td>				
 				<td><?php echo $orc['projeto'] ?> / <?php echo $orc['ficha'] ?></td>				
@@ -189,13 +192,8 @@ body{
 				?>
 				</tr>
 				<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-								<td></td>				
-				<td></td>				
-				<td></td>				
+				<td height="50px" colspan="7"></td>
+
 
 				</tr>
 				<?php 
