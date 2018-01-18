@@ -30,7 +30,7 @@ if(isset($_GET['usuario'])){
 				<?php 
 				global $wpdb;
 				$tipo = 'usuario';
-				$id = $user->ID;
+				$id = $_GET['usuario'];
 				$x = opcaoDados($tipo,$id);
 				$g = $x['edital'][1];
 				
