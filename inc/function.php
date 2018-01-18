@@ -1364,7 +1364,7 @@ function listarAvaliadores($inscricao){
 	global $wpdb;
 	$nota = "";
 //	$sql = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao'";
-	$sql = "SELECT usuario  FROM `ava_nota` WHERE `inscricao` LIKE '$inscricao' AND `edital` = 273 ORDER BY `nota` DESC";
+	$sql = "SELECT usuario  FROM `ava_nota` WHERE `inscricao` LIKE '$inscricao' AND `edital` = 273 ORDER BY `usuario` DESC";
 
 	//$res = $wpdb->get_results($sql,ARRAY_A);
 	$res_ava = $wpdb->get_results($sql,ARRAY_A);
