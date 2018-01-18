@@ -15,7 +15,7 @@
               <a class="nav-link" href="inscricoes.php">Inscrições Selecionadas / Avaliações</a>
             </li>-->
 			<?php
-			if($user->ID == 1){
+			if($user->ID == 1 OR $user->ID == 16 ){
 			?>
 			<li class="nav-item">
               <a class="nav-link" href="edital2fase.php?edital=273">Inscrições</a>
