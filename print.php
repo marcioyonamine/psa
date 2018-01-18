@@ -61,7 +61,7 @@ if(isset($_GET['usuario'])){
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
 				  <td><?php echo somaNotas($json['inscricao'],$_GET['usuario'],273); ?></td>
                   <td>
-				  <?php $anot = retornaAnotacao($json['inscricao'],$_GET['usuario'],273); echo $anot['anotacao']; ?>
+				  <?php $anot = retornaAnotacao($json['inscricao'],$_GET['usuario'],273); echo $json['inscricao']." / ".$_GET['usuario']; ?>
 				  </td>
 					</tr>
 				<?php 
