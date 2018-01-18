@@ -61,7 +61,7 @@ body{
 				</tr>
 				<tr>
 				<td>Saldo Planejado</td>
-				<td><?php //echo dinheiroParaBr($orcamento['']); ?></td>
+				<td><?php echo dinheiroParaBr($orcamento['total'] - $orcamento['planejado'] ); ?></td>
 
 				</tr>				
 				</tbody>
@@ -156,7 +156,7 @@ body{
 										}
 									}
 									?></td>				
-				<td><?php echo $orc['projeto'] ?> / <?php echo $orc['ficha'] ?></td>				
+				<td><?php  if(isset($orc['projeto'])){echo $orc['projeto']; } ?> / <?php if(isset($orc['ficha'])){echo $orc['ficha'];} ?></td>				
 				<td><?php echo $orc['descricao'] ?></td>				
 
 					</tr>
