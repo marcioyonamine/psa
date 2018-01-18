@@ -64,7 +64,7 @@ switch($p){
 
 				$res = json_decode($sel['avaliadores'],true);
 				$inscritos = $res[$g];
-				var_dump($res);
+				//var_dump($res);
 				for($i = 0; $i < count($res[$g]); $i++){
 					$id_insc = $res[$g][$i];
 					$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$id_insc'";	
