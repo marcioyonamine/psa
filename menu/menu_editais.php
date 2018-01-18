@@ -14,6 +14,14 @@
             <!--<li class="nav-item">
               <a class="nav-link" href="inscricoes.php">Inscrições Selecionadas / Avaliações</a>
             </li>-->
+			<?php
+			if($user->ID == 1){
+			?>
+			<li class="nav-item">
+              <a class="nav-link" href="edital2fase.php?edital=273">Inscrições</a>
+            </li>
+			<?php } ?>
+			
             <li class="nav-item">
               <a class="nav-link" href="inscricoes.php?p=all"> Todas as Inscrições (Consulta)</a>
             </li>
