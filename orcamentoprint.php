@@ -144,7 +144,7 @@ $w = 0;
 					</td>
 					<td><?php echo $res_orc['obs']; ?></td>
 									<td><?php 
-									if($pro_json['responsavel'] == NULL){
+									if($pro_json['responsavel'] != NULL){
 									$userwp = get_userdata($pro_json['responsavel']);
 									echo $userwp->first_name."".$userwp->last_name; //var_dump($orc); 
 									}
