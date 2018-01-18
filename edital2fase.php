@@ -51,7 +51,7 @@ $(function() {
 		  $res_fil = $wpdb->get_results($sel,ARRAY_A);
 		  for($i = 0; $i < count($res_fil); $i++){
 			  if($f != $res_fil[$i]['filtro']){
-				echo "<a href='ranking.php?edital=".$_GET['edital']."&filtro=".$res_fil[$i]['filtro']."' >".$res_fil[$i]['filtro']."</a> |  ";
+				echo "<a href='edital2fase.php?edital=".$_GET['edital']."&filtro=".$res_fil[$i]['filtro']."' >".$res_fil[$i]['filtro']."</a> |  ";
 			  }else{
 				  echo $res_fil[$i]['filtro']." | ";
 			  }
