@@ -13,7 +13,11 @@ $orcamento = orcamentoTotal(2018);
 $projeto = array();
 $w = 0;
 ?>
-
+<style>
+body{
+	font-size:10px;
+}
+</style>
             <table border= "1" class="table table-striped">
               <thead>
                 <tr>
@@ -74,7 +78,7 @@ $w = 0;
 				<th width="25%">Programa</th>
 				<th>Projeto</th>
 				<th>Valor</th>
-				<th width="30%">Nota</th>
+				<th width="40%">Nota</th>
 				<th>Responsável</th>
 				<th>Projeto/Ficha</th>
 				<th width="15%">Descrição</th>
