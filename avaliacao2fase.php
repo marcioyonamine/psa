@@ -143,7 +143,6 @@ var objeto = form1.obs.value
 				echo "<select name='categoria' class='form-control' >";
 				for($k = 0; $k < count($res_cat); $k++){
 					if($res_cat[$k]['filtro'] == $res_cat_sel['filtro']){
-
 						echo "<option value='".$res_cat[$k]['filtro']."' selected>".$res_cat[$k]['filtro']."</option>";
 					}else{
 						echo "<option value='".$res_cat[$k]['filtro']."'>".$res_cat[$k]['filtro']."</option>";
