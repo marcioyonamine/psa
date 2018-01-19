@@ -1246,7 +1246,7 @@ break;
 					<br />
 						<div class="row">
 						<div class="col-6">
-						<label>Data da Liberação </label>
+						<label>Data do Pedido </label>
 						<input type="text" name="data_liberado" class="form-control calendario" value="<?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?>">
                          </div>
 						<div class="col-6">

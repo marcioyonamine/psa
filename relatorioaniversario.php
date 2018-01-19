@@ -17,7 +17,11 @@ $w = 0;
 body{
 	font-size:10px;
 }
-
+.pieChart{
+	float: right;
+	
+	
+}
 </style>
 <div>
             <table border= "1" class="table table-striped">
