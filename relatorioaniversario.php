@@ -90,7 +90,7 @@ Informamos ainda que todos os inscritos integrarão um banco de dados específic
 					<td><?php echo $res_json['Agente responsável pela inscrição']; ?></td>
 					<td><?php if(isset($nota['pareceristas'][0])){echo $nota['pareceristas'][0]['nota'];}?></td>
 					<td><?php if(isset($nota['pareceristas'][1])){echo $nota['pareceristas'][1]['nota'];}?></td>
-					<td><?php if(isset($nota['media'])){echo $nota['media'];}?></td>
+					<td><?php if(isset($nota['media'])){echo substr($nota['media'], 0, 4);}?></td>
 					<td><?php echo retornaNota2Fase($inscricao); ?></td>
 					<td><?php echo $res_ins[$k]['nota']; ?></td>
 					<td><?php echo retornaAnotacao($inscricao,16,'274'); ?></td>
