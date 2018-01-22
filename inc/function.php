@@ -1318,7 +1318,7 @@ function nota($inscricao){
 	$nota_total = 0;	
 	$x = array();
 	
-	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao'";
+	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '273'";
 	$query_pareceristas = $wpdb->get_results($sql_pareceristas,ARRAY_A);
 	$numero = count($query_pareceristas);
 	
