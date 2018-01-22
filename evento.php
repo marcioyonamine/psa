@@ -91,6 +91,87 @@ if(isset($_SESSION['id'])){
 		</div>
 </section>
 
+<?php 
+break;
+case "aniversario": 
+if(isset($_POST['enviar'])){  // envia
+	// muda status de dataEnvio para hoje
+	// atualiza a agenda
+	$idEvento = $_SESSION['id'];
+	$hoje = date("Y-m-d H:i:s");
+	global $wpdb;
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
+	$upd = $wpdb->query($sql_enviar);
+	if($upd == 1){
+		atualizarAgenda($idEvento);
+		$mensagem = alerta("Evento enviado com sucesso.","success");
+	}else{
+		$mensagem = alerta("Erro. Tente novamente.","warning");
+	
+	}
+	
+}
+if(isset($_SESSION['id'])){
+	unset($_SESSION['id']);
+}
+?>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Meus Eventos - Aniversário 2018</h1>
+					<?php if(isset($mensagem)){echo $mensagem;}?>
+				</div>
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Título</th>
+                  <th>Data</th>
+                  <th>Status</th>
+				  <th>Categoria</th>
+				  <th>CulturAZ</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$idUser = $user->ID;
+				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE idUsuario = '$idUser' AND publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				for($i = 0; $i < count($res); $i++){
+					$evento = evento($res[$i]['idEvento']);
+					
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['idEvento']; ?></td>
+					  <td><?php echo $evento['titulo']; ?></td>
+					  <td><?php echo $evento['periodo']['legivel']; ?></td>
+					  <td><?php echo $evento['status']; ?></td>
+					  <td><?php echo str_replace("CATEGORIA","",$res[$i]['categoria']); ?></td>
+					  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($res[$i]['inscricao'],3); ?>" target="_blank" ><?php echo $res[$i]['inscricao']; ?> </a></td>
+
+					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
+							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+							</form>
+							<?php 
+							}
+					  ?></td>
+					</tr>
+				<?php } // fim do for?>	
+				
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+
  
 	 
 <?php 	 

@@ -230,6 +230,47 @@ function noResend(){
 	echo $p1;
 	header('Location:'.$p1, true, 301);
 }
+function mask($val, $tipo){
+	
+	//verifica se é só número
+	if(is_float($val) == true){	
+		$val = (string)$val;
+		// prepara o tipo de mascara
+		switch($tipo){
+			case "cnpj": 
+				$mask ='##.###.###/####-##';
+			break;
+			case "cpf":
+				$mask = '###.###.###-##';
+			break;
+			case "cep":
+				$mask ='#####-###';
+			break;
+			case "data":
+				$mask ='##/##/####';
+			break;
+		}
+		$maskared = '';
+		$k = 0;
+		for($i = 0; $i<=strlen($mask)-1; $i++)
+		{
+			if($mask[$i] == '#')
+			{
+				if(isset($val[$k]))
+				$maskared .= $val[$k++];
+			}
+		else
+			{
+			if(isset($mask[$i]))
+			$maskared .= $mask[$i];
+			}
+		}
+	}else{
+		$maskared = $val;
+	}
+	return $maskared;
+}
+
 
 function vGlobais(){
 	if(isset($_POST)){
@@ -330,6 +371,11 @@ function evento($id){
 	$linguagem = tipo($res['idLinguagem']);
 	$tipo_evento = tipo($res["idTipo"]);
 	$usuario = get_userdata($res['idResponsavel']);
+	if($usuario != NULL){
+		$usercon = $usuario->first_name." ".$usuario->last_name;
+	}else{
+		$usercon = "";
+	}
 	$etaria = tipo($res['faixaEtaria']);
 	$periodo = periodo($res['idEvento']);
 	$status = retornaStatus($res['idEvento']);
@@ -341,7 +387,7 @@ function evento($id){
 		'programa' => $programa['tipo'],
 		'projeto' => $projeto['tipo'],
 		'linguagem' => $linguagem['tipo'],
-		'responsavel' => $usuario->first_name." ".$usuario->last_name,
+		'responsavel' => $usercon,
 		'autor' => $res['autor'],
 		'grupo' => $res['nomeGrupo'],
 		'ficha_tecnica' => $res['fichaTecnica'],
@@ -1418,6 +1464,15 @@ function verificaAvaliacao($usuario,$edital){
 	
 	return $matriz;
 		
+}
+
+
+function retornaInscricao($inscricao){
+	global $wpdb;
+	$sql = "SELECT filtro, descricao FROM ava_inscricao, ava_ranking WHERE ava_inscricao.inscricao = '$inscricao' AND ava_inscricao.inscricao = ava_ranking.inscricao";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	return $res;
+	
 }
 
 function retornaPlanejamento($idPlan){

@@ -50,7 +50,17 @@ require "../inc/function.php";
 			events: [
 			<?php 
 			global $wpdb;
-			$sql_busca = "SELECT nomeEvento,data, hora FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento ";
+			if(isset($_GET['p'])){
+				switch($_GET['p']){
+					case "aniversario":
+					$aniversario = " AND sc_evento.categoria <> '' ";
+					break;
+				}
+			}else{
+				$aniversario = "";
+				
+			}
+			$sql_busca = "SELECT nomeEvento,data, hora FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario ";
 			$res = $wpdb->get_results($sql_busca,ARRAY_A);
 			for($i = 0; $i < count($res); $i++){
 				$title = $res[$i]['nomeEvento'];
