@@ -1196,28 +1196,9 @@ break;
 	WHERE idPedidoContratacao = '$id_pedido'";
 	$res = $wpdb->query($sql_atualiza);
 	$mensagem = $res;
-
-	if($res == 1 AND $_POST['data_liberado'] != ""){ // verifica se é necessário criar uma movimentação 
-		$sql = "SELECT id FROM sc_mov_orc WHERE tipo = '306' AND idPedido = '$id_pedido'";
-		$sel = $wpdb->get_results($sql,ARRAY_A);
-		$mensagem = $sql;
-		$pedido = retornaPedido($id_pedido);
-		$titulo = $pedido['objeto'];
-		$descricao = "";
-		$idUsuario = $user->ID;
-		if(count($sel) > 0){ // atualiza
-			$id_mov = $sel[0]['id'];
-			$upd = "UPDATE sc_mov_orc SET data = '$liberado', valor = '$valor', titulo = '$titulo' WHERE id = '$id_mov'";
-			$updwp = $wpdb->query($upd);
-			
-			
-		}else{ //cria
-
-			$ins = "INSERT INTO `sc_mov_orc` (`titulo`, `tipo`, `idOrc`, `idPedido`, `data`, `valor`, `descricao`, `idUsuario`, `publicado`) VALUES ('$titulo', '306',  '$dotacao', '$id_pedido', '$liberado', '$valor', '$descricao', '$idUsuario', '1');";
-			$inswp = $wpdb->query($ins);
-			$mensagem = $inswp;
-		}
-	}
+	
+	$y = atualizaHistorico($id_pedido);
+	//var_dump($y);
 }
  
  

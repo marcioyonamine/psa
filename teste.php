@@ -6,8 +6,12 @@
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
-		<h1><?php 
-		atualizaNota2Fase("on-585853776"); ?></h1>
+<?php 
+		$x = retornaPedido(109);
+		
+		var_dump($x);
+		
+		?>
 		
 		
 		<?php 

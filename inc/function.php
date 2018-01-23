@@ -673,6 +673,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	// Histórico
 	$sel_hist = "SELECT id, titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC ";
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
+		
 	
 	// liberado
 	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND publicado = '1'";
@@ -736,6 +737,100 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	return $dotacao;
 	
 }
+
+function historicoOrcamento($id){
+	global $wpdb;
+	$sel_hist = "SELECT id, titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC ";
+	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
+	
+	$sel_con = "SELECT idPedidoContratacao,idEvento,idAtividade, valor, liberado FROM sc_contratacao WHERE dotacao = '$i' AND liberado <> '0000-00-00'";
+	$con = $wpdb->get_results($sel_con,ARRAY_A);
+	$k = count($hist);
+	for($i = 0; $i < count($con) ; $i++){
+		$x = retornaPedido($con[$i]['idPedidoContratacao']);
+		
+		$hist[$k]['id'] = $con[$i]['idPedidoContratacao'];
+		$hist[$k]['titulo'] = $x['objeto'];
+		$hist[$k]['valor'] = $con[$i]['valor'];
+		$hist[$k]['descricao'] = "Contratação da Empresa/Pessoa: ".$x['nome']." para ".$x['objeto']." no período ". $x['periodo']." em ".$x['local'];
+		$hist[$k]['tipo'] = "Liberação";
+		$hist[$k]['idUsuario'] = "";
+		$hist[$k]['data'] = $con[$i]['liberado'];
+		$k++;
+	}
+	//asort($hist,)
+	
+	return $hist;
+	
+	
+	
+}
+
+
+function atualizaHistorico($idPedidoContratacao){
+	// Liberação = 311, Empenho = 395
+	// liberado, empenhado
+	
+	global $wpdb;
+	$x = retornaPedido($idPedidoContratacao);
+	$sql_ver_mov = "SELECT * FROM sc_mov_orc WHERE idPedidoContratacao = '$idPedidoContratacao'";
+	$res_ver_mov = $wpdb->get_row($sql_ver_mov,ARRAY_A);
+	if($res_ver_mov == NULL){ //insere
+		if($x['liberado'] != '0000-00-00'){
+			$titulo = $x['objeto'];
+			$idOrc = $x['idDot'];
+			$data = $x['liberado'];
+			$valor = dinheiroDeBr($x['valor']);
+			$descricao = "Contratação de ".$x['nome_razaosocial']."( ".$x['cpf_cnpj']. ") para ".$x['objeto']." no período ".$x['periodo'];
+			if($x['local'] != ''){
+				$descricao .= " em ".$x['local'];
+			}
+
+			$id_user = $user->ID;
+			
+			$sql = "INSERT INTO `sc_mov_orc` (`titulo`, `tipo`,  `idOrc`, `data`, `valor`, `descricao`, `idUsuario`, `publicado`, `idPedidoContratacao`) VALUES ('$titulo', '311',  '$idOrc', '$data', '$valor', '$descricao', '$id_user', '1', '$idPedidoContratacao')";	
+			$q = $wpdb->query($sql);
+			if($q == 0){
+				$q = $sql;
+			}
+		}
+		
+	}else{ // atualiza
+	$id = $res_ver_mov['id'];
+	$valor = dinheiroDeBr($x['valor']);
+	$data = $x['liberado'];
+	$idOrc = $x['idDot'];
+	$descricao = "Contratação de ".$x['nome_razaosocial']."( ".$x['cpf_cnpj']. ") para ".$x['objeto']." no período ".$x['periodo'];
+	if($x['local'] != ''){
+		$descricao .= " em ".$x['local'];
+	}
+		if($x['liberado'] != '0000-00-00'){
+			$sql = "UPDATE sc_mov_orc SET 
+			valor = '$valor',
+			data = '$data',
+			idOrc = '$idOrc',
+			descricao = '$descricao',
+			publicado = '1'
+			WHERE id = '$id'";
+			$q = $wpdb->query($sql);
+			if($q == 0){
+				$q = $sql;
+			}			
+		}else{
+			$sql = "UPDATE sc_mov_orc SET 
+			publicado = '0'
+			WHERE id = '$id'";
+			$q = $wpdb->query($sql);
+			if($q == 0){
+				$q = $sql;
+			}
+		}
+		
+	}
+	
+	return $q;
+}
+
 
 /* Funções para Pedidos de Contratação */
 
@@ -875,13 +970,25 @@ function opcaoDados($tipo,$id){
 
 function retornaPedido($id){
 	global $wpdb;
+	$sql_tipo = "SELECT idEvento, idAtividade FROM sc_contratacao WHERE idPedidoContratacao = '$id'";
+	$res_tipo = $wpdb->get_row($sql_tipo,ARRAY_A);
+	
+	if($res_tipo['idEvento'] != 0){
+	
+	
 	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
 	$periodo = periodo($res['idEvento']);
-	$usuario = get_userdata($res['idResponsavel']);
+	$userwp = get_userdata($res['idResponsavel']);
 	$metausuario = opcaoDados("usuario",4);
+	if(!isset($metausuario['cr'])){
+		$metausuario['cr'] = "";
+	}
+	if(!isset($metausuario['telefone'])){
+		$metausuario['telefone'] = "";
+	}
 	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
 	$local = retornaLocais($res['idEvento']);
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
@@ -897,12 +1004,18 @@ function retornaPedido($id){
 		$pes = "Jurídica";
 	}
 	
+	if($userwp == NULL){
+		$usuario = "";
+	}else{
+		$usuario = $userwp->first_name." ".$userwp->last_name;
+	}
+	
 	$x = array();
 	$x['nome'] = $pessoa['nome'];
 	$x['objeto'] = $objeto['objeto'];	
 	$x['autor'] = $objeto['autor'];
 	$x['periodo'] = $periodo['legivel'];
-	$x['usuario'] = $usuario->first_name." ".$usuario->last_name;
+	$x['usuario'] = $usuario;
 	$x['area'] = $metausuario['departamento'];
 	$x['cargo'] = $metausuario['funcao'];
 	$x['tipoPessoa'] = $pessoa['tipoPessoa'];
@@ -910,6 +1023,7 @@ function retornaPedido($id){
 	$x['nome_razaosocial'] = $pessoa['nome'];
 	$x['cpf_cnpj'] = $pessoa['cpf_cnpj'];
 	$x['cr'] = $metausuario['cr'];
+	$x['idDot'] = $res['dotacao'];
 	$x['cod_dotacao'] = $dotac['dotacao'];
 	$x['ficha'] = $dotac['ficha'];
 	$x['projeto'] = $dotac['projeto'];
@@ -931,6 +1045,65 @@ function retornaPedido($id){
 	$x['status'] = $status;
 	$x['parcelas'] = $res['parcelas'];
 	return $x;
+	}
+	
+	if($res_tipo['idAtividade'] != 0){
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_atividade.id, idRes, dotacao, valor, formaPagamento, empenhado, liberado, parcelas  FROM sc_contratacao, sc_atividade WHERE idPedidoContratacao = '$id' AND sc_atividade.id = sc_contratacao.idAtividade";
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
+	$objeto = atividade($res['id']);
+	$userwp = get_userdata($res['idRes']);
+	if($userwp == NULL){
+		$usuario = "";
+	}else{
+		$usuario = $userwp->first_name." ".$userwp->last_name;
+	}
+	$metausuario = opcaoDados("usuario",4);
+	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
+	$local = "";
+	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
+	$status = "Em análise";
+	
+	$x = array();
+	$x['nome'] = $pessoa['nome'];
+	$x['objeto'] = $objeto['objeto'];	
+	$x['autor'] = "";
+	$x['periodo'] = $objeto['periodo'];
+	$x['usuario'] = $usuario;
+	$x['area'] = $metausuario['departamento'];
+	$x['cargo'] = $metausuario['funcao'];
+	$x['tipoPessoa'] = $pessoa['tipoPessoa'];
+	$x['pessoa'] = "Pessoa Jurídica";
+	$x['nome_razaosocial'] = $pessoa['nome'];
+	$x['cpf_cnpj'] = $pessoa['cpf_cnpj'];
+	$x['cr'] = "";
+	$x['idDot'] = $res['dotacao'];
+	$x['cod_dotacao'] = $dotac['dotacao'];
+	$x['ficha'] = $dotac['ficha'];
+	$x['projeto'] = $dotac['projeto'];
+	$x['despesa'] = "";
+	$x['fonte'] = $dotac['fonte'];
+	$x['telefone'] = "";
+	$x['conta_corrente'] = "";
+	$x['contato_telefone'] = "";
+	$x['local'] = $local;
+	$x['tipo'] = "";
+	$x['end'] = $end;
+	$x['email'] = $pessoa['email'];
+	$x['valor'] = dinheiroParaBr($res['valor']);
+	$x['valor_extenso'] = valorPorExtenso($res['valor']);
+	$x['forma_pagamento'] = $res['formaPagamento'];
+	$x['banco'] = $pessoa['banco'];
+	$x['liberado'] = $res['liberado'];
+	$x['empenhado'] = $res['empenhado'];
+	$x['status'] = $status;
+	$x['parcelas'] = $res['parcelas'];
+	return $x;	
+	}
+	
+	
+	
+	
 	
 }
 
