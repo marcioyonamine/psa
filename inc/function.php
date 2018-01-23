@@ -770,7 +770,7 @@ function historicoOrcamento($id){
 function atualizaHistorico($idPedidoContratacao){
 	// Liberação = 311, Empenho = 395
 	// liberado, empenhado
-	
+	$user = wp_get_current_user();
 	global $wpdb;
 	$x = retornaPedido($idPedidoContratacao);
 	$sql_ver_mov = "SELECT * FROM sc_mov_orc WHERE idPedidoContratacao = '$idPedidoContratacao'";
