@@ -653,6 +653,15 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 		$valor_cont = $valor_cont + $cont[$i]['valor'];	
 	}
 	
+	// Anulado (394)
+	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '394' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1'" ;
+	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
+	$valor_anul = 0;
+	for($i = 0; $i < count($cont); $i++){
+		$valor_anul = $valor_anul + $cont[$i]['valor'];	
+	}
+	
+	
 	// Descontigenciado (287)
 	$sel_cont	= "SELECT valor FROM sc_mov_orc WHERE tipo = '287' AND idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1'";
 	$cont = $wpdb->get_results($sel_cont,ARRAY_A);
@@ -726,10 +735,11 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'descontigenciado' => $valor_desc,
 	'suplementado' => $valor_supl,
 	'historico' => $hist,
-	'visualizacao' => $val['projeto']." / ".$val['ficha'], //colocar natureza (importar de novo)
-	'natureza' => $val['natureza']." / ".$val['fonte'],	
+	'visualizacao' => $val['projeto']."/".$val['ficha'], //colocar natureza (importar de novo)
+	'natureza' => $val['natureza']."/".$val['fonte'],	
 	'liberado' => $valor_lib,
 	'planejado' => $valor_pla,
+	'anulado' => $valor_anul
 
 	);
 	
@@ -1011,6 +1021,8 @@ function retornaPedido($id){
 	}
 	
 	$x = array();
+	$x['evento_atividade'] = 'evento';
+
 	$x['nome'] = $pessoa['nome'];
 	$x['objeto'] = $objeto['objeto'];	
 	$x['autor'] = $objeto['autor'];
@@ -1044,6 +1056,7 @@ function retornaPedido($id){
 	$x['empenhado'] = $res['empenhado'];
 	$x['status'] = $status;
 	$x['parcelas'] = $res['parcelas'];
+	$x['obs'] = "";
 	return $x;
 	}
 	
@@ -1065,6 +1078,7 @@ function retornaPedido($id){
 	$status = "Em análise";
 	
 	$x = array();
+	$x['evento_atividade'] = 'atividade';
 	$x['nome'] = $pessoa['nome'];
 	$x['objeto'] = $objeto['objeto'];	
 	$x['autor'] = "";
@@ -1098,6 +1112,7 @@ function retornaPedido($id){
 	$x['empenhado'] = $res['empenhado'];
 	$x['status'] = $status;
 	$x['parcelas'] = $res['parcelas'];
+	$x['obs'] = $res['obs'];
 	return $x;	
 	}
 	

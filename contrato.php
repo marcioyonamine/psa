@@ -1195,7 +1195,12 @@ break;
 	observacao = '$observacao'
 	WHERE idPedidoContratacao = '$id_pedido'";
 	$res = $wpdb->query($sql_atualiza);
-	$mensagem = $res;
+	if($res == 1){
+		$mensagem = alerta("Pedido atualizado com sucesso.","success");
+	}else{
+		$mensagem = alerta("Pedido não atualizado.","warning");
+	}
+
 	
 	$y = atualizaHistorico($id_pedido);
 	//var_dump($y);
@@ -1205,6 +1210,7 @@ break;
  
  
  $pedido = recuperaDados("sc_contratacao",$id_pedido,"idPedidoContratacao");
+ $ped = retornaPedido($id_pedido);
  ?>
  <section id="inserir" class="home-section bg-white">
     <div class="container">
@@ -1212,7 +1218,7 @@ break;
             <div class="col-md-offset-2 col-md-8">
 
                     <h3>Editar Pedido</h3>
-                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
+                    <?php if(isset($mensagem)){ echo $mensagem;} ?>
 
 			</div>
 		</div> 
@@ -1221,7 +1227,11 @@ break;
 				<form method="POST" action="?p=editar_pedido" class="form-horizontal" role="form">
 					<div class="row">
 						<div class="col-12">
-						<p> Informações da Contratação </p>	
+						<p><strong><?php echo $id_pedido; ?><br />
+						<?php echo $ped['objeto']; ?> <br />
+						<?php echo $ped['nome_razaosocial']." ( ".$ped['cpf_cnpj']." )"; ?> <br />
+						<?php echo $ped['periodo'] ?> <?php if($ped['local'] != ""){echo " - ".$ped['local'];}?>
+						</strong></p>						
 						</div>
 					</div>
 					<br />
@@ -1318,12 +1328,13 @@ break;
 						</div>
 					</div>
 				</form>
-				<!--
+				
 					<div class="row">
 						<div class="col-12">
-					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=303&id=<?php echo $id_pedido?>" target="_blank">Criar Folha de Rosto de Processo</a>
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=396&id=<?php echo $id_pedido?>" target="_blank">Gerar Pedido de Liberação</a>
 						</div>
 					</div>
+					<!--
 					<div class="row">
 						<div class="col-12">
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=304&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação</a>

@@ -21,28 +21,39 @@ $w = 0;
 	
 }
 </style>
-<h1>CONVOCATÓRIA NO. 005/2017 
-Aniversário da Cidade 2018
-</h1>
-<h2>Relação de intervenções selecionadas</h2>
-<p>A Secretaria de Cultura de Santo André divulga abaixo a lista de classificação por categoria das propostas culturais selecionadas para compor o quadro de possíveis atrações que se apresentarão na programação do Aniversário da Cidade 2018.</p><p> 
-A Secretaria de Cultura oportunamente entrará em contato com os selecionados, para solicitação de documentação complementar, item fundamental para efetivar a contratação. </p><p>
-As contratações serão realizadas de acordo com as necessidades da grade de programação e no limite orçamentário do programa “Aniversário da Cidade 2018”. </p><p>
-Terão prioridade de contratação as propostas cuja ação se apoie na história, patrimônio, memória e ou imaginário da Vila de Paranapiacaba, conforme disposto nas diretrizes que nortearam a presente  Convocatória. 
-A Secretaria de Cultura esclarece ainda esta seleção contou com 226 propostas de intervenções culturais inscritas, cujas inscrições ocorreram entre 06/11 a 22/12/17. As propostas inscritas foram analisadas por uma Comissão de seleção composta pelos seguintes membros:</p><p>
+<h1>CONVOCATÓRIA NO. 005/2017</h1>
+<h2>Aniversário da Cidade 2018</h2>
+ 
+ 
+<h3>Relação de intervenções selecionadas</h3>
+ 
+<p>A Secretaria de Cultura de Santo André divulga abaixo a lista de classificação por categoria das propostas culturais selecionadas para compor o quadro de possíveis atrações que se apresentarão na programação do Aniversário da Cidade 2018.</p>
+<p>A Secretaria de Cultura oportunamente entrará em contato com os selecionados, para solicitação de documentação complementar, item fundamental para efetivar a contratação.
+As contratações serão realizadas de acordo com as necessidades da grade de programação e no limite orçamentário do programa “Aniversário da Cidade 2018”.</p>
+<p>Terão prioridade de contratação as propostas cuja ação se apoie na história, patrimônio, memória e ou imaginário da Vila de Paranapiacaba, conforme disposto nas diretrizes que nortearam a presente Convocatória. A Secretaria de Cultura esclarece ainda esta seleção contou com 226 propostas de intervenções culturais inscritas, cujas inscrições ocorreram entre 06/11 a 22/12/17. As propostas inscritas foram analisadas por uma Comissão de seleção composta pelos seguintes membros:</p>
+<ul>-04 representantes da sociedade civil indicados pelo Conselho Municipal de Políticas Culturais Comissão de seleção
+<li>• Kleber Fernando de Albuquerque</li>
+<li>• Rosana Banharoli</li>
+<li>• Sergio Luis Zanchetta</li>
+<li>• Tales Andre Loro Jaloretto</li>
+</ul>
+<ul>
+- 04 representantes do poder público indicados pela Secretaria de Cultura.
+<li>• Luciana Zorzato</li>
+<li>• Kedley Correa de Moraes</li>
+<li>• Miguel Gondim de Castro</li>
+<li>• Milton Toller Correia</li>
+</ul>
+<p>Em consenso os membros da Comissão de Seleção estabeleceram os seguintes critérios que nortearam a análise das propostas:</p>
+<ul>
+<li>·         Representatividade do proponente em relação à linguagem/ segmento ao qual pertence; </li>
+<li>·         Priorização de grupos e artistas locais e da região;</li>
+<li>·         Diversidade de linguagens/ segmentos das propostas inscritas;</li>
+<li>·         Evitar na medida do possível,  repetição de proponentes que participaram através de contratações de projetos pela Secretaria de Cultura no último exercício.</li>
+</ul>
 
--04 representantes da sociedade civil indicados pelo Conselho Municipal de Políticas Culturais Comissão de seleção</p><p>
-•	Kleber Fernando de Albuquerque</p><p>
-•	Rosana Banharoli</p><p>
-•	Sergio Luis Zanchetta</p><p>
-•	Tales Andre Loro Jaloretto</p><p>
-- 04 representantes do poder público indicados pela Secretaria de Cultura. </p><p>
-•	Luciana  Zorzato </p><p>
-•	Kedley Correa de Moraes </p><p>
-•	Miguel Gondim de Castro</p><p>
-•	Milton Toller Correia</p><p>
-Informamos ainda que todos os inscritos integrarão um banco de dados específico que terá validade até 31/dezembro/2018.
-</p>
+<p>A somatória dos valores propostas pelas intervenções selecionadas totaliza <strong>R$ 144.000,00</strong>.</p>
+<p>Informamos ainda que todos os inscritos integrarão um banco de dados específico que terá validade até 31/dezembro/2018.</p>
 <div>
 
 

@@ -146,6 +146,15 @@ if(isset($_POST['apaga_pedido'])){
 	}
 }
 
+if(isset($_POST['duplicar'])){
+	$sql_apaga = "INSERT INTO `sc_contratacao` (`idEvento`, `idAtividade`, `tipoPessoa`, `idRepresentante01`, `idPessoa`, `integrantesGrupo`, `valor`, `valorPorExtenso`, `formaPagamento`, `dotacao`, `anexo`, `observacao`, `publicado`, `valorIndividual`, `idRepresentante02`, `instituicao`, `executante`, `NumeroProcesso`, `NumeroNotaEmpenho`, `DataEmissaoNotaEmpenho`, `DataEntregaNotaEmpenho`, `IdUsuarioContratos`, `IdAssinatura`, `IdExecutante`, `justificativa`, `parecerArtistico`, `estado`, `aprovacaoFinanca`, `parcelas`, `idContratos`, `idDetalhamentoAcao`, `DataProposta`, `DataReserva`, `DataContrato`, `AmparoLegal`, `ComplementoDotacao`, `Finalizacao`, `idPenalidade`, `DataJuridico`, `DataPublicacao`, `DataContabilidade`, `DataPagamento`, `nProcesso`, `extratoLiquidacao`, `retencoesINSS`, `retencoesISS`, `retencoesIRRF`, `notaFiscal`, `descricaoNF`, `qtdApresentacoes`, `planejamento`,  `nLiberacao`, `mov_orc`) SELECT `idEvento`, `idAtividade`, `tipoPessoa`, `idRepresentante01`, `idPessoa`, `integrantesGrupo`, `valor`, `valorPorExtenso`, `formaPagamento`, `dotacao`, `anexo`, `observacao`, `publicado`, `valorIndividual`, `idRepresentante02`, `instituicao`, `executante`, `NumeroProcesso`, `NumeroNotaEmpenho`, `DataEmissaoNotaEmpenho`, `DataEntregaNotaEmpenho`, `IdUsuarioContratos`, `IdAssinatura`, `IdExecutante`, `justificativa`, `parecerArtistico`, `estado`, `aprovacaoFinanca`, `parcelas`, `idContratos`, `idDetalhamentoAcao`, `DataProposta`, `DataReserva`, `DataContrato`, `AmparoLegal`, `ComplementoDotacao`, `Finalizacao`, `idPenalidade`, `DataJuridico`, `DataPublicacao`, `DataContabilidade`, `DataPagamento`, `nProcesso`, `extratoLiquidacao`, `retencoesINSS`, `retencoesISS`, `retencoesIRRF`, `notaFiscal`, `descricaoNF`, `qtdApresentacoes`, `planejamento`,  `nLiberacao`, `mov_orc` FROM sc_contratacao WHERE idPedidoContratacao = '".$_POST['duplicar']."'";
+	$query_apaga = $wpdb->query($sql_apaga);
+	if($query_apaga == 1){
+		$mensagem = '<div class="alert alert-success"> Pedido duplicado com sucesso. </div>';
+	}
+}
+
+
 if(isset($_POST['inserir_pj'])){
 
 	//carrega as variaveis	
@@ -226,6 +235,7 @@ if(isset($_POST['inserir_pj'])){
                   <th>Nome / Razão Social</th>
                   <th>CPF / CNPJ</th>
 				  <th>Valor</th>
+				  <?php if($_SESSION['entidade'] == 'atividade'){ echo "<th></th>"; } ?>
 				  <th></th>
 				  <th></th>
 
@@ -241,10 +251,19 @@ if(isset($_POST['inserir_pj'])){
 					  <td><?php echo $peds[$i]['nome']; ?></td>
 					  <td><?php echo $peds[$i]['cpf_cnpj']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
+
+						<?php if($_SESSION['entidade'] == 'atividade'){ ?>
+						<td>	
+							<form method="POST" action="?p=inicio" class="form-horizontal" role="form">
+							<input type="hidden" name="duplicar" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Duplicar">
+							</form>
+					</td>
+						<?php } ?>
 					  <td>	
 							<form method="POST" action="?p=editar_pedido" class="form-horizontal" role="form">
 							<input type="hidden" name="editar_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pedido">
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar">
 							</form>
 							<?php 
 					  
@@ -252,7 +271,7 @@ if(isset($_POST['inserir_pj'])){
 					  <td>	
 							<form method="POST" action="?p=inicio" class="form-horizontal" role="form">
 							<input type="hidden" name="apaga_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar Pedido">
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
 							</form>
 							<?php 
 					  

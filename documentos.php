@@ -392,8 +392,85 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<p class="rodape">Secretaria de Cultura - <?php echo $pedido['area']; ?> <br />
 		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
 		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
-	
 	<?php 
+	break;
+	case 396:
+		$justificativa = "";
+		if($pedido['evento_atividade'] == 'atividade'){
+			$justificativa .= "Valor a ser reservado para empenho  ".$pedido['obs']." ".$pedido['objeto'] ;	
+		}else{
+		$justificativa .= "
+		Valor a ser reservado para empenho de contratação para ".$pedido['objeto']; 
+		}
+		
+		$justificativa .= " a ser realizado por ".$pedido['nome_razaosocial']." (".$pedido['cpf_cnpj'].") em data/período ".$pedido['periodo']  ;
+
+		if($pedido['local'] != ""){
+			$justificativa .= " em ".$pedido['local'];
+			
+		}
+		
+	
+
+		$file_name='liberacaodeverba.doc';
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-type: application/vnd.ms-word');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment;filename='.$file_name);
+		header('Content-Transfer-Encoding: binary ');
+
+			?>
+		<html>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8">
+		<body>
+		<style type='text/css'>
+		.style_01 {
+			font-size: 16px;
+
+		}
+		.paragrafo{
+			text-indent:4em
+		}
+		p{
+			font-size: 18px;
+		}
+		
+		.rodape{
+			text-align: center;
+			font-size: 12px;
+			padding: -10px;
+			
+		}
+		</style>
+
+		<table border='1'>
+		<tr>
+		<th>Liberação Nº</th>
+		<th>Data</th>
+		<th>Justificativa</th>
+		<th>Projeto/Ficha</th>
+		<th>Dotação</th>
+		<th>Fonte</th>
+		<th>Valor</th>
+		</tr>
+		<tr>
+		<td></td>	
+		<td><?php echo date('d/m/Y'); ?></td>	
+		<td><?php echo $justificativa ?></td>	
+		<td><?php echo $pedido['projeto']." / ".$pedido['ficha']; ?></td>	
+		<td><?php echo $pedido['cod_dotacao']; ?></td>	
+		<td><?php echo $pedido['fonte'] ?></td>	
+		<td><?php echo $pedido['valor'] ?>	
+
+		</tr>
+		
+		</table>
+
+
+		<?php 
 	break;
 	default:
 	?>

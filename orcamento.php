@@ -875,12 +875,13 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  
 				<th width='10%'>Proj/Fic</th>
 				<th width='10%'>Nat/Fon</th>
-                  <th>Val Ini</th>
-                  <th>Val Con</th>
-                  <th>Val Des</th>
-                  <th>Val Sup</th>
-                  <th>Val Lib</th>
-				  <th>Val Pla</th>	
+                  <th>Ini</th>
+                  <th>Con</th>
+                  <th>Des</th>
+                  <th>Sup</th>
+                  <th>Anul</th>
+                  <th>Lib</th>
+				  <th>Pla</th>	
                   <th>Saldo Lib</th> <!-- O saldo Planejado é o Saldo Liberado - Valor Planejado -->
                   <th>Saldo Pla</th>
 
@@ -900,10 +901,11 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_tot = 0;
 				$total_pla = 0;
 				$total_lib = 0;
+				$total_anul = 0;
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
-					$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'];
+					$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'] - $orc['anulado'];
 					
 					if($i % 10 == 0 AND $i != 0){
 					?>
@@ -911,15 +913,15 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  
 				<th width='10%'>Proj/Fic</th>
 				<th width='10%'>Nat/Fon</th>
-				<th>Val Ini</th>
-                  <th>Val Con</th>
-                  <th>Val Des</th>
-                  <th>Val Sup</th>
-                  <th>Val Lib</th>
-				  <th>Val Pla</th>	
+				<th>Ini</th>
+                  <th>Con</th>
+                  <th>Des</th>
+                  <th>Sup</th>
+				                    <th>Anul</th>
+                  <th>Lib</th>
+				  <th>Pla</th>	
                   <th>Saldo Lib</th> <!-- O saldo Planejado é o Saldo Liberado - Valor Planejado -->
                   <th>Saldo Pla</th>
-                  <th></th>
 
 				  </tr>
 						<tr>
@@ -930,6 +932,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['anulado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
 					  <td><?php echo dinheiroParaBr($total); ?></td>
@@ -949,6 +952,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['anulado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
 					  <td><?php echo dinheiroParaBr($total); ?></td>
@@ -972,7 +976,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_sup = $total_sup + $orc['suplementado'];
 				$total_lib = $total_lib + $orc['liberado'];
 				$total_pla = $total_pla + $orc['planejado'];
-				
+				$total_anul = $total_anul + $orc['anulado'];
 				//$total_res = $total_res;
 				$total_tot = $total_tot + $total;					
 					
@@ -987,6 +991,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($total_con); ?></td>
 					  <td><?php echo dinheiroParaBr($total_des); ?></td>
 					  <td><?php echo dinheiroParaBr($total_sup); ?></td>
+					  <td><?php echo dinheiroParaBr($total_anul); ?></td>
 					  <td><?php echo dinheiroParaBr($total_lib); ?></td>
 					  <td><?php echo dinheiroParaBr($total_pla); ?></td>
 					  <td><?php echo dinheiroParaBr($total_tot); ?></td>
@@ -1147,7 +1152,7 @@ if(isset($_POST['atualiza'])){
 	$idPlan = $_POST['atualiza'];
 	$valor = dinheiroDeBr($_POST['valor']);
 	$dotacao = $_POST['dotacao'];
-	$obs = $_POST['obs'];
+	$obs = addslashes($_POST['obs']);
 	
 	$ver = retornaPlanejamento($idPlan);
 	if($ver['bool'] == FALSE){ // insere
