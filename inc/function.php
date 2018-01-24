@@ -428,6 +428,7 @@ function atividade($id){
 	$programa = tipo($res['idPrograma']);
 	$projeto = tipo($res['idProjeto']);
 	$usuario = get_userdata($res['idRes']);
+	
 	//$status = retornaStatus($res['idEvento']);
 	
 	$evento = array(

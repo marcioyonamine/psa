@@ -228,14 +228,15 @@ if(isset($_POST['inserir_pj'])){
 					if($peds[$i]['idEvento'] != 0 AND $peds[$i]['idEvento'] != NULL){
 						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
 					}else{
-						$pedido = atividade($peds[$i]['idAtividade']);
+						//$pedido = atividade($peds[$i]['idAtividade']);
+						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
 					}
 					//var_dump($pedido);
 					?>
 					<tr>
 					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
 					  <td><?php echo $pedido['tipoPessoa']; ?></td>
-					  <td><?php echo $pedido['nome_razaosocial']; ?></td>
+					  <td><?php echo $pedido['nome']; ?></td>
 					  <td><?php echo $pedido['objeto']; ?></td>
 					  <td><?php echo $pedido['periodo']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
