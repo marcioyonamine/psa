@@ -196,6 +196,12 @@ if(isset($_POST['inserir_pj'])){
 					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 				</div>
         </div>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+				<p>Filtro: <a href="?" >Todos os pedidos</a> | <a href="?f=liberacao" >Pedidos sem Número de Liberação ou Data de Pedido de Liberação</a></p>
+				</div>
+        </div>
+
 		<?php 
 		// se existe pedido, listar
 		
@@ -208,7 +214,8 @@ if(isset($_POST['inserir_pj'])){
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Número</th>
+				<th>Número</th>
+				<th>Liberação</th>
                   <th>Pessoa</th>
                   <th>Nome / Razão Social</th>
                   <th>Objeto</th>
@@ -220,7 +227,14 @@ if(isset($_POST['inserir_pj'])){
               </thead>
               <tbody>
 				<?php 
-				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL) OR idAtividade <> '0') ORDER BY idPedidoContratacao DESC";
+				if(isset($_GET['f'])){
+					$f = "AND (liberado = '0000-00-00' OR nLiberacao = '') ";
+				}else{
+					$f = "";
+				}
+				
+				
+				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL) OR idAtividade <> '0') $f ORDER BY idPedidoContratacao DESC";
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
 				
 				
@@ -235,6 +249,7 @@ if(isset($_POST['inserir_pj'])){
 					?>
 					<tr>
 					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
+					  <td><?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?></td>
 					  <td><?php echo $pedido['tipoPessoa']; ?></td>
 					  <td><?php echo $pedido['nome']; ?></td>
 					  <td><?php echo $pedido['objeto']; ?></td>

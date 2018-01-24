@@ -1697,9 +1697,10 @@ function orcamentoTotal($ano){
 	$total_tot = 0;
 	$total_pla = 0;
 	$total_lib = 0;
+	$total_anul = 0;
 		for($i = 0; $i < count($res); $i++){
 		$orc = orcamento($res[$i]['id']);
-			$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'];
+			$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'] - $orc['anulado'];
 					
 			$total_orc = $total_orc + $orc['total'];
 			$total_con = $total_con + $orc['contigenciado'];
@@ -1707,7 +1708,7 @@ function orcamentoTotal($ano){
 			$total_sup = $total_sup + $orc['suplementado'];
 			$total_lib = $total_lib + $orc['liberado'];
 			$total_pla = $total_pla + $orc['planejado'];
-				
+			$total_anul = $total_anul + $orc['anulado'];	
 				//$total_res = $total_res;
 			$total_tot = $total_tot + $total;					
 					
@@ -1725,7 +1726,7 @@ function orcamentoTotal($ano){
 		'liberado' => $total_lib,
 		'planejado' => $total_pla,
 		'total' => $total_tot,
-		'planejado' => $total_pla,
+		'anulado' => $total_anul
 		
 		);
 		return $x;

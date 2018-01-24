@@ -103,6 +103,10 @@ $orcamentototal = orcamentoTotal(2018);
 				<td><?php echo dinheiroParaBr($orcamento['suplementado']); ?></td>
 				</tr>
 				<tr>
+				<td>Anulado</td>
+				<td><?php echo dinheiroParaBr($orcamento['anulado']); ?></td>
+				</tr>
+				<tr>
 				<td>Liberado</td>
 				<td><?php echo dinheiroParaBr($orcamento['liberado']); ?></td>
 				</tr>
