@@ -408,6 +408,57 @@ function evento($id){
 		'dataEnvio' => $res['dataEnvio']
 	);
 
+	
+	
+	$evento['mapas'] = array(
+		'id' => $res['mapas'],
+		'name' => $res['nomeEvento'],
+		'shortDescription' => substr($res['sinopse'],0,390)."...",
+		'longDescription' => $res['releaseCom'],
+		'classificaoEtaria' => $etaria['tipo'],
+	);
+	
+	//ocorrências
+	$sql_oc = "SELECT * FROM sc_ocorrencia WHERE idEvento = '$id' AND publicado = '1'";
+	$res_oc = $wpdb->get_results($sql_oc,ARRAY_A);
+	for($i = 0;$i < count($res_oc); $i++){
+		$id_local = tipo($res_oc[$i]['local']);
+		$x = json_decode($id_local['descricao'],ARRAY_A);
+		$mapas_local = $x['mapas'];
+		$evento['mapas']['ocorrencia'][$i]['spaceId'] = $mapas_local;
+		if($res_oc[$i]['dataFinal'] == '0000-00-00'){ // evento de data úntica
+			$evento['mapas']['ocorrencia'][$i]['frequency'] = "once";			
+			$evento['mapas']['ocorrencia'][$i]['startsOn'] = $res_oc[$i]['dataInicio'];
+			$evento['mapas']['ocorrencia'][$i]['startsAt'] = substr($res_oc[$i]['horaInicio'],0,5);
+			$evento['mapas']['ocorrencia'][$i]['duration'] = $res_oc[$i]['duracao'];
+			$evento['mapas']['ocorrencia'][$i]['until'] = '';
+			$evento['mapas']['ocorrencia'][$i]['description'] = "teste123123";
+			if($res_oc[$i]['valorIngresso'] == 0){
+				$evento['mapas']['ocorrencia'][$i]['price'] = "Grátis";
+			}else{
+				$evento['mapas']['ocorrencia'][$i]['price'] = dinheiroParaBr($res_oc[$i]['valorIngresso']);
+			}
+		}
+	}
+	
+	
+	
+	// acontecendo uma única vez no dia 28 de Setembro de 2017 às 12:00 com duração de 120min e preço Gratuíto
+/*$occurrence = $mapas->apiPost('eventOccurrence/create',[
+    'eventId' => $new_event['id'],
+    'spaceId' => $space_id,
+    'startsAt' => '12:00',
+    'duration' => '120',
+    // 'endsAt' => '14:00',
+    'frequency' => 'once',
+    'startsOn' => '2017-09-28',
+    'until' => '',
+    'description' => 'Dia 28 de setembro de 2017 às 12:00',
+    'price' => 'Gratuito'
+]);
+	*/
+	
+
 	return $evento;
 }
 

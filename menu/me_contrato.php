@@ -57,10 +57,6 @@
 					$upd = $wpdb->query($update);
 					
 				}
-
-				
-				
-				
 			}
 		//echo $json;
 		$opcao = opcaoDados('checklist',$id_pedido);
