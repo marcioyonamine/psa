@@ -12,7 +12,18 @@ require "inc/function.php";
 $orcamento = orcamentoTotal(2018);
 $projeto = array();
 $w = 0;
+
+		$file_name='relatorio.doc';
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-type: application/vnd.ms-word');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment;filename='.$file_name);
+		header('Content-Transfer-Encoding: binary ');
 ?>
+
 <style>
 
 .pieChart{
@@ -124,6 +135,8 @@ Informamos ainda que todos os inscritos integrarão um banco de dados específic
 			  
 
 </div>
+
+<div style="page-break-before: always;"> </div>
 <br /><br /><br />
 <p>-------------------------------------------------------------- <br />
 Kleber Fernando de Albuquerque</p><br /><br />
