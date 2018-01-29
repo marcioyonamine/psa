@@ -463,6 +463,13 @@ function evento($id){
 }
 
 
+function metausuario($id){
+	global $wpdb;
+	$sql = "SELECT opcao FROM sc_opcoes WHERE entidade = 'usuario' AND id_entidade = '$id'";
+	//echo $sql;
+	$res = $wpdb->get_row($sql,ARRAY_A);
+	return json_decode($res['opcao'],true);
+}
 
 function atividade($id){
 

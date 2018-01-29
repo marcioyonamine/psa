@@ -20,20 +20,31 @@ if(isset($_GET['p'])){
 case "inicio": 
 if(isset($_POST['atualizar'])){  // envia
 
-
+$meta_edit = metausuario($user->ID);
+$departamento = $_POST['departamento'];
+$funcao = $_POST['funcao'];
+$cr = $_POST['cr'];
+$chave01 = $_POST['chave01'];
+$chave02 = $_POST['chave02'];
+$idMapas = $_POST['idMapas'];
+	
 	$usuario = array(
-		'modulos' => '' ,
-		'departamento' => '',
-		'cr' => '',
-		'funcao' => '',
-		'chave01' => '',
-		'chave02' => '',
-		'idMapas' => ''
-		
-		
+		'modulos' => $meta_edit['modulos'] ,
+		'departamento' => $departamento,
+		'cr' => $cr,
+		'funcao' => $funcao,
+		'chave01' => $chave01,
+		'chave02' => $chave02,
+		'idMapas' => $idMapas
 	);
 
+$opcao = json_encode($usuario);	
 
+$sql_upd = "UPDATE sc_opcoes SET opcao = '$opcao' WHERE entidade = 'usuario' AND id_entidade = '".$user->ID."'";
+$upd = $wpdb->query($sql_upd);
+if($upd == 1){
+	$mensagem = alerta("Dados atualizados","success");
+}
 	
 }
 
@@ -44,6 +55,12 @@ if(isset($_POST['atualizar'])){  // envia
 if(isset($_SESSION['id'])){
 	unset($_SESSION['id']);
 }
+$meta = metausuario($user->ID);
+echo "<pre>";
+var_dump($meta);
+echo "</pre>";
+
+
 ?>
  <section id="inserir" class="home-section bg-white">
     <div class="container">
@@ -62,8 +79,8 @@ if(isset($_SESSION['id'])){
 						<div class="col-12">
 							<label>Departamento</label>
 							<select class="form-control" name="departamento" id="inputSubject" name="IdEstadoCivil">
-							<option>Escolha uma opção</option>
-							<?php echo geraTipoOpcao("unidade") ?>
+							<option value='0'>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("unidade",$meta['departamento']) ?>
 							</select>
 						</div>
 					</div>
@@ -71,7 +88,7 @@ if(isset($_SESSION['id'])){
 					<div class="row">
 						<div class="col-12">
 							<label>CR</label>
-							<input type="text" name="cr" class="form-control" id="inputSubject" value="" />
+							<input type="text" name="cr" class="form-control" id="inputSubject" value="<?php echo $meta['cr']; ?>" />
 						</div>
 					</div>
 					<br />
@@ -80,27 +97,27 @@ if(isset($_SESSION['id'])){
 					<div class="row">
 						<div class="col-12">
 							<label>Função</label>
-							<input type="text" name="funcao" class="form-control" id="inputSubject" />
+							<input type="text" name="funcao" class="form-control" id="inputSubject" value="<?php echo $meta['funcao']; ?>" />
 						</div>
 					</div>
 					<br />
 					<div class="row">
 						<div class="col-12">
 							<label>ID Agente Mapas (somente o número)</label>
-							<input type="text" name="funcao" class="form-control" id="inputSubject" />
+							<input type="text" name="idMapas" class="form-control" id="inputSubject" value="<?php echo $meta['idMapas']; ?>" />
 						</div>
 					</div>
 					<br />	
 					<div class="row">
 						<div class="col-12">
 							<label>Mapas Chave 01</label>
-							<input type="text" name="funcao" class="form-control" id="inputSubject" />
+							<input type="text" name="chave01" class="form-control" id="inputSubject" value="<?php echo $meta['chave01']; ?>"/>
 						</div>
 					</div>
 					<br />					<div class="row">
 						<div class="col-12">
 							<label>Mapas Chave 02</label>
-							<input type="text" name="funcao" class="form-control" id="inputSubject" />
+							<input type="text" name="chave02" class="form-control" id="inputSubject" value="<?php echo $meta['chave02']; ?>" />
 						</div>
 					</div>
 					<br />					

@@ -27,11 +27,20 @@ $w = 0;
  
 <h3>Relação de intervenções selecionadas</h3>
  
-<p>A Secretaria de Cultura de Santo André divulga abaixo a lista de classificação por categoria das propostas culturais selecionadas para compor o quadro de possíveis atrações que se apresentarão na programação do Aniversário da Cidade 2018.</p>
-<p>A Secretaria de Cultura oportunamente entrará em contato com os selecionados, para solicitação de documentação complementar, item fundamental para efetivar a contratação.
-As contratações serão realizadas de acordo com as necessidades da grade de programação e no limite orçamentário do programa “Aniversário da Cidade 2018”.</p>
-<p>Terão prioridade de contratação as propostas cuja ação se apoie na história, patrimônio, memória e ou imaginário da Vila de Paranapiacaba, conforme disposto nas diretrizes que nortearam a presente Convocatória. A Secretaria de Cultura esclarece ainda esta seleção contou com 226 propostas de intervenções culturais inscritas, cujas inscrições ocorreram entre 06/11 a 22/12/17. As propostas inscritas foram analisadas por uma Comissão de seleção composta pelos seguintes membros:</p>
-<ul>-04 representantes da sociedade civil indicados pelo Conselho Municipal de Políticas Culturais Comissão de seleção
+<p>Após efetuarem, no período de 05/01 a 17/01/18, a avaliação individual das intervenções culturais inscritas na presente convocatória, os membros da Comissão de Seleção, reuniram-se na Secretaria de Cultura nos dias 18 e 19 de janeiro de 2018, das 10h00 às 19h00 para análise coletiva das propostas, participando desta avaliação coletiva os seguintes membros: Kleber Fernando de Albuquerque, Sergio Luis Zanchetta, Tales Andre Loro Jaloretto, Luciana Zorzato, Kedley Correa de Moraes, Miguel Gondim de Castro, Milton Toller Correia. Em consenso, e partindo dos critérios de análise constantes da Convocatória, os membros da Comissão de Seleção também deram relevância aos seguintes aspectos no conjunto das propostas: representatividade do proponente em relação à linguagem/ segmento ao qual pertence, priorização de grupos e artistas locais e da região, diversidade de linguagens/ segmentos na composição da seleção, não repetição, na medida do possível, da seleção de proponentes que participaram de projetos da Secretaria de Cultura no último exercício. </p>
+
+<p>Durante a análise coletiva todas as propostas culturais foram debatidas e pontuadas e de comum acordo os membros acharam por bem estabelecer uma linha de corte para cada categoria, levando-se em consideração as médias das notas finais, que foram as seguintes: categoria A: 41,5; categoria C: 36,5; categoria D: 49; categoria E: 25; categoria F: 40; categoria G: 46; categoria H: 50. Não houve linha de corte nas categorias B e I em função das poucas inscrições recebidas. </p>
+
+<p>Também de comum acordo os membros convencionaram que as demais propostas situadas abaixo da linha de corte fossem pontuadas com nota zero por uma questão de agilizar e otimizar o tempo de trabalho da Comissão. A Comissão esclarece que o “zero” não tem nenhuma relação com a análise de qualidade estética das propostas ou mérito do proponente, que essa nota é apenas uma questão sistêmica.</p>
+
+<p>Esta seleção contou com 226 propostas de intervenções culturais inscritas, cujas inscrições ocorreram entre 06/11 a 22/12/17. Foram selecionados 58 propostas sendo 6 delas duplicadas totalizando 64 intervenções a serem contratadas.</p>
+
+<p>A somatória dos valores propostos pelas intervenções selecionadas totaliza <strong>R$144.000,00</strong> (cento e quarenta e quatro mil reais).
+Informamos ainda que todos os inscritos integrarão um banco de dados específico que terá validade até 31/dezembro/2018.</p>
+
+<p>A Comissão de seleção foi composta pelos seguintes membros:</p>
+
+<ul>-04 representantes da sociedade civil indicados pelo Conselho Municipal de Políticas Culturais Comissão:
 <li>• Kleber Fernando de Albuquerque</li>
 <li>• Rosana Banharoli</li>
 <li>• Sergio Luis Zanchetta</li>
@@ -44,16 +53,7 @@ As contratações serão realizadas de acordo com as necessidades da grade de pr
 <li>• Miguel Gondim de Castro</li>
 <li>• Milton Toller Correia</li>
 </ul>
-<p>Em consenso os membros da Comissão de Seleção estabeleceram os seguintes critérios que nortearam a análise das propostas:</p>
-<ul>
-<li>·         Representatividade do proponente em relação à linguagem/ segmento ao qual pertence; </li>
-<li>·         Priorização de grupos e artistas locais e da região;</li>
-<li>·         Diversidade de linguagens/ segmentos das propostas inscritas;</li>
-<li>·         Evitar na medida do possível,  repetição de proponentes que participaram através de contratações de projetos pela Secretaria de Cultura no último exercício.</li>
-</ul>
 
-<p>A somatória dos valores propostas pelas intervenções selecionadas totaliza <strong>R$ 144.000,00</strong>.</p>
-<p>Informamos ainda que todos os inscritos integrarão um banco de dados específico que terá validade até 31/dezembro/2018.</p>
 <div>
 
 
@@ -124,3 +124,20 @@ As contratações serão realizadas de acordo com as necessidades da grade de pr
 			  
 
 </div>
+<br /><br /><br />
+<p>-------------------------------------------------------------- <br />
+Kleber Fernando de Albuquerque</p><br /><br />
+<p>-------------------------------------------------------------- <br />
+Rosana Banharoli</p><br /><br />
+<p>-------------------------------------------------------------- <br />
+Sergio Luis Zanchetta</p><br /><br />
+<p>-------------------------------------------------------------- <br />
+Tales Andre Loro Jaloretto</p><br /><br />
+<p>-------------------------------------------------------------- <br />
+Luciana Zorzato</p><br /><br />
+<p>-------------------------------------------------------------- <br />
+Kedley Correa de Moraes</p><br /><br />
+<p>-------------------------------------------------------------- <br />
+Miguel Gondim de Castro</p><br /><br />
+<p>-------------------------------------------------------------- <br />
+Milton Toller Correia</p><br /><br />
