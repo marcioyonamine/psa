@@ -6,13 +6,13 @@ if(isset($_GET['p'])){
 	$p = 'inicio';	
 }
 //session_start();
-	$_SESSION['entidade'] = 'evento';
+	$_SESSION['entidade'] = 'mapas';
 ?>
 
 
   <body>
   
-  <?php include "menu/me_evento.php"; ?>
+  <?php include "menu/me_mapas.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
@@ -144,12 +144,7 @@ if(isset($_SESSION['id'])){
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
-				if($idUser == 63 OR $idUser == 1){
-				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
-				}else{
 				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE idUsuario = '$idUser' AND publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
-					
-				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
@@ -512,75 +507,11 @@ case "editar":
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<label>Programa</label>
-							<select class="form-control" name="programa" id="programa" >
-								<?php geraTipoOpcao("programa",$evento['idPrograma']) ?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Projeto</label>
-							<select class="form-control" name="projeto" id="projeto" >
-								<?php geraTipoOpcao("projeto",$evento['idProjeto']) ?>								
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
 							<label>Linguagem principal *</label>
 							<select class="form-control" name="linguagem" id="inputSubject" >
 								<?php geraTipoOpcao("linguagens",$evento['idLinguagem']) ?>
 							</select>					
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Tipo de evento *</label>
-							<select class="form-control" name="tipo_evento" id="inputSubject" >
-								<?php geraTipoOpcao("tipo_evento",$evento['idTipo']) ?>
-							</select>					
-						</div>
-					</div>
-					<div class="form-group">
-						<br />
-						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
-						<div class="col-md-offset-2">
-							<label>Primeiro responsável (Fiscal)</label>
-							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
-								<option value="0"></option>	
-								<?php geraOpcaoUsuario($evento['idResponsavel'])	?>							
-
-								</select>	                
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Segundo responsável (Suplente)</label>
-							<select class="form-control" name="suplente" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario($evento['idSuplente'])	?>							
-
-								</select>	
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Autor*</label>
-							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."><?php echo $evento['autor']; ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $evento['nomeGrupo']; ?>"/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Ficha técnica completa*</label>
-							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php echo $evento["fichaTecnica"] ?></textarea>
-						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
@@ -596,18 +527,7 @@ case "editar":
 							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php echo $evento["sinopse"] ?></textarea>
 						</div> 
 					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Release *</label>
-							<textarea name="releaseCom" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo $evento["releaseCom"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Links </label>
-							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php echo $evento["linksCom"] ?></textarea>
-						</div> 
-					</div>
+
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<input type="hidden" name="atualizar" value="<?php echo $evento['idEvento']; ?>" />

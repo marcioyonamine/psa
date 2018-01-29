@@ -12,7 +12,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu/me_evento.php"; ?>
+  <?php include "menu/me_usuario.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
@@ -56,9 +56,7 @@ if(isset($_SESSION['id'])){
 	unset($_SESSION['id']);
 }
 $meta = metausuario($user->ID);
-echo "<pre>";
-var_dump($meta);
-echo "</pre>";
+
 
 
 ?>

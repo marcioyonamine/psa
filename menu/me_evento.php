@@ -1,4 +1,8 @@
-<?php include "barra.php"; ?>
+<?php include "barra.php"; 
+
+
+
+?>
 
 	
     <div class="container-fluid">
