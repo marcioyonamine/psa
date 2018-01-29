@@ -62,7 +62,11 @@ if(isset($_SESSION['id'])){
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
+				if($idUser == 63 OR $idUser == 1){
+					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' ORDER BY idEvento DESC";					
+				}else{
 				$sql_list =  "SELECT idEvento FROM sc_evento WHERE idUsuario = '$idUser' AND publicado = '1' ORDER BY idEvento DESC";
+				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
