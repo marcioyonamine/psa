@@ -15,15 +15,25 @@ $w = 0;
 
 
 ?>
+<style type="text/css" media="print">
+@page {
+    size: auto;   /* auto is the initial value */
+    margin: 30;  /* this affects the margin in the printer settings */
+}
 
+</style>
 <style>
 
 .pieChart{
 	float: right;
+}
+.margem {
+	margin: 20px;
 	
-	
+}	
 }
 </style>
+<div class="margem">
 <h1>CONVOCATÓRIA NO. 005/2017</h1>
 <h2>Aniversário da Cidade 2018</h2>
  
@@ -146,3 +156,5 @@ Kedley Correa de Moraes</p><br /><br />
 Miguel Gondim de Castro</p><br /><br />
 <p>-------------------------------------------------------------- <br />
 Milton Toller Correia</p><br /><br />
+
+</div>
