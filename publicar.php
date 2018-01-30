@@ -30,13 +30,15 @@ $(function() {
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
- switch($p){
+switch($p){
 case "inicio": 
+
+/*
 $evento = evento($_SESSION['id']);
 $meta = metausuario($user->ID);
 
 if(isset($_POST['action'])){
-	//require "MapasSDK/vendor/autoload.php"; //carrega o sdk
+	require "MapasSDK/vendor/autoload.php"; //carrega o sdk
 	$url_mapas = $GLOBALS['url_mapas'];
 	$chave01 = $meta['chave01'];
 	$chave02 = $meta['chave02'];
@@ -240,7 +242,7 @@ $meta = metausuario($user->ID);
 			</div>
 		</div>  	
 		
-		*/	?>
+		*//*	?>
 		<br /><br />
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -308,7 +310,8 @@ $meta = metausuario($user->ID);
  
 	 
 <?php 	 
-break;	 
+break;
+*/	 
  case "inserir": //inserir contratação
  ?>
 
