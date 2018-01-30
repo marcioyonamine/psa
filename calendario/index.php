@@ -21,10 +21,21 @@ require "../inc/function.php";
 ?>
 
 <?php //require_once("../../wp-load.php"); ?>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8' />
+
+    <title><?php echo $GLOBALS['site_title']; ?></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/scpsa.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/dashboard.css" rel="stylesheet">
+ <script src="../js/jquery-3.2.1.js"></script>
 <link href='fullcalendar.min.css' rel='stylesheet' />
 <link href='fullcalendar.print.min.css' rel='stylesheet' media='print' />
 <script src='lib/moment.min.js'></script>
@@ -93,8 +104,10 @@ require "../inc/function.php";
 </style>
 </head>
 <body>
-<?php include "../menu/barra.php"; ?>
 
+
+<?php include "../menu/barra.php"; ?>
+<br /><br />
 
 	<div id='calendar'></div>
 <?php var_dump();?>

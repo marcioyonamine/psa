@@ -426,39 +426,63 @@ function evento($id){
 		$x = json_decode($id_local['descricao'],ARRAY_A);
 		$mapas_local = $x['mapas'];
 		$evento['mapas']['ocorrencia'][$i]['spaceId'] = $mapas_local;
+		$oc_legivel = ocorrencia($res_oc[$i]['idOcorrencia']);
 		if($res_oc[$i]['dataFinal'] == '0000-00-00'){ // evento de data úntica
+
 			$evento['mapas']['ocorrencia'][$i]['frequency'] = "once";			
 			$evento['mapas']['ocorrencia'][$i]['startsOn'] = $res_oc[$i]['dataInicio'];
 			$evento['mapas']['ocorrencia'][$i]['startsAt'] = substr($res_oc[$i]['horaInicio'],0,5);
 			$evento['mapas']['ocorrencia'][$i]['duration'] = $res_oc[$i]['duracao'];
 			$evento['mapas']['ocorrencia'][$i]['until'] = '';
-			$evento['mapas']['ocorrencia'][$i]['description'] = "teste123123";
+			$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
 			if($res_oc[$i]['valorIngresso'] == 0){
 				$evento['mapas']['ocorrencia'][$i]['price'] = "Grátis";
 			}else{
 				$evento['mapas']['ocorrencia'][$i]['price'] = dinheiroParaBr($res_oc[$i]['valorIngresso']);
 			}
+		}else{
+
+			$evento['mapas']['ocorrencia'][$i]['frequency'] = "weekly";			
+			$evento['mapas']['ocorrencia'][$i]['startsOn'] = $res_oc[$i]['dataInicio'];
+			$evento['mapas']['ocorrencia'][$i]['startsAt'] = substr($res_oc[$i]['horaInicio'],0,5);
+			$evento['mapas']['ocorrencia'][$i]['duration'] = $res_oc[$i]['duracao'];
+			$evento['mapas']['ocorrencia'][$i]['until'] = $res_oc[$i]['dataFinal'];
+			$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			if($res_oc[$i]['valorIngresso'] == 0){
+				$evento['mapas']['ocorrencia'][$i]['price'] = "Grátis";
+			}else{
+				$evento['mapas']['ocorrencia'][$i]['price'] = dinheiroParaBr($res_oc[$i]['valorIngresso']);
+			}
+			
+			$evento['mapas']['ocorrencia'][$i]['day'] = array();
+			
+			if($res_oc[$i]['domingo'] == 1){
+				$evento['mapas']['ocorrencia'][$i]['day'][0] = 'on';
+			}		
+			if($res_oc[$i]['segunda'] == 1){
+				$evento['mapas']['ocorrencia'][$i]['day'][1] = 'on';
+			}		
+			if($res_oc[$i]['terca'] == 1){
+				$evento['mapas']['ocorrencia'][$i]['day'][2] = 'on';
+			}		
+			if($res_oc[$i]['quarta'] == 1){
+				$evento['mapas']['ocorrencia'][$i]['day'][3] = 'on';
+			}		
+			if($res_oc[$i]['quinta'] == 1){
+				$evento['mapas']['ocorrencia'][$i]['day'][4] = 'on';
+			}		
+			if($res_oc[$i]['sexta'] == 1){
+				$evento['mapas']['ocorrencia'][$i]['day'][5] = 'on';
+			}		
+			if($res_oc[$i]['sabado'] == 1){
+				$evento['mapas']['ocorrencia'][$i]['day'][6] = 'on';
+			}		
+
+			
+			
 		}
 	}
 	
-	
-	
-	// acontecendo uma única vez no dia 28 de Setembro de 2017 às 12:00 com duração de 120min e preço Gratuíto
-/*$occurrence = $mapas->apiPost('eventOccurrence/create',[
-    'eventId' => $new_event['id'],
-    'spaceId' => $space_id,
-    'startsAt' => '12:00',
-    'duration' => '120',
-    // 'endsAt' => '14:00',
-    'frequency' => 'once',
-    'startsOn' => '2017-09-28',
-    'until' => '',
-    'description' => 'Dia 28 de setembro de 2017 às 12:00',
-    'price' => 'Gratuito'
-]);
-	*/
-	
-
 	return $evento;
 }
 
@@ -554,7 +578,7 @@ function ocorrencia($id){
 			$sem = "";
 		}
 
-		$data = "De ".exibirDataBr($oc['dataInicio'])." a ".exibirDataBr($oc['dataFinal'])." às ".substr($oc['horaInicio'],0,-3)." (".$oc['duracao']." minutos)<br />".$sem;	
+		$data = "De ".exibirDataBr($oc['dataInicio'])." a ".exibirDataBr($oc['dataFinal'])." às ".substr($oc['horaInicio'],0,-3)." (".$oc['duracao']." minutos)".$sem;	
 		
 		
 	}

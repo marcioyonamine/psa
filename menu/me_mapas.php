@@ -7,7 +7,7 @@
 
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Módulo Evento <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="#">Módulo Mapas <span class="sr-only">(current)</span></a>
             </li>
 		</ul>
 	
@@ -21,23 +21,16 @@
               <a class="nav-link" href="mapas.php?p=editar">Informações</a>
             </li>
 	  <li class="nav-item">
-              <a class="nav-link" href="ocorrencias.php?p=listar">Listar Ocorrências</a>
+              <a class="nav-link" href="ocorrencias_mapas.php?p=listar">Listar Ocorrências</a>
             </li>
 			<li class="nav-item">
-              <a class="nav-link" href="ocorrencias.php?p=inserir">Inserir Ocorrências</a>
+              <a class="nav-link" href="ocorrencias_mapas.php?p=inserir">Inserir Ocorrências</a>
             </li>
 
         
-	<li class="nav-item">
-              <a class="nav-link" href="arquivo.php">Listar Arquivos</a>
-            </li>
 
 	<li class="nav-item">
-              <a class="nav-link" href="arquivo.php?p=inserir">Inserir Arquivos</a>
-            </li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="enviar.php">Publicar</a>
+		<a class="nav-link" href="publicar.php">Publicar</a>
    </li>
 
 			</ul>

@@ -9,6 +9,12 @@
             <li class="nav-item">
               <a class="nav-link active" href="#">Módulo Usuário <span class="sr-only">(current)</span></a>
             </li>
+			
+            <li class="nav-item">
+              <a class="nav-link" href="http://scsantoandre.info/tutorial-como-criar-app-e-chaves-no-culturaz/" target="_blank" >Como criar chaves na Plataforma Mapas Culturais. </a>
+            </li>
+
+			
 		</ul>
 	
 

@@ -55,6 +55,7 @@ if(isset($_SESSION['id'])){
                   <th>Título</th>
                   <th>Data</th>
                   <th>Status</th>
+                  <th>ID MAPAS</th>
                   <th></th>
                 </tr>
               </thead>
@@ -63,9 +64,9 @@ if(isset($_SESSION['id'])){
 				global $wpdb;
 				$idUser = $user->ID;
 				if($idUser == 63 OR $idUser == 1){
-					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' ORDER BY idEvento DESC";					
+					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";					
 				}else{
-				$sql_list =  "SELECT idEvento FROM sc_evento WHERE idUsuario = '$idUser' AND publicado = '1' ORDER BY idEvento DESC";
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR suplente = '$idUser')   AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
 				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
@@ -77,13 +78,21 @@ if(isset($_SESSION['id'])){
 					  <td><?php echo $evento['titulo']; ?></td>
 					  <td><?php echo $evento['periodo']['legivel']; ?></td>
 					  <td><?php echo $evento['status']; ?></td>
-					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
+					  <td>
+					  <?php
+						if($evento['mapas']['id'] != 0){
+					  echo "<a href='".$GLOBALS['url_mapas']."evento/".$evento['mapas']['id']."' target='_blank'>".$evento['mapas']['id']."</a>"; 
+						}
+					  ?>
+					  </td>
+					  <td>	
+					  <?php if($evento['mapas']['id'] == 0){ ?>
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
 							</form>
 							<?php 
-							}
+					  }
 					  ?></td>
 					</tr>
 				<?php } // fim do for?>	
@@ -144,7 +153,12 @@ if(isset($_SESSION['id'])){
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
-				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE idUsuario = '$idUser' AND publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
+				if($idUser == 63 OR $idUser == 1){
+				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1' AND  inscricao <> '' AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
+				}else{
+				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1'  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR suplente = '$idUser') AND  inscricao <> '' AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
+					
+				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
@@ -158,13 +172,13 @@ if(isset($_SESSION['id'])){
 					  <td><?php echo str_replace("CATEGORIA","",$res[$i]['categoria']); ?></td>
 					  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($res[$i]['inscricao'],3); ?>" target="_blank" ><?php echo $res[$i]['inscricao']; ?> </a></td>
 
-					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
+					  <td>	 ?>
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
 							</form>
 							<?php 
-							}
+							
 					  ?></td>
 					</tr>
 				<?php } // fim do for?>	
@@ -364,19 +378,18 @@ case "editar":
 
 	if(isset($_POST['atualizar']) OR isset($_POST['inserir'])){
 		$nomeEvento = addslashes($_POST["nomeEvento"]);
-		$programa    = $_POST["programa"];
+
 		$linguagem    = $_POST["linguagem"];
-		$tipo_evento = $_POST["tipo_evento"];
-		$projeto = $_POST["projeto"];
-		$nomeResponsavel    = $_POST["nomeResponsavel"];
-		$suplente    = $_POST["suplente"];
-		$autor    = addslashes($_POST["autor"]);
-		$nomeGrupo    = addslashes($_POST["nomeGrupo"]);
-		$fichaTecnica    = addslashes($_POST["fichaTecnica"]);
+
+
+
+
+
+
+
 		$faixaEtaria    = $_POST["faixaEtaria"];
 		$sinopse    = addslashes($_POST["sinopse"]);
-		$releaseCom    = addslashes($_POST["releaseCom"]);
-		$linksCom    = $_POST["linksCom"];
+
 		if(isset($_POST['subEvento'])){
 			$subEvento = $_POST['subEvento'];
 		}else{
@@ -417,22 +430,22 @@ case "editar":
 	if(isset($_POST['atualizar'])){
 	$atualizar    = $_POST["atualizar"];	
 		$sql_atualizar = "UPDATE sc_evento SET
-		`idTipo` = '$tipo_evento',
-		`idPrograma` = '$programa' ,
-		`idProjeto` =  '$projeto',
+
+
+
 		`idLinguagem` = '$linguagem',
 		`nomeEvento` = '$nomeEvento',
-		`idResponsavel` = '$nomeResponsavel',
-		`idSuplente` = '$suplente',
-		`autor` = '$autor',
-		`nomeGrupo` = '$nomeGrupo',
-		`fichaTecnica` = '$fichaTecnica',
+
+
+
+
+
 		`faixaEtaria` = '$faixaEtaria',
-		`sinopse` = '$sinopse',
-		`releaseCom` = '$releaseCom',
-		`linksCom` = '$linksCom',
-		`planejamento` = '$planejamento',
-		`subEvento` = '$subEvento'
+		`sinopse` = '$sinopse'
+
+
+
+
 		WHERE `idEvento` = '$atualizar';
 		";
 		$atual = $wpdb->query($sql_atualizar);
@@ -443,7 +456,7 @@ case "editar":
 		if($atual == 1){
 			$mensagem = "Evento atualizado com sucesso.";
 		}else{
-			//$mensagem = "Erro ao atualizar.";
+			$mensagem = "Erro ao atualizar.";
 		}
 
 	}
