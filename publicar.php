@@ -33,10 +33,10 @@ $(function() {
 switch($p){
 case "inicio": 
 
-/*
+
 $evento = evento($_SESSION['id']);
 $meta = metausuario($user->ID);
-*/	 
+/*	 
 if(isset($_POST['action'])){
 	require "MapasSDK/vendor/autoload.php"; //carrega o sdk
 	$url_mapas = $GLOBALS['url_mapas'];
@@ -125,6 +125,8 @@ echo "</pre>";
 $evento = evento($_SESSION['id']);
 $meta = metausuario($user->ID);
 }
+
+*/
 ?>
 
 
