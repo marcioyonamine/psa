@@ -190,206 +190,27 @@ if(isset($_SESSION['id'])){
 		</div>
 </section>
 
- 
-	 
-<?php 	 
-break;	 
- case "inserir":
- if(isset($_SESSION['id'])){
-	unset($_SESSION['id']);
-}
-
- ?>
-
- <script type="application/javascript">
-	$(function()
-	{
-		$('#programa').change(function()
-		{
-			if( $(this).val() )
-			{
-				$('#projeto').hide();
-				$('.carregando').show();
-				$.getJSON('inc/projeto.ajax.php?programa=',{programa: $(this).val(), ajax: 'true'}, function(j)
-				{
-					var options = '<option value="0"></option>';	
-					for (var i = 0; i < j.length; i++)
-					{
-						options += '<option value="' + j[i].id + '">' + j[i].projeto + '</option>';
-					}	
-					$('#projeto').html(options).show();
-					$('.carregando').hide();
-				});
-			}
-			else
-			{
-				$('#projeto').html('<option value="">-- Escolha um projeto --</option>');
-			}
-		});
-	});
-</script>
- 
- <section id="inserir" class="home-section bg-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-
-                    <h3>Evento - Informações Gerais</h3>
-                    <h1></h1>
-                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
-            </div>
-		</div> 
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<input type="checkbox" name="planejamento" id="subEvento" <?php //checar($campo['subEvento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>
-						</div>
-					</div>
-				<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Nome do Evento *</label>
-							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value=""/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Programa</label>
-							<select class="form-control" name="programa" id="programa" >
-								<?php geraTipoOpcao("programa") ?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Projeto</label>
-							<select class="form-control" name="projeto" id="projeto" >
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Linguagem principal *</label>
-							<select class="form-control" name="linguagem" id="inputSubject" >
-								<?php geraTipoOpcao("linguagens") ?>
-							</select>					
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Tipo de evento *</label>
-							<select class="form-control" name="tipo_evento" id="inputSubject" >
-								<?php geraTipoOpcao("tipo_evento") ?>
-							</select>					
-						</div>
-					</div>
-					<div class="form-group">
-						<br />
-						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
-						<div class="col-md-offset-2">
-							<label>Primeiro responsável (Fiscal)</label>
-							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario();	?>							
-							</select>	                
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Segundo responsável (Suplente)</label>
-							<select class="form-control" name="suplente" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario();	?>							
-
-								</select>	
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Autor*</label>
-							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value=""/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Ficha técnica completa*</label>
-							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php ////echo $campo["fichaTecnica"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Classificação/indicação etária</label>
-							<select class="form-control" name="faixaEtaria" id="inputSubject" >
-								<?php geraTipoOpcao("faixa_etaria") ?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Sinopse *</label>
-							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php //echo $campo["sinopse"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Release *</label>
-							<textarea name="releaseCom" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php ////echo $campo["releaseCom"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Links </label>
-							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php ////echo $campo["linksCom"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<input type="hidden" name="inserir" value="1" />
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</section>
-
-
-
 <?php 
 break;
 case "editar":
-
+	
 	global $wpdb;	
+	
 	
 	if(isset($_SESSION['id'])){
 		$id = $_SESSION['id'];
 		$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
 		$evento = $wpdb->get_row($sql_select,ARRAY_A);
+		$meta = metausuario($user->ID);
+		$event = evento($_SESSION['id']);
+
 	}
 
 	if(isset($_POST['atualizar']) OR isset($_POST['inserir'])){
 		$nomeEvento = addslashes($_POST["nomeEvento"]);
-
 		$linguagem    = $_POST["linguagem"];
-
-
-
-
-
-
-
 		$faixaEtaria    = $_POST["faixaEtaria"];
 		$sinopse    = addslashes($_POST["sinopse"]);
-
 		if(isset($_POST['subEvento'])){
 			$subEvento = $_POST['subEvento'];
 		}else{
@@ -404,10 +225,8 @@ case "editar":
 		$evento = $wpdb->get_row($sql_select,ARRAY_A);	
 		$_SESSION['id'] = $id;
 	}
-	
-	$idUser = $user->ID;
-	
 
+	$idUser = $user->ID;
 	// Inserir evento
 	if(isset($_POST['inserir'])){
 		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento` ) 
@@ -430,22 +249,10 @@ case "editar":
 	if(isset($_POST['atualizar'])){
 	$atualizar    = $_POST["atualizar"];	
 		$sql_atualizar = "UPDATE sc_evento SET
-
-
-
 		`idLinguagem` = '$linguagem',
 		`nomeEvento` = '$nomeEvento',
-
-
-
-
-
 		`faixaEtaria` = '$faixaEtaria',
 		`sinopse` = '$sinopse'
-
-
-
-
 		WHERE `idEvento` = '$atualizar';
 		";
 		$atual = $wpdb->query($sql_atualizar);
@@ -461,9 +268,96 @@ case "editar":
 
 	}
 	
+	if(isset($_POST['publicar'])){
+		require "MapasSDK/vendor/autoload.php"; //carrega o sdk
+		$url_mapas = $GLOBALS['url_mapas'];
+		$chave01 = $meta['chave01'];
+		$chave02 = $meta['chave02'];
+		$chave03 = $GLOBALS['chave03'];
 
+		$mapas = new MapasSDK\MapasSDK(
+			$url_mapas,
+			$chave01,
+			$chave02,
+			$chave03
+		);
+	
+	//instancia o objeto
+	
+	$new_event = $mapas->createEntity('event', [
+    'name' => $event['titulo'],
+    'shortDescription' => substr($event['sinopse'], 0, 400),
+	'longDescription' => $event['sinopse'],
+    'terms' => [
+        'linguagem' => [$event['linguagem']]
+    ],
+    'classificacaoEtaria' => $event['faixa_etaria'],
+	]);	
+	
+	$new_event = converterObjParaArray($new_event);
+
+	if($new_event['id'] > 0){
+		// Atualiza evento
+		$new_event['id'];
+		$sql_upd = "UPDATE sc_evento SET mapas = '".$new_event['id']."' WHERE idEvento = '".$_SESSION['id']."'";
+		$wpdb->query($sql_upd);
+
+		// acontecendo uma única vez no dia 28 de Setembro de 2017 às 12:00 com duração de 120min e preço Gratuíto
+		$oc = $event['mapas']['ocorrencia'];
+		
+		
+		for($i = 0; $i < count($oc); $i++){
+
+			$oc_le = ocorrencia($event['mapas']['ocorrencia']['idOcorrencia']);
+
+			if($oc[$i]['frequency'] == 'once'){	
+			$occurrence = $mapas->apiPost('eventOccurrence/create',[
+				'eventId' => $new_event['id'],
+				'spaceId' => $oc[$i]['spaceId'],
+				'startsAt' => $oc[$i]['startsAt'],
+				'duration' => $oc[$i]['duration'],
+				// 'endsAt' => '14:00',
+				'frequency' => $oc[$i]['frequency'],
+				'startsOn' => $oc[$i]['startsOn'],
+				'until' => '',
+				'description' => $oc[$i]['description'],
+				'price' => $oc[$i]['price']
+			]);
+
+			}else{
+			// acontecendo Toda seg, qua e sex de 1 a 30 de setembro de 2017 às 10:00
+
+
+				$occurrence = $mapas->apiPost('eventOccurrence/create',[
+				'eventId' => $new_event['id'],
+				'spaceId' => $oc[$i]['spaceId'],
+				'startsAt' => $oc[$i]['startsAt'],
+				'duration' => $oc[$i]['duration'],
+				// 'endsAt' => '12:00',
+				'frequency' => $oc[$i]['frequency'],
+				'startsOn' => $oc[$i]['startsOn'],
+				'until' => $oc[$i]['until'],
+				'day' => $oc[$i]['day'],
+				'description' => $oc[$i]['description'],
+				'price' => $oc[$i]['price']
+			]);
+;
+
+			}
+
+		}
+		
+
+		
+		
+	} //if ok criar evento
 	
 	
+	
+
+	}// fim publicar
+	
+
 ?>
  <script type="application/javascript">
 	$(function()
@@ -550,6 +444,18 @@ case "editar":
 						</div>
 					</div>
 				</form>
+				<form method="POST" action="?p=editar" class="form-horizontal" role="form">				
+				<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="publicar" value="<?php echo $evento['idEvento']; ?>" />
+							<?php if($evento['mapas'] == 0){
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Publicar Mapas Culturais">
+							<?php } else { ?>
+							<a href="<?php echo $GLOBALS['url_mapas']."evento/".$event['mapas']['id']; ?>" class="btn btn-theme btn-lg btn-block" target="_blank">Acessar Mapas Culturais</a> 
+							<?php } ?>
+						</div>
+				</form>	</div>
 			</div>
 		</div>
 	</div>
