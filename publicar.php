@@ -36,7 +36,7 @@ case "inicio":
 /*
 $evento = evento($_SESSION['id']);
 $meta = metausuario($user->ID);
-
+*/	 
 if(isset($_POST['action'])){
 	require "MapasSDK/vendor/autoload.php"; //carrega o sdk
 	$url_mapas = $GLOBALS['url_mapas'];
@@ -242,7 +242,7 @@ $meta = metausuario($user->ID);
 			</div>
 		</div>  	
 		
-		*//*	?>
+		*/	?>
 		<br /><br />
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -311,7 +311,7 @@ $meta = metausuario($user->ID);
 	 
 <?php 	 
 break;
-*/	 
+
  case "inserir": //inserir contratação
  ?>
 
