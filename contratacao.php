@@ -24,7 +24,7 @@ $(function() {
 	$( ".min" ).mask("999");
 	$( ".cep" ).mask("99999-999");
 	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
-	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+
 });
 
 
