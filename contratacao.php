@@ -511,7 +511,7 @@ break;
 					<div class="row">
 						<div class="col-6">
 							<label>CEP</label>
-							<input type="text" class="form-control" name="cep" id="CEP" > 
+							<input type="text" class="form-control cep" name="cep" id="CEP" > 
 						</div>
 						<div class="col-6">
 							<label>Número</label>
@@ -789,7 +789,7 @@ case "resultado_pj":
 					<div class="row">
 						<div class="col-6">
 							<label>CEP</label>
-							<input type="text" class="form-control" name="cep" id="CEP" > 
+							<input type="text" class="form-control cep" name="cep" id="CEP" > 
 						</div>
 						<div class="col-6">
 							<label>Número</label>
@@ -1103,7 +1103,7 @@ break;
 					<div class="row">
 						<div class="col-6">
 							<label>CEP</label>
-							<input type="text" class="form-control" name="cep" id="CEP" value="<?php echo $pessoa['CEP']; ?>"> 
+							<input type="text" class="form-control cep" name="cep" id="CEP" value="<?php echo $pessoa['CEP']; ?>"> 
 						</div>
 						<div class="col-6">
 							<label>Número</label>
@@ -1372,7 +1372,7 @@ break;
 					<div class="row">
 						<div class="col-6">
 							<label>CEP</label>
-							<input type="text" class="form-control" name="CEP" id="CEP" value="<?php echo $pessoa['CEP']; ?>" > 
+							<input type="text" class="form-control cep" name="CEP" id="CEP" value="<?php echo $pessoa['CEP']; ?>" > 
 						</div>
 						<div class="col-6">
 							<label>Número</label>
