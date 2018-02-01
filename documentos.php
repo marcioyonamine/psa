@@ -136,30 +136,30 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	
 	</tr>
 	<tr>
-	<td colspan="2"><center>Prefeitura Municipal de Santo André</center><td>
+	<td colspan="2"><center><b>Prefeitura Municipal de Santo André</b></center><td>
 	</tr>
 	<tr>
-	<td colspan="2"><center>Solicitação de Serviços</center><td>
+	<td colspan="2"><center><b>Solicitação de Serviços</b></center><td>
 	</tr>	
 		<tr>
-		<td><center>Data da Emissão<br /><?php echo date("d/m/Y")?></center></td>
-	<td><center>CR Requisitante<br /></center><?php echo $pedido['cr']; ?></td>
+		<td><center>Data da Emissão<br /><b><?php echo date("d/m/Y")?></b></center></td>
+	<td><center>CR Requisitante<br /></center><b><?php echo $pedido['cr']; ?></b></td>
 
 	</tr>
 	<tr>
-	<td colspan="3">Nome da área requisitante: Secretaria de Cultura - <?php echo $pedido['area']; ?></td>
+	<td colspan="3"><center><b>Nome da área requisitante: Secretaria de Cultura - <?php echo $pedido['area']; ?></b></center></td>
 	<tr/>	
 	</table>
 	<table border="1">
 	<tr>
-	<td colspan="4"><center>Dotação orçamentária</center></td>
+	<td colspan="4"><center><b>Dotação orçamentária</b></center></td>
 
 	</tr>
 
 	<tr>
-	<td>Cód. Dotação:<br /><?php echo $pedido['cod_dotacao']; ?></td>
-	<td>Projeto:<br /><?php echo $pedido['projeto']; ?></td>
-	<td>Ficha: <br /> <?php echo $pedido['ficha']; ?></td>
+	<td>Cód. Dotação:<br /><b><?php echo $pedido['cod_dotacao']; ?></b></td>
+	<td>Projeto:<br /><b><?php echo $pedido['projeto']; ?><b/></td>
+	<td>Ficha: <br /> <b><?php echo $pedido['ficha']; ?></b></td>
 	<td>Sub-elemente Despesa: <br /></td>	
 	</tr>
 	</tr>
