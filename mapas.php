@@ -444,6 +444,8 @@ case "editar":
 						</div>
 					</div>
 				</form>
+				<?php if($event['mapas']['id'] == 0){ ?>
+				
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">				
 				<div class="form-group">
 						<div class="col-md-offset-2">
@@ -456,6 +458,15 @@ case "editar":
 							<?php } ?>
 						</div>
 				</form>	</div>
+				<?php }else{ ?>
+				<div class="form-group">
+						<div class="col-md-offset-2">
+						<a href="<?php echo $GLOBALS['url_mapas']."evento/".$event['mapas']['id']; ?>" target="_blank" class="btn btn-theme btn-lg btn-block" ><?php echo $GLOBALS['url_mapas']."evento/".$event['mapas']['id']; ?></a>
+				</div>
+				</div>
+				<?php
+					
+				} ?>
 			</div>
 		</div>
 	</div>
