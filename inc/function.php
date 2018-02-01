@@ -934,20 +934,23 @@ function retornaPessoa($id,$tipo){
 	if($tipo == 1){
 		$sql = "SELECT Nome, CPF, Email, codBanco, agencia, conta FROM sc_pf WHERE Id_PessoaFisica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
+		$b = tipo($res['codBanco']);
+
 		$x['nome'] = $res['Nome'];
 		$x['cpf_cnpj'] = $res['CPF'];
 		$x['tipoPessoa'] = "Pessoa Física";
 		$x['email'] = $res['Email'];
-		$x['banco'] = "Banco: ".$res['codBanco']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
+		$x['banco'] = "Banco: ".$b['tipo']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
 		
 	}else{
 		$sql = "SELECT RazaoSocial, CNPJ, Email, codBanco, agencia, conta FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
+		$b = tipo($res['codBanco']);
 		$x['nome'] = $res['RazaoSocial'];
 		$x['cpf_cnpj'] = $res['CNPJ'];
 		$x['tipoPessoa'] = "Pessoa Jurídica";
 		$x['email'] = $res['Email'];
-		$x['banco'] = "Banco: ".$res['codBanco']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
+		$x['banco'] = "Banco: ".$b['tipo']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
 	}
 	return $x;
 
@@ -1238,18 +1241,26 @@ function retornaLocais($idEvento){
 }
 
 function retornaCEP($cep){
-/*		$url = "https://viacep.com.br/ws/".$cep."/json/";
-		$ch = curl_init($url);
-		$page = curl_exec($ch);
-		$dec = json_decode($page,true);
-		$dados = array();
-		$dados['rua']     = $dec['logradouro'];
-		$dados['bairro']  = $dec['bairro'];
-		$dados['cidade']  = $dec['localidade'];
-		$dados['estado']  = $dec['uf'];	
-		var_dump($dec);
-		return $dados;
-*/
+	global $wpdb;
+	$cep_index = substr($cep, 0, 5);
+	$dados['sucesso'] = 0;
+	$sql01 = "SELECT * FROM igsis_cep_cep_log_index WHERE cep5 = '$cep_index' LIMIT 0,1";
+	$campo01 = $wpdb->get_row($sql01,ARRAY_A);
+
+	$uf = "igsis_cep_".$campo01['uf'];
+	$sql02 = "SELECT * FROM $uf WHERE cep = '$cep'";
+	$campo02 = $wpdb->get_row($sql02,ARRAY_A);
+	$res = count($campo02);
+	 if($res > 0){
+	$dados['sucesso'] = 1;
+	 }else{
+	$dados['sucesso'] = 0;
+	 }
+	$dados['rua']     = $campo02['tp_logradouro']." ".$campo02['logradouro'];
+	$dados['bairro']  = $campo02['bairro'];
+	$dados['cidade']  = $campo02['cidade'];
+	$dados['estado']  = strtoupper($campo01['uf']);
+	return $dados;
 }
 
 
