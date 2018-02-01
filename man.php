@@ -97,6 +97,32 @@ if(isset($user) AND isset($edital)){
 }
 ?>  
 <?php 
+break;
+case 'atualiza_banco':
+	$sql_sel = "SELECT * FROM igsis_bancos ORDER BY codigo";
+	$res = $wpdb->get_results($sql_sel,ARRAY_A);
+	for($i = 0; $i < count($res); $i++){
+		$descricao = json_encode(array(
+			"codBanco" => $res[$i]['codigo']
+			)
+		);
+		$tipo = $res[$i]['banco'];
+	$sql_ins = "INSERT INTO sc_tipo (tipo,descricao,abreviatura,publicado) VALUES('$tipo','$descricao','banco','1')";
+	$ins = $wpdb->query($sql_ins);
+	
+	if($ins == 1){
+		echo "$tipo migrado<br />";
+	}else{
+		echo $sql_ins."<br />";
+		
+	}
+	
+	}
+  
+?>	
+
+
+<?php 
 //break;
 //case '':  
 ?>		  
