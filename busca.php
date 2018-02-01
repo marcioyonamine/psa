@@ -7,17 +7,14 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Busca</h1>
 <?php 
-if(isset($_POST['busca'])){
-	$busca = $_POST['busca'];
-	// eventos
-	$sql_evento = "SELECT idEvento FROM sc_evento WHERE nomeEveno LIKE '%$busca%' OR
-			autor  LIKE '%$busca%' OR
-			nomeGrupo  LIKE '%$busca%' OR
-			fichaTecnica  LIKE '%$busca%' OR
-			sinopse  LIKE '%$busca%' OR
-			releaseCom  LIKE '%$busca%'"; 
-	$res = 		
-}	
+if(isset($_GET['p'])){
+	$p = $_GET['p'];
+}else{
+	$p = 'inicio';
+}
+switch($p){
+	default:
+	case "inicio":
 		?>
 		 <section id="inserir" class="home-section bg-white">
     <div class="container">
@@ -30,7 +27,7 @@ if(isset($_POST['busca'])){
 		</div> 
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?" class="form-horizontal" role="form">
+				<form method="POST" action="?p=busca" class="form-horizontal" role="form">
 					<div class="row">
 						<div class="col-12">
 						<label>Digite pelo menos 3 caracteres</label>
@@ -48,7 +45,330 @@ if(isset($_POST['busca'])){
 				</form>
 	</div>
 	</section>	
+	
+<?php 
+break;
+case "busca":
+if(isset($_POST['busca'])){
+	$busca = $_POST['busca'];
+	// eventos
+	$sql_evento = "SELECT idEvento FROM sc_evento WHERE nomeEvento LIKE '%$busca%' OR
+			autor  LIKE '%$busca%' OR
+			nomeGrupo  LIKE '%$busca%' OR
+			fichaTecnica  LIKE '%$busca%' OR
+			sinopse  LIKE '%$busca%' OR
+			releaseCom  LIKE '%$busca%'"; 
+	$res_evento = $wpdb->get_results($sql_evento,ARRAY_A);
+	
+	// pessoa física
+	$sql_pf = "SELECT Id_PessoaFisica FROM sc_pf WHERE Nome LIKE '%$busca%' OR
+			NomeArtistico  LIKE '%$busca%'" ; 
+	$res_pf = $wpdb->get_results($sql_pf,ARRAY_A);
+
+	// pessoa jurídicas
+	$sql_pj = "SELECT Id_PessoaJuridica FROM sc_pj WHERE RazaoSocial LIKE '%$busca%' OR
+			rep_nome  LIKE '%$busca%'" ; 
+	$res_pj = $wpdb->get_results($sql_pj,ARRAY_A);
+	
+	
+}else{
+	
+}	
+?>	
+		 <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+                   
+
+					
+			</div>
+		</div> 
 		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 <p>Foram encontrado(s) <?php echo count($res_evento) ?> eventos.</p>
+				<ul>
+				<?php 
+				for($i = 0; $i < count($res_evento); $i++){
+					$evento = evento($res_evento[$i]['idEvento']);
+					echo "<li><a href=?p=view&tipo=evento&id=".$res_evento[$i]['idEvento']." target='_blank'>".$evento['titulo']."</a></li>";
+				}
+				?>
+				</ul>
+	</div>
+	</div>
+	
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 <p>Foram encontrado(s) <?php echo count($res_pf) ?> Pessoas Físicas.</p>
+				<ul>
+				<?php 
+				for($i = 0; $i < count($res_pf); $i++){
+					$evento = retornaPessoa($res_pf[$i]['Id_PessoaFisica'],1);
+					echo "<li><a href=?p=view&tipo=pf&id=".$res_pf[$i]['Id_PessoaFisica']." target='_blank'>".$evento['nome']."</a></li>";
+				}
+				?>
+				</ul>
+	</div>
+	</div>
+
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 <p>Foram encontrado(s) <?php echo count($res_pj) ?> Pessoas Jurídicas.</p>
+				<ul>
+				<?php 
+				for($i = 0; $i < count($res_pj); $i++){
+					$evento = retornaPessoa($res_pj[$i]['Id_PessoaJuridica'],2);
+					echo "<li><a href=?p=view&tipo=pj&id=".$res_pj[$i]['Id_PessoaJuridica']." target='_blank'>".$evento['nome']."</a></li>";
+				}
+				?>
+				</ul>
+	</div>
+	</div>	
+	
+	</section>		
+<?php 
+break;
+case "view":
+	switch($_GET['tipo']){
+		case 'evento':
+		$evento = evento($_GET['id']);
+	?>
+		 <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+                   
+<br /><br />
+					
+			</div>
+		</div> 
+		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+		<h2><?php echo $evento['titulo']; ?></h2>
+		<br />
+		<p>Programa : <?php echo $evento['programa']; ?> / Projeto: <?php echo $evento['projeto']; ?> <p>
+		<p>Linguagem: <?php echo $evento['linguagem']; ?></p>
+		<p>Responsavel: <?php echo $evento['responsavel']; ?></p>
+		<p>Autor: <?php echo $evento['autor']; ?></p>
+		<p>Ficha Técnica: <br /> <?php echo $evento['ficha_tecnica']; ?></p>
+		<p>Sinopse: <br /><?php echo $evento['sinopse']; ?></p>
+		<p>Período: <?php echo $evento['periodo']['legivel']; ?> / Local: <?php echo $evento['local']; ?></p>
+		<p>Faixa etária: <?php echo $evento['faixa_etaria']?></p>
+		<?php if($evento['mapas']['id'] != 0){ ?>
+		<p>CulturAZ: <a href='<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?>' ><?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?></a>
+		<?php } ?>
+		<?php 
+			echo "<pre>";
+			var_dump($evento);
+			echo "</pre>";
+			?>
+	</div>
+	</div>
+	
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 
+	</div>
+	</div>
+	<div>
+	</section>			
+	<?php 
+		break;	
+		case "pj":
+		$pessoa = retornaPessoa($_GET['id'],2);	
+
+	?>
+			 <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+                   
+
+					
+			</div>
+		</div> 
+		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			
+			
+	</div>
+	</div>
+	
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 
+	</div>
+	</div>
+	<div>
+	</section>	
+	<?php
+		break;	
+		case "pf":
+		$pessoa = retornaPessoa($_GET['id'],1);	
+
+	?>	
+			 <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+                   
+<br /><br />
+					
+			</div>
+		</div> 
+		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+		<h2><?php echo $pessoa['nome']; ?></h2>
+		<br />
+
+		<?php 
+			echo "<pre>";
+			var_dump($pessoa);
+			echo "</pre>";
+			?>
+	</div>
+	</div>
+	
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 
+	</div>
+	</div>
+	<div>
+	</section>			
+	<?php 
+		break;	
+		case "pj":
+		$pessoa = retornaPessoa($_GET['id'],2);	
+
+	?>
+			 <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+                   
+
+					
+			</div>
+		</div> 
+		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			
+			
+	</div>
+	</div>
+	
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 
+	</div>
+	</div>
+	<div>
+	</section>	
+	
+	<?php
+		break;	
+		case "pedido":
+		$pessoa = pedido($_GET['id']);	
+
+	?>	
+		
+			 <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+                   
+<br /><br />
+					
+			</div>
+		</div> 
+		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+		<h2><?php echo $evento['titulo']; ?></h2>
+		<br />
+		<p>Programa : <?php echo $evento['programa']; ?> / Projeto: <?php echo $evento['projeto']; ?> <p>
+		<p>Linguagem: <?php echo $evento['linguagem']; ?></p>
+		<p>Responsavel: <?php echo $evento['responsavel']; ?></p>
+		<p>Autor: <?php echo $evento['autor']; ?></p>
+		<p>Ficha Técnica: <br /> <?php echo $evento['ficha_tecnica']; ?></p>
+		<p>Sinopse: <br /><?php echo $evento['sinopse']; ?></p>
+		<p>Período: <?php echo $evento['periodo']['legivel']; ?> / Local: <?php echo $evento['local']; ?></p>
+		<p>Faixa etária: <?php echo $evento['faixa_etaria']?></p>
+		<?php if($evento['mapas']['id'] != 0){ ?>
+		<p>CulturAZ: <a href='<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?>' ><?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?></a>
+		<?php } ?>
+		<?php 
+			echo "<pre>";
+			var_dump($evento);
+			echo "</pre>";
+			?>
+	</div>
+	</div>
+	
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 
+	</div>
+	</div>
+	<div>
+	</section>			
+	<?php 
+		break;	
+		case "pj":
+		$pessoa = retornaPessoa($_GET['id'],2);	
+
+	?>
+			 <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+                   
+
+					
+			</div>
+		</div> 
+		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			
+			
+	</div>
+	</div>
+	
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			 
+	</div>
+	</div>
+	<div>
+	</section>		
+	<?php
+	break;	
+	}// fim switch view
+
+
+?>
+
+
+	
+<?php 
+break;
+} // fim da switch p
+?>		
 		
         </main>
       </div>

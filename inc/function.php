@@ -986,6 +986,7 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 		'tipo' => $tipo,
 		'nome' => $pessoa['nome'],
 		'valor' => $res[$i]['valor'],
+		'idPessoa' => $res[$i]['idPessoa'],
 		'cpf_cnpj' => $pessoa['cpf_cnpj']
 		);
 	
@@ -1083,6 +1084,15 @@ function retornaPedido($id){
 		$metausuario['telefone'] = "";
 	}
 	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
+	if(!is_array($dotac)){
+		$dotac = array(
+			'dotacao' => '',
+			'ficha' => '',
+			'projeto' => '',
+			'fonte' => ''
+		);
+	}
+	
 	$local = retornaLocais($res['idEvento']);
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
 	$status = "Em análise";

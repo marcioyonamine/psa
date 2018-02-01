@@ -34,6 +34,12 @@ $(function() {
  switch($p){
 case "inicio": //Lista as contratações
 
+if(isset($_SESSION['idPessoa'])){
+	unset($_SESSION['idPessoa']);
+	unset($_SESSION['tipo']);
+}
+
+
 // Insere Pessoa Física e Cria Pedido de Contratação
 if(isset($_POST['inserir_pf'])){
 
@@ -238,6 +244,7 @@ if(isset($_POST['inserir_pj'])){
 				  <?php if($_SESSION['entidade'] == 'atividade'){ echo "<th></th>"; } ?>
 				  <th></th>
 				  <th></th>
+				  <th></th>
 
 				  </tr>
               </thead>
@@ -251,14 +258,30 @@ if(isset($_POST['inserir_pj'])){
 					  <td><?php echo $peds[$i]['nome']; ?></td>
 					  <td><?php echo $peds[$i]['cpf_cnpj']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
-
+					  <?php if($peds[$i]['tipo'] == 'Pessoa Física'){ ?>
+					  <td>	
+							<form method="POST" action="?p=editar_pf" class="form-horizontal" role="form">
+							<input type="hidden" name="editar_pf" value="<?php echo $peds[$i]['idPessoa']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pessoa">
+							</form>
+							</td>
+					<?php }else{ ?>
+					  <td>	
+							<form method="POST" action="?p=editar_pj" class="form-horizontal" role="form">
+							<input type="hidden" name="editar_pj" value="<?php echo $peds[$i]['idPessoa']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pessoa">
+							</form>
+							</td>
+					<?php } ?>
+					
+							
 						<?php if($_SESSION['entidade'] == 'atividade'){ ?>
 						<td>	
 							<form method="POST" action="?p=inicio" class="form-horizontal" role="form">
 							<input type="hidden" name="duplicar" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Duplicar">
 							</form>
-					</td>
+				    	</td>
 						<?php } ?>
 					  <td>	
 							<form method="POST" action="?p=editar_pedido" class="form-horizontal" role="form">
@@ -654,7 +677,10 @@ break;
 					<div class="row">
 						<div class="col-6">
 							<label>Banco</label>
-							<input type="text" class="form-control" name="Banco" > 
+							<select class="form-control" name="tipo" id="inputSubject" name="Banco">
+							<option>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("banco") ?>
+							</select>
 						</div>
 						<div class="col-6">
 							<label>Agência bancária</label>
@@ -731,7 +757,7 @@ case "resultado_pj":
 ?>
 <?php 
 	$sql_busca = "SELECT Id_PessoaJuridica, CNPJ, RazaoSocial FROM sc_pj WHERE CNPJ LIKE '%".$_POST['busca']."%'";
-	echo $sql_busca;
+	//echo $sql_busca;
 	$res = $wpdb->get_results($sql_busca,ARRAY_A);
 	if(count($res) > 0){
 		// lista os cpfs encontrados
@@ -987,6 +1013,88 @@ case "resultado_pj":
 <?php 	 
 break;	 
  case "editar_pf": //editar pessoa física
+ 
+ if(isset($_POST['editar_pf'])){
+	$pessoa = recuperaDados("sc_pf",$_POST['editar_pf'],"Id_PessoaFisica");
+ }
+ if(isset($_POST['editar_pf_pag'])){
+	 	// Carrega as variáveis
+	$idPessoaFisica = $_POST['editar_pf_pag'];
+	$Nome = $_POST["Nome"];
+	$NomeArtistico = $_POST["NomeArtistico"];
+	$CPF = $_POST["CPF"];
+	$RG = $_POST["RG"];
+	$DataNascimento = exibirDataMysql($_POST["DataNascimento"]);
+	$LocalNascimento = $_POST["LocalNascimento"];
+	$Nacionalidade = $_POST["Nacionalidade"];
+	$cep = $_POST["cep"];
+	$Numero = $_POST["Numero"];
+	$rua = $_POST["rua"];
+	$bairro = $_POST["bairro"];
+	$Complemento = $_POST["Complemento"];
+	$cidade = $_POST["cidade"];
+	$uf = $_POST["uf"];
+	$Telefone1 = $_POST["Telefone1"];
+	$Telefone2 = $_POST["Telefone2"];
+	$Telefone3 = $_POST["Telefone3"];
+	$Email = $_POST["Email"];
+	$CCM = $_POST["CCM"];
+	$INSS = $_POST["INSS"];
+	$DRT = $_POST["DRT"];
+	$OMB = $_POST["OMB"];
+	$Funcao = $_POST["Funcao"];
+	$PIS = $_POST["PIS"];
+	$observacoes = $_POST["observacoes"];
+	$Banco = $_POST["Banco"];
+	$agencia = $_POST["agencia"];
+	$conta = $_POST["conta"];
+	$cbo = $_POST["cbo"];
+	$data = date("Y-m-d");
+	$id_usuario = $user->ID;
+	$IdEstadoCivil = $_POST['IdEstadoCivil'];
+	
+	$sql_atualizar_pessoa = "UPDATE sc_pf 
+					SET `Nome` = '$Nome',
+					`NomeArtistico` = '$NomeArtistico',
+					`RG` = '$RG', 
+					`CPF` = '$CPF', 
+					`CCM` = '$CCM', 
+					`IdEstadoCivil` = '$IdEstadoCivil' , 
+					`DataNascimento` = '$DataNascimento', 
+					`Nacionalidade` = '$Nacionalidade', 
+					`CEP` = '$cep', 
+					`codBanco` = '$Banco', 
+					`agencia` = '$agencia', 
+					`conta` = '$conta', 
+					`Numero` = '$Numero', 
+					`Complemento` = '$Complemento', 
+					`Telefone1` = '$Telefone1', 
+					`Telefone2` = '$Telefone2',  
+					`Telefone3` = '$Telefone3', 
+					`Email` = '$Email', 
+					`DRT` = '$DRT', 
+					`Funcao` = '$Funcao', 
+					`InscricaoINSS` = '$INSS', 
+					`Pis` = '$PIS', 
+					`OMB` = '$OMB', 
+					`DataAtualizacao` = '$data', 
+					`Observacao` = '$observacoes', 
+					`IdUsuario` = '$id_usuario' 
+					WHERE `Id_PessoaFisica` = '$idPessoaFisica'";		
+	
+	$upd = $wpdb->query($sql_atualizar_pessoa);
+	if($upd == 1){
+		$mensagem = alerta("Pessoa Física atualizado com sucesso.","success");
+	}else{
+		$mensagem = alerta("Não atualizado.","warning");
+	
+	}
+	
+	
+	
+	$pessoa = recuperaDados("sc_pf",$_POST['editar_pf_pag'],"Id_PessoaFisica");
+ }
+ 
  ?>
 
 
@@ -996,36 +1104,36 @@ break;
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
 
-                    <h3>Inserir Pessoa Física</h3>
+                    <h3>Editar Pessoa Física</h3>
                     <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
 
 			</div>
 		</div> 
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?p=inicio" class="form-horizontal" role="form">
+				<form method="POST" action="?p=editar_pf" class="form-horizontal" role="form">
 					<div class="row">
 						<div class="col-12">
 							<label>Nome Completo *</label>
-							<input type="text" name="Nome" class="form-control" id="inputSubject" />
+							<input type="text" name="Nome" class="form-control" id="inputSubject" value="<?php echo $pessoa['Nome']; ?>" />
 						</div>
 					</div>
 					<br />
 					<div class="row">
 						<div class="col-12">
 							<label>Nome Artístico *</label>
-							<input type="text" name="NomeArtistico" class="form-control" id="inputSubject" />
+							<input type="text" name="NomeArtistico" class="form-control" id="inputSubject" value="<?php echo $pessoa['NomeArtistico']; ?>" />
 						</div>
 					</div>
 					<br />
 					<div class="row">
 						<div class="col-6">
 							<label>CPF *</label>
-							<input type="text" name="CPF" class="form-control cpf" id="inputSubject" value="<?php echo $_POST['busca']; ?>" />
+							<input type="text" name="CPF" class="form-control cpf" id="inputSubject"value="<?php echo $pessoa['CPF']; ?>" />
 						</div>
 						<div class="col-6">
 							<label>RG *</label>
-							<input type="text" name="RG" class="form-control" id="inputSubject" />
+							<input type="text" name="RG" class="form-control" id="inputSubject" value="<?php echo $pessoa['RG']; ?>" />
 						</div>
 
 					</div>
@@ -1033,36 +1141,36 @@ break;
 					<div class="row">
 						<div class="col-6">
 							<label>Estado civil</label>
-							<select class="form-control" name="tipo" id="inputSubject" name="IdEstadoCivil">
+							<select class="form-control" id="inputSubject" name="IdEstadoCivil">
 							<option>Escolha uma opção</option>
-							<?php echo geraTipoOpcao("civil") ?>
+							<?php echo geraTipoOpcao("civil",$pessoa['IdEstadoCivil']) ?>
 							</select>
 						</div>
 						<div class="col-6">
 							<label>Data de Nascimento</label>
-							<input type="text" class="form-control calendario" name="DataNascimento"> 
+							<input type="text" class="form-control calendario" name="DataNascimento" value="<?php echo exibirDataBr($pessoa['DataNascimento']); ?>"> 
 						</div>
 					</div>	
 					<br />
 					<div class="row">
 						<div class="col-6">
 							<label>Local de Nascimento</label>
-							<input type="text" class="form-control" name="LocalNascimento" > 
+							<input type="text" class="form-control" name="LocalNascimento" value="<?php echo $pessoa['LocalNascimento']; ?>"> 
 						</div>
 						<div class="col-6">
 							<label>Nacionalidade</label>
-							<input type="text" class="form-control" name="Nacionalidade" > 
+							<input type="text" class="form-control" name="Nacionalidade" value="<?php echo $pessoa['Nacionalidade']; ?>"> 
 						</div>
 					</div>	
 					<br />
 					<div class="row">
 						<div class="col-6">
 							<label>CEP</label>
-							<input type="text" class="form-control" name="cep" id="cep" > 
+							<input type="text" class="form-control" name="cep" id="cep" value="<?php echo $pessoa['CEP']; ?>"> 
 						</div>
 						<div class="col-6">
 							<label>Número</label>
-							<input type="text" class="form-control" name="Numero" > 
+							<input type="text" class="form-control" name="Numero" value="<?php echo $pessoa['Numero']; ?>"> 
 						</div>
 					</div>	
 					<br />
@@ -1080,7 +1188,7 @@ break;
 						</div>
 						<div class="col-6">
 							<label>Complemento</label>
-							<input type="text" class="form-control" name="Complemento"> 
+							<input type="text" class="form-control" name="Complemento" value="<?php echo $pessoa['Complemento']; ?>"> 
 						</div>
 					</div>	
 					<br />
@@ -1098,22 +1206,22 @@ break;
 										<div class="row">
 						<div class="col-6">
 							<label>Telefone 01</label>
-							<input type="text" class="form-control" name="Telefone1" > 
+							<input type="text" class="form-control" name="Telefone1" value="<?php echo $pessoa['Telefone1']; ?>" > 
 						</div>
 						<div class="col-6">
 							<label>Telefone 02</label>
-							<input type="text" class="form-control" name="Telefone2"> 
+							<input type="text" class="form-control" name="Telefone2" value="<?php echo $pessoa['Telefone2']; ?>"> 
 						</div>
 					</div>	
 					<br />
 					<div class="row">
 						<div class="col-6">
 							<label>Telefone 03</label>
-							<input type="text" class="form-control" name="Telefone3"> 
+							<input type="text" class="form-control" name="Telefone3" value="<?php echo $pessoa['Telefone3']; ?>"> 
 						</div>
 						<div class="col-6">
 							<label>E-mail</label>
-							<input type="text" class="form-control" name="Email"> 
+							<input type="text" class="form-control" name="Email" value="<?php echo $pessoa['Email']; ?>"> 
 						</div>
 					</div>	
 					<br />
@@ -1121,75 +1229,90 @@ break;
 					<div class="row">
 						<div class="col-6">
 							<label>CCM</label>
-							<input type="text" class="form-control" name="CCM"> 
+							<input type="text" class="form-control" name="CCM" value="<?php echo $pessoa['CCM']; ?>"> 
 						</div>
 						<div class="col-6">
 							<label>INSS</label>
-							<input type="text" class="form-control" name="INSS" > 
+							<input type="text" class="form-control" name="INSS" value="<?php echo $pessoa['InscricaoINSS']; ?>" > 
 						</div>
 					</div>	
 					<br />
 					<div class="row">
 						<div class="col-6">
 							<label>DRT</label>
-							<input type="text" class="form-control" name="DRT" > 
+							<input type="text" class="form-control" name="DRT" value="<?php echo $pessoa['DRT']; ?>"> 
 						</div>
 						<div class="col-6">
 							<label>OMB</label>
-							<input type="text" class="form-control" name="OMB" > 
+							<input type="text" class="form-control" name="OMB" value="<?php echo $pessoa['OMB']; ?>"> 
 						</div>
 					</div>	
 					<br />
 					<div class="row">
 						<div class="col-6">
 							<label>Função</label>
-							<input type="text" class="form-control" name="Funcao" > 
+							<input type="text" class="form-control" name="Funcao" value="<?php echo $pessoa['Funcao']; ?>" > 
 						</div>
 						<div class="col-6">
 							<label>PIS</label>
-							<input type="text" class="form-control" name="PIS" > 
+							<input type="text" class="form-control" name="PIS" value="<?php echo $pessoa['Pis']; ?>"> 
 						</div>
 					</div>	
 					<br />					
 					<div class="row">
 						<div class="col-12">
 							<label>Observações </label>
-								<textarea name="observacoes" class="form-control" rows="10" ></textarea>					
+								<textarea name="observacoes" class="form-control" rows="10" ><?php echo $pessoa['Observacao']; ?></textarea>					
 						</div>
 					</div>
 					<br />
 					<div class="row">
 						<div class="col-6">
-							<label>Banco</label>
-							<input type="text" class="form-control" name="Banco" > 
+														<label>Banco</label>
+							<select class="form-control" id="inputSubject" name="Banco">
+							<option>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("banco",$pessoa['codBanco']) ?>
+							</select>
 						</div>
 						<div class="col-6">
 							<label>Agência bancária</label>
-							<input type="text" class="form-control" name="agencia"> 
+							<input type="text" class="form-control" name="agencia" value="<?php echo $pessoa['agencia']; ?>"> 
 						</div>
 					</div>	
 					<br />					
 					<div class="row">
 						<div class="col-6">
 							<label>Conta Corrente</label>
-							<input type="text" class="form-control" name="conta"> 
+							<input type="text" class="form-control" name="conta" value="<?php echo $pessoa['conta']; ?>"> 
 						</div>
 						<div class="col-6">
 							<label>CBO</label>
-							<input type="text" class="form-control" name="cbo"> 
+							<input type="text" class="form-control" name="cbo" value="<?php echo $pessoa['cbo']; ?>"> 
 						</div>
 					</div>	
 					<br />					
 
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<input type="hidden" name="inserir_pf" value="1" />
+							<input type="hidden" name="editar_pf_pag" value="<?php echo $pessoa['Id_PessoaFisica']; ?>" />
 							<?php 
 							?>
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir Pessoa Física e Criar Pedido de Contratação">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar dados PF">
 						</div>
 					</div>
 				</form>
+				<form method="POST" action="arquivo.php" class="form-horizontal" role="form">
+									<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="idPessoa" value="<?php echo $pessoa['Id_PessoaFisica'] ?>" />
+							<input type="hidden" name="tipo" value="pf" />
+
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Arquivos PF">
+						</div>
+					</div>
+					</form>
 			</div>
 		</div>
 	</div>
@@ -1198,8 +1321,286 @@ break;
 <?php 	 
 break;	 
  case "editar_pj": //editar pessoa jurídica
- ?>
  
+ if(isset($_POST['editar_pj'])){
+	 $pessoa = recuperaDados("sc_pj",$_POST['editar_pj'],"Id_PessoaJuridica");
+ }
+  if(isset($_POST['editar_pj_pag'])){
+	 
+	 
+	 
+	 				$idJuridica = $_POST['editar_pj_pag'];
+				$RazaoSocial = addslashes($_POST['RazaoSocial']);
+				$CNPJ = $_POST['CNPJ'];
+				$CCM = $_POST['CCM'];
+				$CEP = $_POST['CEP'];
+				$Numero = $_POST['Numero'];
+				$Complemento = $_POST['Complemento'];
+				$Telefone1 = $_POST['Telefone1'];
+				$Telefone2 = $_POST['Telefone2'];
+				$Telefone3 = $_POST['Telefone3'];
+				$Email = $_POST['Email'];
+				//$IdRepresentanteLegal1 = $_POST['IdRepresentanteLegal1'];
+				//$IdRepresentanteLegal2 = $_POST['IdRepresentanteLegal2'];
+				$Observacao = $_POST['observacao'];
+				$data = date("Y-m-d");
+				$idUsuario = $user->ID;
+				$codBanco = $_POST['codBanco'];
+				$agencia = $_POST['agencia'];
+				$conta = $_POST['conta'];
+				$cbo = $_POST['cbo'];
+				$rep_nome = $_POST["rep_nome"];
+				$rep_cpf = $_POST["rep_cpf"];
+				$rep_rg = $_POST["rep_rg"];
+				$rep_civil = $_POST["rep_civil"];
+				$rep_nascimento	= exibirDataMysql($_POST["rep_nascimento"]);
+				$rep_nacionalidade = $_POST["rep_nacionalidade"];
+				$sql_atualizar_juridica = "UPDATE sc_pj 
+					SET `RazaoSocial` = '$RazaoSocial', 
+					`CNPJ` = '$CNPJ', 
+					`CCM` = '$CCM', 
+					`CEP` = '$CEP', 
+					`Numero` = '$Numero', 
+					`Complemento` = '$Complemento', 
+					`Telefone1` = '$Telefone1', 
+					`Telefone2` = '$Telefone2', 
+					`Telefone3` = '$Telefone3', 
+					`Email` = '$Email', 
+					`DataAtualizacao` = '$data', 
+					`Observacao` = '$Observacao', 
+					`codBanco` = '$codBanco', 
+					`agencia` = '$agencia', 
+					`cbo` = '$cbo', 
+					`rep_nome` = '$rep_nome', 
+					`rep_cpf` = '$rep_cpf', 
+					`rep_rg` = '$rep_rg', 
+					`rep_civil` = '$rep_civil', 
+					`rep_nascimento` = '$rep_nascimento', 
+					`rep_nacionalidade` = '$rep_nacionalidade', 
+
+
+
+					`conta` = '$conta'  
+					WHERE `Id_PessoaJuridica` = '$idJuridica'";
+				$upd = $wpdb->query($sql_atualizar_juridica);
+				if($upd == 1){
+					$mensagem =  alerta("Atualizado com sucesso.","success");
+				}else{
+					$mensagem = alerta("Não atualizado.","warning");
+				}
+			
+ 
+ $pessoa = recuperaDados("sc_pj",$_POST['editar_pj_pag'],"Id_PessoaJuridica");
+ }
+ 
+ 
+ 
+ 
+ ?>
+ <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+
+                    <h3>Editar Pessoa Jurídica</h3>
+                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
+
+			</div>
+		</div> 
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="?p=editar_pj" class="form-horizontal" role="form">
+					<div class="row">
+						<div class="col-12">
+							<label>Razão Social</label>
+							<input type="text" name="RazaoSocial" class="form-control" id="inputSubject" value="<?php echo $pessoa['RazaoSocial']; ?>"/>
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-12">
+							<label>CNPJ</label>
+							<input type="text" name="CNPJ" class="form-control" id="inputSubject" value="<?php echo $pessoa['CNPJ']; ?>" />
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-12">
+							<label>CCM</label>
+							<input type="text" name="CCM" class="form-control" id="inputSubject" value="<?php echo $pessoa['CCM']; ?>" />
+						</div>
+					</div>
+					<br />
+
+					<div class="row">
+						<div class="col-6">
+							<label>CEP</label>
+							<input type="text" class="form-control" name="CEP" id="cep" value="<?php echo $pessoa['CEP']; ?>" > 
+						</div>
+						<div class="col-6">
+							<label>Número</label>
+							<input type="text" class="form-control" name="Numero" value="<?php echo $pessoa['Numero']; ?>" > 
+						</div>
+					</div>	
+					<br />
+					<div class="row">
+						<div class="col-12">
+							<label>Logradouro *</label>
+							<input type="text" name="rua" class="form-control" id="rua" />
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-6">
+							<label>Bairro</label>
+							<input type="text" class="form-control" name="bairro" id="bairro" > 
+						</div>
+						<div class="col-6">
+							<label>Complemento</label>
+							<input type="text" class="form-control" name="Complemento" value="<?php echo $pessoa['Complemento']; ?>"> 
+						</div>
+					</div>	
+					<br />
+					<div class="row">
+						<div class="col-6">
+							<label>Cidade</label>
+							<input type="text" class="form-control" name="cidade" id="cidade"> 
+						</div>
+						<div class="col-6">
+							<label>Estado</label>
+							<input type="text" class="form-control" name="uf" id="uf"> 
+						</div>
+					</div>	
+					<br />					
+										<div class="row">
+						<div class="col-6">
+							<label>Telefone 01</label>
+							<input type="text" class="form-control" name="Telefone1" value="<?php echo $pessoa['Telefone1']; ?>"> 
+						</div>
+						<div class="col-6">
+							<label>Telefone 02</label>
+							<input type="text" class="form-control" name="Telefone2" value="<?php echo $pessoa['Telefone2']; ?>"> 
+						</div>
+					</div>	
+					<br />
+					<div class="row">
+						<div class="col-6">
+							<label>Telefone 03</label>
+							<input type="text" class="form-control" name="Telefone3" value="<?php echo $pessoa['Telefone3']; ?>"> 
+						</div>
+						<div class="col-6">
+							<label>E-mail</label>
+							<input type="text" class="form-control" name="Email" value="<?php echo $pessoa['Email']; ?>"> 
+						</div>
+					</div>	
+					<br />
+
+					
+					<div class="row">
+						<div class="col-12">
+							<label>Observações </label>
+								<textarea name="observacao" class="form-control" rows="10" ><?php echo $pessoa['Observacao']; ?></textarea>					
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-6">
+							<label>Banco</label>
+							<select class="form-control" id="inputSubject" name="codBanco">
+							<option value='0'>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("banco",$pessoa['codBanco']) ?>
+							</select>
+						</div>
+						<div class="col-6">
+							<label>Agência bancária</label>
+							<input type="text" class="form-control" name="agencia" value="<?php echo $pessoa['agencia']; ?>"> 
+						</div>
+					</div>	
+					<br />					
+					<div class="row">
+						<div class="col-6">
+							<label>Conta Corrente</label>
+							<input type="text" class="form-control" name="conta" value="<?php echo $pessoa['conta']; ?>"> 
+						</div>
+						<div class="col-6">
+							<label>CBO</label>
+							<input type="text" class="form-control" name="cbo" value="<?php echo $pessoa['cbo']; ?>"> 
+						</div>
+					</div>	
+					<br />					
+
+					<div class="row">
+						<div class="col-12">
+						<h3>Representante Legal</h3>
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-12">
+							<label>Nome Completo</label>
+							<input type="text" name="rep_nome" class="form-control" id="inputSubject" value="<?php echo $pessoa['rep_nome']; ?>" />
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-6">
+							<label>CPF *</label>
+							<input type="text" name="rep_cpf" class="form-control cpf" id="inputSubject" value="<?php echo $pessoa['rep_cpf']; ?>" />
+						</div>
+						<div class="col-6">
+							<label>RG *</label>
+							<input type="text" name="rep_rg" class="form-control" id="inputSubject" value="<?php echo $pessoa['rep_rg']; ?>" />
+						</div>
+
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-6">
+							<label>Estado civil</label>
+							<select class="form-control" name="rep_civil" id="inputSubject" >
+							<option>Escolha uma opção</option>
+							<?php echo geraTipoOpcao("civil",$pessoa['rep_civil']) ?>
+							</select>
+						</div>
+						<div class="col-6">
+							<label>Data de Nascimento</label>
+							<input type="text" class="form-control calendario" name="rep_nascimento" value="<?php echo exibirDataBr($pessoa['rep_nascimento']); ?>"> 
+						</div>
+					</div>	
+					<br />
+
+					<div class="row">
+						<div class="col-12">
+							<label>Nacionalidade</label>
+							<input type="text" name="rep_nacionalidade" class="form-control" id="inputSubject" value="<?php echo $pessoa['rep_nacionalidade']; ?>"/>
+						</div>
+					</div>
+					<br />
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="editar_pj_pag" value="<?php echo $pessoa['Id_PessoaJuridica'] ?>" />
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar dados PJ">
+						</div>
+					</div>
+				</form>
+								<form method="POST" action="arquivo.php" class="form-horizontal" role="form">
+									<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="idPessoa" value="<?php echo $pessoa['Id_PessoaJuridica'] ?>" />
+							<input type="hidden" name="tipo" value="pj" />
+
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Arquivos PJ">
+						</div>
+					</div>
+					</form>
+			</div>
+		</div>
+	</div>
+</section>	
 <?php 	 
 break;	 
  case "editar_pedido": //editar pessoa jurídica
@@ -1238,33 +1639,37 @@ break;
  
  
  $pedido = recuperaDados("sc_contratacao",$id_pedido,"idPedidoContratacao");
+ $ped = retornaPedido($id_pedido);
  ?>
  <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-
-                    <h3>Editar Pedido</h3>
+<h1> Editar Pedido</h1>
+                    <h3><?php echo $ped['objeto']; ?></h3>
                     <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
 
 			</div>
 		</div> 
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?p=editar_pedido" class="form-horizontal" role="form">
+				
 					<div class="row">
 						<div class="col-12">
-						<p> Informações da Contratação </p>	
+						<p> <?php ?> </p>	
 						</div>
 					</div>
 					<br />
+
+
+		<form method="POST" action="?p=editar_pedido" class="form-horizontal" role="form">
 					<div class="row">
 						<div class="col-12">
 							<label>Número de Processo</label>
 							<input type="text" name="processo" class="form-control" id="inputSubject" value="<?php echo $pedido['nProcesso']; ?>" />
 						</div>
 					</div>					
-					
+									<br />
 						<div class="row">
 						<div class="col-12">
 							<label>Integrantes do Grupo </label>
