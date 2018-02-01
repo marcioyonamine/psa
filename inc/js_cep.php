@@ -15,15 +15,15 @@
                 dataType: 'json', /* Tipo de transmissão */
                 success: function(data){
                     if(data.sucesso == 1){
-                        $('#Endereco').val(data.rua);
-                        $('#Bairro').val(data.bairro);
-                        $('#Cidade').val(data.cidade);
-                        $('#Estado').val(data.estado);
-						$('#Sucesso').val(data.sucesso);
+                        $('#rua').val(data.rua);
+                        $('#bairro').val(data.bairro);
+                        $('#cidade').val(data.cidade);
+                        $('#estado').val(data.estado);
+						$('#sucesso').val(data.sucesso);
  
-                        $('#Numero').focus();
+                        $('#numero').focus();
                     }else{
-						$('#Sucesso').val(0);
+						$('#sucesso').val(0);
 					}
                 }
            });   
@@ -31,3 +31,5 @@
    })
 });
 	</script>
+	
+	
