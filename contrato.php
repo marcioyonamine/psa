@@ -136,6 +136,16 @@ if(isset($_POST['apaga_pedido'])){
 	}
 }
 
+if(isset($_POST['reabrir_pedido'])){
+	$evento = retornaPedido($_POST['reabrir_pedido']);
+	$id = $evento['id'];
+	$sql_apaga = "UPDATE sc_evento SET dataEnvio = NULL WHERE idEvento = '$id'";
+	$query_apaga = $wpdb->query($sql_apaga);
+	if($query_apaga == 1){
+		$mensagem = '<div class="alert alert-success"> Evento aberto com sucesso. </div>';
+	}
+}
+
 if(isset($_POST['inserir_pj'])){
 
 	//carrega as variaveis	
@@ -265,8 +275,8 @@ if(isset($_POST['inserir_pj'])){
 					  ?></td>
 					  <td>	
 							<form method="POST" action="?p=inicio" class="form-horizontal" role="form">
-							<input type="hidden" name="apaga_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar Pedido">
+							<input type="hidden" name="reabrir_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Reabrir Pedido">
 							</form>
 							<?php 
 					  

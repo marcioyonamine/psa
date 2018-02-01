@@ -1118,7 +1118,7 @@ function retornaPedido($id){
 	
 	$x = array();
 	$x['evento_atividade'] = 'evento';
-
+	$x['id'] = $res['idEvento'];
 	$x['nome'] = $pessoa['nome'];
 	$x['objeto'] = $objeto['objeto'];	
 	$x['autor'] = $objeto['autor'];
@@ -1176,6 +1176,7 @@ function retornaPedido($id){
 	
 	$x = array();
 	$x['evento_atividade'] = 'atividade';
+	$x['id'] = $res['id'];
 	$x['nome'] = $pessoa['nome'];
 	$x['objeto'] = $objeto['objeto'];	
 	$x['autor'] = "";
