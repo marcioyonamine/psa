@@ -122,70 +122,66 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	
 	?>
 	<!-- CSS para impressão -->
+	
+	
+	
 	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+
+	
+	
+	
+	<table  width="100%" border="1">
+	<tr>
+	<td rowspan="5" width="15%"><center><img src="images/logo.png" /></center></td>
+	
+	</tr>
+	<tr>
+	<td colspan="2"><center>Prefeitura Municipal de Santo André</center><td>
+	</tr>
+	<tr>
+	<td colspan="2"><center>Solicitação de Serviços</center><td>
+	</tr>	
+		<tr>
+		<td><center>Data da Emissão<br /><?php echo date("d/m/Y")?></center></td>
+	<td><center>CR Requisitante<br /></center><?php echo $pedido['cr']; ?></td>
+
+	</tr>
+	<tr>
+	<td colspan="3">Nome da área requisitante: Secretaria de Cultura - <?php echo $pedido['area']; ?></td>
+	<tr/>	
+	</table>
 	<table border="1">
 	<tr>
-	<td></td>
-	<td colspan="2">Prefeitura Municipal de Santo André<td>
-	</tr>
-	<tr>
-	<td></td>
-	<td colspan="2">Solicitação de Serviços<td>
+	<td colspan="4"><center>Dotação orçamentária</center></td>
 
-	</tr>	
-	
-	<tr>
-	<td>CR Requisitante</td>
-	<td><?php echo $pedido['cr']; ?></td>
-	</tr>
-	
-	<tr>
-	<td>Nome da área requisitante:</td>
-	<td>Secretaria de Cultura - <?php echo $pedido['area']; ?></td>
-	</tr>
-	<tr>
-	<td>Cód. Dotação:</td>
-	<td><?php echo $pedido['cod_dotacao']; ?></td>
-	</tr>
-	<tr>
-	<td>Projeto:</td>
-	<td><?php echo $pedido['projeto']; ?></td>
-	</tr>
-	<tr>
-	<td>Ficha:</td>
-	<td> <?php echo $pedido['ficha']; ?></td>
-	</tr>
-	<tr>
-	<td>Sub-elemente Despesa:</td>
-	<td></td>
-	</tr>
-	<tr>
-	<td>Conta corrente codReduzido/DB</td>
-	<td></td>
-	</tr>	<tr>
-	<td>Fonte de Recurso:</td>
-	<td><?php echo $pedido['fonte']; ?></td>
-	</tr>	
-	<tr>
-	<td>Nome do Contato</td>
-	<td><?php echo $pedido['usuario']; ?></td>
-	</tr>	
-	<tr>
-	<td>Telefone de Contato:</td>
-	<td><?php echo $pedido['telefone']; ?></td>
-	</tr>	
-	<tr>
-	<td>Data Período do evento: </td>
-	<td><?php echo $pedido['periodo']; ?></td>
-	</tr>	
-	<tr>
-	<td>Local de aplicação do serviço ou evento:</td>
-	<td><?php echo $pedido['local']; ?></td>
 	</tr>
 
 	<tr>
-	<td>Especificação</td>
-	<td>	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?>, representando com exclusividade as apresentações do(s) seguinte(s) artista(s) <?php  echo $pedido['autor'] ?> para  <?php echo $pedido['tipo']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b></p>
+	<td>Cód. Dotação:<br /><?php echo $pedido['cod_dotacao']; ?></td>
+	<td>Projeto:<br /><?php echo $pedido['projeto']; ?></td>
+	<td>Ficha: <br /> <?php echo $pedido['ficha']; ?></td>
+	<td>Sub-elemente Despesa: <br /></td>	
+	</tr>
+	</tr>
+	<tr>
+	<td colspan="3">Conta corrente <br />codReduzido/DB</td>
+	<td>Fonte: <br />  <?php echo $pedido['fonte']; ?></td>
+	</tr>
+	<tr>
+	<td colspan="3">Nome do Contato <br /><?php echo $pedido['usuario']; ?></td>
+	<td>Telefone Contato<br /><?php echo $pedido['telefone']; ?></td>
+	</tr>
+	<tr><td colspan=4"><center>Serviço e/ou Evento</center></td></tr>	
+	<tr>
+	<td colspan="4">Data Período do evento: <br /><?php echo $pedido['periodo']; ?></td>
+	</tr>	
+	<tr>
+	<td colspan="4">Local de aplicação do serviço ou evento:<br /><?php echo $pedido['local']; ?></td>
+	<tr>
+	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
+	</tr>
+	<tr>
+	<td colspan="4">	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?>, representando com exclusividade as apresentações do(s) seguinte(s) artista(s) <?php  echo $pedido['autor'] ?> para  <?php echo $pedido['tipo']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b></p>
 		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?></p>
 	<p>CNPJ: <?php echo $pedido['cpf_cnpj']  ?></p>
 	<p>Endereço: <?php echo $pedido['end']  ?></p>
