@@ -22,6 +22,8 @@ $(function() {
 	$(".cnpj").mask("99.999.999/9999-99");
 	$( ".hora" ).mask("99:99");
 	$( ".min" ).mask("999");
+	$( ".cep" ).mask("99999-999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
 	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
 });
 
