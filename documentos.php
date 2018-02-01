@@ -181,7 +181,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
 	</tr>
 	<tr>
-	<td colspan="4">	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?>, representando com exclusividade as apresentações do(s) seguinte(s) artista(s) <?php  echo $pedido['autor'] ?> para  <?php echo $pedido['tipo']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b></p>
+	<td colspan="4">	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?>, representando com exclusividade as apresentações do(s) seguinte(s) artista(s) <?php  echo $pedido['integrantes'] ?> para  <?php echo $pedido['objeto']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b></p>
 		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?></p>
 	<p>CNPJ: <?php echo $pedido['cpf_cnpj']  ?></p>
 	<p>Endereço: <?php echo $pedido['end']  ?></p>

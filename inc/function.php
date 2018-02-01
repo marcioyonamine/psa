@@ -1152,6 +1152,7 @@ function retornaPedido($id){
 	$x['empenhado'] = $res['empenhado'];
 	$x['status'] = $status;
 	$x['parcelas'] = $res['parcelas'];
+	$x['integrantes'] = $res['integrantesGrupo'];
 	$x['obs'] = "";
 	return $x;
 	}
@@ -1209,6 +1210,7 @@ function retornaPedido($id){
 	$x['status'] = $status;
 	$x['parcelas'] = $res['parcelas'];
 	$x['obs'] = $res['observacao'];
+		$x['integrantes'] = "";
 	return $x;	
 	}
 	
