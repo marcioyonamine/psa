@@ -34,9 +34,9 @@ switch($p){
 case "inicio": 
 
 
-$evento = evento($_SESSION['id']);
-$meta = metausuario($user->ID);
-
+//$evento = evento($_SESSION['id']);
+//$meta = metausuario($user->ID);
+/*
 if(isset($_POST['action'])){
 	require "MapasSDK/vendor/autoload.php"; //carrega o sdk
 	$url_mapas = $GLOBALS['url_mapas'];
@@ -51,20 +51,37 @@ if(isset($_POST['action'])){
 		$chave03
 	);
 
-	if($_POST['action'] == 'publicar'){
+	echo "<pre>";	
+	var_dump($mapas);
+	echo "</pre>";
 	
+	if($_POST['action'] == 'publicar'){
+		
 	$new_event = $mapas->createEntity('event', [
-
+    'name' => 'Teste',
+    'shortDescription' => 'Teste123',
+	'longDescription' => 'Teste123',
+    'terms' => [
+        'linguagem' => 'Música Popular';
+    ],
+    'classificacaoEtaria' => 'Livre';
+	]);	
+		
+		
+	/*
+	$new_event = $mapas->createEntity('event', array(
     'name' => $evento['titulo'],
     'shortDescription' => substr($evento['sinopse'], 0, 400),
 	'longDescription' => $evento['release'],
-    'terms' => [
+    'terms' => array(
         'linguagem' => $evento['linguagem'];
-        
-    ],
+    ),
     'classificacaoEtaria' => $evento['faixa_etaria'];
-]);
+	));
+	*/
+	}
 
+/*	
 $new_event = converterObjParaArray($new_event);
 
 // Atualiza evento
@@ -121,11 +138,11 @@ echo "</pre>";
 
 }
 	} // publicar
-	
+
 $evento = evento($_SESSION['id']);
 $meta = metausuario($user->ID);
 }
-
+	*/
 
 ?>
 
