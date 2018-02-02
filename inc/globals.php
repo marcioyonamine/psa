@@ -4,7 +4,7 @@
 //error_reporting(E_ALL ^ E_WARNING);  
 date_default_timezone_set("America/Sao_Paulo");
 
-$site_title = "Sistema de Informação e Indicadores da Secretaria de Cultura de Santo André";
+$site_title = "Bartira - Sistema de Informação e Indicadores da Secretaria de Cultura de Santo André";
 
 $url_mapas = "http://culturaz.santoandre.sp.gov.br/";
 $chave03 = "HS256";

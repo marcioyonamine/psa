@@ -64,8 +64,15 @@
             <li class="nav-item">
               <a class="nav-link" href="evento.php?p=inserir">Inserir Novo Evento</a>
 		    </li>
+
           </ul>
 
+		<ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="evento.php?p=pedido">Listar Meus Pedidos de Contratação</a>
+            </li>
+
+          </ul>
 
 
           <ul class="nav nav-pills flex-column">

@@ -120,7 +120,89 @@ case 'atualiza_banco':
 	}
   
 ?>	
+<?php 
+break;
+case 'subelemento':
 
+$sub = array(
+
+	"319004" => [
+		"3" => "Férias - CPTD",
+		"21" =>	"13º Salário - CPTD",
+		"151" => "Obrigação Patronal - Inss Temporário",
+		"152" => "Obrigação Patronal - Inss Temporário -Férias",
+		"153" => "Obrigação Patronal - Fgts Temporário",
+		"154" => "Obrigação Patronal - Fgts Temporário -Férias",
+		"991" => "Outras Contratações por Tempo Determinado - Demais", 
+		"992" => "Outras Contratações por Tempo Determinado - Demais Férias",
+		"998" => "Serviços Extraordinários Diurnos - Temporário"
+	],
+
+	"335043" => [
+		"0" => "Subvenções Sociais" 
+	],
+
+	"339030" => [
+		"4" => "Gás Engarrafado",
+		"7" => "Gêneros de Alimentação",
+		"24" => "Material para manutenção de bens imóveis",
+		"26" => "Material elétrico e eletrônico	",
+		"99" => "Outros materiais de consumo ",
+	],	
+
+	"339031" => [
+		"0" => "Premiações Culturais, Artísticas, Científicas e Outras",
+
+	],	
+	
+	"339033" => [
+		"2" => "Passagens para o Exterior",
+	],
+	
+	"339036" => [
+		"7" => "Estagiários",
+		"28" => "Serviço de Seleção e Treinamento",
+		"99" => "Outros Serviços",
+
+	],	
+
+	"339039" => [
+		"1" => "Assinaturas De Periódicos E Anuidades",
+		"2" => "Condomínios",
+		"4" => "Direitos Autorais",
+		"5" => "Serviços Técnicos Profissionais ",
+		"12" => "Locação de Máquinas e Equipamentos ",
+		"16" => "Manutenção e Conservação De Bens Imóveis", 
+		"17" => "Manutenção e Conservação de Máquinas e Equipamentos ",
+		"22" => "Exposições, Congressos e Conferências",
+		"39" => "Encargos Financeiros Indedutíveis - Empresas ",
+		"47" => "Serviços de Comunicação em Geral", 
+		"48" => "Serviço de Seleção e Treinamento",
+		"57" => "Serviços de Processamento de Dados ",
+		"58" => "Serviços de Telecomunicação",
+		"63" => "Serviços Gráficos ",
+		"99" => "Outros Serviços de Terceiros- Pessoa Jurídica ",
+
+	],	
+	
+	"449052" => [
+		"12	Aparelhos e Utensílios Domésticos ",
+		"33	Equipamentos Para Áudio Vídeo e Foto",
+		"42	Mobiliário em Geral ",
+		"99	outros Materiais Permanente",
+	],	
+);
+
+
+echo "<pre>";
+var_dump($sub);
+echo "</pre>";
+
+var_dump(json_encode($sub));
+
+
+
+?>	
 
 <?php 
 //break;

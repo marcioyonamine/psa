@@ -142,7 +142,7 @@ if(isset($_POST['reabrir_pedido'])){
 	$sql_apaga = "UPDATE sc_evento SET dataEnvio = NULL WHERE idEvento = '$id'";
 	$query_apaga = $wpdb->query($sql_apaga);
 	if($query_apaga == 1){
-		$mensagem = '<div class="alert alert-success"> Evento aberto com sucesso. </div>';
+		$mensagem = '<div class="alert alert-success"> Evento  reaberto com sucesso. </div>';
 	}
 }
 
