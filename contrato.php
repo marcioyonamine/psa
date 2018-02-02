@@ -227,7 +227,7 @@ if(isset($_POST['inserir_pj'])){
 				<th>Num</th>
 				<th>NumLib</th>
 				<th></th>
-                  <th>Pessoa</th>
+
                   <th>Nome / Razão Social</th>
                   <th>Objeto</th>
 				  <th>Período</th>
@@ -262,7 +262,7 @@ if(isset($_POST['inserir_pj'])){
 					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
 					  <td><?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?></td>
   					  <td><?php echo $peds[$i]['nLiberacao']; ?></td>
-					  <td><?php echo $pedido['tipoPessoa']; ?></td>
+
 					  <td><?php echo $pedido['nome']; ?></td>
 					  <td><?php echo $pedido['objeto']; ?></td>
 					  <td><?php echo $pedido['periodo']; ?></td>
