@@ -746,7 +746,7 @@ case "pedido":
 					<tr>
 					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
 					  <td><?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?></td>
-					  <td><?php echo $pedido['nLiberacao']; ?></td>
+
 					  
 					  <td><?php echo $pedido['tipoPessoa']; ?></td>
 					  <td><?php echo $pedido['nome']; ?></td>
