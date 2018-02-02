@@ -109,7 +109,7 @@ $meta = metausuario($user->ID);
 					<div class="row">
 						<div class="col-12">
 							<label>Mapas Chave 01</label>
- <input type="text" name="chave01" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave01'])){echo $meta['chave01']};} ?>"/>
+ <input type="text" name="chave01" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave01'])){echo $meta['chave01'];} ?>"/>
 						</div>
 					</div>
 					<br />					<div class="row">
