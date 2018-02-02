@@ -66,7 +66,7 @@ if(isset($_SESSION['id'])){
 				if($idUser == 63 OR $idUser == 1){
 					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";					
 				}else{
-				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR suplente = '$idUser')   AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser')   AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
 				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
@@ -156,7 +156,7 @@ if(isset($_SESSION['id'])){
 				if($idUser == 63 OR $idUser == 1){
 				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1' AND  inscricao <> '' AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
 				}else{
-				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1'  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR suplente = '$idUser') AND  inscricao <> '' AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
+				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1'  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND  inscricao <> '' AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";
 					
 				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
