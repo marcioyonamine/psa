@@ -678,6 +678,107 @@ $event = evento($_SESSION['id']);
 
 		</div>
 </section>
+<?php 
+break;
+case "pedido":
+?>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Pedidos de Contratação</h1>
+					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
+				</div>
+        </div>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+				<p>Filtro: <a href="?" >Todos os pedidos</a> | <a href="?f=liberacao" >Pedidos sem Número de Liberação ou Data de Pedido de Liberação</a></p>
+				</div>
+        </div>
+
+		<?php 
+		// se existe pedido, listar
+		
+		?>
+		
+    <div class="container">
+        <div class="row">    
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+				<th>Número</th>
+				<th>Liberação</th>
+                  <th>Pessoa</th>
+                  <th>Nome / Razão Social</th>
+                  <th>Objeto</th>
+				  <th>Período</th>
+				  <th>Valor</th>
+				  <th></th>
+
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				$idUser = $user->ID;
+				if(isset($_GET['f'])){
+					$f = "AND (liberado = '0000-00-00' OR nLiberacao = '') ";
+				}else{
+					$f = "";
+				}
+				
+				
+				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser'))) $f ORDER BY idPedidoContratacao DESC";
+				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
+				
+				
+				for($i = 0; $i < count($peds); $i++){
+					if($peds[$i]['idEvento'] != 0 AND $peds[$i]['idEvento'] != NULL){
+						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
+					}else{
+						//$pedido = atividade($peds[$i]['idAtividade']);
+						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
+					}
+					//var_dump($pedido);
+					?>
+					<tr>
+					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
+					  <td><?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?></td>
+					  <td><?php echo $pedido['tipoPessoa']; ?></td>
+					  <td><?php echo $pedido['nome']; ?></td>
+					  <td><?php echo $pedido['objeto']; ?></td>
+					  <td><?php echo $pedido['periodo']; ?></td>
+					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
+					  <td>	
+							<form method="POST" action="contratacao.php?p=editar_pedido" class="form-horizontal" role="form">
+							<input type="hidden" name="editar_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pedido">
+							</form>
+							<?php 
+					  
+					  ?></td>
+					  <td>	
+							<form method="POST" action="?p=inicio" class="form-horizontal" role="form">
+							<input type="hidden" name="reabrir_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Reabrir Pedido">
+							</form>
+							<?php 
+					  
+					  ?></td>
+
+					  </tr>
+				<?php } // fim do for?>	
+				
+              </tbody>
+            </table>
+          </div>
+
+		
+		
+</div>
+</section>
+
 
 <?php 
 break;

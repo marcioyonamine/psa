@@ -86,7 +86,7 @@ $meta = metausuario($user->ID);
 					<div class="row">
 						<div class="col-12">
 							<label>CR</label>
-							<input type="text" name="cr" class="form-control" id="inputSubject" value="<?php echo $meta['cr']; ?>" />
+							<input type="text" name="cr" class="form-control" id="inputSubject" value="<?php if(isset($meta['cr'])){echo $meta['cr'];} ?>" />
 						</div>
 					</div>
 					<br />
@@ -95,27 +95,27 @@ $meta = metausuario($user->ID);
 					<div class="row">
 						<div class="col-12">
 							<label>Função</label>
-							<input type="text" name="funcao" class="form-control" id="inputSubject" value="<?php echo $meta['funcao']; ?>" />
+							<input type="text" name="funcao" class="form-control" id="inputSubject" value="<?php if(isset($meta['funcao'])){echo $meta['funcao'];} ?>" />
 						</div>
 					</div>
 					<br />
 					<div class="row">
 						<div class="col-12">
 							<label>ID Agente Mapas (somente o número)</label>
-							<input type="text" name="idMapas" class="form-control" id="inputSubject" value="<?php echo $meta['idMapas']; ?>" />
+							<input type="text" name="idMapas" class="form-control" id="inputSubject" value="<?php if(isset($meta['idMapas'])){echo $meta['idMapas'];} ?>" />
 						</div>
 					</div>
 					<br />	
 					<div class="row">
 						<div class="col-12">
 							<label>Mapas Chave 01</label>
-							<input type="text" name="chave01" class="form-control" id="inputSubject" value="<?php echo $meta['chave01']; ?>"/>
+							<input type="text" name="chave01" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave01'])){echo $meta['chave01']}; ?>"/>
 						</div>
 					</div>
 					<br />					<div class="row">
 						<div class="col-12">
 							<label>Mapas Chave 02</label>
-							<input type="text" name="chave02" class="form-control" id="inputSubject" value="<?php echo $meta['chave02']; ?>" />
+							<input type="text" name="chave02" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave02'])){echo $meta['chave02'];} ?>" />
 						</div>
 					</div>
 					<br />					
