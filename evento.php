@@ -709,7 +709,7 @@ case "pedido":
               <thead>
                 <tr>
 				<th>Num</th>
-				<th>NumLib</th>
+
 				<th>Liberação</th>
                   <th>Pessoa</th>
                   <th>Nome / Razão Social</th>
