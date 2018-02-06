@@ -7,13 +7,13 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
 <?php 
-		$to = "marcioyonamine@gmail.com";
+		$to = "myyonamine@santoandre.sp.gov.br";
 		$subject = "teste 123 123 wp_mail";
 		$message = "Testando a bagaça 123123";
 
 
 		$header[] = 'From: Teste <teste@teste.com.br>';
-
+		$header[] = 'Reply-To: Teste<teste@teste.com.br>';
 		
 
 		 $x = wp_mail( $to, $subject, $message, $header, $attachments = array() );
