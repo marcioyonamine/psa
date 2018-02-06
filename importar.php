@@ -7,11 +7,6 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Importar inscrições</h1>
 
-		  
-		  
-		  
-		  
-
 			<div>
 			
 
@@ -77,7 +72,7 @@
 			global $wpdb;
 			$json = addslashes(json_encode($matriz,JSON_UNESCAPED_UNICODE));		
 			$sql = "INSERT INTO `ava_inscricao` (`id`, `id_mapas`, `inscricao`, `edital`, `aprovado`, `descricao`) 
-			VALUES (NULL, '', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
+			VALUES (NULL, '286', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
 			$insert = $wpdb->query($sql);
 			if($insert == FALSE){
 				echo $sql."<br /><br />";

@@ -85,21 +85,26 @@ if(isset($_POST['inserir_pf'])){
 	$query = $wpdb->query($sql_insere);
 	$numero = $wpdb->insert_id;
 	
-}
-
-// Se foi inserido uma pessoa física, insere um pedido de contratação.
-if((isset($numero))){
+	// Se foi inserido uma pessoa física, insere um pedido de contratação.
 	if($numero > 0){
 		$idUsuario = $user->ID;
 		$evento = $_SESSION['id'];
 		$pessoa = 1;
+		if($_SESSION['entidade'] == 'evento'){
 		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`,  `publicado`) 
 		VALUES ('$evento', '1', '$numero','1')";
+		}else{
+		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idAtividade`, `tipoPessoa`, `idPessoa`,  `publicado`) 
+		VALUES ('$evento', '1', '$numero','1')";
+			
+		}
 		$query_pedido = $wpdb->query($sql_insere_pedido);
 		if($wpdb->insert_id){
 			$mensagem = '<div class="alert alert-success"> Pedido inserido com sucesso. </div>';			
 		}
 	}
+	
+	
 }
 
 // Insere Pedido Via Busca PF
@@ -198,20 +203,24 @@ if(isset($_POST['inserir_pj'])){
 	$query = $wpdb->query($sql_insere);
 	$numero_pj = $wpdb->insert_id;
 		
- }
- if((isset($numero_pj))){
 	if($numero_pj > 0){
 		$idUsuario = $user->ID;
 		$evento = $_SESSION['id'];
 		$pessoa = 1;
+		if($_SESSION['entidade'] == 'evento'){
 		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`,  `publicado`) 
 		VALUES ('$evento', '2', '$numero_pj','1')";
+		}else{
+		$sql_insere_pedido = "INSERT INTO `sc_contratacao` (`idAtividade`, `tipoPessoa`, `idPessoa`,  `publicado`) 
+		VALUES ('$evento', '2', '$numero_pj','1')";
+		}
 		$query_pedido = $wpdb->query($sql_insere_pedido);
 		if($wpdb->insert_id){
 			$mensagem = '<div class="alert alert-success"> Pedido inserido com sucesso. </div>';			
 		}
 	}
-}
+		
+	}
  
 
 ?>
