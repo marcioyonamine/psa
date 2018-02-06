@@ -7,7 +7,13 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
 <?php 
-		$x = retornaPedido(109);
+		$to = "marcioyonamine@gmail.com";
+		$subject = "teste 123 123 wp_mail";
+		$message = "Testando a bagaça 123123";
+		$headers = "";
+		
+
+		 $x = wp_mail( $to, $subject, $message, $headers = 'From: marcio.yonamine@fatec.sp.gov.br', $attachments = array() );
 		
 		var_dump($x);
 		
