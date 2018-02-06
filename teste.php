@@ -16,7 +16,7 @@
 
 		
 
-		 $x = wp_mail( $to, $subject, $message, $headers, $attachments = array() );
+		 $x = wp_mail( $to, $subject, $message, $header, $attachments = array() );
 		
 		var_dump($x);
 		
