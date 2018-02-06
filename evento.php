@@ -381,7 +381,7 @@ case "editar":
 		$faixaEtaria    = $_POST["faixaEtaria"];
 		$sinopse    = addslashes($_POST["sinopse"]);
 		$releaseCom    = addslashes($_POST["releaseCom"]);
-		$linksCom    = $_POST["linksCom"];
+		$linksCom    = addslashes($_POST["linksCom"]);
 		if(isset($_POST['subEvento'])){
 			$subEvento = $_POST['subEvento'];
 		}else{

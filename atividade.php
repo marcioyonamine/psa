@@ -56,7 +56,12 @@ if(isset($_POST['apagar'])){
               <tbody>
 				<?php 
 				global $wpdb;
-				$sql_list =  "SELECT * FROM sc_atividade WHERE publicado = '1' ORDER BY id DESC";
+				$id_user = $user->ID;
+				if($user->ID == 1){
+					$sql_list =  "SELECT * FROM sc_atividade WHERE publicado = '1' ORDER BY id DESC";
+				}else{
+					$sql_list =  "SELECT * FROM sc_atividade WHERE publicado = '1' AND (idRes = '$id_user' OR idSuplente = '$id_user' OR id_usuario = '$id_user' ) ORDER BY id DESC";
+				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = atividade($res[$i]['id']);
