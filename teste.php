@@ -10,10 +10,13 @@
 		$to = "marcioyonamine@gmail.com";
 		$subject = "teste 123 123 wp_mail";
 		$message = "Testando a bagaça 123123";
-		$headers = "";
+
+
+		$header[] = 'From: Teste <teste@teste.com.br>';
+
 		
 
-		 $x = wp_mail( $to, $subject, $message, $headers = 'From: marcio.yonamine@fatec.sp.gov.br', $attachments = array() );
+		 $x = wp_mail( $to, $subject, $message, $headers, $attachments = array() );
 		
 		var_dump($x);
 		
