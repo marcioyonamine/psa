@@ -14,7 +14,7 @@
 
 		$header[] = 'From: Teste <teste@teste.com.br>';
 		$header[] = 'Reply-To: Teste<teste@teste.com.br>';
-		
+		$header[] = 'From: Teste <teste@teste.com.br>';
 
 		 $x = wp_mail( $to, $subject, $message, $header, $attachments = array() );
 		
