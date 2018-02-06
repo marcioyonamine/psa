@@ -225,8 +225,8 @@ if(isset($_POST['inserir_pj'])){
               <thead>
                 <tr>
 				<th>Num</th>
+				<th>Data</th>
 				<th>NumLib</th>
-				<th></th>
 
                   <th>Nome / Razão Social</th>
                   <th>Objeto</th>
@@ -245,7 +245,7 @@ if(isset($_POST['inserir_pj'])){
 				}
 				
 				
-				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL) OR idAtividade <> '0') $f ORDER BY idPedidoContratacao DESC";
+				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL) OR idAtividade <> '0') $f ORDER BY nLiberacao DESC";
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
 				
 				
