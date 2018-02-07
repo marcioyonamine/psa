@@ -15,24 +15,24 @@
             </li>
 			-->
 <br /><br />
-<form action="?" method="POST">
+<form action="?" method="GET">
 
 			<label><center>Local</center></label>
 			<select class="form-control" name="local" id="inputSubject" >
 			<option value="0">Todos os locais</option>
-			<?php geraTipoOpcao("local",$_POST['local']) ?>
+			<?php geraTipoOpcao("local",$_GET['local']) ?>
 			</select>
 <br /><br />
 			<label><center>Linguagem</center></label>
 			<select class="form-control" name="linguagem" id="inputSubject" >
 			<option value="0">Todas as linguagens</option>
-			<?php geraTipoOpcao("linguagens",$_POST['linguagem']) ?>
+			<?php geraTipoOpcao("linguagens",$_GET['linguagem']) ?>
 			</select>
 <br /><br />
 			<label><center>Projeto</center></label>
 			<select class="form-control" name="projeto" id="inputSubject" >
 			<option value="0">Todos os projetos</option>
-			<?php geraTipoOpcao("projeto",$_POST['projeto']) ?>
+			<?php geraTipoOpcao("projeto",$_GET['projeto']) ?>
 			</select>
 <br /><br />
 <input type="submit" class="btn btn-theme btn-md btn-block" name="filtro" value="Aplicar filtro" />

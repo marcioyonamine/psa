@@ -75,23 +75,23 @@ require "inc/function.php";
 				
 			}
 			
-			if(isset($_POST['filtro'])){
-				if($_POST['local'] == 0){
+			if(isset($_GET['filtro'])){
+				if($_GET['local'] == 0){
 					$local = "";
 				}else{
-					$local = " AND idLocal = '".$_POST['local']."' ";
+					$local = " AND idLocal = '".$_GET['local']."' ";
 				}
 				
-				if($_POST['linguagem'] == 0){
+				if($_GET['linguagem'] == 0){
 					$linguagem = "";
 				}else{
-					$linguagem = " AND idLinguagem = '".$_POST['linguagem']."' ";
+					$linguagem = " AND idLinguagem = '".$_GET['linguagem']."' ";
 				}
 				
-				if($_POST['projeto'] == 0){
+				if($_GET['projeto'] == 0){
 					$projeto = "";
 				}else{
-					$projeto = " AND idProjeto = '".$_POST['projeto']."' ";
+					$projeto = " AND idProjeto = '".$_GET['projeto']."' ";
 				}
 				
 			}
