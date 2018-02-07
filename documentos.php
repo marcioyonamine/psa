@@ -490,7 +490,6 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		$res_mult = $wpdb->get_results($sql_mult,ARRAY_A);
 		//var_dump($res_mult); $sql_mult;		
 		
-		/*
 		$file_name='liberacaodeverbamultipla.doc';
 		header('Pragma: public');
 		header('Expires: 0');
@@ -500,7 +499,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		header('Content-Type: application/download');
 		header('Content-Disposition: attachment;filename='.$file_name);
 		header('Content-Transfer-Encoding: binary ');
-		*/
+
 			?>
 
 		<html>

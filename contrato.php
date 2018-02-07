@@ -1362,6 +1362,11 @@ break;
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=396&id=<?php echo $id_pedido?>" target="_blank">Gerar Pedido de Liberação</a>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=320&id=<?php echo $id_pedido?>" target="_blank">Gerar Pedido de Liberação Multiplas Dotações</a>
+						</div>
+					</div>
 					<!--
 					<div class="row">
 						<div class="col-12">
