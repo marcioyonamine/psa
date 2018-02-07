@@ -120,7 +120,7 @@ function pegaJsonMapas($url){
 			$ins++;
 		}
 	$sql_insert = "";
-
+	echo $owner;
 
 
 

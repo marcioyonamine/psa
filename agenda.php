@@ -116,7 +116,14 @@ require "inc/function.php";
 		max-width: 900px;
 		margin: 0 auto;
 		margin-top: 40px;
+		
 	}
+	@media (min-width: 992px){
+	#calendar{
+		padding-left: 150px;
+	}
+	
+}
 
 </style>
 </head>
