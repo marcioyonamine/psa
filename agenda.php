@@ -96,17 +96,21 @@ require "inc/function.php";
 				
 			}
 			
-			$sql_busca = "SELECT nomeEvento,data,hora FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
+			$sql_busca = "SELECT sc_evento.idEvento,nomeEvento,data,hora,mapas FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
 			$res = $wpdb->get_results($sql_busca,ARRAY_A);
 			for($i = 0; $i < count($res); $i++){
 				$title = $res[$i]['nomeEvento'];
 				$data = $res[$i]['data'];
 				$hora = $res[$i]['hora'];
 				echo "{title: '".$title."',";
-				echo "start: '".$data."T".$hora."'},";
+				echo "start: '".$data."T".$hora."',";
+				echo " url:'busca.php?p=view&tipo=evento&id=".$res[$i]['idEvento']."'";	
+				
+				echo "},";
 			}
 			?>
 			]
+ 
 		});
 		
 	});
@@ -143,7 +147,7 @@ require "inc/function.php";
 
 
 	<div id='calendar'>
-	<?php echo $sql_busca; ?>
+	<?php //echo $sql_busca; ?>
 	</div>
 <?php 
 include "footer.php";

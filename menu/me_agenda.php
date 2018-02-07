@@ -31,7 +31,7 @@
 <br /><br />
 			<label><center>Projeto</center></label>
 			<select class="form-control" name="projeto" id="inputSubject" >
-			<option value="0">Todas as linguagens</option>
+			<option value="0">Todos os projetos</option>
 			<?php geraTipoOpcao("projeto",$_POST['projeto']) ?>
 			</select>
 <br /><br />
