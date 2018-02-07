@@ -96,13 +96,14 @@ require "inc/function.php";
 				
 			}
 			
-			$sql_busca = "SELECT sc_evento.idEvento,nomeEvento,data,hora,mapas,dataEnvio FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
+			$sql_busca = "SELECT sc_evento.idEvento,nomeEvento,data,hora,mapas,dataEnvio,idLocal FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
 			$res = $wpdb->get_results($sql_busca,ARRAY_A);
 			for($i = 0; $i < count($res); $i++){
+				$local = tipo($res[$i]['idLocal']);
 				$title = $res[$i]['nomeEvento'];
 				$data = $res[$i]['data'];
 				$hora = $res[$i]['hora'];
-				echo "{title: '".$title."',";
+				echo "{title: '".$title. " (".$local['tipo'].")',";
 				echo "start: '".$data."T".$hora."',";
 				echo " url:'busca.php?p=view&tipo=evento&id=".$res[$i]['idEvento']."'";	
 				if($res[$i]['dataEnvio'] == NULL){
@@ -140,6 +141,10 @@ require "inc/function.php";
 	#calendar{
 		padding-left: 150px;
 	}
+	@media print { 
+		.sidebar { display:none; } 
+		body { background: #fff; }
+    }
 	
 }
 
