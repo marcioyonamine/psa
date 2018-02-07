@@ -38,7 +38,7 @@
 
 			<ul class="nav nav-pills flex-column">
 			<li class="nav-item">
-              <a class="nav-link" href="../links-para-documentacao-de-contratacao-artistica/">Confira os documentos necessários para contratação.</a>
+              <a class="nav-link" href="../links-para-documentacao-de-contratacao-artistica/" target="_blank">Confira os documentos necessários para contratação.</a>
             </li>
 
 			
