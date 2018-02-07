@@ -100,7 +100,7 @@ require "inc/function.php";
 			$res = $wpdb->get_results($sql_busca,ARRAY_A);
 			for($i = 0; $i < count($res); $i++){
 				$local = tipo($res[$i]['idLocal']);
-				$title = $res[$i]['nomeEvento'];
+				$title = addslashes($res[$i]['nomeEvento']);
 				$data = $res[$i]['data'];
 				$hora = $res[$i]['hora'];
 				echo "{title: '".$title. " (".$local['tipo'].")',";
