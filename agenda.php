@@ -61,6 +61,9 @@ require "inc/function.php";
 			events: [
 			<?php 
 			global $wpdb;
+			$local = "";
+			$linguagem = "";
+			$projeto = "";
 			if(isset($_GET['p'])){
 				switch($_GET['p']){
 					case "aniversario":
@@ -85,9 +88,15 @@ require "inc/function.php";
 					$linguagem = " AND idLinguagem = '".$_POST['linguagem']."' ";
 				}
 				
+				if($_POST['projeto'] == 0){
+					$projeto = "";
+				}else{
+					$projeto = " AND idProjeto = '".$_POST['projeto']."' ";
+				}
+				
 			}
 			
-			$sql_busca = "SELECT nomeEvento,data,hora FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local";
+			$sql_busca = "SELECT nomeEvento,data,hora FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
 			$res = $wpdb->get_results($sql_busca,ARRAY_A);
 			for($i = 0; $i < count($res); $i++){
 				$title = $res[$i]['nomeEvento'];
@@ -134,7 +143,8 @@ require "inc/function.php";
 
 
 	<div id='calendar'>
-</div>
+	<?php echo $sql_busca; ?>
+	</div>
 <?php 
 include "footer.php";
 ?>

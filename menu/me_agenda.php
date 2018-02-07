@@ -29,6 +29,12 @@
 			<?php geraTipoOpcao("linguagens",$_POST['linguagem']) ?>
 			</select>
 <br /><br />
+			<label><center>Projeto</center></label>
+			<select class="form-control" name="projeto" id="inputSubject" >
+			<option value="0">Todas as linguagens</option>
+			<?php geraTipoOpcao("projeto",$_POST['projeto']) ?>
+			</select>
+<br /><br />
 <input type="submit" class="btn btn-theme btn-md btn-block" name="filtro" value="Aplicar filtro" />
 </form>         
 
