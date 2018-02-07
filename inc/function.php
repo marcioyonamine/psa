@@ -1073,7 +1073,7 @@ function retornaPedido($id){
 	if($res_tipo['idEvento'] != 0){
 	
 	
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo, nLiberacao  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
@@ -1154,11 +1154,12 @@ function retornaPedido($id){
 	$x['parcelas'] = $res['parcelas'];
 	$x['integrantes'] = $res['integrantesGrupo'];
 	$x['obs'] = "";
+	$x['nLiberacao'] = $res['nLiberacao'];
 	return $x;
 	}
 	
 	if($res_tipo['idAtividade'] != 0){
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_atividade.id, idRes, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao  FROM sc_contratacao, sc_atividade WHERE idPedidoContratacao = '$id' AND sc_atividade.id = sc_contratacao.idAtividade";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_atividade.id, idRes, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, nLiberacao FROM sc_contratacao, sc_atividade WHERE idPedidoContratacao = '$id' AND sc_atividade.id = sc_contratacao.idAtividade";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = atividade($res['id']);
@@ -1211,7 +1212,8 @@ function retornaPedido($id){
 	$x['status'] = $status;
 	$x['parcelas'] = $res['parcelas'];
 	$x['obs'] = $res['observacao'];
-		$x['integrantes'] = "";
+	$x['integrantes'] = "";
+	$x['nLiberacao'] = $res['nLiberacao'];
 	return $x;	
 	}
 	

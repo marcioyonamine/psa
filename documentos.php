@@ -453,7 +453,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<th>Valor</th>
 		</tr>
 		<tr>
-		<td></td>	
+		<td><?php echo $pedido['nLiberacao'] ?></td>	
 		<td><?php echo date('d/m/Y'); ?></td>	
 		<td><?php echo $justificativa ?></td>	
 		<td><?php echo $pedido['projeto']." / ".$pedido['ficha']; ?></td>	
@@ -465,6 +465,112 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		
 		</table>
 
+				<?php 
+	break;
+	case "320":
+	
+		
+		$justificativa = "";
+
+		if($pedido['evento_atividade'] == 'atividade'){
+			$justificativa .= "Valor a ser reservado para empenho  ".$pedido['obs']." ".$pedido['objeto'] ;	
+		}else{
+		$justificativa .= "
+		Valor a ser reservado para empenho de contratação para ".$pedido['objeto']; 
+		}
+		
+		$justificativa .= " a ser realizado por ".$pedido['nome_razaosocial']." (".$pedido['cpf_cnpj'].") em data/período ".$pedido['periodo']  ;
+
+		if($pedido['local'] != ""){
+			$justificativa .= " em ".$pedido['local'];
+			
+		}
+		
+		$sql_mult = "SELECT idPedidoContratacao FROM sc_contratacao WHERE nLiberacao = '".$pedido['nLiberacao']."'";
+		$res_mult = $wpdb->get_results($sql_mult,ARRAY_A);
+		//var_dump($res_mult); $sql_mult;		
+		
+		/*
+		$file_name='liberacaodeverbamultipla.doc';
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-type: application/vnd.ms-word');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment;filename='.$file_name);
+		header('Content-Transfer-Encoding: binary ');
+		*/
+			?>
+
+		<html>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8">
+		<body>
+		<style type='text/css'>
+
+		.style_01 {
+			font-size: 16px;
+
+		}
+		.paragrafo{
+			text-indent:4em
+		}
+		p{
+			font-size: 18px;
+		}
+		
+		.rodape{
+			text-align: center;
+			font-size: 12px;
+			padding: -10px;
+			
+		}
+
+		</style>
+
+		<table border='1'>
+		<tr>
+		<th>Liberação Nº</th>
+		<th>Data</th>
+		<th>Justificativa</th>
+		<th>Projeto/Ficha</th>
+		<th>Dotação</th>
+		<th>Fonte</th>
+		<th>Valor</th>
+		</tr>
+		<tr>
+		<td rowspan='4'><?php echo $pedido['nLiberacao'] ?></td>
+		<td rowspan='4'><?php echo date('d/m/Y'); ?></td>
+		<td rowspan='4'><?php echo $justificativa; ?></td>
+
+		</tr>
+		<?php $total = 0; ?>
+		<?php for ($i = 0; $i < count($res_mult); $i++){ 
+			$ped = retornaPedido($res_mult[$i]['idPedidoContratacao']);
+			
+		?>
+		<tr>
+
+		<td><?php echo $ped['projeto']." / ".$ped['ficha']; ?></td>	
+		<td><?php echo $ped['cod_dotacao']; ?></td>	
+		<td><?php echo $ped['fonte'] ?></td>	
+		<td><?php echo $ped['valor'];
+			$total = $total + dinheiroDeBr($ped['valor']);
+		?>	
+		</tr>
+
+		<?php } ?>
+		<tr>
+		
+		<td colspan="5"></td>
+		<td>Total</td>
+		<td><?php echo dinheiroParaBr($total); ?></td>
+		</tr>
+		
+		
+		
+		</table>
+	
 
 		<?php 
 	break;
