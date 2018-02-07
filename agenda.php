@@ -103,7 +103,8 @@ require "inc/function.php";
 				$title = addslashes($res[$i]['nomeEvento']);
 				$data = $res[$i]['data'];
 				$hora = $res[$i]['hora'];
-				echo "{title: '".$title. "',";
+				$loc = addslashes($local['tipo']);
+				echo "{title: '".$title. " (".$loc.")',";
 				echo "start: '".$data."T".$hora."',";
 				echo " url:'busca.php?p=view&tipo=evento&id=".$res[$i]['idEvento']."'";	
 				if($res[$i]['dataEnvio'] == NULL){
