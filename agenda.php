@@ -96,7 +96,7 @@ require "inc/function.php";
 				
 			}
 			
-			$sql_busca = "SELECT sc_evento.idEvento,nomeEvento,data,hora,mapas FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
+			$sql_busca = "SELECT sc_evento.idEvento,nomeEvento,data,hora,mapas,dataEnvio FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
 			$res = $wpdb->get_results($sql_busca,ARRAY_A);
 			for($i = 0; $i < count($res); $i++){
 				$title = $res[$i]['nomeEvento'];
@@ -105,7 +105,9 @@ require "inc/function.php";
 				echo "{title: '".$title."',";
 				echo "start: '".$data."T".$hora."',";
 				echo " url:'busca.php?p=view&tipo=evento&id=".$res[$i]['idEvento']."'";	
-				
+				if($res[$i]['dataEnvio'] == NULL){
+					echo " , backgroundColor: 'red'";
+				}
 				echo "},";
 			}
 			?>
@@ -148,7 +150,15 @@ require "inc/function.php";
 
 	<div id='calendar'>
 	<?php //echo $sql_busca; ?>
+	<br /><br />
+	Legendas
+	<p style="background:red; color: white; align = center;" >Não enviados</p> 
+	<p style="background:#0275d8; color: white; align = center;" >Enviados</p> 
 	</div>
+	<div>
+
+	</div>
+	
 <?php 
 include "footer.php";
 ?>
