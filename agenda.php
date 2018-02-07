@@ -107,6 +107,9 @@ require "inc/function.php";
 				echo " url:'busca.php?p=view&tipo=evento&id=".$res[$i]['idEvento']."'";	
 				if($res[$i]['dataEnvio'] == NULL){
 					echo " , backgroundColor: 'red'";
+				}else
+				if($res[$i]['mapas'] != 0){
+					echo " , backgroundColor: 'green'";	
 				}
 				echo "},";
 			}
@@ -154,6 +157,7 @@ require "inc/function.php";
 	Legendas
 	<p style="background:red; color: white; align = center;" >Não enviados</p> 
 	<p style="background:#0275d8; color: white; align = center;" >Enviados</p> 
+	<p style="background:green; color: white; align = center;" >Publicados no CulturAZ</p> 
 	</div>
 	<div>
 
