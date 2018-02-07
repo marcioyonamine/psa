@@ -692,7 +692,7 @@ case "pedido":
         </div>
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-				<p>Filtro: <a href="?" >Todos os pedidos</a> | <a href="?f=liberacao" >Pedidos sem Número de Liberação ou Data de Pedido de Liberação</a></p>
+
 				</div>
         </div>
 
