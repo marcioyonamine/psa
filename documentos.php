@@ -399,7 +399,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		Valor a ser reservado para empenho de contratação para ".$pedido['objeto']; 
 		}
 		
-		$justificativa .= " a ser realizado por ".$pedido['nome_razaosocial']." (".$pedido['cpf_cnpj'].") em data/período ".$pedido['periodo']  ;
+		$justificativa .= " a ser realizado por ".$pedido['nome_razaosocial']." representando ".$pedido['autor']."(".$pedido['cpf_cnpj'].") em data/período ".$pedido['periodo']  ;
 
 		if($pedido['local'] != ""){
 			$justificativa .= " em ".$pedido['local'];
@@ -538,9 +538,9 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<th>Valor</th>
 		</tr>
 		<tr>
-		<td rowspan='4'><?php echo $pedido['nLiberacao'] ?></td>
-		<td rowspan='4'><?php echo date('d/m/Y'); ?></td>
-		<td rowspan='4'><?php echo $justificativa; ?></td>
+		<td rowspan='<?php echo count($ped); ?>'><?php echo $pedido['nLiberacao'] ?></td>
+		<td rowspan='<?php echo count($ped); ?>'><?php echo date('d/m/Y'); ?></td>
+		<td rowspan='<?php echo count($ped); ?>'><?php echo $justificativa; ?></td>
 
 		</tr>
 		<?php $total = 0; ?>
