@@ -1298,6 +1298,38 @@ function retornaEndereco($tipo,$pessoa){
 	
 }
 
+function resumoDotacao($dotacao){
+	
+	/*	[0]70
+		[1]10
+		[2].3
+		[3].3
+		[4].90
+		[5].39
+		[6].13
+		[7].392
+		[8].0072
+		[9].2
+		[10].189
+		[11].01 
+
+	*/
+	global $wpdb;
+
+	if(strlen($dotacao) > 5){ //veio inteiro
+		$x = explode(".",$dotacao);
+		$resumo = $x[0].$x[1].".".$x[2].$x[3].$x[4].$x[5].".".$x[10];
+	
+	}else{ //veio o id
+		$sql = "SELECT dotacao FROM sc_orcamento WHERE id = '$dotacao'";
+		$res = $wpdb->get_row($sql,ARRAY_A);
+		$x = explode(".",$res['dotacao']);
+		$resumo = $x[0].$x[1].".".$x[2].$x[3].$x[4].$x[5].".".$x[10];
+	}
+	return $resumo;
+	
+}
+
 function parcela($id){
 	global $wpdb;
 	$sel = "SELECT * FROM sc_parcela WHERE idPedidoContratacao = '$id'";

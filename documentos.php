@@ -457,7 +457,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<td><?php echo date('d/m/Y'); ?></td>	
 		<td><?php echo $justificativa ?></td>	
 		<td><?php echo $pedido['projeto']." / ".$pedido['ficha']; ?></td>	
-		<td><?php echo $pedido['cod_dotacao']; ?></td>	
+		<td><?php echo resumoDotacao($pedido['cod_dotacao']); ?></td>	
 		<td><?php echo $pedido['fonte'] ?></td>	
 		<td><?php echo $pedido['valor'] ?>	
 
@@ -551,7 +551,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<tr>
 
 		<td><?php echo $ped['projeto']." / ".$ped['ficha']; ?></td>	
-		<td><?php echo $ped['cod_dotacao']; ?></td>	
+		<td><?php echo resumoDotacao($ped['cod_dotacao']); ?></td>	
 		<td><?php echo $ped['fonte'] ?></td>	
 		<td><?php echo $ped['valor'];
 			$total = $total + dinheiroDeBr($ped['valor']);
