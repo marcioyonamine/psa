@@ -518,8 +518,31 @@ function chamaAPI($url,$data){
         </div>
 </div>
 
+<?php 
+break;
+case 'quantitativo':  
+?>	
+<div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Quantitativo</h1>
+				</div>
+        </div>
 
-
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h2>Empresas</h2>
+					<?php 
+					$sql = "SELECT idPedidoContratacao,idPessoa FROM sc_contratacao WHERE (sc_evento.idEvento = sc_contratacao.idEvento) AND (sc_evento.publicado = '1') AND tipoPessoa = '2' GROUP BY idPessoa";
+					?>
+				</div>
+        </div>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h2>Novos Agentes</h2>
+				</div>
+        </div>
+</div>
 
 		
 <?php 

@@ -155,7 +155,7 @@ require "inc/function.php";
 
 
 <?php include "menu/me_agenda.php"; ?>
-
+<br /><br />
 
 	<div id='calendar'>
 	<?php //echo $sql_busca; ?>
@@ -165,9 +165,35 @@ require "inc/function.php";
 	<p style="background:#0275d8; color: white; align = center;" >Enviados</p> 
 	<p style="background:green; color: white; align = center;" >Publicados no CulturAZ</p> 
 	</div>
-	<div>
+    <div class="container">
+      
+		
+	<form action="?" method="GET">
 
-	</div>
+			<label><center>Local</center></label>
+			<select class="form-control" name="local" id="inputSubject" >
+			<option value="0">Todos os locais</option>
+			<?php geraTipoOpcao("local",$_GET['local']) ?>
+			</select>
+<br /><br />
+			<label><center>Linguagem</center></label>
+			<select class="form-control" name="linguagem" id="inputSubject" >
+			<option value="0">Todas as linguagens</option>
+			<?php geraTipoOpcao("linguagens",$_GET['linguagem']) ?>
+			</select>
+<br /><br />
+			<label><center>Projeto</center></label>
+			<select class="form-control" name="projeto" id="inputSubject" >
+			<option value="0">Todos os projetos</option>
+			<?php geraTipoOpcao("projeto",$_GET['projeto']) ?>
+			</select>
+<br /><br />
+<input type="submit" class="btn btn-theme btn-md btn-block" name="filtro" value="Aplicar filtro" />
+</form>  	
+	
+		</div>
+       
+
 	
 <?php 
 include "footer.php";
