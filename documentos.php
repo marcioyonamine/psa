@@ -136,10 +136,10 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	
 	</tr>
 	<tr>
-	<td colspan="2"><center><b>Prefeitura Municipal de Santo André</b></center><td>
+	<td colspan="2"><center><b>Prefeitura Municipal de Santo André</b></center></td>
 	</tr>
 	<tr>
-	<td colspan="2"><center><b>Solicitação de Serviços</b></center><td>
+	<td colspan="2"><center><b>Solicitação de Serviços</b></center></td>
 	</tr>	
 		<tr>
 		<td><center>Data da Emissão<br /><b><?php echo date("d/m/Y")?></b></center></td>
