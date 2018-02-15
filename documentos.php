@@ -164,19 +164,20 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	</tr>
 	</tr>
 	<tr>
-	<td colspan="3">Conta corrente codReduzido/DB<br /><center>252</center></td>
-	<td><center>Fonte: <br />  <?php echo $pedido['fonte']; ?></center></td>
+	<td colspan="3">Cód. Vinculação de Despesa<br /><center>110.000</center></td>
+	<td>Fonte de Recursos: <br /><center>  <?php echo $pedido['fonte']; ?></center></td>
 	</tr>
 	<tr>
 	<td colspan="3">Nome do Contato <br /><?php echo $pedido['usuario']; ?></td>
 	<td>Telefone Contato<br /><?php echo $pedido['telefone']; ?></td>
 	</tr>
-	<tr><td colspan="4"><center><b>Serviço e/ou Evento</b></center></td></tr>	
+	<tr><td colspan="4">Conta corrente codReduzido/DB<br /><center>252</center></td></tr>	
 	<tr>
 	<td colspan="4">Data Período do evento: <br /><?php echo $pedido['periodo']; ?></td>
 	</tr>	
 	<tr>
 	<td colspan="4">Local de aplicação do serviço ou evento:<br /><?php echo $pedido['local']; ?></td>
+	</tr>
 	<tr>
 	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
 	</tr>
