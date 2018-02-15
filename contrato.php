@@ -1258,8 +1258,12 @@ break;
 						<p><strong><?php echo $id_pedido; ?><br />
 						<?php echo $ped['objeto']; ?> <br />
 						<?php echo $ped['nome_razaosocial']." ( ".$ped['cpf_cnpj']." )"; ?> <br />
-						<?php echo $ped['periodo'] ?> <?php if($ped['local'] != ""){echo " - ".$ped['local'];}?>
-						</strong></p>						
+						<?php echo $ped['periodo'] ?> <?php if($ped['local'] != ""){echo " - ".$ped['local'];}?><br />
+						Responsável: <?php echo $ped['usuario']; ?>
+						
+						</strong>
+						
+						</p>						
 						</div>
 					</div>
 					<br />
