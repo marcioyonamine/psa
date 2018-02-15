@@ -1,8 +1,8 @@
 <?php include "header.php"; ?>
 
   <body>
-  
-  <?php include "menu/me_inicio.php"; ?>
+   <?php include "menu/barra.php"; ?> 
+  <?php //include "menu/me_inicio.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Busca</h1>
@@ -163,18 +163,28 @@ case "view":
 		<p>CulturAZ: <a href='<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?>' ><?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?></a>
 		<?php } ?>
 		<?php 
-			echo "<pre>";
-			var_dump($evento);
-			echo "</pre>";
+			
+			
+			
+		?>
+	</div>
+	</div>
+	<?php 
+		$ped = listaPedidos($_GET['id'],'evento');
+		//var_dump($ped);
+		for($i = 0; $i < count($ped); $i++){
+			$pedido = retornaPedido($ped[$i]['idPedidoContratacao']);
 			?>
+	<div class="row">
+	<div class="col-md-offset-1 col-md-10">
+	<p><b>Pedidos Relacionados</b><br />
+	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome:</b> <?php echo $ped[$i]['nome'] ?> / <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><?php echo $pedido['valor'] ?> </li>	
+		<?php } ?>
+	
+	</p>		
 	</div>
 	</div>
 	
-			<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			 
-	</div>
-	</div>
 	<div>
 	</section>			
 	<?php 

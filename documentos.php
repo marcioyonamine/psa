@@ -157,21 +157,21 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	</tr>
 
 	<tr>
-	<td>Cód. Dotação:<br /><b><?php echo $pedido['cod_dotacao']; ?></b></td>
+	<td>Cód. Dotação:<br /><b><?php echo resumoDotacao($pedido['cod_dotacao']); ?></b></td>
 	<td>Projeto:<br /><b><?php echo $pedido['projeto']; ?><b/></td>
 	<td>Ficha: <br /> <b><?php echo $pedido['ficha']; ?></b></td>
-	<td>Sub-elemente Despesa: <br /></td>	
+	<td>Sub-elemente Despesa: <br /><center>22</center></td>	
 	</tr>
 	</tr>
 	<tr>
-	<td colspan="3">Conta corrente <br />codReduzido/DB</td>
-	<td>Fonte: <br />  <?php echo $pedido['fonte']; ?></td>
+	<td colspan="3">Conta corrente codReduzido/DB<br /><center>252</center></td>
+	<td><center>Fonte: <br />  <?php echo $pedido['fonte']; ?></center></td>
 	</tr>
 	<tr>
 	<td colspan="3">Nome do Contato <br /><?php echo $pedido['usuario']; ?></td>
 	<td>Telefone Contato<br /><?php echo $pedido['telefone']; ?></td>
 	</tr>
-	<tr><td colspan=4"><center>Serviço e/ou Evento</center></td></tr>	
+	<tr><td colspan="4"><center><b>Serviço e/ou Evento</b></center></td></tr>	
 	<tr>
 	<td colspan="4">Data Período do evento: <br /><?php echo $pedido['periodo']; ?></td>
 	</tr>	
@@ -181,21 +181,46 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
 	</tr>
 	<tr>
-	<td colspan="4">	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?>, representando com exclusividade as apresentações do(s) seguinte(s) artista(s) <?php  echo $pedido['integrantes'] ?> para  <?php echo $pedido['objeto']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b></p>
-		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?></p>
-	<p>CNPJ: <?php echo $pedido['cpf_cnpj']  ?></p>
-	<p>Endereço: <?php echo $pedido['end']  ?></p>
-	<p>Email: <?php echo $pedido['email'];?> </p>
+	<td colspan="4">	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade a(s) apresentação(ões) do(s) seguinte(s) artista(s) <b><?php  echo $pedido['integrantes'] ?></b> para  realização de <?php echo $pedido['objeto']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b></p>
+		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
+	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
+	Endereço: <?php echo $pedido['end']  ?><br />
+	Email: <?php echo $pedido['email'];?> <br />
 	<p>Valor total: R$<?php echo $pedido['valor'];?> (<?php echo $pedido['valor_extenso']; ?>)</p>
 	
-	<p>Forma de pagamento: <?php echo $pedido['forma_pagamento'];?> </p>
+	<p><b>Forma de pagamento:</b> <?php echo $pedido['forma_pagamento'];?> </p>
 	<p><?php echo $pedido['banco'];?> </p>		
 
 	</td>
 	</tr>
+<tr>
+<td colspan="4"><center><b>Aprovação (assinatura sobre carimbo e data)</b></center></td>
+</tr>
+<tr>
 
+<td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
+<td width='33%' height="100px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
+<td height="100px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
+
+
+<tr>
+<td colspan="4"><center><b>Aprovação (assinatura sobre carimbo e data)</b></center></td>
+</tr>
+<tr>
+
+<td colspan="2" width='33%' height="50px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
+<td width='33%' height="50px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
+<td height="50px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
+
+
+</tr>
+<tr>
+<td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
+</tr>
+<tr>	
+		</table>
 	
-	</table>
+
 
 
 	
