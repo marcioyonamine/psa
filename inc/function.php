@@ -1079,12 +1079,18 @@ function retornaPedido($id){
 	$objeto = evento($res['idEvento']);
 	$periodo = periodo($res['idEvento']);
 	$userwp = get_userdata($res['idResponsavel']);
-	$metausuario = opcaoDados("usuario",4);
+	$metausuario = opcaoDados("usuario",$res['idResponsavel']);
 	if(!isset($metausuario['cr'])){
 		$metausuario['cr'] = "";
 	}
 	if(!isset($metausuario['telefone'])){
 		$metausuario['telefone'] = "";
+	}
+	if(!isset($metausuario['funcao'])){
+		$metausuario['funcao'] = "";
+	}
+	if(!isset($metausuario['departamento'])){
+		$metausuario['departamento'] = "";
 	}
 	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
 	if(!is_array($dotac)){
@@ -1169,7 +1175,7 @@ function retornaPedido($id){
 	}else{
 		$usuario = $userwp->first_name." ".$userwp->last_name;
 	}
-	$metausuario = opcaoDados("usuario",4);
+	$metausuario = opcaoDados("usuario",$res['idRes']);
 	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
 	$local = "";
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
@@ -1196,9 +1202,9 @@ function retornaPedido($id){
 	$x['projeto'] = $dotac['projeto'];
 	$x['despesa'] = "";
 	$x['fonte'] = $dotac['fonte'];
-	$x['telefone'] = "";
+	$x['telefone'] = $metausuario['telefone'];
 	$x['conta_corrente'] = "";
-	$x['contato_telefone'] = "";
+	$x['contato_telefone'] = $metausuario['telefone'];
 	$x['local'] = $local;
 	$x['tipo'] = "";
 	$x['end'] = $end;

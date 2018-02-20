@@ -209,7 +209,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 </tr>
 <tr>
 
-<td colspan="2" width='33%' height="50px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
+<td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
 <td width='33%' height="50px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
 <td height="50px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
 
@@ -231,6 +231,11 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	<?php /*
 	echo '<pre>';
 	var_dump($pedido);
+	echo '</pre>';
+	
+		echo '<pre>';
+	$metausuario = opcaoDados("usuario",1);
+	var_dump($metausuario);
 	echo '</pre>';
 	*/
 	?>

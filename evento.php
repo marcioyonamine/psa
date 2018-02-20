@@ -717,7 +717,7 @@ case "pedido":
 				  <th>Período</th>
 				  <th>Valor</th>
 				  <th></th>
-
+				  <th></th>
 				  </tr>
               </thead>
               <tbody>
@@ -753,6 +753,22 @@ case "pedido":
 					  <td><?php echo $pedido['objeto']; ?></td>
 					  <td><?php echo $pedido['periodo']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
+					  <?php if($pedido['tipo'] == 'Pessoa Física'){ ?>
+					  <td>	
+							<form method="POST" action="contratacao.php?p=editar_pf" class="form-horizontal" role="form">
+							<input type="hidden" name="editar_pf" value="<?php echo $peds[$i]['idPessoa']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pessoa">
+							</form>
+							</td>
+					<?php }else{ ?>
+					  <td>	
+							<form method="POST" action="contratacao.php?p=editar_pj" class="form-horizontal" role="form">
+							<input type="hidden" name="editar_pj" value="<?php echo $peds[$i]['idPessoa']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pessoa">
+							</form>
+							</td>
+					<?php } ?>
+
 					  <td>	
 							<form method="POST" action="contratacao.php?p=editar_pedido" class="form-horizontal" role="form">
 							<input type="hidden" name="editar_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />

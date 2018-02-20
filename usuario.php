@@ -27,6 +27,7 @@ $cr = $_POST['cr'];
 $chave01 = $_POST['chave01'];
 $chave02 = $_POST['chave02'];
 $idMapas = $_POST['idMapas'];
+$telefone = $_POST['telefone'];
 	
 	$usuario = array(
 		'modulos' => $meta_edit['modulos'] ,
@@ -35,7 +36,8 @@ $idMapas = $_POST['idMapas'];
 		'funcao' => $funcao,
 		'chave01' => $chave01,
 		'chave02' => $chave02,
-		'idMapas' => $idMapas
+		'idMapas' => $idMapas,
+		'telefone' => $telefone
 	);
 
 $opcao = json_encode($usuario);	
@@ -99,6 +101,15 @@ $meta = metausuario($user->ID);
 						</div>
 					</div>
 					<br />
+
+					<div class="row">
+						<div class="col-12">
+							<label>Telefone</label>
+							<input type="text" name="telefone" class="form-control" id="inputSubject" value="<?php if(isset($meta['telefone'])){echo $meta['telefone'];} ?>" />
+						</div>
+					</div>
+					<br />
+					
 					<div class="row">
 						<div class="col-12">
 							<label>ID Agente Mapas (somente o número)</label>
