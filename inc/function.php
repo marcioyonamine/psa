@@ -1176,6 +1176,19 @@ function retornaPedido($id){
 		$usuario = $userwp->first_name." ".$userwp->last_name;
 	}
 	$metausuario = opcaoDados("usuario",$res['idRes']);
+		if(!isset($metausuario['cr'])){
+		$metausuario['cr'] = "";
+	}
+	if(!isset($metausuario['telefone'])){
+		$metausuario['telefone'] = "";
+	}
+	if(!isset($metausuario['funcao'])){
+		$metausuario['funcao'] = "";
+	}
+	if(!isset($metausuario['departamento'])){
+		$metausuario['departamento'] = "";
+	}
+	
 	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
 	$local = "";
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
