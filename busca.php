@@ -178,7 +178,8 @@ case "view":
 	<div class="row">
 	<div class="col-md-offset-1 col-md-10">
 	<p><b>Pedidos Relacionados</b><br />
-	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome:</b> <?php echo $ped[$i]['nome'] ?> / <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><?php echo $pedido['valor'] ?> </li>	
+	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome/Razão Social:</b> <a href="busca.php?p=view&tipo=pj&id=<?php echo $ped[$i]['idPessoa']?>" ><?php echo $ped[$i]['nome'] ?> </a>/ <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><?php echo $pedido['valor'] ?> </li>
+		<?php //var_dump($ped); ?>	
 		<?php } ?>
 	
 	</p>		
@@ -206,13 +207,36 @@ case "view":
 		
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-			
-			
+			<?php 
+			$pessoa = retornaPessoa($_GET['id'],2);
+					
+			?>
+			Razão Social: <?php echo $pessoa['nome']; ?><br />
+			CNPJ: <?php echo $pessoa['cpf_cnpj']; ?><br />
+			Email: <?php echo $pessoa['email']; ?><br />
+			</div>
 	</div>
-	</div>
-	
+	<br /><Br />
 			<div class="row">
 			<div class="col-md-offset-1 col-md-10">
+			 <p>Pedidos de contratação</p>
+			 <?php 
+			 $sql_ped = "SELECT idPedidoContratacao FROM sc_contratacao WHERE publicado = '1' AND tipoPessoa = '2' AND idPessoa = '".$_GET['id']."'";
+			 $res = $wpdb->get_results($sql_ped,ARRAY_A);
+			 //var_dump($res);
+			 for($i = 0; $i < count($res); $i++){
+				 $pes = retornaPedido($res[$i]['idPedidoContratacao']);
+				//echo "<pre>";
+				 //var_dump($pes);
+				// echo "</pre>";
+			 ?>
+			 Objeto: <a href = "busca.php?p=view&tipo=evento&id=<?php echo $pes['id']; ?>" target="_blank"><?php echo $pes['objeto']; ?></a><br />
+			 Período: <?php echo $pes['periodo']; ?><br />
+			 Local: <?php echo $pes['local']; ?><br />
+ 			 Projeto / Ficha: <?php echo $pes['projeto']; ?> / <?php echo $pes['ficha']; ?><br />
+			 Valor: <?php echo ($pes['valor']); ?><br />
+			<br /><br />
+			 <?php } ?>
 			 
 	</div>
 	</div>
@@ -255,37 +279,6 @@ case "view":
 	</div>
 	<div>
 	</section>			
-	<?php 
-		break;	
-		case "pj":
-		$pessoa = retornaPessoa($_GET['id'],2);	
-
-	?>
-			 <section id="inserir" class="home-section bg-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
-                   
-
-					
-			</div>
-		</div> 
-		
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			
-			
-	</div>
-	</div>
-	
-			<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			 
-	</div>
-	</div>
-	<div>
-	</section>	
 	
 	<?php
 		break;	
