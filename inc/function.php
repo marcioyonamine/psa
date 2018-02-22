@@ -964,10 +964,10 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 	switch($tipo){
 		case 'evento':
 		default:
-			$sql = "SELECT idPedidoContratacao, tipoPessoa, idPessoa, valor FROM sc_contratacao WHERE idEvento = '$id' AND publicado = '1'";
+			$sql = "SELECT idPedidoContratacao, tipoPessoa, idPessoa, valor, dotacao FROM sc_contratacao WHERE idEvento = '$id' AND publicado = '1'";
 		break;
 		case 'atividade' :
-			$sql = "SELECT idPedidoContratacao, tipoPessoa, idPessoa, valor FROM sc_contratacao WHERE idAtividade = '$id' AND publicado = '1'";
+			$sql = "SELECT idPedidoContratacao, tipoPessoa, idPessoa, valor, dotacao FROM sc_contratacao WHERE idAtividade = '$id' AND publicado = '1'";
 		break;		
 	}
 	
@@ -990,7 +990,8 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 		'nome' => $pessoa['nome'],
 		'valor' => $res[$i]['valor'],
 		'idPessoa' => $res[$i]['idPessoa'],
-		'cpf_cnpj' => $pessoa['cpf_cnpj']
+		'cpf_cnpj' => $pessoa['cpf_cnpj'],
+		'dotacao' => $res[$i]['dotacao']
 		);
 	
 	}
@@ -1399,6 +1400,9 @@ function verificaEvento($idEvento){
 		Justificativa
 		Parecer Artístico
 	*/
+	
+	global $wpdb;
+	
 	$relatorio = "";
 	$r = 0;
 	$evento = evento($idEvento);
@@ -1449,14 +1453,41 @@ function verificaEvento($idEvento){
 	$ocorrencias = periodo($idEvento);
 	if($ocorrencias['bool'] == FALSE){
 		$relatorio .= "O evento não possui ocorrências.<br />";
-		$r++;	
+		$r++;
+	}else{
+		$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
+		$res = $wpdb->get_results($sql_ocor,ARRAY_A);
+		for ($i = 0; $i < count($res); $i++){
+			if($res[$i]['local'] == 0){
+				$relatorio .= "Há ocorrências sem locais.<br />";
+				$r++;
+			} 
+			if($res[$i]['horaInicio'] == '00:00:00'){
+				$relatorio .= "Há ocorrências sem hora de início.<br />";
+				$r++;
+			} 
+
+			if($res[$i]['duracao'] == '0'){
+				$relatorio .= "Há ocorrências sem duração.<br />";
+				$r++;
+			} 
+		}
 	}
 
 	$pedidos = listaPedidos($idEvento,'evento');	
 	if(count($pedidos) > 0){
 		//$relatorio .= "O evento possui pedidos de contratação.<br />";
 		//$ped = retornaPedido($pedidos[$i]['idPedidoContratacao']);
-		
+		for($k = 0; $k < count($pedidos); $k++){
+			if($pedidos[$k]['dotacao'] == NULL){
+				$relatorio .= "Há pedidos de contratação sem dotação definida.<br />";
+				$r++;
+			}
+			if($pedidos[$k]['valor'] == 0){
+				$relatorio .= "Há pedidos de contratação sem valores definidos.<br />";
+				$r++;
+			}
+		}		
 		
 		
 		
