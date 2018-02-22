@@ -379,6 +379,7 @@ function evento($id){
 	$etaria = tipo($res['faixaEtaria']);
 	$periodo = periodo($res['idEvento']);
 	$status = retornaStatus($res['idEvento']);
+	$local = retornaLocais($id);
 	
 	
 	
@@ -398,7 +399,7 @@ function evento($id){
 		'sub' => '',
 		'envio' => '',
 		'periodo' => $periodo,
-		'local' => '',
+		'local' => $local,
 		'faixa_etaria' => $etaria['tipo'],
 		'valor_entrada' => '',
 		'imagem' => '',
