@@ -220,7 +220,7 @@ case "view":
 			<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			 <?php 
-			 $sql_ped = "SELECT DISTINCT idPedidoContratacao FROM sc_contratacao, sc_evento WHERE sc_contratacao.publicado = '1' AND  tipoPessoa = '2' AND idPessoa = '".$_GET['id']."' AND dataEnvio <> NULL";
+			 $sql_ped = "SELECT DISTINCT idPedidoContratacao FROM sc_contratacao WHERE sc_contratacao.publicado = '1' AND  tipoPessoa = '2' AND idPessoa = '".$_GET['id']."' AND dataEnvio IS NOT NULL AND idEvento IN(SELECT idEvento FROM sc_evento WHERE publicado ='1' AND dataEnvio IS NOT NULL)";
 			 $res = $wpdb->get_results($sql_ped,ARRAY_A);
 			 //var_dump($res);
 				?>
