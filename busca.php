@@ -79,7 +79,7 @@ if(isset($_POST['busca'])){
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+
                    
 
 					
@@ -127,7 +127,12 @@ if(isset($_POST['busca'])){
 				</ul>
 	</div>
 	</div>	
-	
+	<br /><br />
+	<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+						<a href="?p=inicio"  class="btn btn-primary btn-block">Fazer outra busca</a>
+	</div>
+	</div>
 	</section>		
 <?php 
 break;
@@ -140,7 +145,7 @@ case "view":
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+
                    
 <br /><br />
 					
@@ -186,7 +191,12 @@ case "view":
 	</div>
 	</div>
 	
-	<div>
+	<br /><br />
+	<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+						<a href="?p=inicio"  class="btn btn-primary btn-block">Fazer outra busca</a>
+	</div>
+	</div>
 	</section>			
 	<?php 
 		break;	
@@ -198,7 +208,7 @@ case "view":
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+
                    
 
 					
@@ -245,7 +255,12 @@ case "view":
 			 
 	</div>
 	</div>
-	<div>
+	<br /><br />
+	<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+						<a href="?p=inicio"  class="btn btn-primary btn-block">Fazer outra busca</a>
+	</div>
+	</div>
 	</section>	
 	<?php
 		break;	
@@ -257,7 +272,7 @@ case "view":
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+					<h2><a href="?p=inicio"  class="btn btn-primary btn-block">Fazer outra busca</a></h2>
                    
 <br /><br />
 					
@@ -282,7 +297,12 @@ case "view":
 			 
 	</div>
 	</div>
-	<div>
+	<br /><br />
+	<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+						<a href="?p=inicio"  class="btn btn-primary btn-block">Fazer outra busca</a>
+	</div>
+	</div>
 	</section>			
 	
 	<?php
@@ -296,7 +316,7 @@ case "view":
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+
                    
 <br /><br />
 					
@@ -343,7 +363,7 @@ case "view":
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-					<h2><a href="?p=inicio" >Fazer outra busca</a></h2>
+					<h2><a href="?p=inicio"  class="btn btn-primary btn-block">Fazer outra busca</a></h2>
                    
 
 					
