@@ -219,11 +219,15 @@ case "view":
 	<br /><Br />
 			<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-			 <p>Pedidos de contratação</p>
 			 <?php 
-			 $sql_ped = "SELECT idPedidoContratacao FROM sc_contratacao WHERE publicado = '1' AND tipoPessoa = '2' AND idPessoa = '".$_GET['id']."'";
+			 $sql_ped = "SELECT idPedidoContratacao FROM sc_contratacao, sc_evento WHERE sc_contratacao.publicado = '1' AND tipoPessoa = '2' AND idPessoa = '".$_GET['id']."' AND dataEnvio IS NOT NULL";
 			 $res = $wpdb->get_results($sql_ped,ARRAY_A);
 			 //var_dump($res);
+				?>
+			 <p>Pedidos de contratação (<?php echo count($res); ?>)</p>
+
+			<?php 
+
 			 for($i = 0; $i < count($res); $i++){
 				 $pes = retornaPedido($res[$i]['idPedidoContratacao']);
 				//echo "<pre>";
