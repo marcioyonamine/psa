@@ -222,7 +222,7 @@ case "view":
 			 <?php 
 			 $sql_ped = "SELECT DISTINCT idPedidoContratacao FROM sc_contratacao WHERE sc_contratacao.publicado = '1' AND  tipoPessoa = '2' AND idPessoa = '".$_GET['id']."' AND idEvento IN(SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL)";
 			 $res = $wpdb->get_results($sql_ped,ARRAY_A);
-			 echo $sql_ped;
+			 //echo $sql_ped;
 			 //var_dump($res);
 				?>
 			 <p>Pedidos de contratação (<?php echo count($res); ?>)</p>
