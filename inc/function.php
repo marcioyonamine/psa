@@ -177,6 +177,7 @@ function urlAtual(){
 
 
 function gravarLog($log, $idUsuario){ //grava na tabela ig_log os inserts e updates
+		global $wpdb;
 		$logTratado = addslashes($log);
 		//$idUsuario = $user->ID;
 		
@@ -190,9 +191,8 @@ function gravarLog($log, $idUsuario){ //grava na tabela ig_log os inserts e upda
 		
 		
 		$data = date('Y-m-d H:i:s');
-		$sql = "INSERT INTO `iap_log` (`idLog`, `ig_usuario_idUsuario`, `enderecoIP`, `dataLog`, `descricao`) VALUES (NULL, '$idUsuario', '$ip', '$data', '$logTratado')";
-		$mysqli = bancoMysqli();
-		$mysqli->query($sql);
+		$sql = "INSERT INTO `sc_log` (`idUsuario`, `ip`, `data`, `query`) VALUES ('$idUsuario', '$ip', '$data', '$logTratado')";
+		$wpdb->query($sql);
 }
 /*
 	function diasemana($data)

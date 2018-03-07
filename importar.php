@@ -15,7 +15,7 @@
 			require_once dirname(__FILE__) . '/classes/PHPExcel.php';
 			
 			if(isset($_GET['file'])){
-			$fileName = $_GET['file'];
+			$fileName = "upload/".$_GET['file'];
 			
 			/** detecta automaticamente o tipo de arruivo que será carregado */
 			$excelReader = PHPExcel_IOFactory::createReaderForFile($fileName);
@@ -72,7 +72,7 @@
 			global $wpdb;
 			$json = addslashes(json_encode($matriz,JSON_UNESCAPED_UNICODE));		
 			$sql = "INSERT INTO `ava_inscricao` (`id`, `id_mapas`, `inscricao`, `edital`, `aprovado`, `descricao`) 
-			VALUES (NULL, '286', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
+			VALUES (NULL, '277', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
 			$insert = $wpdb->query($sql);
 			if($insert == FALSE){
 				echo $sql."<br /><br />";

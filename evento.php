@@ -29,9 +29,10 @@ if(isset($_POST['enviar'])){  // envia
 	if($upd == 1){
 		atualizarAgenda($idEvento);
 		$mensagem = alerta("Evento enviado com sucesso.","success");
+		gravarLog($sql_enviar, $user->ID);
 	}else{
 		$mensagem = alerta("Erro. Tente novamente.","warning");
-	
+		gravarLog($sql_enviar, $user->ID);
 	}
 	
 }
@@ -411,9 +412,11 @@ case "editar":
 			$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
 			$evento = $wpdb->get_row($sql_select,ARRAY_A);
 			$_SESSION['id'] = $evento['idEvento'];
+			gravarLog($sql, $user->ID);
 			
 		}else{
 			$mensage = "Erro ao inserir";
+			gravarLog($sql, $user->ID);
 			
 		}
 		
@@ -446,7 +449,8 @@ case "editar":
 		$_SESSION['id'] = $evento['idEvento'];
 		
 		if($atual == 1){
-			$mensagem = "Evento atualizado com sucesso.";
+			$mensagem = alerta("Evento atualizado com sucesso.","success");
+			gravarLog($sql_atualizar, $user->ID);
 		}else{
 			//$mensagem = "Erro ao atualizar.";
 		}

@@ -601,7 +601,83 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		
 		</table>
 	
+<?php 
+break;
+case "salao2018":
+//http://scsantoandre.info/scpsa/documentos.php?id=0&modelo=salao2018
 
+$sql = "SELECT descricao FROM ava_inscricao WHERE id_mapas = '277'";
+$res = $wpdb->get_results($sql,ARRAY_A);
+
+?>
+<style>
+.break { page-break-before: always; }
+</style>
+<?php 
+for($i = 1;$i < count($res); $i++){
+	$x = json_decode($res[$i]['descricao'],true);
+	
+	//echo "<pre>";
+	//var_dump($x);
+	//echo "</pre>";
+	?>
+	
+	
+	
+	
+	
+	
+	<h1 class="break"></h1>
+	<p><center>46° Salão de Arte Contemporânea Luiz Sacilotto - 2018 - Santo André<br />
+	Caderno dos Artistas - 1 fase
+	</center></p>
+	<br /><br /><br />
+	
+	
+	<h3>Cadastro : ___________</h3>
+	<p>Nome artístico: <?php echo $x['Nome artístico']?> / <?php echo $x['Número']?> </p>	
+	<p>Técnica:<?php echo $x['Informar técnica']; ?> </p>
+	
+	
+	<h3>Obra A</h3>	
+	<p>Título: <?php echo $x['Título da Obra (a)']; ?><br />
+	Dimensões:  <?php echo $x['Dimensões (a)']; ?><br />
+	Valor:  <?php echo $x['Valor (a)']; ?><br />
+	</p>
+
+		<h3>Obra B</h3>	
+	<p>Título: <?php echo $x['Título da Obra (b)']; ?><br />
+	Dimensões:  <?php echo $x['Dimensões (b)']; ?><br />
+	Valor:  <?php echo $x['Valor (b)']; ?><br />
+	</p>
+
+	<h3>Obra C</h3>	
+	<p>Título: <?php echo $x['Título da Obra (c)']; ?><br />
+	Dimensões:  <?php echo $x['Dimensões (c)']; ?><br />
+	Valor:  <?php echo $x['Valor (c)']; ?><br />
+	</p>
+
+	<h3>Obra D</h3>	
+	<p>Título: <?php echo $x['Título da Obra (d)']; ?><br />
+	Dimensões:  <?php echo $x['Dimensões (d)']; ?><br />
+	Valor:  <?php echo $x['Valor (d)']; ?><br />
+	</p>
+
+	<h3>Obra E</h3>	
+	<p>Título: <?php echo $x['Título da Obra (e)']; ?><br />
+	Dimensões:  <?php echo $x['Dimensões (e)']; ?><br />
+	Valor:  <?php echo $x['Valor (e)']; ?><br />
+	</p>
+	
+	
+	<?php
+	
+}
+
+?>
+
+	
+	
 		<?php 
 	break;
 	default:
