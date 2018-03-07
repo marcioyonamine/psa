@@ -628,7 +628,7 @@ for($i = 1;$i < count($res); $i++){
 	
 	
 	<h1 class="break"></h1>
-	<p><center><font size="6">46° Salão de Arte Contemporânea Luiz Sacilotto - 2018 - Santo André<br />
+	<p><center><font size="1">46° Salão de Arte Contemporânea Luiz Sacilotto - 2018 - Santo André<br />
 	Caderno dos Artistas - 1 fase
 	</font></center></p>
 	<br /><br />
