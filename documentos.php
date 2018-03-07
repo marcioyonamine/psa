@@ -610,9 +610,13 @@ $sql = "SELECT descricao FROM ava_inscricao WHERE id_mapas = '277'";
 $res = $wpdb->get_results($sql,ARRAY_A);
 
 ?>
-	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+	
 <style>
 .break { page-break-before: always; }
+.esquerda{
+	margin-left: 100px;
+}
+
 </style>
 <?php 
 for($i = 1;$i < count($res); $i++){
