@@ -72,7 +72,7 @@ require "inc/function.php";
 </style>
 </head>
 <body>
-
+<?php include "menu/me_agenda.php"; ?>
 
  <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <section id="contact" class="home-section bg-white">
