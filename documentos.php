@@ -644,30 +644,35 @@ for($i = 1;$i < count($res); $i++){
 	Dimensões:  <?php echo $x['Dimensões (a)']; ?><br />
 	Valor:  <?php echo $x['Valor (a)']; ?><br />
 	</p>
+	<br />
 
 		<h3>Obra B</h3>	
 	<p>Título: <?php echo $x['Título da Obra (b)']; ?><br />
 	Dimensões:  <?php echo $x['Dimensões (b)']; ?><br />
 	Valor:  <?php echo $x['Valor (b)']; ?><br />
 	</p>
+	<br />
 
 	<h3>Obra C</h3>	
 	<p>Título: <?php echo $x['Título da Obra (c)']; ?><br />
 	Dimensões:  <?php echo $x['Dimensões (c)']; ?><br />
 	Valor:  <?php echo $x['Valor (c)']; ?><br />
 	</p>
+	<br />
 
 	<h3>Obra D</h3>	
 	<p>Título: <?php echo $x['Título da Obra (d)']; ?><br />
 	Dimensões:  <?php echo $x['Dimensões (d)']; ?><br />
 	Valor:  <?php echo $x['Valor (d)']; ?><br />
 	</p>
+	<br />
 
 	<h3>Obra E</h3>	
 	<p>Título: <?php echo $x['Título da Obra (e)']; ?><br />
 	Dimensões:  <?php echo $x['Dimensões (e)']; ?><br />
 	Valor:  <?php echo $x['Valor (e)']; ?><br />
 	</p>
+	<br />
 	
 	
 	<?php
