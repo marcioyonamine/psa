@@ -628,16 +628,16 @@ for($i = 1;$i < count($res); $i++){
 	
 	
 	<h1 class="break"></h1>
-	<p><center>46° Salão de Arte Contemporânea Luiz Sacilotto - 2018 - Santo André<br />
+	<p style="font-size:8px;"><center>46° Salão de Arte Contemporânea Luiz Sacilotto - 2018 - Santo André<br />
 	Caderno dos Artistas - 1 fase
 	</center></p>
-	<br /><br /><br />
+	<br /><br />
 	
 	
 	<h3>Cadastro : ___________</h3>
 	<p>Nome artístico: <?php echo $x['Nome artístico']?> / <?php echo $x['Número']?> </p>	
 	<p>Técnica:<?php echo $x['Informar técnica']; ?> </p>
-	
+	<br />
 	
 	<h3>Obra A</h3>	
 	<p>Título: <?php echo $x['Título da Obra (a)']; ?><br />
