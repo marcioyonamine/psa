@@ -1197,6 +1197,7 @@ function retornaPedido($id){
 		$dotac['dotacao'] = "";
 		$dotac['ficha'] = "";
 		$dotac['projeto'] = "";
+		$dotac['fonte'] = "";
 	}
 	
 	$local = "";
