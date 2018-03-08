@@ -1191,7 +1191,14 @@ function retornaPedido($id){
 		$metausuario['departamento'] = "";
 	}
 	
-	$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
+	if($res['dotacao'] != NULL){
+		$dotac = recuperaDados("sc_orcamento",$res['dotacao'],"id");
+	}else{
+		$dotac['dotacao'] = "";
+		$dotac['ficha'] = "";
+		$dotac['projeto'] = "";
+	}
+	
 	$local = "";
 	$end = retornaEndereco($res['tipoPessoa'],$res['idPessoa']);
 	$status = "Em análise";
