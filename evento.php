@@ -63,7 +63,7 @@ if(isset($_SESSION['id'])){
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
-				if($idUser == 63 OR $idUser == 1){
+				if($idUser == 63 OR $idUser == 1 OR $idUser == 5){
 					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' ORDER BY idEvento DESC";					
 				}else{
 				$sql_list =  "SELECT idEvento FROM sc_evento WHERE  publicado = '1' AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser')  ORDER BY idEvento DESC";
@@ -145,7 +145,7 @@ if(isset($_SESSION['id'])){
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
-				if($idUser == 63 OR $idUser == 1){
+				if($idUser == 63 OR $idUser == 1 OR $idUser == 5){ //admin, juliana, moretto
 				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
 				}else{
 				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1'  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND  inscricao <> '' ORDER BY idEvento DESC";
@@ -312,6 +312,22 @@ break;
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
+							<label>Cidade do Autor/Grupo/Artista</label>
+							<select class="form-control" name="artista_cidade" id="inputSubject" >
+								<?php geraTipoOpcao("artista_local") ?>
+							</select>
+						</div>
+					</div>					
+					
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Outra cidade</label>
+							<input type="text" name="outra_cidade" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
+						</div> 
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-offset-2">
 							<label>Ficha técnica completa*</label>
 							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php ////echo $campo["fichaTecnica"] ?></textarea>
 						</div> 
@@ -383,6 +399,9 @@ case "editar":
 		$sinopse    = addslashes($_POST["sinopse"]);
 		$releaseCom    = addslashes($_POST["releaseCom"]);
 		$linksCom    = addslashes($_POST["linksCom"]);
+		$artista_cidade = $_POST['artista_cidade'];
+		$outra_cidade = $_POST['outra_cidade'];
+
 		if(isset($_POST['subEvento'])){
 			$subEvento = $_POST['subEvento'];
 		}else{
@@ -403,8 +422,8 @@ case "editar":
 
 	// Inserir evento
 	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento')";		
+		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade` ) 
+		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade')";		
 		$ins = $wpdb->query($sql);
 		if($ins){
 			$mensagem = "Inserido com sucesso";
@@ -440,7 +459,10 @@ case "editar":
 		`releaseCom` = '$releaseCom',
 		`linksCom` = '$linksCom',
 		`planejamento` = '$planejamento',
-		`subEvento` = '$subEvento'
+		`subEvento` = '$subEvento',
+		`artista_local` = '$artista_cidade',
+		`cidade` = '$outra_cidade'
+		
 		WHERE `idEvento` = '$atualizar';
 		";
 		$atual = $wpdb->query($sql_atualizar);
@@ -580,6 +602,22 @@ case "editar":
 							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $evento['nomeGrupo']; ?>"/>
 						</div> 
 					</div>
+										<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Cidade do Autor/Grupo/Artista</label>
+							<select class="form-control" name="artista_cidade" id="inputSubject" >
+								<?php geraTipoOpcao("artista_local",$evento['artista_local']) ?>
+							</select>
+						</div>
+					</div>					
+					
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Outra cidade</label>
+							<input type="text" name="outra_cidade" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['cidade']; ?>"/>
+						</div> 
+					</div>
+					
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Ficha técnica completa*</label>
