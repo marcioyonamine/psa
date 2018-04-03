@@ -56,3 +56,59 @@ Monitoramento Redes Sociais (série histórica mensal)
 	>> CONDEPHAAPSA
 
 	
+Indicadores
+		-> evento
+			-> artistas locais
+			-> agentes locais
+			-> bairros atendidos (rever nomenclatura de espaços no culturaz e colocar bairros)
+			
+		-> serviço
+		
+		
+		-> escolas (cursos continuados) / inscritos / frequência
+			alunos matriculados
+		
+		
+			-> público
+		
+Ciclo
+Concurso
+Conferência
+Congresso
+Contação de História
+Convenção
+Curso
+Encontros
+Espetáculo
+Espetáculo Infantil
+Feira
+Festa Popular
+Festa Religiosa
+Festival
+Fórum
+Intervenção
+Jornada
+Mostra
+Oficina
+Palestra
+Parada / Desfile
+Performance
+Programa
+Reunião 
+Sarau
+Seminário
+Sessão de Cinema
+Show
+Simpósio
+Workshop
+
+
+"Exposição" CulturAZ sobrepor no mesmo espaço
+
+tipo = geral
+       especifico 
+		
+	   
+contagem = média aritmética
+		   total		
+	
