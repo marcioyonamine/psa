@@ -1047,7 +1047,7 @@ $historico = orcamento($id_hist);
 						
 				for($i = 0; $i < count($historico['historico']); $i++){
 					$tipo = tipo($historico['historico'][$i]['tipo']);
-					if($historico['historico'][$i]['tipo'] == 286 OR $historico['historico'][$i]['tipo'] == 311 ){
+					if($historico['historico'][$i]['tipo'] == 286 OR $historico['historico'][$i]['tipo'] == 311 OR $historico[$i]['tipo'] == 394  ){
 						$valor = "(".dinheiroParaBr($historico['historico'][$i]['valor']).")";
 					}else{
 						$valor = dinheiroParaBr($historico['historico'][$i]['valor']);
@@ -1070,7 +1070,7 @@ $historico = orcamento($id_hist);
 						<td><td>
 					  <td></td>
 								  <td>Total em <?php echo date('d/m/Y') ?></td>
-					  <td><?php echo dinheiroParaBr($historico['total'] - $historico['contigenciado'] + $historico['descontigenciado'] + $historico['suplementado'] - $historico['liberado']); ?></td>
+					  <td><?php echo dinheiroParaBr($historico['total'] - $historico['contigenciado'] + $historico['descontigenciado'] + $historico['suplementado'] - $historico['liberado'] - $historico['anulado']); ?></td>
 	
 				</tr>
 								<tr><td colspan="6">		
