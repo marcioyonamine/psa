@@ -9,7 +9,11 @@ if(isset($_GET['p'])){
 	$_SESSION['entidade'] = 'orcamento';
 ?>
 
-
+<style>
+.container{
+	margin-left: 0px !important;
+}
+</style>
   <body>
   
   <?php include "menu/me_orcamento.php"; ?>
@@ -1016,6 +1020,7 @@ case 'historico':
 $id_hist = $_GET['id'];
 $historico = orcamento($id_hist);
 ?>
+
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">    
