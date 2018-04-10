@@ -881,8 +881,9 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
                   <th>Sup</th>
                   <th>Anul</th>
                   <th>Lib</th>
-				  <th>Pla</th>	
+
                   <th>Saldo Lib</th> <!-- O saldo Planejado é o Saldo Liberado - Valor Planejado -->
+				  <th>Pla</th>	
                   <th>Saldo Pla</th>
 
 				  </tr>
@@ -919,8 +920,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
                   <th>Sup</th>
 				                    <th>Anul</th>
                   <th>Lib</th>
-				  <th>Pla</th>	
                   <th>Saldo Lib</th> <!-- O saldo Planejado é o Saldo Liberado - Valor Planejado -->
+				  <th>Pla</th>	
                   <th>Saldo Pla</th>
 
 				  </tr>
@@ -934,8 +935,9 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['anulado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
-					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
+
 					  <td><?php echo dinheiroParaBr($total); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
 					  <td><?php echo dinheiroParaBr( $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado'] - $orc['planejado']); ?></td>				
 					
 					
@@ -954,8 +956,9 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['anulado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
-					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
+
 					  <td><?php echo dinheiroParaBr($total); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
 					  <td><?php echo dinheiroParaBr( $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado'] - $orc['planejado']); ?></td>
 	<!--<td>	
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
@@ -993,8 +996,9 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($total_sup); ?></td>
 					  <td><?php echo dinheiroParaBr($total_anul); ?></td>
 					  <td><?php echo dinheiroParaBr($total_lib); ?></td>
-					  <td><?php echo dinheiroParaBr($total_pla); ?></td>
+
 					  <td><?php echo dinheiroParaBr($total_tot); ?></td>
+					  <td><?php echo dinheiroParaBr($total_pla); ?></td>
 					  <td><?php echo dinheiroParaBr($total_tot - $total_pla + $total_lib); ?></td>
 						<td></td>
 				
