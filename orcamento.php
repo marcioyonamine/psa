@@ -1047,7 +1047,7 @@ $historico = orcamento($id_hist);
 						
 				for($i = 0; $i < count($historico['historico']); $i++){
 					$tipo = tipo($historico['historico'][$i]['tipo']);
-					if($historico['historico'][$i]['tipo'] == 286 OR $historico['historico'][$i]['tipo'] == 311 OR $historico[$i]['tipo'] == 394  ){
+					if($historico['historico'][$i]['tipo'] == 286 OR $historico['historico'][$i]['tipo'] == 311 OR $historico['historico'][$i]['tipo'] == 394  ){
 						$valor = "(".dinheiroParaBr($historico['historico'][$i]['valor']).")";
 					}else{
 						$valor = dinheiroParaBr($historico['historico'][$i]['valor']);
