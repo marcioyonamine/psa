@@ -10,8 +10,11 @@ if(isset($_GET['p'])){
 ?>
 
 <style>
-.container{
-	margin-left: 0px !important;
+@media(min-width: 1400px){
+	.container{
+		margin-left: 0px !important;
+		width: 1400px !important;
+	}
 }
 </style>
   <body>
