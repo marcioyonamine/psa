@@ -75,7 +75,14 @@ if(isset($_SESSION['id'])){
 					?>
 					<tr>
 					  <td><?php echo $res[$i]['idEvento']; ?></td>
+					<?php
+						if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){
+					  ?>
+					  <td><a href="busca.php?p=view&tipo=evento&id=<?php echo $res[$i]['idEvento'] ?>" target=_blank><?php echo $evento['titulo']; ?></a></td>
+						<?php}else{ ?>
 					  <td><?php echo $evento['titulo']; ?></td>
+					  
+						<?php } ?>
 					  <td><?php echo $evento['periodo']['legivel']; ?></td>
 					  <td><?php echo $evento['status']; ?></td>
 					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
