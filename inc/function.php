@@ -174,7 +174,25 @@ function urlAtual(){
 	return $url;
 }
 
-
+function retornaMascara($val, $mask)
+{
+  $maskared = '';
+  $k = 0;
+  for($i = 0; $i<=strlen($mask)-1; $i++)
+  {
+     if($mask[$i] == '#')
+     {
+        if(isset($val[$k]))
+        $maskared .= $val[$k++];
+     }
+     else
+     {
+        if(isset($mask[$i]))
+           $maskared .= $mask[$i];
+     } 
+  }
+  return $maskared;
+}
 
 function gravarLog($log, $idUsuario){ //grava na tabela ig_log os inserts e updates
 		global $wpdb;

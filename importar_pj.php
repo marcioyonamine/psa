@@ -1,0 +1,227 @@
+<?php
+//Carrega WP como FW
+require_once("../wp-load.php");
+$user = wp_get_current_user();
+if(!is_user_logged_in()): // Impede acesso de pessoas não autorizadas
+      /*** REMEMBER THE PAGE TO RETURN TO ONCE LOGGED IN ***/
+	  $_SESSION["return_to"] = $_SERVER['REQUEST_URI'];
+      /*** REDIRECT TO LOGIN PAGE ***/
+	  header("location: /");
+endif;
+//Carrega os arquivos de funções
+require "inc/function.php";
+
+global $wpdb;
+/*
+// Lista de Aprovados
+$x = array("on-58078286","on-2101871521","on-2135100180","on-1302100216","on-316231794","on-688002562","on-1954495637","on-1776752054","on-779107560","on-1800557621","on-1865705822","on-260727837","on-1539060598","on-1517359845","on-83570770","on-1973229016","on-1866929251","on-1024162598","on-650254741","on-250367787","on-1310481067","on-1403335167","on-22818438","on-101546906","on-1054155689","on-1601848067","on-2022854575","on-445536142","on-221062963","on-509705695","on-783504660","on-1860378557","on-646718992","on-307571087","on-465126408","on-643633308","on-1443264217","on-259882278","on-1878208231","on-921197314","on-442527509","on-1134166409","on-1142376109","on-431032341","on-945691027","on-1932027042","on-2104955905","on-140922196","on-654073001","on-652043718","on-1950425915","on-990847295","on-845238052","on-585853776","on-313286495","on-795438355","on-1843281716","on-1030052997");
+
+//$x = array("on-58078286");
+
+// Cria uma string para verificação
+$y = "";
+foreach($x as $value){
+	$y .= $value.",";
+}
+$y = substr($y,0,-1);
+
+
+for($i = 0; $i < count($x); $i++){
+	// verifica se já o evento na base;
+	$sql_verifica = "SELECT idEvento FROM sc_evento WHERE inscricao = '".$x[$i]."'";
+	$ver = $wpdb->get_results($sql_verifica);
+	
+	// não existe, insere
+	if(count($ver) == 0){ 
+		$ins = retornaInscricao($x[$i]);
+		//var_dump($ins);
+		$n_inscricao = $x[$i];
+		$cat = $ins['filtro'];
+		$ins_json = json_decode($ins['descricao'],ARRAY_A);
+		//echo "<pre>";
+		//var_dump();
+		//echo "</pre>";
+		$nome_evento = addslashes($ins_json['3.1 - Título']);
+		$programa = 25;
+		$projeto = 322;
+		$responsavel = "5"; //id do moretto
+		$suplente = "9"; //id do kedley
+		$autor = "";
+		$ficha_tecnica = addslashes($ins_json['1.2 - Discriminar os integrantes do grupo']);
+		$sinopse = addslashes($ins_json['3.6 - Sinopse do evento']);
+		$links = addslashes($ins_json['3.14 - Referências']."".$ins_json['1.4 - Referências']);
+		$release = addslashes($ins_json['1.4 - Resumo Currículo Grupo / Coletivo / Agente Cultural']." /n ".$ins_json['3.5 – Release e objetivo principal:']."".$ins_json['3.12 – Justificativa para a existência de sua proposta/ Resultados esperados com a execução / Relação com o local:']);
+		
+
+		
+		$sql_ins = "INSERT INTO `sc_evento` (`idPrograma`, `idProjeto`, `nomeEvento`, `idResponsavel`, `idSuplente`, `fichaTecnica`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `inscricao`, `categoria`) VALUES ('$programa', '$projeto', '$nome_evento', '$responsavel', '$suplente', '$ficha_tecnica', '$sinopse', '$release', '1', '1', '$links', '$n_inscricao', '$cat')";
+		$query_ins = $wpdb->query($sql_ins);
+		if($query_ins == 1){
+			echo "$nome_evento inserido com sucesso.<br />";
+			$idEvento = $wpdb->insert_id;
+			// Insere PJ
+			$agente = $ins_json["Agente responsável pela inscrição - Nome completo ou Razão Social"];
+			$cpf = mask($ins_json["Agente responsável pela inscrição - CPF ou CNPJ"],"cpf");
+			$empresa = addslashes($ins_json["Instituição responsável - Nome completo ou Razão Social"]);
+			$cnpj = mask($ins_json["Instituição responsável - CPF ou CNPJ"],"cnpj");
+			$cep = $ins_json["Instituição responsável - CEP"];
+			$numero = $ins_json["Instituição responsável - Número"];
+			$telefone01 = $ins_json["Instituição responsável - Telefone 1"];
+			$email = $ins_json["Instituição responsável - Email Privado"];
+			$obs_pf = "End PF: ".$ins_json["Agente responsável pela inscrição - Endereço"];
+			$nome_artistico = $ins_json["Agente responsável pela inscrição"];	
+			$email01 = $ins_json["Agente responsável pela inscrição - Email Privado"]; 
+			$email02 = $ins_json["Agente responsável pela inscrição - Email Público"];
+			$agente_tel01 = $ins_json["Agente responsável pela inscrição - Telefone 1"];
+			$agente_tel02 = $ins_json["Agente responsável pela inscrição - Telefone 2"];
+			$agente_tel03 = $ins_json["Agente responsável pela inscrição - Telefone Público"];
+			$agente_email = $ins_json["Agente responsável pela inscrição - Email Privado"];
+			$agente_cep = $ins_json["Agente responsável pela inscrição - CEP"];
+			$agente_numero = $ins_json["Agente responsável pela inscrição - Número"];
+			$hoje = date("Y-m-d");
+			$rg = $ins_json["1.1 - RG do Agente Individual"];
+			
+			//Verifica PJ
+			$sql_verifica_pj = "SELECT Id_PessoaJuridica FROM sc_pj WHERE CNPJ LIKE '$cnpj'";
+			$res_verifica_pj = $wpdb->get_row($sql_verifica_pj,ARRAY_A);
+			if(count($res_verifica_pj) == 0){
+				//Insere PJ
+				$sql_ins_pj = "INSERT INTO `sc_pj` (`RazaoSocial`, `CNPJ`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Email`, `DataAtualizacao`, `Observacao`, `IdUsuario`,  `rep_nome`, `rep_rg`, `rep_cpf`) VALUES ('$empresa', '$cnpj', '$cep', '$numero', '',  '$telefone01',  '$email', '$hoje', '$obs_pf', '1','$agente','$rg','$cpf')";
+				$res_ins_pj = $wpdb->query($sql_ins_pj);
+				$id_pj = $wpdb->insert_id;
+				if($id_pj > 0){
+					echo "PJ inserido com sucesso.<br />";
+				}else{
+					echo "Erro ao inserir PJ. $sql_ins_pj<br />";
+				}
+			}else{
+				$id_pj = $res_verifica_pj['Id_PessoaJuridica'];
+			}
+			
+			if(isset($id_pj)){
+			$sql_ins_pedido = "INSERT INTO `sc_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantesGrupo`, `valor`, `dotacao`,  `observacao`, `publicado`,  `justificativa`, `parecerArtistico`) VALUES ('$idEvento','2','$id_pj','','','','','1','','')";
+			$res_ins_pedido = $wpdb->query($sql_ins_pedido);
+				if($res_ins_pedido == 1){
+					echo "Pedido criado com sucesso.<br />";
+				}else{
+					echo "Erro ao criar pedido. $sql_ins_pedido<br />";
+				}			
+			}
+
+		}else{
+			echo $sql_ins."<br / >"; 
+		}
+	}
+}
+
+*/
+
+$sql = "SELECT * FROM ava_inscricao WHERE id_mapas = '286'";
+$ver = $wpdb->get_results($sql,ARRAY_A);
+
+for($i = 0; $i < count($ver); $i++){
+	$ins_json = json_decode($ver[$i]['descricao'],ARRAY_A);
+	
+	//var_dump($ins_json);
+	
+	$veri = strripos($ins_json['Instituição responsável - CPF ou CNPJ'], ".");
+	
+	if($veri === false){
+		$cnpj = retornaMascara($ins_json['Instituição responsável - CPF ou CNPJ'],'##.###.###/####-##');
+	}else{
+		$cnpj = $ins_json['Instituição responsável - CPF ou CNPJ'];
+	}
+	$hoje = date('Y-m-d');
+	$razaosocial = $ins_json['Instituição responsável - Nome completo ou Razão Social'];
+	$cep = $ins_json['Instituição responsável - CEP'];
+	$numero = $ins_json['Instituição responsável - Número'];
+	$telefone01 = $ins_json['Instituição responsável - Telefone 1'];
+	$email = $ins_json['Instituição responsável - Email Privado']; 
+	$complemento = $ins_json["Instituição responsável - Complemento"];
+	
+	$sql_ver = "SELECT Id_PessoaJuridica FROM sc_pj WHERE CNPJ LIKE '$cnpj'";
+	$query_ver = $wpdb->get_results($sql_ver,ARRAY_A);
+	echo count($query_ver);
+	echo "<pre>";
+	var_dump($query_ver);
+	echo "</pre>";
+
+	if(count($query_ver) == 0){
+		$sql_insert = "INSERT INTO `sc_pj` (`RazaoSocial`, `CNPJ`, `CEP`, `Numero`,  `Complemento`, `Telefone1` , `Email`, `DataAtualizacao` ) VALUES ('$razaosocial','$cnpj','$cep','$numero','$complemento','$telefone01','$email','$hoje')";		
+		$query_insert = $wpdb->query($sql_insert);
+		var_dump($query_insert);
+	}
+
+	/*
+	echo $cnpj."<br />";
+	echo "<pre>";
+	var_dump($ins_json);
+	echo "</pre>";
+	*/
+}
+
+
+echo "<pre>";
+var_dump($ver);
+echo "</pre>";
+
+//$ins_json = json_decode($ver['descricao'],ARRAY_A);
+
+//var_dump
+
+
+
+
+
+/*
+on-58078286
+on-2101871521
+on-2135100180
+on-1302100216
+on-316231794
+on-688002562
+on-1954495637
+on-1776752054
+on-779107560
+
+on-1800557621
+on-1865705822
+on-260727837
+on-1539060598
+
+on-1517359845
+on-83570770
+on-1973229016
+on-1866929251
+on-1024162598
+on-650254741
+on-250367787
+
+on-1310481067
+on-1403335167
+on-22818438
+on-101546906	
+on-1054155689
+	on-1601848067
+	on-2022854575
+	on-445536142
+	
+on-221062963
+on-509705695
+on-783504660
+
+on-1860378557
+on-646718992
+on-307571087	
+	
+on-465126408
+on-643633308	
+	on-1443264217
+	on-259882278
+	
+on-1878208231
+on-921197314
+on-442527509
+on-1134166409
+*/
+
