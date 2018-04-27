@@ -1136,7 +1136,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
-					$contigenciado = $orc['contigenciado'] - $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado'];
+					$contigenciado = $orc['contigenciado'] - $orc['descontigenciado'] - $orc['suplementado'] + $orc['anulado'];
 					
 					if($i % 10 == 0 AND $i != 0){
 					?>
