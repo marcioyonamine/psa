@@ -1019,6 +1019,209 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 
 <?php 
 break;
+case "visaogeralv2": 
+
+if(isset($_GET['unidade']) AND $_GET['unidade'] != 0 ){
+	$unidade = " AND unidade ='".$_GET['unidade']."' ";	
+}else{
+	$unidade = "";
+}
+
+if(isset($_GET['fonte']) AND $_GET['fonte'] != 0 ){
+	$fonte = " AND fonte ='".$_GET['fonte']."' ";
+	$fonte_option = $_GET['fonte']; 	
+}else{
+	$fonte = "";
+	$fonte_option = 0; 	
+
+	}
+
+
+if(isset($_GET['ano'])){
+	$ano = " AND ano_base = '".$_GET['ano']."' ";	
+}else{
+	$ano = " AND ano_base = '2018' ";	
+}
+
+if(isset($_GET['projeto']) AND $_GET['projeto'] != 0 ){
+	$projeto = " AND projeto = '".$_GET['projeto']."' ";	
+}else{
+	$projeto = "";	
+}
+
+if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
+	$ficha = " AND ficha = '".$_GET['ficha']."' ";	
+}else{
+	$ficha = "";	
+}
+
+//filtros projeto e ficha
+?>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Dotações</h1>
+				</div>
+        </div>
+		<h3>Filtro</h3>
+		<div class="col-md-offset-1 col-md-10">
+			<form method="GET" action="orcamento.php?p=visaogeral&ano=2018" class="form-horizontal" role="form">
+				<div class="form-group">
+					<div class="col-md-offset-2">
+							<label>Unidade *</label>
+							<select class="form-control" name="unidade" id="inputSubject" >
+							<option value='0'>Escolha uma opção</option>
+							<?php echo geraTipoOpcao('unidade',$_GET['unidade']); ?>
+							<option value='0'>Todas as unidades</option>
+							</select>
+					</div>
+					</div>		
+				<div class="form-group">
+					<div class="col-md-offset-2">
+							<label>Fonte *</label>
+							<select class="form-control" name="fonte" id="inputSubject" >
+							<option value= '0'>Escolha uma opção</option>
+							<option <?php echo select(1,$fonte_option) ?> >1</option>
+							<option <?php echo select(2,$fonte_option) ?> >2</option>
+							<option <?php echo select(3,$fonte_option) ?> >3</option>
+							<option <?php echo select(4,$fonte_option) ?> >4</option>
+							<option <?php echo select(5,$fonte_option) ?> >5</option>
+							<option <?php echo select(6,$fonte_option) ?> >6</option>
+							<option value= '0'>Todas as opções</option>
+
+							</select>
+					</div>
+					</div>		
+
+					<div class="form-group">
+					<div class="col-md-offset-2">
+						<input type="submit" class="btn btn-theme btn-sm btn-block" value="Aplicar">
+							</form>
+							</select>
+					</div>
+			</div>		
+		
+		</form>			
+		</div>		
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+					  
+				<th width='10%'>Proj/Fic</th>
+				<th width='10%'>Nat/Fon</th>
+                  <th>Inicial</th>
+                  <th>Contigenciado</th>
+				<th>Saldo</th>		
+
+
+				  </tr>
+              </thead>
+              <tbody>
+			  <form method="POST" action="?" />
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT id FROM sc_orcamento WHERE publicado = '1' $ano $unidade $fonte $projeto $ficha ORDER BY projeto ASC, ficha ASC";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				$total_orc = 0;
+				$total_con = 0;
+				$total_des = 0;
+				$total_sup = 0;
+				$total_res = 0;
+				$total_tot = 0;
+				$total_pla = 0;
+				$total_lib = 0;
+				$total_anul = 0;
+				
+				for($i = 0; $i < count($res); $i++){
+					$orc = orcamento($res[$i]['id']);
+					$contigenciado = $orc['contigenciado'] - $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado'];
+					
+					if($i % 10 == 0 AND $i != 0){
+					?>
+					               <tr>
+					  
+				<th width='10%'>Proj/Fic</th>
+				<th width='10%'>Nat/Fon</th>
+				<th>Inical</th>
+                  <th>Contigenciado</th>
+				  				<th>Saldo</th>		
+
+
+				  </tr>
+						<tr>
+
+					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
+					  <td><?php echo $orc['natureza']; ?></td>
+					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
+					  <td><?php echo dinheiroParaBr($contigenciado); ?></td>
+					 <td><?php echo dinheiroParaBr($orc['total'] - $contigenciado); ?></td>
+			
+					
+					
+					<?php
+					}else{
+					
+					?>
+                    
+					<tr>
+
+					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
+					  <td><?php echo $orc['natureza']; ?></td>
+					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
+					  <td><?php echo dinheiroParaBr($contigenciado); ?></td>
+					 <td><?php echo dinheiroParaBr($orc['total'] - $contigenciado); ?></td>
+					 
+	<!--<td>	
+							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+							</form>
+							<?php 
+					  
+					  ?></td>-->
+					</tr>
+                    
+                    
+				<?php 
+					}
+				$total_orc = $total_orc + $orc['total'];
+				$total_con = $total_con + $orc['contigenciado'];
+				$total_des = $total_des + $orc['descontigenciado'];
+				$total_sup = $total_sup + $orc['suplementado'];
+				$total_lib = $total_lib + $orc['liberado'];
+				$total_pla = $total_pla + $orc['planejado'];
+				$total_anul = $total_anul + $orc['anulado'];
+				//$total_res = $total_res;
+				//$total_tot = $total_tot + $total;					
+					
+					
+					
+					
+				} // fim do for?>	
+				<tr>
+					  <td>TOTAL:</td>
+					  <td></td>
+					  <td><?php echo dinheiroParaBr($total_orc); ?></td>
+					  <td><?php echo dinheiroParaBr($total_con); ?></td>
+
+					  <td><?php echo dinheiroParaBr($total_tot); ?></td>
+					  <td><?php echo dinheiroParaBr($total_pla); ?></td>
+					  <td><?php echo dinheiroParaBr($total_tot - $total_pla + $total_lib); ?></td>
+						<td></td>
+				
+				</tr>
+				</tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+
+
+<?php 
+break;
 case 'historico':
 $id_hist = $_GET['id'];
 $historico = orcamento($id_hist);
