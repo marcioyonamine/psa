@@ -72,7 +72,7 @@
 			global $wpdb;
 			$json = addslashes(json_encode($matriz,JSON_UNESCAPED_UNICODE));		
 			$sql = "INSERT INTO `ava_inscricao` (`id`, `id_mapas`, `inscricao`, `edital`, `aprovado`, `descricao`) 
-			VALUES (NULL, '349', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
+			VALUES (NULL, '".$_GET['mapas']."', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
 			$insert = $wpdb->query($sql);
 			if($insert == FALSE){
 				echo $sql."<br /><br />";
