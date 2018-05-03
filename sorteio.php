@@ -93,11 +93,11 @@ $x = $x."}";
 
 $x = json_encode($input);
 
-$sql_insert_grupo = "UPDATE ava_edital SET avaliadores = '$x' WHERE id_mapas = '273'";
+$sql_insert_grupo = "UPDATE ava_edital SET avaliadores = '$x' WHERE id_mapas = '".$_GET['id_mapas']."'";
 $insert = $wpdb->query($sql_insert_grupo);
 
 
-$sql_sel_ins = "SELECT avaliadores FROM ava_edital WHERE id_mapas = '273'";
+$sql_sel_ins = "SELECT avaliadores FROM ava_edital WHERE id_mapas = '".$_GET['id_mapas']."'";
 $sel = $wpdb->get_row($sql_sel_ins,ARRAY_A);
 
 
