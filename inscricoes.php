@@ -14,9 +14,9 @@ if(isset($_GET['p'])){
 
 switch($p){
 	case "inicio":
-	$edital =  273;
+	$edital =  $_GET['edital'];
 	$aval = verificaAvaliacao($user->ID,$edital);
-	var_dump($aval);
+	//var_dump($aval);
 	//var_dump($aval);
 ?>
 
