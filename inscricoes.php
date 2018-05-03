@@ -56,7 +56,7 @@ switch($p){
 				$x = opcaoDados($tipo,$id);
 				$g = $x['edital'][1];
 				
-				$edital =  editais("",19);
+				$edital =  editais("",21);
 
 				
 				$sql_sel_ins = "SELECT avaliadores FROM ava_edital WHERE id_mapas = '273'";
