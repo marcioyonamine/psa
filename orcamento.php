@@ -1240,6 +1240,7 @@ $historico = orcamento($id_hist);
               <thead>
                 <tr>
 				<th>#</th>
+				<th>Lib</th>
 			  <th>Data</th>
 				<th>Tipo</th>
 				<th>Título</th>
@@ -1270,6 +1271,9 @@ $historico = orcamento($id_hist);
 					?>
 					<tr>
 					  <td><?php echo $historico['historico'][$i]['id']; ?></td>
+					  <td><?php 
+						$ped = retornaPedido($historico['historico'][$i]['idPedidoContratacao']);	
+					  echo $ped['nLiberacao']; ?></td>
 					  <td><?php echo exibirDataBr($historico['historico'][$i]['data']); ?></td>
 					  <td><?php echo  $tipo['tipo']; ?></td>
 					  <td><?php echo $historico['historico'][$i]['titulo']; ?></td>
@@ -1281,6 +1285,7 @@ $historico = orcamento($id_hist);
 					
 				} // fim do for?>	
 				<tr>
+				<td></td>
 				<td></td>
 						<td><td>
 					  <td></td>

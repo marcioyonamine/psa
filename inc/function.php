@@ -782,7 +782,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	}
 	
 	// Histórico
-	$sel_hist = "SELECT id, titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC ";
+	$sel_hist = "SELECT id, titulo,valor, descricao, tipo, idUsuario,data,idPedidoContratacao FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC ";
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 		
 	
