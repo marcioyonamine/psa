@@ -1251,6 +1251,7 @@ $historico = orcamento($id_hist);
               <tbody>
 			  <tr>
 			  <td></td>
+			  <td></td>
 			  <td>Inicial</td>
 			  <td>Orçamento aprovado</td>
 			  <td></td>
