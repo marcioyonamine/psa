@@ -83,7 +83,7 @@ switch($p){
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
 				  <td><?php echo somaNotas($json['inscricao'],$user->ID,273); ?></td>
                   <td>
-				  <form method="POST" action="avaliacao.php" class="form-horizontal" role="form">
+				  <form method="POST" action="avaliacao.php?edital=<?php echo $_GET['edital'] ?>" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $json['inscricao']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Avaliar">
 							</form></td>

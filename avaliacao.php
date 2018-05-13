@@ -100,10 +100,10 @@ var objeto = form1.obs.value
                 </tr>
               </thead>
               <tbody>
-			  <form method="POST" action="?" class="form-horizontal" role="form" name="form1">
+			  <form method="POST" action="?edital=<?php echo $_GET['edital']; ?>" class="form-horizontal" role="form" name="form1">
 				<?php 
 				
-				$sql = "SELECT * FROM ava_criterios WHERE edital = '273'";
+				$sql = "SELECT * FROM ava_criterios WHERE edital = '".$_GET['edital']."'";
 				$res = $wpdb->get_results($sql,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 				?>	
