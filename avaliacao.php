@@ -109,7 +109,7 @@ var objeto = form1.obs.value
 				?>	
                 <tr>
                   <td><?php echo $res[$i]['criterio']?></td>
-					<td><input type="text" class="form-control nota" name="<?php echo $res[$i]['id']; ?>" value="<?php echo retornaNota($inscricao,$res[$i]['id'],$user->ID); ?>" max='3' min = '1'><?php echo $inscricao." - ".$res[$i]['id']." - ".$id->ID; ?></td>
+					<td><input type="text" class="form-control nota" name="<?php echo $res[$i]['id']; ?>" value="<?php echo retornaNota($inscricao,$res[$i]['id'],$user->ID); ?>" max='3' min = '1'><?php echo $inscricao." - ".$res[$i]['id']." - ".$user->ID; ?></td>
 				  </tr>
 				  
 				<?php } ?>
