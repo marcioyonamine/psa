@@ -14,7 +14,7 @@ if(isset($_POST['gravar'])){
 				$sql_verifica = "SELECT id FROM ava_nota WHERE inscricao = '$inscricao' AND usuario = '".$user->ID."' AND criterio = '$key'";
 				$res = $wpdb->get_results($sql_verifica,ARRAY_A);
 					if(count($res) == 0){
-						$sql_insere = "INSERT INTO `ava_nota` (`id`, `usuario`, `inscricao`, `nota`, `criterio`) VALUES (NULL, '$usuario', '$inscricao', '$value', '$key')";
+						$sql_insere = "INSERT INTO `ava_nota` (`id`, `usuario`, `inscricao`, `nota`, `criterio`, `edital` ) VALUES (NULL, '$usuario', '$inscricao', '$value', '$key', '".$_GET['edital']."')";
 						$ins = $wpdb->query($sql_insere);
 						if($ins == 1){
 							$contador++;

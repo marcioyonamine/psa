@@ -18,7 +18,7 @@
 			if($user->ID == 1 OR $user->ID == 16 ){
 			?>
 			<li class="nav-item">
-              <a class="nav-link" href="inscricoes.php">Inscrições</a>
+              <a class="nav-link" href="inscricoes.php?edital=349">Inscrições</a>
             </li>
 			<?php } ?>
 			
