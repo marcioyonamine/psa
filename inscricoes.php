@@ -141,11 +141,11 @@ case 'all':
 				$x = opcaoDados($tipo,$id);
 				$g = $x['edital'][1];
 				
-				$edital =  editais("",21);
+				$edital =  editais("",22);
 				$pag = 20;
 
 				
-				$sql_sel_ins = "SELECT inscricao FROM ava_inscricao WHERE edital = '".$_GET['edital']."'";
+				$sql_sel_ins = "SELECT inscricao FROM ava_inscricao WHERE id_mapas = '".$_GET['edital']."'";
 				$res = $wpdb->get_results($sql_sel_ins,ARRAY_A);
 				
 				
