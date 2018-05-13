@@ -23,7 +23,7 @@
 			<?php } ?>
 			
             <li class="nav-item">
-              <a class="nav-link" href="inscricoes.php?p=all"> Todas as Inscrições (Consulta)</a>
+              <a class="nav-link" href="inscricoes.php?p=all?edital=349"> Todas as Inscrições (Consulta)</a>
             </li>
 			<?php 
 		
