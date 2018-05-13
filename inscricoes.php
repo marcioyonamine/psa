@@ -59,7 +59,7 @@ switch($p){
 				$edital =  editais($id,21);
 
 				
-				$sql_sel_ins = "SELECT avaliadores FROM ava_edital WHERE id_mapas = '".$edital."'";
+				$sql_sel_ins = "SELECT avaliadores FROM ava_edital WHERE id_mapas = '".$_GET['id_mapas']."'";
 				$sel = $wpdb->get_row($sql_sel_ins,ARRAY_A);
 
 				$res = json_decode($sel['avaliadores'],true);
