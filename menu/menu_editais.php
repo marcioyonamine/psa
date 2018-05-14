@@ -15,7 +15,8 @@
               <a class="nav-link" href="inscricoes.php">Inscrições Selecionadas / Avaliações</a>
             </li>-->
 			<?php
-			if($user->ID == 1 OR $user->ID == 16 ){
+			$jurados = array(1,9,85,80,82,70,53,86,81,84,83);
+			if(in_array($user->ID,$jurados)){
 			?>
 			<li class="nav-item">
               <a class="nav-link" href="inscricoes.php?edital=349">Inscrições</a>
