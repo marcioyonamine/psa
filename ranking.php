@@ -109,32 +109,7 @@ $(function() {
 		  
 		  </p>
 		  
-<?php
-//lista todas as inscrições
 
-$sql_gera = "SELECT DISTINCT inscricao FROM ava_nota WHERE edital = '".$_GET['edital']."'";
-$query_gera = $wpdb->get_results($sql_gera,ARRAY_A);
-for($i = 0; $i < count($query_gera); $i++){
-	//verifica quantos usuários deram nota
-	$sql_user = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao ='".$query_gera[$i]['inscricao']."'";
-	$user = $wpdb->get_results($sql_user,ARRAY_A);	
-	$n_user = count($user);
-	// contamos todos os valores
-	$sql_notas = "SELECT nota FROM ava_nota WHERE inscricao = '".$query_gera[$i]['inscricao']."'";
-	$notas = $wpdb->get_results($sql_notas,ARRAY_A);	
-	$total = 0;
-	for($k = 0; $k < count($notas); $k++){
-		$total = $total + $notas[$k]['nota'];
-	}
-	echo $query_gera[$i]['inscricao']." = ".$total." média = ".$total/$n_user."<br />"; 
-	
-}
-
-echo "<pre>";
-echo $sql_gera;
- var_dump($query_gera); 
- echo "</pre>";
- ?>
 		<!--<div><select>
 		<option></option>
 		<input class="btn btn-sm btn-default" type="submit" value="Filtrar" />
