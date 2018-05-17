@@ -16,7 +16,7 @@ for($i = 0; $i < count($resultados); $i++){
 	//verifica quantos usuários deram nota
 	$sql_user = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao ='".$resultados[$i]['inscricao']."'";
 	$usuarios = $wpdb->get_results($sql_user,ARRAY_A);	
-	$n_user = count($usarios);
+	$n_user = count($usuarios);
 	// contamos todos os valores
 	$sql_notas = "SELECT nota FROM ava_nota WHERE inscricao = '".$resultados[$i]['inscricao']."'";
 	$notas = $wpdb->get_results($sql_notas,ARRAY_A);	
