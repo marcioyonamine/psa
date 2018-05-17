@@ -15,8 +15,8 @@ $resultados = $wpdb->get_results($sql_gera,ARRAY_A);
 for($i = 0; $i < count($resultados); $i++){
 	//verifica quantos usuários deram nota
 	$sql_user = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao ='".$resultados[$i]['inscricao']."'";
-	$user = $wpdb->get_results($sql_user,ARRAY_A);	
-	$n_user = count($user);
+	$usuarios = $wpdb->get_results($sql_user,ARRAY_A);	
+	$n_user = count($usarios);
 	// contamos todos os valores
 	$sql_notas = "SELECT nota FROM ava_nota WHERE inscricao = '".$resultados[$i]['inscricao']."'";
 	$notas = $wpdb->get_results($sql_notas,ARRAY_A);	
@@ -47,26 +47,6 @@ for($i = 0; $i < count($resultados); $i++){
 	
 }
 
-
-
-if(isset($_GET['edital'])){
-	
-	$projeto = $_GET['edital'];
-
-	// atualiza ranking
-	//verifica se existe o projeto no ranking
-	$sql_ver = "SELECT id FROM ava_ranking WHERE edital = '$projeto'";
-	$query_ver = $wpdb->get_results($sql_ver);
-	if(count($query_ver) > 0){ // atualiza
-		
-		
-	}else{ //insere
-		$sql_insere = "INSERT INTO `ava_ranking` (`inscricao`, `edital`) SELECT inscricao, id_mapas FROM ava_inscricao WHERE id_mapas = '$projeto'";
-		$query_insere = $wpdb->query($sql_insere);
-		
-	}
-
-}
 
 
 ?>
