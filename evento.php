@@ -79,7 +79,7 @@ if(isset($_SESSION['id'])){
 					<?php
 						if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){
 					  ?>
-					  <td><a href="busca.php?p=view&tipo=evento&id=<?php echo $res[$i]['idEvento'] ?>" target=_blank>
+					  <a href="busca.php?p=view&tipo=evento&id=<?php echo $res[$i]['idEvento'] ?>" target=_blank>
 						<?php  } ?>
 					  <?php echo $evento['titulo']; ?>
 					<?php
