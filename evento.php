@@ -75,6 +75,7 @@ if(isset($_SESSION['id'])){
 					?>
 					<tr>
 					  <td><?php echo $res[$i]['idEvento']; ?></td>
+					  <td>
 					<?php
 						if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){
 					  ?>
