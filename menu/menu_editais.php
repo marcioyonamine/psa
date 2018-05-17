@@ -31,7 +31,7 @@
 			$peruser = array(2,1,5,6,7);
 			if(in_array($user->ID,$peruser)){ ?>
             <li class="nav-item">
-              <a class="nav-link" href="ranking.php?edital=349"> Ranking Aniversário</a>
+              <a class="nav-link" href="ranking.php?edital=349"> Ranking FIP 2018</a>
             </li>
 			<?php } ?>
 			<?php ?>

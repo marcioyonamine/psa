@@ -1,5 +1,54 @@
 <?php include "header.php"; ?>
 <?php 
+
+
+// gera ranking
+
+$edital = $_GET['edital'];
+$sql_gera = "SELECT DISTINCT inscricao FROM ava_nota WHERE edital = '$edital'";
+$resultados = $wpdb->get_results($sql_gera,ARRAY_A);
+
+//echo $sql_gera;
+//echo "<br />";
+//var_dump($resultados);
+
+for($i = 0; $i < count($resultados); $i++){
+	//verifica quantos usuários deram nota
+	$sql_user = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao ='".$resultados[$i]['inscricao']."'";
+	$user = $wpdb->get_results($sql_user,ARRAY_A);	
+	$n_user = count($user);
+	// contamos todos os valores
+	$sql_notas = "SELECT nota FROM ava_nota WHERE inscricao = '".$resultados[$i]['inscricao']."'";
+	$notas = $wpdb->get_results($sql_notas,ARRAY_A);	
+	$total = 0;
+	for($k = 0; $k < count($notas); $k++){
+		$total = $total + $notas[$k]['nota'];
+	}
+	$inscricao = $resultados[$i]['inscricao'];
+	$nota_media = $total/$n_user;
+	
+	$sql_insc = "SELECT descricao FROM ava_inscricao WHERE inscricao = '$inscricao'";
+	$insc_json = $wpdb->get_results($sql_insc,ARRAY_A);
+	$insc = json_decode($insc_json[0]['descricao'],true);
+	$categoria = $insc['3.2 - Categoria'];
+	//echo "<pre>";
+	//var_dump($insc);
+	//echo "</pre>";
+	$sql_atualiza = "UPDATE ava_ranking SET
+	nota = '$nota_media',
+	filtro = '$categoria'
+	WHERE inscricao = '$inscricao'
+	";
+	$atualiza = $wpdb->query($sql_atualiza);
+	
+	//echo $resultados[$i]['inscricao']." = ".$total." | média = ".$total/$n_user." Categoria: $categoria<br />"; 
+	
+	
+	
+}
+
+
+
 if(isset($_GET['edital'])){
 	
 	$projeto = $_GET['edital'];
@@ -59,6 +108,33 @@ $(function() {
 		  ?>
 		  
 		  </p>
+		  
+<?php
+//lista todas as inscrições
+
+$sql_gera = "SELECT DISTINCT inscricao FROM ava_nota WHERE edital = '".$_GET['edital']."'";
+$query_gera = $wpdb->get_results($sql_gera,ARRAY_A);
+for($i = 0; $i < count($query_gera); $i++){
+	//verifica quantos usuários deram nota
+	$sql_user = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao ='".$query_gera[$i]['inscricao']."'";
+	$user = $wpdb->get_results($sql_user,ARRAY_A);	
+	$n_user = count($user);
+	// contamos todos os valores
+	$sql_notas = "SELECT nota FROM ava_nota WHERE inscricao = '".$query_gera[$i]['inscricao']."'";
+	$notas = $wpdb->get_results($sql_notas,ARRAY_A);	
+	$total = 0;
+	for($k = 0; $k < count($notas); $k++){
+		$total = $total + $notas[$k]['nota'];
+	}
+	echo $query_gera[$i]['inscricao']." = ".$total." média = ".$total/$n_user."<br />"; 
+	
+}
+
+echo "<pre>";
+echo $sql_gera;
+ var_dump($query_gera); 
+ echo "</pre>";
+ ?>
 		<!--<div><select>
 		<option></option>
 		<input class="btn btn-sm btn-default" type="submit" value="Filtrar" />
@@ -86,7 +162,7 @@ $(function() {
 				$x = opcaoDados($tipo,$id);
 				$g = $x['edital'][1];
 				
-				$edital =  editais("",19);
+				$edital =  editais("",21);
 				
 				if(isset($_GET['order'])){
 					$order = "ORDER BY nota DESC, filtro ASC";
