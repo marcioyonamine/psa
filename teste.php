@@ -45,7 +45,7 @@ for($i = 0; $i < count($resultados); $i++){
 	";
 	$atualiza = $wpdb->query($sql_atualiza);
 	
-	echo $resultados[$i]['inscricao']." = ".$total." | média = ".$total/$n_user." Categoria: $categoria<br />"; 
+	//echo $resultados[$i]['inscricao']." = ".$total." | média = ".$total/$n_user." Categoria: $categoria<br />"; 
 	
 	
 	

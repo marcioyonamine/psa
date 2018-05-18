@@ -1112,6 +1112,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				<th width='10%'>Proj/Fic</th>
 				<th width='10%'>Nat/Fon</th>
                   <th>Inicial</th>
+				  <th>Anulado</th>
+				  <th>Suplementado</th>
                   <th>Contigenciado</th>
 				<th>Saldo</th>		
 
@@ -1136,7 +1138,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
-					$contigenciado = $orc['contigenciado'] - $orc['descontigenciado'] - $orc['suplementado'] + $orc['anulado'];
+					//$contigenciado = $orc['contigenciado'] - $orc['descontigenciado'] - $orc['suplementado'] + $orc['anulado'];
+					$contigenciado = $orc['contigenciado'] - $orc['descontigenciado']; 
 					
 					if($i % 10 == 0 AND $i != 0){
 					?>
@@ -1145,8 +1148,10 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				<th width='10%'>Proj/Fic</th>
 				<th width='10%'>Nat/Fon</th>
 				<th>Inical</th>
-                  <th>Contigenciado</th>
-				  				<th>Saldo</th>		
+    		  <th>Anulado</th>
+			  <th>Suplementado</th>
+				<th>Contigenciado</th>
+  				<th>Saldo</th>		
 
 
 				  </tr>
@@ -1155,6 +1160,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
 					  <td><?php echo $orc['natureza']; ?></td>
 					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['anulado']); ?></td>	
+					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>	
 					  <td><?php echo dinheiroParaBr($contigenciado); ?></td>
 					 <td><?php echo dinheiroParaBr($orc['total'] - $contigenciado); ?></td>
 			
@@ -1170,6 +1177,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
 					  <td><?php echo $orc['natureza']; ?></td>
 					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
+					  <td><?php echo dinheiroParaBr($orc['anulado']); ?></td>	
+					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>	
 					  <td><?php echo dinheiroParaBr($contigenciado); ?></td>
 					 <td><?php echo dinheiroParaBr($orc['total'] - $contigenciado); ?></td>
 					 
