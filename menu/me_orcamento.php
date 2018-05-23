@@ -19,6 +19,8 @@
 			<li class="nav-item">
               <a class="nav-link" href="orcamento.php?p=visaogeral">Visão Geral</a>
             </li>
+		<?php $autorizados = array(1,5,62);
+			if(in_array($user->ID,$autorizados)){ ?>		
 	<li class="nav-item">
               <a class="nav-link" href="orcamento.php?p=mov_inserir">Inserir Movimentação</a>
             </li>
@@ -39,7 +41,7 @@
   	  <li class="nav-item">
               <a class="nav-link" href="orcamento.php?p=listaprojeto">Projetos</a>
             </li> 
-
+			<?php } ?>
 			</ul>
 
 		  <?php 

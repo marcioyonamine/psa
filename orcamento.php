@@ -1308,11 +1308,14 @@ $historico = orcamento($id_hist);
 	
 				</tr>
 								<tr><td colspan="6">		
+				<?php $autorizados = array(1,5,62);
+			if(in_array($user->ID,$autorizados)){ ?>
 				<form method="POST" action="?p=mov_inserir" class="form-horizontal" role="form" name="form1">
 				<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" >
 				<input type="submit" class="btn btn-theme btn-lg btn-block"  name="gravar" value="Inserir movimentação">
 				</td>
 				  </form>
+			<?php } ?>
 				  </tr>
 
 <tr>
