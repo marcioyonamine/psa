@@ -911,6 +911,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_pla = 0;
 				$total_lib = 0;
 				$total_anul = 0;
+								$total_rev = 0;
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
@@ -943,6 +944,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['suplementado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['anulado']); ?></td>
+					  
 					  <td><?php echo dinheiroParaBr( $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado']); ?></td>					  
 					  <td><?php echo dinheiroParaBr($orc['liberado']); ?></td>
 
@@ -992,6 +994,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_lib = $total_lib + $orc['liberado'];
 				$total_pla = $total_pla + $orc['planejado'];
 				$total_anul = $total_anul + $orc['anulado'];
+				$total_rev = $total_rev + ($orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado']);
 				//$total_res = $total_res;
 				$total_tot = $total_tot + $total;					
 					
@@ -1007,6 +1010,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td><?php echo dinheiroParaBr($total_des); ?></td>
 					  <td><?php echo dinheiroParaBr($total_sup); ?></td>
 					  <td><?php echo dinheiroParaBr($total_anul); ?></td>
+					  <td><?php echo dinheiroParaBr($total_rev); ?></td>
+					  
 					  <td><?php echo dinheiroParaBr($total_lib); ?></td>
 
 					  <td><?php echo dinheiroParaBr($total_tot); ?></td>
@@ -1140,6 +1145,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_pla = 0;
 				$total_lib = 0;
 				$total_anul = 0;
+				$total_rev = 0;
 				
 				for($i = 0; $i < count($res); $i++){
 					$orc = orcamento($res[$i]['id']);
@@ -1206,6 +1212,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 				$total_lib = $total_lib + $orc['liberado'];
 				$total_pla = $total_pla + $orc['planejado'];
 				$total_anul = $total_anul + $orc['anulado'];
+				$total_rev = $total_rev + ($orc['total'] - $contigenciado - $orc['anulado'] + $orc['suplementado']);
 				//$total_res = $total_res;
 				//$total_tot = $total_tot + $total;					
 					
@@ -1218,7 +1225,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  <td></td>
 					  <td><?php echo dinheiroParaBr($total_orc); ?></td>
 					  <td><?php echo dinheiroParaBr($total_con); ?></td>
-
+					  <td><?php echo dinheiroParaBr($total_des); ?></td>
 					  <td><?php echo dinheiroParaBr($total_tot); ?></td>
 					  <td><?php echo dinheiroParaBr($total_pla); ?></td>
 					  <td><?php echo dinheiroParaBr($total_tot - $total_pla + $total_lib); ?></td>
