@@ -1298,7 +1298,7 @@ $historico = orcamento($id_hist);
 					  <td><?php echo exibirDataBr($historico['historico'][$i]['data']); ?></td>
 					  <td><?php echo  $tipo['tipo']; ?></td>
 					  <td><?php echo $historico['historico'][$i]['titulo']; ?></td>
-					  <td><?php echo $historico['historico'][$i]['descricao']; ?></td>
+					  <td><?php echo $historico['historico'][$i]['descricao']."".$ped['observacao']; ?></td>
 					  <td><?php echo $valor; ?></td>
 					  </tr>
 				<?php 
