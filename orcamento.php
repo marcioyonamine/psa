@@ -887,6 +887,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
                   <th>Des</th>
                   <th>Sup</th>
                   <th>Anul</th>
+				  				   <th>Rev</th>
                   <th>Lib</th>
 
                   <th>Saldo Lib</th> <!-- O saldo Planejado é o Saldo Liberado - Valor Planejado -->
