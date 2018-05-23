@@ -862,9 +862,9 @@ function historicoOrcamento($id){
 		$x = retornaPedido($con[$i]['idPedidoContratacao']);
 		
 		$hist[$k]['id'] = $con[$i]['idPedidoContratacao'];
-		$hist[$k]['titulo'] = $x['objeto'];
+		$hist[$k]['titulo'] = $x['objeto']." - ".$x['obs'];
 		$hist[$k]['valor'] = $con[$i]['valor'];
-		$hist[$k]['descricao'] = "Contratação da Empresa/Pessoa: ".$x['nome']." para ".$x['objeto']." no período ". $x['periodo']." em ".$x['local']." - ".$x['obs'];
+		$hist[$k]['descricao'] = "Contratação da Empresa/Pessoa: ".$x['nome']." para ".$x['objeto']." no período ". $x['periodo']." em ".$x['local'];
 		$hist[$k]['tipo'] = "Liberação";
 		$hist[$k]['idUsuario'] = "";
 		$hist[$k]['data'] = $con[$i]['liberado'];
