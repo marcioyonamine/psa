@@ -855,7 +855,7 @@ function historicoOrcamento($id){
 	$sel_hist = "SELECT id, titulo,valor, descricao, tipo, idUsuario,data FROM sc_mov_orc WHERE idOrc = '$id' AND '$inicio' <= data AND '$fim' >= data AND publicado = '1' ORDER BY data ASC ";
 	$hist = $wpdb->get_results($sel_hist,ARRAY_A);
 	
-	$sel_con = "SELECT idPedidoContratacao,idEvento,idAtividade, valor, liberado FROM sc_contratacao WHERE dotacao = '$i' AND liberado <> '0000-00-00'";
+	$sel_con = "SELECT idPedidoContratacao,idEvento,idAtividade, valor, liberado, observacao FROM sc_contratacao WHERE dotacao = '$i' AND liberado <> '0000-00-00'";
 	$con = $wpdb->get_results($sel_con,ARRAY_A);
 	$k = count($hist);
 	for($i = 0; $i < count($con) ; $i++){
@@ -864,7 +864,7 @@ function historicoOrcamento($id){
 		$hist[$k]['id'] = $con[$i]['idPedidoContratacao'];
 		$hist[$k]['titulo'] = $x['objeto'];
 		$hist[$k]['valor'] = $con[$i]['valor'];
-		$hist[$k]['descricao'] = "Contratação da Empresa/Pessoa: ".$x['nome']." para ".$x['objeto']." no período ". $x['periodo']." em ".$x['local'];
+		$hist[$k]['descricao'] = "Contratação da Empresa/Pessoa: ".$x['nome']." para ".$x['objeto']." no período ". $x['periodo']." em ".$x['local']. - .$con['observacao'];
 		$hist[$k]['tipo'] = "Liberação";
 		$hist[$k]['idUsuario'] = "";
 		$hist[$k]['data'] = $con[$i]['liberado'];
