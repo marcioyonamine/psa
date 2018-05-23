@@ -945,7 +945,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 
 					  <td><?php echo dinheiroParaBr($total); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
-					  <td><?php echo dinheiroParaBr( $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado'] - $orc['planejado']); ?></td>				
+					  <!--<td><?php echo dinheiroParaBr( $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado'] - $orc['planejado']); ?></td>-->				
+					 <td><?php echo dinheiroParaBr( $orc['liberado'] - $orc['planejado']); ?>				
 					
 					
 					<?php
@@ -966,7 +967,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 
 					  <td><?php echo dinheiroParaBr($total); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['planejado']) ?><?php //var_dump($orc); ?></td>
-					  <td><?php echo dinheiroParaBr( $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['anulado'] - $orc['planejado']); ?></td>
+					 <td><?php echo dinheiroParaBr( $orc['liberado'] - $orc['planejado']); ?>				
 	<!--<td>	
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id']; ?>" />
