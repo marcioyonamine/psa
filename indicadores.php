@@ -56,9 +56,10 @@ Monitoramento Redes Sociais (série histórica mensal)
 	>> CONDEPHAAPSA
 
 	
-Indicadores
+Indicadores (25 e 26 de junho reunião)
 		-> evento
-			-> artistas locais
+			-> artistas locais (novo campo)
+			-> Parceria e qual parceiro?
 			-> agentes locais
 			-> bairros atendidos (rever nomenclatura de espaços no culturaz e colocar bairros)
 			
@@ -137,53 +138,13 @@ case "inicio": ?>
     <div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h3>Relatórios de Público - Inserir</h3>
-					<?php
-					// listar o evento;
-					$evento = evento($_SESSION['idEvento']);
-					?>
-					<h1><?php echo $evento['titulo']; ?></h1>
+					<h3>Relatórios de Público</h3>
 				</div>
         </div>
-		          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Título</th>
-                  <th>Data</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-				<?php 
-				global $wpdb;
-				$sql_list =  "SELECT idEvento FROM sc_evento ORDER BY idEvento DESC";
-				$res = $wpdb->get_results($sql_list,ARRAY_A);
-				for($i = 0; $i < count($res); $i++){
-					$evento = evento($res[$i]['idEvento']);
-					
-					?>
-					<tr>
-					  <td><?php echo $res[$i]['idEvento']; ?></td>
-					  <td><?php echo $evento['titulo']; ?></td>
-					  <td><?php echo $evento['programa']; ?></td>
-					  <td><?php echo $evento['projeto']; ?></td>
-					  <td>	
-							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
-							</form>
-							<?php 
-					  
-					  ?></td>
-					</tr>
-				<?php } // fim do for?>	
-				
-              </tbody>
-            </table>
-          </div>
+         <div class="table-responsive">
+				<p>Escolha no Menu ao lado o tipo de indicador que deseja inserir.</p>
+
+		 </div>
 
     </div>
 </section>
@@ -192,7 +153,7 @@ case "inicio": ?>
 	 
 <?php 	 
 break;	 
- case "inserir":
+ case "inserirevento":
  ?>
  
   <link href="css/jquery-ui.css" rel="stylesheet">
@@ -307,80 +268,8 @@ $(function() {
 
 <?php 	 
 break;	 
- case "editar":
+ case "inserirbiblioteca":
 
-if(isset($_POST['editar']) OR isset($_POST['inserir'])){ 
-	$data_inicio = exibirDataMysql($_POST["data_inicio"]);
-	if($_POST["data_final"] != ''){
-		$data_final   = exibirDataMysql($_POST["data_final"]);
-	}else{
-		$data_final = '0000-00-00';
-	}
-	$hora   = $_POST["hora"].":00";
-	$valorIngresso   = dinheiroDeBr($_POST["valorIngresso"]);
-	$duracao   = $_POST["duracao"];
-	$retiradaIngresso   = $_POST["retiradaIngresso"];
-	$local   = $_POST["local"];
-	$ingressos   = $_POST["ingressos"];
-
-	if(isset($_POST["domingo"])){$domingo  = 1; }else{ $domingo  = 0;}
-	if(isset($_POST["segunda"])){$segunda  = 1; }else{ $segunda  = 0;}
-	if(isset($_POST["terca"])){$terca = 1; }else{ $terca  = 0;}
-	if(isset($_POST["quarta"])){$quarta  = 1; }else{ $quarta  = 0;}
-	if(isset($_POST["quinta"])){$quinta  = 1; }else{ $quinta  = 0;}
-	if(isset($_POST["sexta"])){$sexta  = 1; }else{ $sexta  = 0;}
-	if(isset($_POST["sabado"])){$sabado  = 1; }else{ $sabado  = 0;}
-	
-	//colocar if do cara que esqueceu de marcar	
-	
-}
- 
-if(isset($_POST['inserir'])){
-	global $wpdb;
-	$id_evento = $_SESSION['id'];
-	$sql = "INSERT INTO `sc_ocorrencia` (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`) 
-	VALUES ('$local', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_final', '$hora', '$valorIngresso', '$retiradaIngresso',  '$ingressos',  '$duracao',  '1')";	
-	$res = $wpdb->query($sql);
-	$id_ocorrencia = $wpdb->insert_id;
-	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
-	$ocor = $wpdb->get_row($sql_ocor,ARRAY_A);
-} 
- 
-if(isset($_POST['editar'])){
-	global $wpdb;
-	$id_ocorrencia = $_POST['editar'];
-	$id_evento = $_SESSION['id'];
-	$sql = "UPDATE `sc_ocorrencia` SET
-	`local` = '$local',
-	`idEvento` = '$id_evento',
-	`segunda` = '$segunda',
-	`terca` =  '$terca',
-	`quarta` = '$quarta',
-	`quinta` = '$quinta',
-	`sexta` = '$sexta',
-	`sabado` = '$sabado',
-	`domingo` = '$domingo',
-	`dataInicio` = '$data_inicio',
-	`dataFinal` = '$data_final',
-	`horaInicio` = '$hora',
-	`valorIngresso` = '$valorIngresso',
-	`retiradaIngresso` = '$retiradaIngresso',
-	`lotacao` = '$ingressos', 
-	`duracao` = '$duracao'
-	WHERE `idOcorrencia` = '$id_ocorrencia'";
-	$res = $wpdb->query($sql);
-	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
-	$ocor = $wpdb->get_row($sql_ocor,ARRAY_A);
-} 
-
-if(isset($_POST['carregar'])){
-	$id_ocorrencia = $_POST['carregar'];
-	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
-	$ocor = $wpdb->get_row($sql_ocor,ARRAY_A);
-
-	
-}
- 
  ?>
  
  <link href="css/jquery-ui.css" rel="stylesheet">
@@ -405,97 +294,80 @@ $(function() {
 	<div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h3>Meus Eventos - Ocorrência - Editar</h3>
-					<?php
-					// listar o evento;
-					$evento = evento($_SESSION['id']);
-					?>
-					<h1><?php echo $evento['titulo']; ?></h1>
+					<h3>Biblioteca - Inserir</h3>
 					<p><?php //echo $sql; ?></p>
 				</div>
         </div>
 			
 		</div>
-		<div class="row">
+		<div class="row">	
 
 		<form class="formocor" action="?p=editar" method="POST" role="form">
             <div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<label>Data de Início:</label>
-                    <input type='text' class="form-control calendario" name="data_inicio" value="<?php echo exibirDataBr($ocor['dataInicio']); ?>"/>
+					<label>Período de Avaliação - Início:</label>
+                    <input type='text' class="form-control calendario" name="periodo_inicio" value="<?php //echo exibirDataBr($ocor['dataInicio']); ?>"/>
 				</div>
 			</div>
             <div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<label>Data de Encerramento (se for data única, não preencher):</label>
-                    <input type='text' class="form-control calendario" name="data_final" value="<?php if($ocor['dataFinal'] != '0000-00-00'){ echo exibirDataBr($ocor['dataFinal']);} ?>"/>
+					<label>Período de Avaliação - Fim:</label>
+                    <input type='text' class="form-control calendario" name="periodo_fim" value="<?php //if($ocor['dataFinal'] != '0000-00-00'){ echo exibirDataBr($ocor['dataFinal']);} ?>"/>
                 </div>
             </div>
 
-           <div class="form-group">
-				<div class="col-md-offset-2 col-md-8">
-					<label>Selecione apenas se existr Data de Encerramento</label>
-					<p>
-                    <input type='checkbox'  name="domingo" <?php if($ocor['domingo'] == 1){ echo "checked";} ?> /> Dom | 
-                    <input type='checkbox' name="segunda" <?php if($ocor['segunda'] == 1){ echo "checked";} ?>/> Seg |
-                    <input type='checkbox' name="terca" <?php if($ocor['terca'] == 1){ echo "checked";} ?>/> Ter |
-                    <input type='checkbox' name="quarta" <?php if($ocor['quarta'] == 1){ echo "checked";} ?>/> Qua |
-                    <input type='checkbox' name="quinta" <?php if($ocor['quinta'] == 1){ echo "checked";} ?>/> Quin |
-                    <input type='checkbox' name="sexta" <?php if($ocor['sexta'] == 1){ echo "checked";} ?>/> Sex |
-                    <input type='checkbox' name="sabado"<?php if($ocor['sabado'] == 1){ echo "checked";} ?> /> Sab 
-					</p>
-				</div>
-            </div>
+
 
 
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-							<label>Horário de início</label>
-							<input type="text" name="hora" class="form-control hora" value="<?php echo $ocor['horaInicio']; ?>" />
+				<label>Público Biblioteca Central (só número, sem pontuação)</label>
+			<input type="text" name="pub_central" class="form-control publico" value="" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Público Biblioteca Ramais (só número, sem pontuação)</label>
+			<input type="text" name="pub_ramais" class="form-control publico" value="" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Empréstimos Biblioteca Central (só número, sem pontuação)</label>
+			<input type="text" name="emp_central" class="form-control publico" value="" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Empréstimos Biblioteca Ramais (só número, sem pontuação)</label>
+			<input type="text" name="emp_ramais" class="form-control publico" value="" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Sócios Biblioteca Central (só número, sem pontuação)</label>
+			<input type="text" name="soc_central" class="form-control publico" value="" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Sócios Biblioteca Ramais (só número, sem pontuação)</label>
+			<input type="text" name="soc_ramais" class="form-control publico" value="" />
+			</div>
+			</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>obs</label>
+							<textarea name="obs" class="form-control" rows="10" placeholder="Relato de incidentes, impressões, avaliações e críticas."><?php //echo $campo["sinopse"] ?></textarea>
 						</div> 
 					</div>
-
-
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-8">
-				<label>Valor do ingresso * (se for entrada franca, inserir 0)</label>
-			<input type="text" name="valorIngresso" class="form-control valor" value="<?php echo dinheiroParaBr($ocor['valorIngresso']); ?>" />
-			</div>
-			</div>
-			<div class="form-group">
-			<div class="col-md-offset-2 col-md-8">
-				<label>Duração do evento em minutos *</label>
-				<input type="text" id="duracao" name="duracao" class="form-control minutos" value="<?php echo ($ocor['duracao']); ?>"/>
-			</div>
-			</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Sistema de retirada de ingressos</label>
-							<select class="form-control" name="retiradaIngresso" id="inputSubject" ><option value='0'>Selecione</option></select>
+						<input type="hidden" name="inserir" value="1" />
+							<button type="submit" class="btn btn-theme btn-lg btn-block">Enviar Relatório</button>
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<label>Sala / espaço</label>
-							<select class="form-control" name="local" id="inputSubject" >
-							<option>Escolha uma opção</option>
-							<?php echo geraTipoOpcao("local",$ocor['local']) ?>
-							</select>
-						</div>
-					</div>	
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-						<label>Ingressos disponíveis</label>
-						<input type="text" class="form-control" name="ingressos" value="<?php echo ($ocor['lotacao']); ?>" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="editar" value="<?php echo ($ocor['idOcorrencia']); ?>" />
-						<button type="submit" class="btn btn-theme btn-lg btn-block">Editar ocorrência</button>
-						</div>
-					</div>
-				</form>
+					</div>			
+			</form>
 			</div>
 
 </section>
@@ -503,44 +375,583 @@ $(function() {
 
 <?php 
 break;
-case "listar":
+ case "inseririncentivo":
+
+ ?>
+ 
+ <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+
+
+
+<section id="contact" class="home-section bg-white">
+	<div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h3>Incentivo à Criação - Inserir Disciplina</h3>
+					<p><?php //echo $sql; ?></p>
+				</div>
+        </div>
+			
+		</div>
+		<div class="row">	
+
+		<form class="formocor" action="?p=listarincentivo" method="POST" role="form">
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Equipamentos Culturais / Local</label>
+				<select class="form-control" name="equipamento" id="programa" >
+								<?php geraTipoOpcao("local") ?>
+								<option value='0'>Outros</option>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Outros Locais</label>
+			<input type="text" name="outros" class="form-control" value="" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Bairro</label>
+				<select class="form-control" name="bairro" id="programa" >
+								<?php geraTipoOpcao("bairro") ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Projeto</label>
+							<select class="form-control" name="projeto" id="programa" >
+								<?php geraTipoOpcao("projeto") ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Tipo de ação</label>
+				<select class="form-control" name="tipo_acao" id="programa" >
+								<?php geraTipoOpcao("tipo_evento") ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Título da ação (título usado para divulgação na cidade)</label>
+			<input type="text" name="titulo_acao" class="form-control" value="" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Linguagem</label>
+				<select class="form-control" name="linguagem" id="programa" >
+								<?php geraTipoOpcao("linguagens") ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Disciplinas</label>
+			<input type="text" name="disciplinas" class="form-control" value="" />
+			</div>
+			</div>	
+
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Início:</label>
+                    <input type='text' class="form-control calendario" name="ocor_inicio" value="<?php //echo exibirDataBr($ocor['dataInicio']); ?>"/>
+				</div>
+			</div>
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Fim:</label>
+                    <input type='text' class="form-control calendario" name="ocor_fim" value="<?php //if($ocor['dataFinal'] != '0000-00-00'){ echo exibirDataBr($ocor['dataFinal']);} ?>"/>
+                </div>
+            </div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Carga Horária</label>
+			<input type="text" name="carga_horaria" class="form-control" value="" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de Concluintes</label>
+			<input type="text" name="n_concluintes" class="form-control" value="" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de Evasão</label>
+			<input type="text" name="n_evasao" class="form-control" value="" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Nome do(s) profissional(is)</label>
+			<input type="text" name="nome_profissional" class="form-control" value="" />
+			</div>
+			</div>	
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Profissionnal é de Santo André?</label>
+							<select class="form-control" name="santo_andre" id="programa" >
+								<option value = '1'>Sim</option>
+								<option value = '0'>Não</option>
+
+								</select>
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Custo da hora/aula do profissional</label>
+			<input type="text" name="custo_hora_aula" class="form-control valor" value="" />
+			</div>
+			</div>					
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Carga horária total do profissional para esta ação</label>
+			<input type="text" name="carga_horaria_prof" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Custo total de contratação do profissional para esta ação (R$)
+</label>
+			<input type="text" name="custo_total" class="form-control valor" value="" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Gastos com materiais de consumo</label>
+			<input type="text" name="material_consumo" class="form-control valor" value="" />
+			</div>
+			</div>				
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Houve parceria para esta ação?</label>
+							<select class="form-control" name="parceria" id="programa" >
+								<option value = '1'>Sim</option>
+								<option value = '0'>Não</option>
+
+								</select>
+			</div>
+			</div>	
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Qual o parceiro (incluindo voluntariado)?</label>
+			<input type="text" name="parceiro" class="form-control" value="" />
+			</div>
+			</div>					
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de vagas oferecidas</label>
+			<input type="text" name="vagas" class="form-control" value="" />
+			</div>
+			</div>	
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de rematriculados
+</label>
+			<input type="text" name="rematriculas" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de inscritos
+</label>
+			<input type="text" name="inscritos" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de interessados em lista de espera</label>
+			<input type="text" name="espera" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número total de atendidos ao longo da ação (número de frequentadores reais da ação no mês + número de atendidos da lista de espera)
+</label>
+			<input type="text" name="atendidos" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número total de atendidos que são moradores de Santo André</label>
+			<input type="text" name="atendidos_sa" class="form-control" value="" />
+			</div>
+			</div>	
+			
+			<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Obs</label>
+							<textarea name="obs" class="form-control" rows="10" placeholder="Relato de incidentes, impressões, avaliações e críticas."><?php //echo $campo["sinopse"] ?></textarea>
+						</div> 
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+						<input type="hidden" name="inserir" value="1" />
+							<button type="submit" class="btn btn-theme btn-lg btn-block">Enviar Relatório</button>
+						</div>
+					</div>			
+			</form>
+			</div>
+
+</section>
+
+
+<?php 
+break;
+ case "editarincentivo":
+if(isset($_POST['editar'])){
+	$ind = recuperaDados("sc_ind_incentivo",$_POST['editar'],"id");
+	
+}
+ ?>
+ 
+ <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
+</script>
+
+
+
+<section id="contact" class="home-section bg-white">
+	<div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h3>Incentivo à Criação - Editar Disciplina</h3>
+					<p><?php //var_dump($ind); ?></p>
+				</div>
+        </div>
+			
+		</div>
+		<div class="row">	
+
+		<form class="formocor" action="?p=listarincentivo" method="POST" role="form">
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Equipamentos Culturais / Local</label>
+				<select class="form-control" name="equipamento" id="programa" >
+								<?php geraTipoOpcao("local",$ind['equipamento']) ?>
+								<option value='0'>Outros</option>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Outros Locais</label>
+			<input type="text" name="outros" class="form-control" value="<?php echo $ind['outros']; ?>" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Bairro</label>
+				<select class="form-control" name="bairro" id="programa" >
+								<?php geraTipoOpcao("bairro",$ind['bairro']) ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Projeto</label>
+							<select class="form-control" name="projeto" id="programa" >
+								<?php geraTipoOpcao("projeto",$ind['projeto']) ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Tipo de ação</label>
+				<select class="form-control" name="tipo_acao" id="programa" >
+								<?php geraTipoOpcao("tipo_evento",$ind['tipo_acao']) ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Título da ação (título usado para divulgação na cidade)</label>
+			<input type="text" name="titulo_acao" class="form-control" value="<?php echo $ind['titulo_acao']; ?>" />
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Linguagem</label>
+				<select class="form-control" name="linguagem" id="programa" >
+								<?php geraTipoOpcao("linguagens",$ind['linguagem']) ?>
+							</select>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Disciplinas</label>
+			<input type="text" name="disciplinas" class="form-control" value="<?php echo $ind['disciplinas']; ?>" />
+			</div>
+			</div>	
+
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Início:</label>
+                    <input type='text' class="form-control calendario" name="ocor_inicio" value="<?php echo exibirDataBr($ind['ocor_inicio']); ?>"/>
+				</div>
+			</div>
+            <div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<label>Fim:</label>
+                    <input type='text' class="form-control calendario" name="ocor_fim" value="<?php if($ind['ocor_fim'] != '0000-00-00'){ echo exibirDataBr($ind['ocor_fim']);} ?>"/>
+                </div>
+            </div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Carga Horária</label>
+			<input type="text" name="carga_horaria" class="form-control" value="<?php echo $ind['carga_horaria']; ?>" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de Concluintes</label>
+			<input type="text" name="n_concluintes" class="form-control" value="<?php echo $ind['n_concluintes']; ?>" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de Evasão</label>
+			<input type="text" name="n_evasao" class="form-control" value="<?php echo $ind['n_evasao']; ?>" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Nome do(s) profissional(is)</label>
+			<input type="text" name="nome_profissional" class="form-control" value="<?php echo $ind['nome_profissional']; ?>" />
+			</div>
+			</div>	
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Profissionnal é de Santo André?</label>
+							<select class="form-control" name="santo_andre" id="programa" >
+								<option value = '1' <?php if($ind['santo_andre'] == 1){ echo "selected";} ?>Sim</option>
+								<option value = '0' <?php if($ind['santo_andre'] == 0){ echo "selected";} ?>Sim</option>
+								
+								</select>
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Custo da hora/aula do profissional</label>
+			<input type="text" name="custo_hora_aula" class="form-control valor" value="" />
+			</div>
+			</div>					
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Carga horária total do profissional para esta ação</label>
+			<input type="text" name="carga_horaria_prof" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Custo total de contratação do profissional para esta ação (R$)
+</label>
+			<input type="text" name="custo_total" class="form-control valor" value="" />
+			</div>
+			</div>				
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Gastos com materiais de consumo</label>
+			<input type="text" name="material_consumo" class="form-control valor" value="" />
+			</div>
+			</div>				
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Houve parceria para esta ação?</label>
+							<select class="form-control" name="parceria" id="programa" >
+								<option value = '1'>Sim</option>
+								<option value = '0'>Não</option>
+
+								</select>
+			</div>
+			</div>	
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Qual o parceiro (incluindo voluntariado)?</label>
+			<input type="text" name="parceiro" class="form-control" value="" />
+			</div>
+			</div>					
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de vagas oferecidas</label>
+			<input type="text" name="vagas" class="form-control" value="" />
+			</div>
+			</div>	
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de rematriculados
+</label>
+			<input type="text" name="rematriculas" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de inscritos
+</label>
+			<input type="text" name="inscritos" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número de interessados em lista de espera</label>
+			<input type="text" name="espera" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número total de atendidos ao longo da ação (número de frequentadores reais da ação no mês + número de atendidos da lista de espera)
+</label>
+			<input type="text" name="atendidos" class="form-control" value="" />
+			</div>
+			</div>	
+
+						<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Número total de atendidos que são moradores de Santo André</label>
+			<input type="text" name="atendidos_sa" class="form-control" value="" />
+			</div>
+			</div>	
+			
+			<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Obs</label>
+							<textarea name="obs" class="form-control" rows="10" placeholder="Relato de incidentes, impressões, avaliações e críticas."><?php //echo $campo["sinopse"] ?></textarea>
+						</div> 
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+						<input type="hidden" name="inserir" value="1" />
+							<button type="submit" class="btn btn-theme btn-lg btn-block">Enviar Relatório</button>
+						</div>
+					</div>			
+			</form>
+			</div>
+
+</section>
+
+
+<?php 
+break;
+
+case "listarincentivo":
+
+
+if(isset($_POST['inserir']) OR isset($_POST['editar'])){
+  $equipamento = $_POST["equipamento"];
+  $outros = $_POST["outros"];
+  $bairro = $_POST["bairro"];
+  $projeto = $_POST["projeto"];
+  $tipo_acao = $_POST["tipo_acao"];
+  $titulo_acao = $_POST["titulo_acao"];
+  $linguagem = $_POST["linguagem"];
+  $disciplinas = $_POST["disciplinas"];
+  $ocor_inicio = exibirDataMysql($_POST["ocor_inicio"]);
+  $ocor_fim = exibirDataMysql($_POST["ocor_fim"]);
+  $carga_horaria = $_POST["carga_horaria"];
+  $n_concluintes = $_POST["n_concluintes"];
+  $n_evasao = $_POST["n_evasao"];
+  $nome_profissional = $_POST["nome_profissional"];
+  $santo_andre = $_POST["santo_andre"];
+  $custo_hora_aula = dinheiroDeBr($_POST["custo_hora_aula"]);
+  $carga_horaria_prof = $_POST["carga_horaria_prof"];
+  $custo_total = dinheiroDeBr($_POST["custo_total"]);
+  $material_consumo = dinheiroDeBr($_POST["material_consumo"]);
+  $parceria = $_POST["parceria"];
+  $parceiro = $_POST["parceiro"];
+  $vagas = $_POST["vagas"];
+  $rematriculas = $_POST["rematriculas"];
+  $inscritos = $_POST["inscritos"];
+  $espera = $_POST["espera"];
+  $atendidos = $_POST["atendidos"];
+  $atendidos_sa = $_POST["atendidos_sa"];
+  $obs = $_POST["obs"];
+  $atualizacao = date("Y-m-d H:s:i");
+  $idUsuario = $user->ID;
+}
+
+if(isset($_POST['inserir'])){
+	$sql_ins = "INSERT INTO `sc_ind_incentivo` (`equipamento`, `outros`, `bairro`, `projeto`, `tipo_acao`, `titulo_acao`, `disciplinas`, `linguagem`, `ocor_inicio`, `ocor_fim`, `carga_horaria`, `n_concluintes`, `n_evasao`, `nome_profissional`, `santo_andre`, `custo_hora_aula`, `carga_horaria_prof`, `custo_total`, `material_consumo`, `parceria`, `parceiro`, `vagas`, `rematriculas`, `inscritos`, `espera`, `atendidos`, `atendidos_sa`, `obs`, `atualizacao`, `idUsuario`, `publicado`) VALUES ( '$equipamento', '$outros', '$bairro', '$projeto', '$tipo_acao', '$titulo_acao', '$disciplinas', '$linguagem', '$ocor_inicio', '$ocor_fim', '$carga_horaria', '$n_concluintes', '$n_evasao', '$nome_profissional', '$santo_andre', '$custo_hora_aula', '$carga_horaria_prof', '$custo_total', '$material_consumo', '$parceria', '$parceiro', '$vagas', '$rematriculas', '$inscritos', '$espera', '$atendidos', '$atendidos_sa','$obs','$atualizacao','$idUsuario','1' );";
+	$ins = $wpdb->query($sql_ins);
+	$lastid = $wpdb->insert_id;
+	
+}
+
+
 
 if(isset($_POST['apagar'])){
 	global $wpdb;
 	$id = $_POST['apagar'];
-	$sql = "UPDATE sc_ocorrencia SET publicado = '0' WHERE idOcorrencia = '$id'";
+	$sql = "UPDATE sc_ind_incentivo SET publicado = '0' WHERE id = '$id'";
 	$apagar = $wpdb->query($sql);	
 }
 
-if(isset($_POST['duplicar'])){
-	global $wpdb;
-	$id = $_POST['duplicar'];
-	$sql = "INSERT INTO sc_ocorrencia (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`) 
-	SELECT `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado` FROM sc_ocorrencia WHERE `idOcorrencia` = '$id'";
-	$duplicar = $wpdb->query($sql);
-}
 
-if(isset($_POST['agenda'])){
-	atualizarAgenda($_POST['agenda']);	
-	
-}
 
 ?>
 
 
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h3>Meus Eventos - Ocorrência - Listar</h3>
+					<h3>Incentivo à Criação - Listar Disciplinas</h3>
 					<?php
 					// listar o evento;
-					$evento = evento($_SESSION['id']);
+					//var_dump($lastid);
 					?>
-					<h1><?php echo $evento['titulo']; ?></h1>
+
 				</div>		
 		</div>
 		
 		<?php 
-				$sel = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$_SESSION['id']."' AND publicado = '1' ORDER BY dataInicio";
+				$sel = "SELECT * FROM sc_ind_incentivo WHERE publicado = '1' ORDER BY id DESC";
 				$ocor = $wpdb->get_results($sel,ARRAY_A);
 		if(count($ocor) > 0){
 		?>
@@ -549,37 +960,32 @@ if(isset($_POST['agenda'])){
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Ocorrência</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
+                  <th>Título Disciplina/Curso</th>
+                  <th>Responsável</th>
+                  <th>Período</th>
+                  <th width="10%"></th>
+                  <th width="10%"></th>
+
+				  </tr>
               </thead>
               <tbody>
 				<?php
 				for($i = 0; $i < count($ocor); $i++){
-					$ocorrencia = ocorrencia($ocor[$i]['idOcorrencia']);
+					
 				?>
 				<tr>
-                  <td><?php 
-				  echo $ocorrencia['tipo']."<br />".$ocorrencia['data']."<br />".$ocorrencia['local'];
-				  
-				  ?></td>
+                  <td><?php echo $ocor[$i]['titulo_acao'];  ?></td>
+                  <td><?php echo $ocor[$i]['nome_profissional']; ?></td>
+                  <td><?php echo exibirDataBr($ocor[$i]['ocor_inicio']) ?> a <?php echo exibirDataBr($ocor[$i]['ocor_fim']) ?> </td>				  
                   <td>
-					<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-					<input type="hidden" name="carregar" value="<?php echo $ocor[$i]['idOcorrencia']; ?>" />
+					<form method="POST" action="?p=editarincentivo" class="form-horizontal" role="form">
+					<input type="hidden" name="editar" value="<?php echo $ocor[$i]['id']; ?>" />
 					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
 					</form>
 				 </td>
                   <td>
-					<form method="POST" action="?p=listar" class="form-horizontal" role="form">
-					<input type="hidden" name="duplicar" value="<?php echo $ocor[$i]['idOcorrencia']; ?>" />
-					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Duplicar">
-					</form>
-				</td>
-                  <td>
-					<form method="POST" action="?p=listar" class="form-horizontal" role="form">
-					<input type="hidden" name="apagar" value="<?php echo $ocor[$i]['idOcorrencia']; ?>" />
+					<form method="POST" action="?p=listarincentivo" class="form-horizontal" role="form">
+					<input type="hidden" name="apagar" value="<?php echo $ocor[$i]['id']; ?>" />
 					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
 					</form>
 				</td>
@@ -589,23 +995,16 @@ if(isset($_POST['agenda'])){
 				</tbody>
             </table>
 			
-			<form class="form-horizontal" action="?p=listar" method="POST" role="form">
-            <div class="form-group">
-				<div class="col-md-offset-2 col-md-8">
-					
-                   <input type="hidden" name="agenda" value="<?php echo $_SESSION['id']; ?>" />
-					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Atualizar Agenda">
-				</div>
-			</div>
+			
 			
           </div>
-			</form>
+
 			</div>
 
 		  <?php } else { ?>
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-				<p> Não há ocorrências cadastradas </p>
+				<p> Não há disciplinas/cursos cadastrados. </p>
 				</div>		
 		</div>
 

@@ -8,6 +8,29 @@
           <h1>Ambiente teste</h1>
 
 <?php 
+$sql = "SELECT * FROM temp_bairros";
+$x = $wpdb->get_results($sql,ARRAY_A);
+for($i = 0; $i < count($x); $i++){
+	$bairro = $x[$i]['bairro'];
+	$distrito = $x[$i]['distrito'];
+	$json = '{"distrito":"'.$distrito.'"}';
+	$sql_insert = "INSERT INTO `sc_tipo` (`id_tipo`, `tipo`, `descricao`, `abreviatura`, `publicado`) VALUES (NULL, '$bairro', '$json', 'bairro', '1');";
+	$ins = $wpdb->query($sql_insert);
+	if($ins){
+		echo "$bairro inserido com sucesso.<br />";
+	}else{
+		echo "Erro ao inserir $bairro.<br />";
+	}
+	
+}
+
+
+
+?>		  
+		  
+		  
+		  
+<?php /*
 $edital = $_GET['edital'];
 $sql_gera = "SELECT DISTINCT inscricao FROM ava_nota WHERE edital = '$edital'";
 $resultados = $wpdb->get_results($sql_gera,ARRAY_A);
@@ -51,7 +74,7 @@ for($i = 0; $i < count($resultados); $i++){
 	
 }
 
-
+*/
 ?>		
 		
 		

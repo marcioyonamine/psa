@@ -16,63 +16,30 @@
 		</ul>
 	
 
-		<?php 
-		if((isset($_GET['p']) AND $_GET['p'] == 'editar') OR isset($_SESSION['id'])){
-		
-		?>
-		  <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=editar">Informações</a>
-            </li>
-	  <li class="nav-item">
-              <a class="nav-link" href="ocorrencias.php?p=listar">Listar Ocorrências</a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="ocorrencias.php?p=inserir">Inserir Ocorrências</a>
-            </li>
-
-        
-	<li class="nav-item">
-              <a class="nav-link" href="arquivo.php">Listar Arquivos</a>
-            </li>
-
-	<li class="nav-item">
-              <a class="nav-link" href="arquivo.php?p=inserir">Inserir Arquivos</a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php">Pedidos de Contratação</a>
-            </li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="enviar.php">Enviar</a>
-   </li>
-
-			</ul>
-
-		  <?php 
-		}
-		?>
-
-
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="evento.php">Listar Meus Eventos</a>
+              <a class="nav-link" href="indicadores.php?p=listarbiblioteca">Listar Biblioteca</a>
+            </li>
+              <a class="nav-link" href="indicadores.php?p=inserirbiblioteca">Inserir Biblioteca</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="indicadores.php?p=listarincentivo">Listar Disciplinas/Cursos - Incentivo à Criação</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=aniversario">Listar Eventos Aniversário</a>
+              <a class="nav-link" href="indicadores.php?p=inseririncentivo">Inserir Disciplinas/Cursos Incentivo à Criação</a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=inserir">Inserir Novo Evento</a>
+              <a class="nav-link" href="indicadores.php?p=listarevento">Listar Eventos</a>
 		    </li>
-
-          </ul>
-
-		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=pedido">Listar Meus Pedidos de Contratação</a>
-            </li>
-
+              <a class="nav-link" href="indicadores.php?p=inserirevento">Inserir Eventos</a>
+		    </li>
+    
           </ul>
+
+
 
 
           <ul class="nav nav-pills flex-column">
