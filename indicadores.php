@@ -765,8 +765,8 @@ $(function() {
 				<div class="col-md-offset-2 col-md-8">
 				<label>Profissionnal é de Santo André?</label>
 							<select class="form-control" name="santo_andre" id="programa" >
-								<option value = '1' <?php if($ind['santo_andre'] == 1){ echo "selected";} ?>Sim</option>
-								<option value = '0' <?php if($ind['santo_andre'] == 0){ echo "selected";} ?>Sim</option>
+								<option value = '1' <?php if($ind['santo_andre'] == 1){ echo "selected";} ?> >Sim</option>
+								<option value = '0' <?php if($ind['santo_andre'] == 0){ echo "selected";} ?> >Não</option>
 								
 								</select>
 			</div>
@@ -774,14 +774,14 @@ $(function() {
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Custo da hora/aula do profissional</label>
-			<input type="text" name="custo_hora_aula" class="form-control valor" value="" />
+			<input type="text" name="custo_hora_aula" class="form-control valor" value="<?php echo $ind['custo_hora_aula']; ?>" />
 			</div>
 			</div>					
 
 						<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Carga horária total do profissional para esta ação</label>
-			<input type="text" name="carga_horaria_prof" class="form-control" value="" />
+			<input type="text" name="carga_horaria_prof" class="form-control" value="<?php echo $ind['carga_horaria_prof']; ?>" />
 			</div>
 			</div>	
 
@@ -789,13 +789,13 @@ $(function() {
 				<div class="col-md-offset-2 col-md-8">
 				<label>Custo total de contratação do profissional para esta ação (R$)
 </label>
-			<input type="text" name="custo_total" class="form-control valor" value="" />
+			<input type="text" name="custo_total" class="form-control valor" value="<?php echo $ind['custo_total']; ?>" />
 			</div>
 			</div>				
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Gastos com materiais de consumo</label>
-			<input type="text" name="material_consumo" class="form-control valor" value="" />
+			<input type="text" name="material_consumo" class="form-control valor" value="<?php echo $ind['material_consumo']; ?>" />
 			</div>
 			</div>				
 
@@ -803,8 +803,8 @@ $(function() {
 				<div class="col-md-offset-2 col-md-8">
 				<label>Houve parceria para esta ação?</label>
 							<select class="form-control" name="parceria" id="programa" >
-								<option value = '1'>Sim</option>
-								<option value = '0'>Não</option>
+								<option value = '1' <?php if($ind['parceria'] == 1){ echo "selected";} ?> >Sim</option>
+								<option value = '0' <?php if($ind['parceria'] == 0){ echo "selected";} ?> >Não</option>
 
 								</select>
 			</div>
@@ -813,21 +813,21 @@ $(function() {
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Qual o parceiro (incluindo voluntariado)?</label>
-			<input type="text" name="parceiro" class="form-control" value="" />
+			<input type="text" name="parceiro" class="form-control" value="<?php echo $ind['parceiro']; ?>" />
 			</div>
 			</div>					
 
 						<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Número de vagas oferecidas</label>
-			<input type="text" name="vagas" class="form-control" value="" />
+			<input type="text" name="vagas" class="form-control" value="<?php echo $ind['vagas']; ?>" />
 			</div>
 			</div>	
 						<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Número de rematriculados
 </label>
-			<input type="text" name="rematriculas" class="form-control" value="" />
+			<input type="text" name="rematriculas" class="form-control" value="<?php echo $ind['rematriculas']; ?>" />
 			</div>
 			</div>	
 
@@ -835,14 +835,14 @@ $(function() {
 				<div class="col-md-offset-2 col-md-8">
 				<label>Número de inscritos
 </label>
-			<input type="text" name="inscritos" class="form-control" value="" />
+			<input type="text" name="inscritos" class="form-control" value="<?php echo $ind['inscritos']; ?>" />
 			</div>
 			</div>	
 
 						<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Número de interessados em lista de espera</label>
-			<input type="text" name="espera" class="form-control" value="" />
+			<input type="text" name="espera" class="form-control" value="<?php echo $ind['espera']; ?>" />
 			</div>
 			</div>	
 
@@ -850,26 +850,26 @@ $(function() {
 				<div class="col-md-offset-2 col-md-8">
 				<label>Número total de atendidos ao longo da ação (número de frequentadores reais da ação no mês + número de atendidos da lista de espera)
 </label>
-			<input type="text" name="atendidos" class="form-control" value="" />
+			<input type="text" name="atendidos" class="form-control" value="<?php echo $ind['atendidos']; ?>" />
 			</div>
 			</div>	
 
 						<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Número total de atendidos que são moradores de Santo André</label>
-			<input type="text" name="atendidos_sa" class="form-control" value="" />
+			<input type="text" name="atendidos_sa" class="form-control" value="<?php echo $ind['atendidos_sa']; ?>" />
 			</div>
 			</div>	
 			
 			<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Obs</label>
-							<textarea name="obs" class="form-control" rows="10" placeholder="Relato de incidentes, impressões, avaliações e críticas."><?php //echo $campo["sinopse"] ?></textarea>
+							<textarea name="obs" class="form-control" rows="10" placeholder="Relato de incidentes, impressões, avaliações e críticas."><?php echo $ind["obs"] ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="inserir" value="1" />
+						<input type="hidden" name="editar" value="<?php echo $ind['id']; ?>" />
 							<button type="submit" class="btn btn-theme btn-lg btn-block">Enviar Relatório</button>
 						</div>
 					</div>			
