@@ -632,6 +632,76 @@ if(isset($_POST['editar'])){
 	$ind = recuperaDados("sc_ind_incentivo",$_POST['editar'],"id");
 	
 }
+$editar = 0;
+
+if(isset($_POST["equipamento"])){
+  $equipamento = $_POST["equipamento"];
+  $outros = $_POST["outros"];
+  $bairro = $_POST["bairro"];
+  $projeto = $_POST["projeto"];
+  $tipo_acao = $_POST["tipo_acao"];
+  $titulo_acao = $_POST["titulo_acao"];
+  $linguagem = $_POST["linguagem"];
+  $disciplinas = $_POST["disciplinas"];
+  $ocor_inicio = exibirDataMysql($_POST["ocor_inicio"]);
+  $ocor_fim = exibirDataMysql($_POST["ocor_fim"]);
+  $carga_horaria = $_POST["carga_horaria"];
+  $n_concluintes = $_POST["n_concluintes"];
+  $n_evasao = $_POST["n_evasao"];
+  $nome_profissional = $_POST["nome_profissional"];
+  $santo_andre = $_POST["santo_andre"];
+  $custo_hora_aula = dinheiroDeBr($_POST["custo_hora_aula"]);
+  $carga_horaria_prof = $_POST["carga_horaria_prof"];
+  $custo_total = dinheiroDeBr($_POST["custo_total"]);
+  $material_consumo = dinheiroDeBr($_POST["material_consumo"]);
+  $parceria = $_POST["parceria"];
+  $parceiro = $_POST["parceiro"];
+  $vagas = $_POST["vagas"];
+  $rematriculas = $_POST["rematriculas"];
+  $inscritos = $_POST["inscritos"];
+  $espera = $_POST["espera"];
+  $atendidos = $_POST["atendidos"];
+  $atendidos_sa = $_POST["atendidos_sa"];
+  $obs = $_POST["obs"];
+  $atualizacao = date("Y-m-d H:s:i");
+  $idUsuario = $user->ID;
+
+  $sql_update = "UPDATE sc_ind_incentivo SET
+   equipamento = '$equipamento',
+  outros = '$outros',
+  bairro = '$bairro',
+   projeto = '$projeto',
+   tipo_acao = '$tipo_acao',
+   titulo_acao = '$titulo_acao',
+   linguagem = '$linguagem',
+   disciplinas = '$disciplinas',
+   ocor_inicio = '$ocor_inicio',
+   ocor_fim = '$ocor_fim',
+   carga_horaria = '$carga_horaria',
+   n_concluintes = '$n_concluintes',
+   n_evasao = '$n_evasao',
+   nome_profissional = '$nome_profissional',
+   santo_andre = '$santo_andre',
+   custo_hora_aula = '$custo_hora_aula',
+   carga_horaria_prof = '$carga_horaria_prof',   
+   custo_total = '$custo_total',
+   material_consumo = '$material_consumo',
+   parceria = '$parceria',
+   parceiro = '$parceiro',
+   vagas = '$vagas',
+   rematriculas = '$rematriculas',
+   inscritos = '$inscritos',
+   espera = '$espera',
+   atendidos = '$atendidos',
+   atendidos_sa = '$atendidos_sa',
+   obs = '$obs'
+   WHERE id = '".$_POST['editar']."'";
+
+	$editar = $wpdb->query($sql_update);
+	$ind = recuperaDados("sc_ind_incentivo",$_POST['editar'],"id");
+  
+}
+
  ?>
  
  <link href="css/jquery-ui.css" rel="stylesheet">
@@ -657,14 +727,16 @@ $(function() {
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h3>Incentivo à Criação - Editar Disciplina</h3>
-					<p><?php //var_dump($ind); ?></p>
+					<p><?php if($editar == 1){
+						echo alerta("Disciplina/Curso atualizado.","success");
+					}; ?></p>
 				</div>
         </div>
 			
 		</div>
 		<div class="row">	
 
-		<form class="formocor" action="?p=listarincentivo" method="POST" role="form">
+		<form class="formocor" action="?p=editarincentivo" method="POST" role="form">
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 				<label>Equipamentos Culturais / Local</label>
