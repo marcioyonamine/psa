@@ -9,9 +9,15 @@
 
 <?php 
 
+$inscricao = $_GET['inscricao'];
+
+$x = atualizaNota2Fase($inscricao);
+var_dump($x);
+
 // atualiza as médias
 
 // pega todas as incrições com notas
+/*
 $sql_nota = "SELECT DISTINCT inscricao FROM ava_nota WHERE edital = 349";
 $notas = $wpdb->get_results($sql_nota,ARRAY_A);
 for ($i = 0; $i < count($notas); $i++){
@@ -46,7 +52,7 @@ for ($i = 0; $i < count($notas); $i++){
 	
 }
 
-
+*/
 
 
 /*
