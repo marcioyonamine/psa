@@ -21,7 +21,7 @@
 			$jurados = array(84);
 			if(in_array($user->ID,$jurados)){
 			?>
-              <a class="nav-link" href="inscricoes.php?edital=349"> Todas as Inscrições (Consulta)</a>
+              <a class="nav-link" href="inscricoes.php?edital=349">Inscrições</a>
 			<?php } ?>
 
 			<?php 
