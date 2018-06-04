@@ -1713,7 +1713,7 @@ function atualizaNota2Fase($inscricao){
 	$nota_total = $total_nota/$numero;
 	$discrepancia = 0;
 	if($numero == 2){
-		$discrepancia = moduloAritimetica($nota[0] - $nota[1]);
+		//$discrepancia = moduloAritimetica($nota[0] - $nota[1]);
 	}
 	
 	$sql_2fase = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '350'";
