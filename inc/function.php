@@ -1701,13 +1701,16 @@ function atualizaNota2Fase($inscricao){
 	$query_pareceristas = $wpdb->get_results($sql_pareceristas,ARRAY_A);
 	$numero = count($query_pareceristas);
 	if($numero != 0){
+		
+		$sql_soma = "SELECT nota FROM ava_nota WHERE inscricao ='$inscricao'";
+		$soma = $wpdb->get_results($sql_soma,ARRAY_A);
+		$total_nota = 0;
+		for($i = 0; $i < count($soma); $i++){
+			$total_nota = $total_nota + $soma[$k]['nota'];
+		}	
+			
 	
-		for($k = 0; $k < $numero; $k++){
-			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],'349');		
-			$nota_total = $nota_total + $nota[$k];
-		}
-	
-	$nota_total = $nota_total/$numero;
+	$nota_total = $total_nota/$numero;
 	$discrepancia = 0;
 	if($numero == 2){
 		$discrepancia = moduloAritimetica($nota[0] - $nota[1]);
