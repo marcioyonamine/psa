@@ -42,7 +42,8 @@ if(isset($_POST['gravar'])){
 		}
 	// passa função de valor máximo
 	$rank = atualizaNota2Fase($inscricao);
-	valorNotaMax($inscricao,$usuario);
+	//valorNotaMax($inscricao,$usuario);
+	
 
 		
 	$sql_filtro = "UPDATE ava_ranking SET filtro = '".$_POST['categoria']."', revisao = '$revisao'  WHERE edital = '349' AND inscricao = '$inscricao'";

@@ -1702,7 +1702,7 @@ function atualizaNota2Fase($inscricao){
 	$numero = count($query_pareceristas);
 	if($numero != 0){
 		
-		$sql_soma = "SELECT nota FROM ava_nota WHERE inscricao ='$inscricao'";
+		$sql_soma = "SELECT nota FROM ava_nota WHERE inscricao ='$inscricao' AND edital='349'";
 		$soma = $wpdb->get_results($sql_soma,ARRAY_A);
 		$total_nota = 0;
 		for($i = 0; $i < count($soma); $i++){
@@ -1817,7 +1817,7 @@ function retornaNotaTotal($inscricao,$usuario,$edital){
 
 function retornaNota2Fase($inscricao){
 	global $wpdb;
-	$sql = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '274'";
+	$sql = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '350'";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	return $res['nota'];
 }
