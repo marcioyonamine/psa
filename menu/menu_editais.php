@@ -23,9 +23,9 @@
             </li>
 			<?php } ?>
 			
-            <li class="nav-item">
+            <!--<li class="nav-item">
               <a class="nav-link" href="inscricoes.php?p=all&edital=349"> Todas as Inscrições (Consulta)</a>
-            </li>
+            </li>-->
 			<?php 
 		
 			$peruser = array(2,1,5,6,7,53);
