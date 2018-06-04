@@ -68,10 +68,10 @@
 				<td><?php echo str_replace("CATEGORIA","",$res_json['3.2 - Categoria']); ?></td>
                   <td><?php echo $res_json['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
                   <td><?php echo $res_json['3.11 - Valor (em Reais)']; ?></td>
-				  <td><?php echo somaNotas($json['inscricao'],$user->ID,$_GET['edital']); ?></td>
+				  <td><?php echo somaNotas($json['inscricao'],$user->ID,$edital); ?></td>
                   <td>
 				  <?php 
-					$sql_obs = "SELECT * FROM ava_anotacao WHERE inscricao = '$inscricao' AND edital = '349' AND usuario ='".$id."'";
+					$sql_obs = "SELECT * FROM ava_anotacao WHERE inscricao = '".$json['inscricao']."' AND edital = '349' AND usuario ='".$id."'";
 				$note = $wpdb->get_results($sql_obs,ARRAY_A);
 				for($i = 0;$i < count($note); $i++){
 					echo "<p>: ".$note[$i]['anotacao']."</p>";
