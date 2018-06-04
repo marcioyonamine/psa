@@ -30,7 +30,7 @@ for ($i = 0; $i < count($notas); $i++){
 	}
 	$media = $soma_nota / $num;
 	
-	echo "A inscricao $inscricao teve $num jurados e média de $media.<br />";
+	echo "A inscricao $inscricao teve $num jurados e média de $media ($soma_nota).<br />";
 	
 }
 
