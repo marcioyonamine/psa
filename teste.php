@@ -22,7 +22,7 @@ for ($i = 0; $i < count($notas); $i++){
 	$num = count($jurados);
 	
 	// soma as notas
-	$sql_soma = "SELECT nota FROM av_nota WHERE inscricao = '$inscricao'";
+	$sql_soma = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao'";
 	$soma = $wpdb->get_results($sql_soma,ARRAY_A);
 	$soma_nota = 0;
 	for($k =0; $k < count($soma); $k++){
