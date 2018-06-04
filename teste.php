@@ -8,6 +8,36 @@
           <h1>Ambiente teste</h1>
 
 <?php 
+
+// atualiza as médias
+
+// pega todas as incrições com notas
+$sql_nota = "SELECT DISTINCT inscricao FROM ava_nota WHERE edital = 349";
+$notas = $wpdb->get_results($sql_nota,ARRAY_A);
+for ($i = 0; $i < count($notas); $i++){
+	$inscricao = $notas[$i]['inscricao'];
+	// pega o número de jurados
+	$sql_jurados = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao ='$inscricao'";
+	$jurados = $wpdb->get_results($sql_jurados,ARRAY_A);
+	$num = count($jurados);
+	
+	// soma as notas
+	$sql_soma = "SELECT nota FROM av_nota WHERE inscricao = '$inscricao'";
+	$soma = $wpdb->get_results($sql_soma,ARRAY_A);
+	$soma_nota = 0;
+	for($k =0; $k < count($soma); $k++){
+		$soma_nota = $soma_nota + $soma[$k]['nota'];
+	}
+	$media = $soma_nota / $num;
+	
+	echo "A inscricao $inscricao teve $num jurados e média de $media.<br />";
+	
+}
+
+
+
+
+/*
 $sql = "SELECT * FROM temp_bairros";
 $x = $wpdb->get_results($sql,ARRAY_A);
 for($i = 0; $i < count($x); $i++){
@@ -24,7 +54,7 @@ for($i = 0; $i < count($x); $i++){
 	
 }
 
-
+*/
 
 ?>		  
 		  

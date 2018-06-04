@@ -1881,6 +1881,11 @@ function retornaInscricao($inscricao){
 	
 }
 
+
+
+
+/* Planejamento */
+
 function retornaPlanejamento($idPlan){
 	global $wpdb;
 	$x = array();
