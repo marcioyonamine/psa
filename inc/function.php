@@ -1706,7 +1706,7 @@ function atualizaNota2Fase($inscricao){
 		$soma = $wpdb->get_results($sql_soma,ARRAY_A);
 		$total_nota = 0;
 		for($i = 0; $i < count($soma); $i++){
-			$total_nota = $total_nota + $soma[$k]['nota'];
+			$total_nota = $total_nota + $soma[$i]['nota'];
 		}	
 			
 	
