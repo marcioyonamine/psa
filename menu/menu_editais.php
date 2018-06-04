@@ -29,7 +29,7 @@
 			$peruser = array(2,1,5,6,7,53);
 			if(in_array($user->ID,$peruser)){ ?>
 			<li class="nav-item">
-              <a class="nav-link" href="edital2fase.php?edital=349">Inscrições</a>
+              <a class="nav-link" href="edital2fase.php?edital=349">Inscrições (2fase)</a>
             </li>
 			<?php } ?>
 			
