@@ -1,7 +1,7 @@
 <?php include "header.php"; ?>
 <?php 
 
-
+/*
 // gera ranking
 
 $edital = $_GET['edital'];
@@ -47,7 +47,7 @@ for($i = 0; $i < count($resultados); $i++){
 	
 }
 
-
+*/
 
 ?>
 
