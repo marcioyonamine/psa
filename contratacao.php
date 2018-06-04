@@ -1566,6 +1566,7 @@ break;
 	$observacao =   $_POST["observacao"];
 	$parcelas =   $_POST["parcelas"];
 	$processo =   $_POST["processo"];
+	$dataEnvio = date('Y-m-d H:i:s');
 	
 	$sql_atualiza = "UPDATE sc_contratacao SET
 	integrantesGrupo = '$integrantes',
@@ -1576,7 +1577,8 @@ break;
 	parecerArtistico = '$parecer',
 	nProcesso = '$processo',
 	parcelas = '$parcelas',
-	observacao = '$observacao'
+	observacao = '$observacao',
+	dataEnvio = '$dataEnvio'
 	WHERE idPedidoContratacao = '$id_pedido'";
 	$res = $wpdb->query($sql_atualiza);
  }

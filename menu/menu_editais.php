@@ -14,10 +14,20 @@
             <!--<li class="nav-item">
               <a class="nav-link" href="inscricoes.php">Inscrições Selecionadas / Avaliações</a>
             </li>-->
+			
+			
+			
 			<?php
-			$jurados = array(1,9,85,80,82,70,53,86,81,84,83,76);
+			$jurados = array(84);
 			if(in_array($user->ID,$jurados)){
 			?>
+              <a class="nav-link" href="inscricoes.php?edital=349"> Todas as Inscrições (Consulta)</a>
+			<?php } ?>
+
+			<?php 
+		
+			$peruser = array(2,1,5,6,7,53);
+			if(in_array($user->ID,$peruser)){ ?>
 			<li class="nav-item">
               <a class="nav-link" href="edital2fase.php?edital=349">Inscrições</a>
             </li>

@@ -1259,8 +1259,8 @@ break;
 						<?php echo $ped['objeto']; ?> <br />
 						<?php echo $ped['nome_razaosocial']." ( ".$ped['cpf_cnpj']." )"; ?> <br />
 						<?php echo $ped['periodo'] ?> <?php if($ped['local'] != ""){echo " - ".$ped['local'];}?><br />
-						Responsável: <?php echo $ped['usuario']; ?>
-						
+						Responsável: <?php echo $ped['usuario']; ?><br />
+						Enviado em: <?php echo $pedido[''];?>
 						</strong>
 						
 						</p>						

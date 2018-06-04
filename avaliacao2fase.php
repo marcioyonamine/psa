@@ -66,7 +66,9 @@ if(isset($_POST['gravar'])){
 	}
 
 
-
+				$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$inscricao'";	
+					$json = $wpdb->get_row($sel,ARRAY_A);	
+					$res_json = json_decode($json['descricao'],true);
 ?>
 
 
@@ -98,7 +100,7 @@ var objeto = form1.obs.value
           <h1>Avaliação</h1>
 		  <?php if(isset($mensagem)){ echo $mensagem; } ?>
   		  <?php //if(isset($sql_filtro)){ echo $sql_filtro; } ?>
-		<h2><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($inscricao,3); ?>" target="_blank" ><?php echo $inscricao; ?> </a></h2>	
+		<h2><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($inscricao,3); ?>" target="_blank" ><?php echo $inscricao; ?> </a> [ <a href="edital2fase.php?edital=349&filtro=<?php  echo $res_json['3.2 - Categoria']; ?>">Voltar a Categoria </a> ]</h2>	
           <h2></h2>
           <div class="table-responsive">
             <table class="table table-striped">
