@@ -18,7 +18,7 @@
 			
 			
 			<?php
-			$jurados = array(84,9);
+			$jurados = array(84,9,53,70,76,80,81,82,83,85,86);
 			if(in_array($user->ID,$jurados)){
 			?>
               <a class="nav-link" href="inscricoes.php?edital=349">Inscrições</a>
