@@ -167,6 +167,21 @@ var objeto = form1.obs.value
 						</div> 
 					</div>
 				</td>
+				<td>
+				<?php 
+				$sql_obs = "SELECT * FROM ava_anotacao WHERE inscricao = '$inscricao' AND edital = '349'";
+				$note = $wpdb->get_results($sql_obs,ARRAY_A);
+				for($i = 0;$i < count($note); $i++){
+					$u = get_userdata($note[$i]['usuario']);
+					echo "<p>".$u->user_nicename.": $note</p>";
+					
+				}
+				
+				?>
+				
+				
+				</td>
+				
 				</tr>
 				
 				</tbody>
