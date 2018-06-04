@@ -30,7 +30,19 @@ for ($i = 0; $i < count($notas); $i++){
 	}
 	$media = $soma_nota / $num;
 	
+	
 	echo "A inscricao $inscricao teve $num jurados e média de $media ($soma_nota).<br />";
+
+	// atualiza o ranking
+	
+	$sql_update = "UPDATE ava_ranking SET nota = '$media' WHERE inscricao = '$inscricao'";
+	$update = $wpdb->query($sql_update);
+	if($update == 1){
+		echo "Ranking atualizado.<br />";
+	}else{
+		echo "Erro ao atualizar o ranking.<br />";
+	}
+	
 	
 }
 
