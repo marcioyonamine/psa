@@ -105,7 +105,7 @@ var objeto = form1.obs.value
               <thead>
                 <tr>
                   <th>Critério</th>
-                  <th>Nota</th>
+                  <th width="50%">Nota</th>
                 </tr>
               </thead>
               <tbody>
