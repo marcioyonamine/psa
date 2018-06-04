@@ -19,14 +19,14 @@ if(isset($_POST['gravar'])){
 				$sql_verifica = "SELECT id FROM ava_nota WHERE inscricao = '$inscricao' AND usuario = '".$user->ID."' AND criterio = '$key'";
 				$res = $wpdb->get_results($sql_verifica,ARRAY_A);
 					if(count($res) == 0){
-						$sql_insere = "INSERT INTO `ava_nota` (`id`, `usuario`, `inscricao`, `nota`, `criterio`, `edital`) VALUES (NULL, '$usuario', '$inscricao', '$value', '$key', '274')";
+						$sql_insere = "INSERT INTO `ava_nota` (`id`, `usuario`, `inscricao`, `nota`, `criterio`, `edital`) VALUES (NULL, '$usuario', '$inscricao', '$value', '$key', '350')";
 						$ins = $wpdb->query($sql_insere);
 						if($ins == 1){
 							$contador++;
 						}
 					}else{
 				
-						$sql_atualiza = "UPDATE ava_nota SET nota = '$value' WHERE usuario = '$usuario' AND criterio = '$key' AND inscricao = '$inscricao' AND edital = '274'";
+						$sql_atualiza = "UPDATE ava_nota SET nota = '$value' WHERE usuario = '$usuario' AND criterio = '$key' AND inscricao = '$inscricao' AND edital = '350'";
 						$ins = $wpdb->query($sql_atualiza);
 						if($ins == 1){
 							$contador++;
@@ -45,19 +45,19 @@ if(isset($_POST['gravar'])){
 	valorNotaMax($inscricao,$usuario);
 
 		
-	$sql_filtro = "UPDATE ava_ranking SET filtro = '".$_POST['categoria']."', revisao = '$revisao'  WHERE edital = '273' AND inscricao = '$inscricao'";
+	$sql_filtro = "UPDATE ava_ranking SET filtro = '".$_POST['categoria']."', revisao = '$revisao'  WHERE edital = '349' AND inscricao = '$inscricao'";
 	$wpdb->query($sql_filtro);
 
 	
 	
 	if($_POST['obs'] != ""){
-		$sql_sel_obs = "SELECT id FROM ava_anotacao WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."' AND edital = '274'";
+		$sql_sel_obs = "SELECT id FROM ava_anotacao WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."' AND edital = '350";
 		$res_obs = $wpdb->get_row($sql_sel_obs,ARRAY_A);
 		if(count($res_obs) > 0){ // atualiza
-			$sql_up_obs = "UPDATE ava_anotacao SET anotacao = '".addslashes($_POST['obs'])."' WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."' AND edital = '274'";
+			$sql_up_obs = "UPDATE ava_anotacao SET anotacao = '".addslashes($_POST['obs'])."' WHERE usuario = '".$user->ID."' AND inscricao = '".$inscricao."' AND edital = '350'";
 			$res_up_obs = $wpdb->query($sql_up_obs);
 		}else{ //insere
-			$sql_ins_obs = "INSERT INTO `ava_anotacao` (`id`, `usuario`, `inscricao`, `anotacao`, `edital`) VALUES (NULL, '".$user->ID."', '".$inscricao."', '".addslashes($_POST['obs'])."','274');";
+			$sql_ins_obs = "INSERT INTO `ava_anotacao` (`id`, `usuario`, `inscricao`, `anotacao`, `edital`) VALUES (NULL, '".$user->ID."', '".$inscricao."', '".addslashes($_POST['obs'])."','350');";
 			$res_ins_obs = $wpdb->query($sql_ins_obs);
 			
 		}
@@ -111,7 +111,7 @@ var objeto = form1.obs.value
 			  <form method="POST" action="?" class="form-horizontal" role="form" name="form1">
 				<?php 
 
-				$sql = "SELECT * FROM ava_criterios WHERE edital = '274'";
+				$sql = "SELECT * FROM ava_criterios WHERE edital = '350'";
 				$res = $wpdb->get_results($sql,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 				?>	
@@ -162,7 +162,7 @@ var objeto = form1.obs.value
 									<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Observação</label>
-							<textarea name="obs" class="form-control" rows="10" OnKeyUp="return verificachars()" ><?php echo retornaAnotacao($inscricao,$user->ID,'274'); ?></textarea>
+							<textarea name="obs" class="form-control" rows="10" OnKeyUp="return verificachars()" ><?php echo retornaAnotacao($inscricao,$user->ID,'350'); ?></textarea>
 						</div> 
 					</div>
 				</td>
