@@ -19,7 +19,7 @@
 			if(in_array($user->ID,$jurados)){
 			?>
 			<li class="nav-item">
-              <a class="nav-link" href="inscricoes.php?edital=349">Inscrições</a>
+              <a class="nav-link" href="edital2fase.php?edital=349">Inscrições</a>
             </li>
 			<?php } ?>
 			
