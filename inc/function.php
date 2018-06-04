@@ -1715,10 +1715,10 @@ function atualizaNota2Fase($inscricao){
 	
 	$sql_2fase = "SELECT nota FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '350'";
 	$res_2fase = $wpdb->get_row($sql_2fase,ARRAY_A);
-	var_dump($res_2fase);	
 	
 	if(count($res_2fase) > 0){
 		$nota_total = $nota_total + $res_2fase['nota'];
+		var_dump($nota_total);
 	}
 	
 
