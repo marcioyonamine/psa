@@ -173,7 +173,7 @@ var objeto = form1.obs.value
 				$note = $wpdb->get_results($sql_obs,ARRAY_A);
 				for($i = 0;$i < count($note); $i++){
 					$u = get_userdata($note[$i]['usuario']);
-					echo "<p>".$u->first_name." ".$u->last_name.": ".$note[$i]['anotacao']."</p>";
+					echo "<p><b>".$u->first_name." ".$u->last_name."</b>: ".$note[$i]['anotacao']."</p>";
 					
 				}
 				
