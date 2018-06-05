@@ -1260,7 +1260,7 @@ break;
 						<?php echo $ped['nome_razaosocial']." ( ".$ped['cpf_cnpj']." )"; ?> <br />
 						<?php echo $ped['periodo'] ?> <?php if($ped['local'] != ""){echo " - ".$ped['local'];}?><br />
 						Responsável: <?php echo $ped['usuario']; ?><br />
-						Enviado em: <?php echo exibirDataBr($pedido['dataEnvio']);?>
+						Enviado em: <?php if($pedido['dataEnvio'] == '0000-00-00 00:00:00'){echo exibirDataHoraBr($pedido['dataEnvio']);}?> 
 						</strong>
 						
 						</p>						
