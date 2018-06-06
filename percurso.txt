@@ -7,6 +7,7 @@ alunos
 	> id_user
 	> nome
 	> rg
+	> cpf
 	> cep
 	> numero
 	> complemento
@@ -14,18 +15,21 @@ alunos
 	> telefone02
 	> email
 	> data_nascimento
-	> genero (tipo)
-	> escolaridade (tipo)
+	> genero (tipo) (OK)
+	> escolaridade (tipo) OK
 	> estuda_atual (json: instituicao, curso, horario[tipo])
 	> trabalha_atual (json: bool, profissao )
-	> experiencia (tipo)
+	> experiencia (tipo) (linguagens)
 	> deficiencia (json: bool, qual)
 	> cuidados_especiais (json: bool, qual)
 	> medicamento (json: bool, qual)
 	> disciplinas cursadas > json {"id_disciplina":["avaliacao":"nota"]}
 	> atualizacao {json: data, usuario}
-disciplina
+	> turma
+	
+	disciplina
 	> id
+	> titulo
 	> id_professores
 	> período / datas 
 	> horario
@@ -35,10 +39,18 @@ disciplina
 	
 frequência
 	> id
-	> id_aluno
-	> data
-	> presenca
-	> displina
+	> id_aluno 
+	> data 
+	> presenca 
+	> displina 
+	
+relatorio de alunos
+	> id
+	> disciplinas 
+	> desistencia 
+	> data (antes ou depois da data de encerramento da disciplina)
+	> comentario, obs
+
 	
 
 tipo (instituição, avaliação)

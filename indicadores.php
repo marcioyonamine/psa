@@ -371,6 +371,114 @@ $(function() {
 			</div>
 
 </section>
+<?php 
+break;
+case "listarbiblioteca":
+
+if(isset($_POST['apagar'])){
+	$sql_update = "UPDATE sc_ind_biblioteca SET publicado = '0' WHERE id = '".$_POST['apagar']."'";
+	$apagar = $wpdb->query($sql_update);
+	if($apagar == 1){
+		$mensagem = alerta("Relatório apagado com sucesso","success");
+	}
+}
+
+
+if(isset($_POST['inserir'])){
+
+  $periodo_inicio =  $_POST["periodo_inicio"];
+  $periodo_fim =  $_POST["periodo_fim"];
+  $pub_central =  $_POST["pub_central"];
+  $pub_ramais =  $_POST["pub_ramais"];
+  $emp_central =  $_POST["emp_central"];
+  $emp_ramais =  $_POST["emp_ramais"];
+  $soc_central =  $_POST["soc_central"];
+  $soc_ramais =  $_POST["soc_ramais"];
+  $obs =  $_POST["obs"];
+  
+  $sql_inserir = "INSERT INTO `sc_ind_biblioteca` (`id`, `periodo_inicio`, `periodo_fim`, `pub_central`, `pub_ramais`, `emp_central`, `emp_ramais`, `soc_central`, `soc_ramais`, `obs`, `idUsuario`, `atualizacao`) VALUES (NULL, '$periodo_inicio', '$periodo_fim', '$pub_central', '$pub_ramais', '$emp_central', '$emp_ramais', '$soc_central', '$soc_ramais', '$obs', '".$user->ID."', '".date("Y-m-d")."')";
+   $ins = $wpdb->query($sql_inserir);
+   if($ins == 1){
+	   $mensagem = alerta("Relatório inserido com sucesso.","success");
+   }
+}
+
+
+
+  
+
+
+
+?>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h3>Biblioteca - Listar Relatórios</h3>
+					<p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
+					<?php
+					// listar o evento;
+					// var_dump($ex);
+					?>
+
+				</div>		
+		</div>
+		
+		<?php 
+				$sel = "SELECT * FROM sc_indicadores WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY id DESC";
+				$ocor = $wpdb->get_results($sel,ARRAY_A);
+				if(count($ocor) > 0){
+		?>
+		
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Evento</th>
+                  <th>Período/Data</th>
+                  <th>Contagem</th>
+                  <th width="10%"></th>
+                  <th width="10%"></th>
+
+				  </tr>
+              </thead>
+              <tbody>
+				<?php
+				for($i = 0; $i < count($ocor); $i++){
+					$evento = evento($ocor[$i]['idEvento']);
+				?>
+				<tr>
+                  <td><?php echo $evento['titulo'];  ?></td>
+                  <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?><?php if($ocor[$i]['periodoFim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodoFim']);} ?></td>
+                  <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  ?></td>				  
+                  <td>
+					
+				 </td>
+                  <td>
+					<form method="POST" action="?p=listarevento" class="form-horizontal" role="form">
+					<input type="hidden" name="apagar" value="<?php echo $ocor[$i]['id']; ?>" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
+					</form>
+				</td>
+                </tr>
+				<?php } ?>
+
+				</tbody>
+            </table>
+			
+			
+			
+          </div>
+
+			</div>
+
+		  <?php } else { ?>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+				<p> Não há disciplinas/cursos cadastrados. </p>
+				</div>		
+		</div>
+
+		
+		<?php } ?>
 
 
 <?php 
@@ -1108,6 +1216,15 @@ array(9) {
 }
 */
 
+if(isset($_POST['apagar'])){
+	$sql_update = "UPDATE sc_indicadores SET publicado = '0' WHERE id = '".$_POST['apagar']."'";
+	$apagar = $wpdb->query($sql_update);
+	if($apagar == 1){
+		$mensagem = alerta("Relatório apagado com sucesso","success");
+	}
+}
+
+
 if(isset($_POST['inserir'])){
 
   $idEvento = $_POST['idEvento'];
@@ -1123,13 +1240,12 @@ if(isset($_POST['inserir'])){
   $contagem = $_POST['contagem'];
   $valor = $_POST['valor'];
   $relato = $_POST['relato'];
-  $inserir_evento = $_POST['inserir_evento'];
   $idUsuario = $user->ID;
 
   $sql_inserir = "INSERT INTO `sc_indicadores` (`id`, `idEvento`, `valor`, `contagem`, `tipo`, `periodoInicio`, `periodoFim`, `ndias`, `idUsuario`, `relato`, `publicado`) VALUES (NULL, '$idEvento','$valor','$contagem', '$tipo','$periodoInicio', '$periodoFim', '$ndias', '$idUsuario', '$relato', '1')";
   $ex = $wpdb->query($sql_inserir);
   if($ex == 1){
-	  
+	  $mensagem = alerta("Relatório inserido com sucesso.","success");
   }
   
 }
@@ -1139,6 +1255,7 @@ if(isset($_POST['inserir'])){
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h3>Eventos - Listar Relatórios</h3>
+					<p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
 					<?php
 					// listar o evento;
 					// var_dump($ex);
@@ -1150,8 +1267,7 @@ if(isset($_POST['inserir'])){
 		<?php 
 				$sel = "SELECT * FROM sc_indicadores WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY id DESC";
 				$ocor = $wpdb->get_results($sel,ARRAY_A);
-				echo $sel;
-		if(count($ocor) > 0){
+				if(count($ocor) > 0){
 		?>
 		
           <div class="table-responsive">
@@ -1173,16 +1289,13 @@ if(isset($_POST['inserir'])){
 				?>
 				<tr>
                   <td><?php echo $evento['titulo'];  ?></td>
-                  <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?></td>
+                  <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?><?php if($ocor[$i]['periodoFim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodoFim']);} ?></td>
                   <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  ?></td>				  
                   <td>
-					<form method="POST" action="?p=editarincentivo" class="form-horizontal" role="form">
-					<input type="hidden" name="editar" value="<?php echo $ocor[$i]['id']; ?>" />
-					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
-					</form>
+					
 				 </td>
                   <td>
-					<form method="POST" action="?p=listarincentivo" class="form-horizontal" role="form">
+					<form method="POST" action="?p=listarevento" class="form-horizontal" role="form">
 					<input type="hidden" name="apagar" value="<?php echo $ocor[$i]['id']; ?>" />
 					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
 					</form>
