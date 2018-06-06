@@ -194,7 +194,7 @@ $(function() {
 		$eventos = $wpdb->get_results($sql_lista_evento,ARRAY_A);
 		?>
 		<div class="row">
-		<form class="formocor" action="?p=editar" method="POST" role="form">
+		<form class="formocor" action="?p=listarevento" method="POST" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Evento/Atividade</label>
@@ -234,7 +234,7 @@ $(function() {
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Contagem</label>
+							<label>Tipo de Contagem</label>
 							<select class="form-control" name="contagem" id="inputSubject" ><option>Selecione</option>
 							<option value="1">Número total (absoluto)</option>
 							<option value="2">Média Geral (por dia)</option>
@@ -1082,6 +1082,140 @@ if(isset($_POST['apagar'])){
 
 		
 		<?php } ?>
+<?php 
+case "listarevento":
+
+/*
+array(9) {
+  ["idEvento"]=>
+  string(3) "121"
+  ["tipo"]=>
+  string(1) "1"
+  ["periodoInicio"]=>
+  string(10) "06/06/2018"
+  ["periodoFim"]=>
+  string(0) ""
+  ["ndias"]=>
+  string(0) ""
+  ["contagem"]=>
+  string(1) "1"
+  ["valor"]=>
+  string(3) "300"
+  ["relato"]=>
+  string(8) "teste123"
+  ["inserir_evento"]=>
+  string(1) "1"
+}
+*/
+
+if(isset($_POST['inserir'])){
+
+  $idEvento = $_POST['idEvento'];
+  $tipo = $_POST['tipo'];
+  $periodoInicio = exibirDataMysql($_POST['periodoInicio']);
+   if($_POST['periodoFim'] != ''){
+	$periodoFim = exibirDataMysql($_POST['periodoFim']);
+  }else{
+	$periodoFim = '0000-00-00';
+	  
+  }
+  $ndias = $_POST['ndias'];
+  $contagem = $_POST['contagem'];
+  $valor = $_POST['valor'];
+  $relato = $_POST['relato'];
+  $inserir_evento = $_POST['inserir_evento'];
+  $idUsuario = $user->ID;
+
+  $sql_inserir = "INSERT INTO `sc_indicadores` (`id`, `idEvento`, `valor`, `contagem`, `tipo`, `periodoInicio`, `periodoFim`, `ndias`, `idUsuario`, `relato`, `publicado`) VALUES (NULL, '$idEvento','$valor','$contagem', '$tipo','$periodoInicio', '$periodoFim', '$ndias', '$idUsuario', '$relato', '1')";
+  $ex = $wpdb->query($sql_inserir);
+  if($ex == 1){
+	  
+  }
+  
+}
+
+
+?>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h3>Eventos - Listar Relatórios</h3>
+					<?php
+					// listar o evento;
+					// var_dump($ex);
+					?>
+
+				</div>		
+		</div>
+		
+		<?php 
+				$sel = "SELECT * FROM sc_indicadores WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY id DESC";
+				$ocor = $wpdb->get_results($sel,ARRAY_A);
+				echo $sel;
+		if(count($ocor) > 0){
+		?>
+		
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Evento</th>
+                  <th>Período/Data</th>
+                  <th>Contagem</th>
+                  <th width="10%"></th>
+                  <th width="10%"></th>
+
+				  </tr>
+              </thead>
+              <tbody>
+				<?php
+				for($i = 0; $i < count($ocor); $i++){
+					$evento = evento($ocor[$i]['idEvento']);
+				?>
+				<tr>
+                  <td><?php echo $evento['titulo'];  ?></td>
+                  <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?></td>
+                  <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  ?></td>				  
+                  <td>
+					<form method="POST" action="?p=editarincentivo" class="form-horizontal" role="form">
+					<input type="hidden" name="editar" value="<?php echo $ocor[$i]['id']; ?>" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+					</form>
+				 </td>
+                  <td>
+					<form method="POST" action="?p=listarincentivo" class="form-horizontal" role="form">
+					<input type="hidden" name="apagar" value="<?php echo $ocor[$i]['id']; ?>" />
+					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
+					</form>
+				</td>
+                </tr>
+				<?php } ?>
+
+				</tbody>
+            </table>
+			
+			
+			
+          </div>
+
+			</div>
+
+		  <?php } else { ?>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+				<p> Não há disciplinas/cursos cadastrados. </p>
+				</div>		
+		</div>
+
+		
+		<?php } ?>
+
+<?php 
+break;
+
+?>
+
+
+
 <?php 
 break;
 } // fim da switch p

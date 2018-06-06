@@ -1,0 +1,47 @@
+// Sistema Percurso
+
+usuário
+
+alunos
+	> id
+	> id_user
+	> nome
+	> rg
+	> cep
+	> numero
+	> complemento
+	> telefone01
+	> telefone02
+	> email
+	> data_nascimento
+	> genero (tipo)
+	> escolaridade (tipo)
+	> estuda_atual (json: instituicao, curso, horario[tipo])
+	> trabalha_atual (json: bool, profissao )
+	> experiencia (tipo)
+	> deficiencia (json: bool, qual)
+	> cuidados_especiais (json: bool, qual)
+	> medicamento (json: bool, qual)
+	> disciplinas cursadas > json {"id_disciplina":["avaliacao":"nota"]}
+	> atualizacao {json: data, usuario}
+disciplina
+	> id
+	> id_professores
+	> período / datas 
+	> horario
+	> alunos
+	> instituicao
+	> local
+	
+frequência
+	> id
+	> id_aluno
+	> data
+	> presenca
+	> displina
+	
+
+tipo (instituição, avaliação)
+
+
+

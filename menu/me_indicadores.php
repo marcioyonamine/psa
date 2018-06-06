@@ -18,9 +18,9 @@
 
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="indicadores.php?p=listarbiblioteca">Listar Biblioteca</a>
+              <a class="nav-link" href="indicadores.php?p=listarbiblioteca">Listar Relatório Biblioteca</a>
             </li>
-              <a class="nav-link" href="indicadores.php?p=inserirbiblioteca">Inserir Biblioteca</a>
+              <a class="nav-link" href="indicadores.php?p=inserirbiblioteca">Inserir Relatório Biblioteca</a>
             </li>
 
             <li class="nav-item">
@@ -31,10 +31,10 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="indicadores.php?p=listarevento">Listar Eventos</a>
+              <a class="nav-link" href="indicadores.php?p=listarevento">Listar Relatório Eventos</a>
 		    </li>
             <li class="nav-item">
-              <a class="nav-link" href="indicadores.php?p=inserirevento">Inserir Eventos</a>
+              <a class="nav-link" href="indicadores.php?p=inserirevento">Inserir Realtório Eventos</a>
 		    </li>
     
           </ul>
