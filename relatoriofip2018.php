@@ -117,7 +117,7 @@ Informamos ainda que todos os inscritos integrarão um banco de dados específic
 					<td><?php if(isset($nota['media'])){echo substr($nota['media'], 0, 4);}?></td>
 					<td><?php echo retornaNota2Fase($inscricao); ?></td>
 					<td><?php echo $res_ins[$k]['nota']; ?></td>
-					<td><?php echo retornaAnotacao($inscricao,16,'350'); ?></td>
+					<td><?php echo retornaAnotacao($inscricao,53,'350'); ?></td>
 					</tr>			  
 
 				<?php 
