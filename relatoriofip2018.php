@@ -72,7 +72,7 @@ Informamos ainda que todos os inscritos integrarão um banco de dados específic
 
 			  <?php 
 			// Seleciona as categorias
-			$sql_cat = "SELECT DISTINCT filtro FROM ava_ranking AND edital = '349' ORDER BY filtro ASC";
+			$sql_cat = "SELECT DISTINCT filtro FROM ava_ranking WHERE edital = '349' ORDER BY filtro ASC";
 			$res_cat = $wpdb->get_results($sql_cat,ARRAY_A);
 
 			for($i = 0; $i < count($res_cat); $i++){
