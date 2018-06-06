@@ -27,6 +27,9 @@
 			<li class="nav-item">
               <a class="nav-link" href="relatorioaniversario.php" target="_blank">Relatório do Edital de Aniversário para Impressão</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="relatoriofip2018.php" target="_blank">Relatório do Edital de FIP2018 para Impressão</a>
+            </li>
 			<!--
 			<li class="nav-item">
               <a class="nav-link" href="contratacao.php?p=busca_pf">Insere Contratação PF</a>
