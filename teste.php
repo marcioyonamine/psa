@@ -54,8 +54,8 @@ foreach($x as $inscricao){
 <?php
 
 
-	var_dump($insc);
-	echo "<br />";	
+	//var_dump($insc);
+	//echo "<br />";	
 }
 
 ?>
