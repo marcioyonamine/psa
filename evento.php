@@ -196,7 +196,105 @@ if(isset($_SESSION['id'])){
 		</div>
 </section>
 
+ <?php 
+break;
+case "fip2018": 
+
+$selecionados = array("on-1773097257","on-783829307","on-1761685716","on-352832","on-732854095","on-1442268823","on-1566051262","on-1683241002","on-1714966032","on-118036985","on-743253080","on-1048183298","on-757466696","on-816928171","on-206463587","on-802625839","on-1577808338","on-1911167732","on-21575494","on-692984084","on-1619996948","on-597512233","on-238034968","on-1968119092","on-833444987","on-947680953","on-1322976383","on-1820229336","on-2052139008","on-1717118768","on-1400064695","on-275136340","on-764674688","on-81144614","on-1097209228","on-2083747890","on-772235373","on-1489454805","on-1064335160","on-575366804","on-199453234","on-1038431609","on-1386686453","on-998397921","on-1901353153","on-63316958","on-1093220644","on-31740023","on-467012070","on-1511533568","on-549538762","on-1542680140","on-1762919233","on-840918750","on-1579498570","on-144863959","on-998053853","on-1014304746","on-1873687417","on-2059946682","on-1637835576","on-1213339754","on-1790838746","on-1686202074","on-1335892498","on-700738777","on-924806377","on-2114852335");
+
+
+if(isset($_POST['enviar'])){  // envia
+	// muda status de dataEnvio para hoje
+	// atualiza a agenda
+	$idEvento = $_SESSION['id'];
+	$hoje = date("Y-m-d H:i:s");
+	global $wpdb;
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
+	$upd = $wpdb->query($sql_enviar);
+	if($upd == 1){
+		atualizarAgenda($idEvento);
+		$mensagem = alerta("Evento enviado com sucesso.","success");
+	}else{
+		$mensagem = alerta("Erro. Tente novamente.","warning");
+	
+	}
+	
+}
+if(isset($_SESSION['id'])){
+	unset($_SESSION['id']);
+}
+?>
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Meus Eventos - FIP2018</h1>
+					<?php if(isset($mensagem)){echo $mensagem;}?>
+				</div>
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Título</th>
+                  <th>Data</th>
+                  <th>Status</th>
+				  <th>Categoria</th>
+				  <th>CulturAZ</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$idUser = $user->ID;
+				if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){ //admin, juliana, moretto
+				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
+				}else{
+				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1'  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND  inscricao <> '' ORDER BY idEvento DESC";
+					
+				}
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				for($i = 0; $i < count($res); $i++){
+					if(in_array($res[$i]['inscricao'],$selecionados)){
+					
+					
+					
+					$evento = evento($res[$i]['idEvento']);
+					
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['idEvento']; ?></td>
+					  <td><?php echo $evento['titulo']; ?></td>
+					  <td><?php echo $evento['periodo']['legivel']; ?></td>
+					  <td><?php echo $evento['status']; ?></td>
+					  <td><?php echo str_replace("CATEGORIA","",$res[$i]['categoria']); ?></td>
+					  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($res[$i]['inscricao'],3); ?>" target="_blank" ><?php echo $res[$i]['inscricao']; ?> </a></td>
+
+					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
+							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+							</form>
+							<?php 
+							}
+					  ?></td>
+					</tr>
+					
+				<?php 
+					} // fim do if
+				} // fim do for?>	
+				
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+
  
+
 	 
 <?php 	 
 break;	 

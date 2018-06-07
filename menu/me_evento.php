@@ -59,7 +59,7 @@
               <a class="nav-link" href="evento.php">Listar Meus Eventos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=aniversario">Listar Eventos Aniversário</a>
+              <a class="nav-link" href="evento.php?p=fip2018">Listar Eventos FIP2018</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="evento.php?p=inserir">Inserir Novo Evento</a>
