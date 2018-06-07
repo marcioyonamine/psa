@@ -1725,6 +1725,11 @@ break;
 					</div>
 					<div class="row">
 						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=549&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=306&id=<?php echo $id_pedido?>" target="_blank">Gerencia de Compras</a>
 						</div>
 					</div>
