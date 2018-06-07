@@ -14,7 +14,8 @@ require "inc/function.php";
 global $wpdb;
 
 // Lista de Aprovados
-$x = array("on-58078286","on-2101871521","on-2135100180","on-1302100216","on-316231794","on-688002562","on-1954495637","on-1776752054","on-779107560","on-1800557621","on-1865705822","on-260727837","on-1539060598","on-1517359845","on-83570770","on-1973229016","on-1866929251","on-1024162598","on-650254741","on-250367787","on-1310481067","on-1403335167","on-22818438","on-101546906","on-1054155689","on-1601848067","on-2022854575","on-445536142","on-221062963","on-509705695","on-783504660","on-1860378557","on-646718992","on-307571087","on-465126408","on-643633308","on-1443264217","on-259882278","on-1878208231","on-921197314","on-442527509","on-1134166409","on-1142376109","on-431032341","on-945691027","on-1932027042","on-2104955905","on-140922196","on-654073001","on-652043718","on-1950425915","on-990847295","on-845238052","on-585853776","on-313286495","on-795438355","on-1843281716","on-1030052997");
+$x = array("on-1773097257","on-783829307","on-1761685716","on-352832","on-732854095","on-1442268823","on-1566051262","on-1683241002","on-1714966032","on-118036985","on-743253080","on-1048183298","on-757466696","on-816928171","on-206463587","on-802625839","on-1577808338","on-1911167732","on-21575494","on-692984084","on-1619996948","on-597512233","on-238034968","on-1968119092","on-833444987","on-947680953","on-1322976383","on-1820229336","on-2052139008","on-1717118768","on-1400064695","on-275136340","on-764674688","on-81144614","on-1097209228","on-2083747890","on-772235373","on-1489454805","on-1064335160","on-575366804","on-199453234","on-1038431609","on-1386686453","on-998397921","on-1901353153","on-63316958","on-1093220644","on-31740023","on-467012070","on-1511533568","on-549538762","on-1542680140","on-1762919233","on-840918750","on-1579498570","on-144863959","on-998053853","on-1014304746","on-1873687417","on-2059946682","on-1637835576","on-1213339754","on-1790838746","on-1686202074","on-1335892498","on-700738777","on-924806377","on-2114852335","on-1046440738");
+
 
 //$x = array("on-58078286");
 
@@ -43,8 +44,8 @@ for($i = 0; $i < count($x); $i++){
 		//echo "</pre>";
 		$nome_evento = addslashes($ins_json['3.1 - Título']);
 		$programa = 25;
-		$projeto = 322;
-		$responsavel = "5"; //id do moretto
+		$projeto = 91;
+		$responsavel = "70"; //id do rodrigo
 		$suplente = "9"; //id do kedley
 		$autor = "";
 		$ficha_tecnica = addslashes($ins_json['1.2 - Discriminar os integrantes do grupo']);
@@ -99,7 +100,7 @@ for($i = 0; $i < count($x); $i++){
 			}
 			
 			if(isset($id_pj)){
-			$sql_ins_pedido = "INSERT INTO `sc_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantesGrupo`, `valor`, `dotacao`,  `observacao`, `publicado`,  `justificativa`, `parecerArtistico`) VALUES ('$idEvento','2','$id_pj','','','','','1','','')";
+			$sql_ins_pedido = "INSERT INTO `sc_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantesGrupo`, `valor`, `dotacao`,  `observacao`, `publicado`,  `justificativa`, `parecerArtistico`) VALUES ('$idEvento','2','$id_pj','','','142','','1','','')";
 			$res_ins_pedido = $wpdb->query($sql_ins_pedido);
 				if($res_ins_pedido == 1){
 					echo "Pedido criado com sucesso.<br />";
