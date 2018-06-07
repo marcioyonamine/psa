@@ -404,6 +404,7 @@ $mensagem = alerta("Erro.","");
   $obs =  $_POST["obs"];
   
   $sql_inserir = "INSERT INTO `sc_ind_biblioteca` (`id`, `periodo_inicio`, `periodo_fim`, `pub_central`, `pub_ramais`, `emp_central`, `emp_ramais`, `soc_central`, `soc_ramais`, `downloads`, `obs`, `idUsuario`, `atualizacao`, `publicado`) VALUES (NULL, '$periodo_inicio', '$periodo_fim', '$pub_central', '$pub_ramais', '$emp_central', '$emp_ramais', '$soc_central', '$soc_ramais', '$downloads', '$obs', '".$user->ID."', '".date("Y-m-d")."','1')";
+  echo $sql_inserir;
    $ins = $wpdb->query($sql_inserir);
    if($ins == 1){
 	   $mensagem = alerta("Relatório inserido com sucesso.","success");
