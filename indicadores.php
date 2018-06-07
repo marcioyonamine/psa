@@ -354,6 +354,12 @@ $(function() {
 				<label>Sócios Biblioteca Ramais (só número, sem pontuação)</label>
 			<input type="text" name="soc_ramais" class="form-control publico" value="" />
 			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				<label>Downloads (só número, sem pontuação)</label>
+			<input type="text" name="downloads" class="form-control publico" value="" />
+			</div>
+
 			</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
@@ -394,9 +400,10 @@ if(isset($_POST['inserir'])){
   $emp_ramais =  $_POST["emp_ramais"];
   $soc_central =  $_POST["soc_central"];
   $soc_ramais =  $_POST["soc_ramais"];
+  $downloads = $_POST["downloads"];
   $obs =  $_POST["obs"];
   
-  $sql_inserir = "INSERT INTO `sc_ind_biblioteca` (`id`, `periodo_inicio`, `periodo_fim`, `pub_central`, `pub_ramais`, `emp_central`, `emp_ramais`, `soc_central`, `soc_ramais`, `obs`, `idUsuario`, `atualizacao`, `publicado`) VALUES (NULL, '$periodo_inicio', '$periodo_fim', '$pub_central', '$pub_ramais', '$emp_central', '$emp_ramais', '$soc_central', '$soc_ramais', '$obs', '".$user->ID."', '".date("Y-m-d")."','1')";
+  $sql_inserir = "INSERT INTO `sc_ind_biblioteca` (`id`, `periodo_inicio`, `periodo_fim`, `pub_central`, `pub_ramais`, `emp_central`, `emp_ramais`, `soc_central`, `soc_ramais`, `downloads`, `obs`, `idUsuario`, `atualizacao`, `publicado`) VALUES (NULL, '$periodo_inicio', '$periodo_fim', '$pub_central', '$pub_ramais', '$emp_central', '$emp_ramais', '$soc_central', '$soc_ramais', '$downloads', '$obs', '".$user->ID."', '".date("Y-m-d")."','1')";
    $ins = $wpdb->query($sql_inserir);
    if($ins == 1){
 	   $mensagem = alerta("Relatório inserido com sucesso.","success");
