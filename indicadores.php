@@ -391,7 +391,7 @@ if(isset($_POST['apagar'])){
 
 
 if(isset($_POST['inserir'])){
-
+$mensagem = alerta("Erro.","");
   $periodo_inicio =  exibirDataMysql($_POST["periodo_inicio"]);
   $periodo_fim =  exibirDataMysql($_POST["periodo_fim"]);
   $pub_central =  $_POST["pub_central"];
