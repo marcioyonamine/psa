@@ -302,7 +302,7 @@ $(function() {
 		</div>
 		<div class="row">	
 
-		<form class="formocor" action="?p=editar" method="POST" role="form">
+		<form class="formocor" action="?p=listarbiblioteca" method="POST" role="form">
             <div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<label>Período de Avaliação - Início:</label>
@@ -386,8 +386,8 @@ if(isset($_POST['apagar'])){
 
 if(isset($_POST['inserir'])){
 
-  $periodo_inicio =  $_POST["periodo_inicio"];
-  $periodo_fim =  $_POST["periodo_fim"];
+  $periodo_inicio =  exibirDataMysql($_POST["periodo_inicio"]);
+  $periodo_fim =  exibirDataMysql($_POST["periodo_fim"]);
   $pub_central =  $_POST["pub_central"];
   $pub_ramais =  $_POST["pub_ramais"];
   $emp_central =  $_POST["emp_central"];
@@ -396,7 +396,7 @@ if(isset($_POST['inserir'])){
   $soc_ramais =  $_POST["soc_ramais"];
   $obs =  $_POST["obs"];
   
-  $sql_inserir = "INSERT INTO `sc_ind_biblioteca` (`id`, `periodo_inicio`, `periodo_fim`, `pub_central`, `pub_ramais`, `emp_central`, `emp_ramais`, `soc_central`, `soc_ramais`, `obs`, `idUsuario`, `atualizacao`) VALUES (NULL, '$periodo_inicio', '$periodo_fim', '$pub_central', '$pub_ramais', '$emp_central', '$emp_ramais', '$soc_central', '$soc_ramais', '$obs', '".$user->ID."', '".date("Y-m-d")."')";
+  $sql_inserir = "INSERT INTO `sc_ind_biblioteca` (`id`, `periodo_inicio`, `periodo_fim`, `pub_central`, `pub_ramais`, `emp_central`, `emp_ramais`, `soc_central`, `soc_ramais`, `obs`, `idUsuario`, `atualizacao`, `publicado`) VALUES (NULL, '$periodo_inicio', '$periodo_fim', '$pub_central', '$pub_ramais', '$emp_central', '$emp_ramais', '$soc_central', '$soc_ramais', '$obs', '".$user->ID."', '".date("Y-m-d")."','1')";
    $ins = $wpdb->query($sql_inserir);
    if($ins == 1){
 	   $mensagem = alerta("Relatório inserido com sucesso.","success");
@@ -423,7 +423,7 @@ if(isset($_POST['inserir'])){
 		</div>
 		
 		<?php 
-				$sel = "SELECT * FROM sc_indicadores WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY id DESC";
+				$sel = "SELECT * FROM sc_ind_biblioteca WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY id DESC";
 				$ocor = $wpdb->get_results($sel,ARRAY_A);
 				if(count($ocor) > 0){
 		?>
@@ -432,9 +432,8 @@ if(isset($_POST['inserir'])){
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Evento</th>
                   <th>Período/Data</th>
-                  <th>Contagem</th>
+                  
                   <th width="10%"></th>
                   <th width="10%"></th>
 
@@ -443,17 +442,15 @@ if(isset($_POST['inserir'])){
               <tbody>
 				<?php
 				for($i = 0; $i < count($ocor); $i++){
-					$evento = evento($ocor[$i]['idEvento']);
 				?>
 				<tr>
-                  <td><?php echo $evento['titulo'];  ?></td>
-                  <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?><?php if($ocor[$i]['periodoFim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodoFim']);} ?></td>
-                  <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  ?></td>				  
+                  <td><?php echo exibirDataBr($ocor[$i]['periodo_inicio']); ?><?php if($ocor[$i]['periodo_fim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodo_fim']);} ?></td>
+                 	  
                   <td>
 					
 				 </td>
                   <td>
-					<form method="POST" action="?p=listarevento" class="form-horizontal" role="form">
+					<form method="POST" action="?p=listarbiblioteca" class="form-horizontal" role="form">
 					<input type="hidden" name="apagar" value="<?php echo $ocor[$i]['id']; ?>" />
 					<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
 					</form>
