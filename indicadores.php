@@ -404,7 +404,7 @@ $mensagem = alerta("Erro.","");
   $obs =  $_POST["obs"];
   
   $sql_inserir = "INSERT INTO `sc_ind_biblioteca` (`id`, `periodo_inicio`, `periodo_fim`, `pub_central`, `pub_ramais`, `emp_central`, `emp_ramais`, `soc_central`, `soc_ramais`, `downloads`, `obs`, `idUsuario`, `atualizacao`, `publicado`) VALUES (NULL, '$periodo_inicio', '$periodo_fim', '$pub_central', '$pub_ramais', '$emp_central', '$emp_ramais', '$soc_central', '$soc_ramais', '$downloads', '$obs', '".$user->ID."', '".date("Y-m-d")."','1')";
-  echo $sql_inserir;
+  //echo $sql_inserir;
    $ins = $wpdb->query($sql_inserir);
    if($ins == 1){
 	   $mensagem = alerta("Relatório inserido com sucesso.","success");
@@ -431,7 +431,7 @@ $mensagem = alerta("Erro.","");
 		</div>
 		
 		<?php 
-				$sel = "SELECT * FROM sc_ind_biblioteca WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY id DESC";
+				$sel = "SELECT * FROM sc_ind_biblioteca WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY periodo_inicio DESC";
 				$ocor = $wpdb->get_results($sel,ARRAY_A);
 				if(count($ocor) > 0){
 		?>
@@ -441,8 +441,10 @@ $mensagem = alerta("Erro.","");
               <thead>
                 <tr>
                   <th>Período/Data</th>
-                  
-                  <th width="10%"></th>
+                  <th>Público</th>
+                  <th>Empréstimos</th>
+                  <th>Sócios</th>
+                  <th>Downloads</th>
                   <th width="10%"></th>
 
 				  </tr>
@@ -453,10 +455,10 @@ $mensagem = alerta("Erro.","");
 				?>
 				<tr>
                   <td><?php echo exibirDataBr($ocor[$i]['periodo_inicio']); ?><?php if($ocor[$i]['periodo_fim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodo_fim']);} ?></td>
-                 	  
-                  <td>
-					
-				 </td>
+				<td><?php echo $ocor[$i]['pub_central']+$ocor[$i]['pub_ramais'] ?></td>	  
+				<td><?php echo $ocor[$i]['emp_central']+$ocor[$i]['emp_ramais'] ?></td>	 
+				<td><?php echo $ocor[$i]['soc_central']+$ocor[$i]['soc_ramais'] ?></td>	 
+				<td><?php echo $ocor[$i]['downloads'] ?></td>	 
                   <td>
 					<form method="POST" action="?p=listarbiblioteca" class="form-horizontal" role="form">
 					<input type="hidden" name="apagar" value="<?php echo $ocor[$i]['id']; ?>" />
