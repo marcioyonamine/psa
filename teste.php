@@ -19,7 +19,7 @@ $x = array("on-1773097257","on-783829307","on-1761685716","on-352832","on-732854
 <th>Segmento</th>
 <th>Nome da Intervenção</th>
 <th>Grupo / Coletivo</th>
-<th></th>
+<th>Descrição</th>
 <th>Proponente</th>
 <th>Valor</th>
 <th>No. Apresentações</th>
@@ -40,7 +40,7 @@ foreach($x as $inscricao){
 <td><?php echo $insc['3.3 - Determine a área principal de enquadramento da proposta']; ?></td>
 <td><?php echo $insc['3.1 - Título']; ?></td>
 <td><?php echo $insc['1.4 - Resumo Currículo Grupo / Coletivo / Agente Cultural']; ?></td>
-<td></td>
+<td><?php echo $insc['3.6 - Sinopse do evento']; ?></td>
 <td><?php echo $insc['Agente responsável pela inscrição']; // Proponente ?></td>
 <td></td>
 <td><?php echo $insc['3.11 - Valor (em Reais)']; // Valor ?></td>
