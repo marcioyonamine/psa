@@ -60,6 +60,41 @@ foreach($x as $inscricao){
 
 ?>
 </table>
+
+<table>
+<tr>
+<th>Evento</th>
+<th>Instituição</th>
+<th>Razão Social</th>
+<th>CNPJ</th>
+</tr>
+<?php
+//PROPOPENTE Valor No. Apresentações Valor Total Contratado CONTATO Obs.
+foreach($x as $inscricao){
+	$y = retornaInscricao($inscricao);
+	$insc = json_decode($y['descricao'],true);
+?>
+<tr>
+<td><?php echo $insc['3.1 - Título']; ?></td>
+
+<td><?php echo $insc['Instituição responsável']; ?></td>
+
+<td><?php echo $insc['Instituição responsável - Nome completo ou Razão Social']; ?></td>
+<td><?php echo $insc['Instituição responsável - CPF ou CNPJ']; ?></td>
+
+</tr>
+
+<?php
+
+
+	//var_dump($insc);
+	//echo "<br />";	
+}
+
+?>
+</table>
+
+
 <?php
 // atualiza as médias
 
