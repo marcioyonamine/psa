@@ -1723,11 +1723,7 @@ break;
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=304&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação</a>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-12">
-					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=549&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação</a>
-						</div>
-					</div>
+
 					<div class="row">
 						<div class="col-12">
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=306&id=<?php echo $id_pedido?>" target="_blank">Gerencia de Compras</a>
@@ -1737,7 +1733,30 @@ break;
 						<div class="col-12">
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=307&id=<?php echo $id_pedido?>" target="_blank">Ordenador de Despesa</a>
 						</div>
-					</div>					
+					</div>
+
+					<div class="row">
+						<div class="col-12">
+						<br />
+						</div>
+					</div>	
+					
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=549&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação FIP 2018</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=549&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação FIP 2018</a>
+						</div>
+					</div>						
+					<div class="row">
+						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="justificativa_fip2018.docx" target="_blank">Modelo de Justificativa FIP 2018</a>
+						</div>
+					</div>	
+					
 					
 				</form>
 

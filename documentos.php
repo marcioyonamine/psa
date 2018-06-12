@@ -309,14 +309,7 @@ case 549: // OS para FIP2018
 <tr>
 <td colspan="4"><center><b>Aprovação (assinatura sobre carimbo e data)</b></center></td>
 </tr>
-<tr>
 
-<td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
-<td width='33%' height="50px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
-<td height="50px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
-
-
-</tr>
 <tr>
 <td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
 </tr>
@@ -438,6 +431,101 @@ case 549: // OS para FIP2018
 		
 	<?php 
 	break;	
+	case 561: //Gerencia de compra	FIP2018
+
+		$file_name='gerencia_de_compras_fip2018.doc';
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-type: application/vnd.ms-word');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment;filename='.$file_name);
+		header('Content-Transfer-Encoding: binary ');
+
+			?>
+		<html>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8">
+		<body>
+		<style type='text/css'>
+		.style_01 {
+			font-size: 16px;
+
+		}
+		.paragrafo{
+			text-indent:4em
+		}
+		p{
+			font-size: 18px;
+		}
+		
+		.rodape{
+			text-align: center;
+			font-size: 12px;
+			padding: -10px;
+			
+		}
+		</style>
+		<br /><br /><br /> 
+		<p class="style_01">À <br />
+		Gerência de Compras e Licitações | <br />
+		Sr. Gerente</p>
+		<br />
+
+		
+		<p class="paragrafo">Com base nas informações e justificativas, retro que adoto, peço a continuidade da contratação nas bases da O.S. que o presente processo trata, com fulcro na Lei Federal n°8.6666/93.</p>
+
+
+		<br />
+		<br />
+		<p>Santo André, <?php 
+		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+		date_default_timezone_set('America/Sao_Paulo');
+		echo strftime('%A, %d de %B de %Y', strtotime('today'));
+		
+		?>. </p>
+		
+		<br /><br />
+		
+		<br /><br />
+		
+		<p><center>Marco Moretto Neto<br />
+		Departamento de Planejamento e Projetos Especiais
+		</p></center>
+		
+		<br /><br />
+		
+		<br /><br />
+		
+		<p>De acordo,</p>
+
+		<p>Santo André, <?php 
+		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+		date_default_timezone_set('America/Sao_Paulo');
+		echo strftime('%A, %d de %B de %Y', strtotime('today'));
+		
+		?>. </p>
+
+		<br /><br />
+		
+		<br /><br />
+			<p>Simone Zárate<br />
+			Secretaria de Cultura</p>
+		
+		<p class="rodape">------------------------------------------------------------</p>
+		<p class="rodape">Secretaria de Cultura - <?php echo $pedido['area']; ?> <br />
+		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
+		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
+		
+		
+		
+		
+	<?php 
+	break;	
+	
+	
+	
+	
 	case 307: //Ordenador de Despesa	
 
 		$file_name='ordenador_de_despesas.doc';
@@ -519,6 +607,91 @@ case 549: // OS para FIP2018
 		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
 	<?php 
 	break;
+
+		case 562: //Ordenador de Despesa FIP2018	
+
+		$file_name='ordenador_de_despesas_fip2018.doc';
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-type: application/vnd.ms-word');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment;filename='.$file_name);
+		header('Content-Transfer-Encoding: binary ');
+
+			?>
+		<html>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8">
+		<body>
+		<style type='text/css'>
+		.style_01 {
+			font-size: 16px;
+
+		}
+		.paragrafo{
+			text-indent:4em
+		}
+		p{
+			font-size: 18px;
+		}
+		
+		.rodape{
+			text-align: center;
+			font-size: 12px;
+			padding: -10px;
+			
+		}
+		</style>
+		<br />
+
+		
+		<p>Ref: Contratação de <?php echo $pedido['tipoPessoa'] ?> <?php echo $pedido['nome'] ?> representando com exclusividade, <?php echo $pedido['autor'] ?>.
+
+
+		<br />
+		<br />
+		<p>Dotação: <?php echo $pedido['cod_dotacao']?> - Projeto: <?php echo $pedido['projeto']?> - Ficha: <?php echo $pedido['ficha']?> </p>
+<br /><br />
+<p>Valor: R$ <?php echo $pedido['valor'] ?> ( <?php echo $pedido['valor_extenso'] ?>)		
+		
+		<br /><br />
+		<p>Declaração</p>
+		<p>
+		Declaro que a despesa pretendida tem a correspondente adequação orçamentária e financeira de acordo com a lei orçamentária anual e possui dotação específica e suficiente, ou seja, está abrangida por crédito genérico, de forma que somadas todas as despesas da mesma espécie, realizadas e a realizar, previstas no programa de trabalho da unidade, não serão ultrapassados os limetes estabelecidos para o exercício, estando adequada também a Lei de Diretrizes Orçamentárias e o Plano Plurianual vigentes.</p>
+		</p>
+		<p>Santo André, <?php 
+		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+		date_default_timezone_set('America/Sao_Paulo');
+		echo strftime('%A, %d de %B de %Y', strtotime('today'));
+		
+		?>. </p>
+		
+		<br /><br />
+		
+		<br /><br />
+		
+
+		<br /><br />
+		
+		<br /><br />
+			<p>Simone Zárate<br />
+			Secretaria de Cultura<br />
+			CPF : 161.410.008-00<br />
+			E-mail profissional: szarate@santoandre.sp.gov.br<br />
+			E-mail particular: simonezarate@terra.com.br
+			</p>
+			
+		
+		<p class="rodape">------------------------------------------------------------</p>
+		<p class="rodape">Secretaria de Cultura - <?php echo $pedido['area']; ?> <br />
+		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
+		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
+	<?php 
+	break;
+
+
+
 	case 396:
 		$justificativa = "";
 		if($pedido['evento_atividade'] == 'atividade'){
