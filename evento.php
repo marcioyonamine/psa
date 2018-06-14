@@ -249,7 +249,7 @@ if(isset($_SESSION['id'])){
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
-				if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){ //admin, juliana, moretto
+				if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77 OR $idUser == 15){ //admin, juliana, moretto
 				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
 				}else{
 				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1'  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND  inscricao <> '' ORDER BY idEvento DESC";
