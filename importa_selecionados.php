@@ -14,7 +14,7 @@ require "inc/function.php";
 global $wpdb;
 
 // Lista de Aprovados
-$x = array("on-781389061");
+$x = array("on-1738877893","on-1453010115");
 
 
 //$x = array("on-58078286");
