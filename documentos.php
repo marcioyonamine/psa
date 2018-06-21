@@ -613,9 +613,9 @@ case 549: // OS para FIP2018
 	
 	
 	
-	case 307: //Ordenador de Despesa	
+	case 562: //Ordenador de Despesa	fip
 
-		$file_name='ordenador_de_despesas.doc';
+		$file_name='ordenador_de_despesas_fip2018.doc';
 		header('Pragma: public');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -693,9 +693,9 @@ case 549: // OS para FIP2018
 	<?php 
 	break;
 
-		case 562: //Ordenador de Despesa FIP2018	
+		case 307: //Ordenador de Despesa 	
 
-		$file_name='ordenador_de_despesas_fip2018.doc';
+		$file_name='ordenador_de_despesas.doc';
 		header('Pragma: public');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
