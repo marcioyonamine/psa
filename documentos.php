@@ -407,7 +407,7 @@ case 549: // OS para FIP2018
 </tr>
 <tr>
 
-<td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Código Serviço/Material</td>
+<td colspan="2" width='33%' height="35px" style="vertical-align:top; text-align: center;">Código Serviço/Material</td>
 <td width='33%' height="100px" style="vertical-align:top; text-align: center;">Almoxarifado</td>
 <td height="100px" style="vertical-align:top; text-align: center;">Nº SC/OS(SICOM)</td>
 
