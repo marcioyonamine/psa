@@ -1251,7 +1251,7 @@ function retornaPedido($id){
 	$x['fonte'] = $dotac['fonte'];
 	$x['telefone'] = $pessoa['telefone'];
 	$x['conta_corrente'] = "";
-	$x['contato_telefone'] = $metausuario['telefone'];
+	$x['contato_telefone'] = $pessoa['telefone'];
 	$x['local'] = $local;
 	$x['tipo'] = $objeto['tipo'];
 	$x['end'] = $end;
