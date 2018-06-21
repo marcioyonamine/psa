@@ -342,7 +342,7 @@ case 549: // OS para FIP2018
 	</tr>	
 		<tr>
 		<td><center>Data da Emissão<br /><b><?php echo date("d/m/Y")?></b></center></td>
-	<td><center>CR Requisitante<br /></center><b>70500</b></td>
+	<td><center>CR Requisitante<br /><b>70500</b></center></td>
 
 	</tr>
 	<tr>
