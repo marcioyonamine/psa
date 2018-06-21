@@ -34,7 +34,7 @@ function checar($id){
 	}
 }
 
-
+/*
 function exibeHoje(){
 	$dia = date('d');
 	$ano = date('Y');
@@ -95,6 +95,7 @@ function exibeHoje(){
 	return "$dia de $dia de $ano";
 	
 }
+*/
 
 function saudacao(){ 
 	$hora = date('H');
