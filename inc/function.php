@@ -1423,7 +1423,7 @@ function retornaEndereco($tipo,$pessoa){
 		$res = $wpdb->get_row($sql,ARRAY_A);
 		$dados = retornaCEP($res['CEP']);
 		
-		$end = $dados['rua'].", ".$res['Numero']." - ".$res['Complemento']. "<br />".$dados['bairro']. " " .$dados['cidade']. " / ".$dados['estado'];
+		$end = $dados['rua'].", ".$res['Numero']." - ".$res['Complemento']. " ".$dados['bairro']. " " .$dados['cidade']. " / ".$dados['estado']."<br />CEP:".$res['CEP'];
 		
 		return $end;
 		

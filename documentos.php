@@ -385,7 +385,7 @@ case 549: // OS para FIP2018
 	<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
 	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
 	Endereço: <?php echo $pedido['end']  ?>
-	Email: <?php echo $pedido['email'];?> Telefone: <?php echo $pedido['contato_telefone']; ?> <br />
+	Telefone: <?php echo $pedido['contato_telefone']; ?> Email: <?php echo $pedido['email'];?>   <br />
 	<p>Valor total: R$<?php echo $pedido['valor'];?> (<?php echo $pedido['valor_extenso']; ?>)</p>
 	
 	<p><b>Forma de pagamento:</b> 30 dias após a entrega do serviço, depositado em conta corrente da empresa, conforme segue:</p>
