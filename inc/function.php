@@ -1032,7 +1032,7 @@ function retornaPessoa($id,$tipo){
 	global $wpdb;
 	$x = array();
 	if($tipo == 1){
-		$sql = "SELECT Nome, CPF, Email, codBanco, agencia, conta FROM sc_pf WHERE Id_PessoaFisica = '$id'";
+		$sql = "SELECT Nome, CPF, Email, codBanco, agencia, conta, Telefone1 FROM sc_pf WHERE Id_PessoaFisica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$b = tipo($res['codBanco']);
 		$codBanco = json_decode($b['descricao'],true);
@@ -1045,7 +1045,7 @@ function retornaPessoa($id,$tipo){
 		$x['telefone'] = $res['Telefone1'];
 		
 	}else{
-		$sql = "SELECT RazaoSocial, CNPJ, Email, codBanco, agencia, conta FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
+		$sql = "SELECT RazaoSocial, CNPJ, Email, codBanco, agencia, conta, Telefone1 FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$b = tipo($res['codBanco']);
 		$codBanco = json_decode($b['descricao'],true);
