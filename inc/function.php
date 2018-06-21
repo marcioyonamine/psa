@@ -1042,6 +1042,7 @@ function retornaPessoa($id,$tipo){
 		$x['tipoPessoa'] = "Pessoa Física";
 		$x['email'] = $res['Email'];
 		$x['banco'] = "Banco: ".$b['tipo']." (".$codBanco['codBanco'].") / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
+		$x['telefone'] = $res['Telefone1'];
 		
 	}else{
 		$sql = "SELECT RazaoSocial, CNPJ, Email, codBanco, agencia, conta FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
@@ -1053,7 +1054,9 @@ function retornaPessoa($id,$tipo){
 		$x['tipoPessoa'] = "Pessoa Jurídica";
 		$x['email'] = $res['Email'];
 		$x['banco'] = "Banco: ".$b['tipo']." (".$codBanco['codBanco'].") / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
-	}
+		$x['telefone'] = $res['Telefone1'];
+
+		}
 	return $x;
 
 }
@@ -1246,7 +1249,7 @@ function retornaPedido($id){
 	$x['projeto'] = $dotac['projeto'];
 	$x['despesa'] = "";
 	$x['fonte'] = $dotac['fonte'];
-	$x['telefone'] = $metausuario['telefone'];
+	$x['telefone'] = $pessoa['telefone'];
 	$x['conta_corrente'] = "";
 	$x['contato_telefone'] = $metausuario['telefone'];
 	$x['local'] = $local;
@@ -1329,7 +1332,7 @@ function retornaPedido($id){
 	$x['fonte'] = $dotac['fonte'];
 	$x['telefone'] = $metausuario['telefone'];
 	$x['conta_corrente'] = "";
-	$x['contato_telefone'] = $metausuario['telefone'];
+	$x['contato_telefone'] = $pessoa['telefone'];
 	$x['local'] = $local;
 	$x['tipo'] = "";
 	$x['end'] = $end;
@@ -1409,7 +1412,7 @@ function retornaEndereco($tipo,$pessoa){
 		$res = $wpdb->get_row($sql,ARRAY_A);
 		$dados = retornaCEP($res['CEP']);
 		
-		$end = $dados['rua'].", ".$res['Numero']." - ".$res['Complemento']. "<br />".$dados['bairro']. " " .$dados['cidade']. " / ".$dados['estado'];
+		$end = $dados['rua'].", ".$res['Numero']." - ".$res['Complemento']. " ".$dados['bairro']. " " .$dados['cidade']. " / ".$dados['estado']."<br />CEP:".$res['CEP'];
 		
 		return $end;
 		

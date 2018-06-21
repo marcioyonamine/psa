@@ -382,10 +382,10 @@ case 549: // OS para FIP2018
 	</tr>
 	<tr>
 	<td colspan="4">	<p>Contratação de empresa <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade <b><?php  echo $pedido['integrantes'] ?></b> para  realização de apresentação, inserida na programação do XVIII Festival de Inverno de Paranapiacaba em Santo André.</p>
-		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
+	<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
 	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
-	Endereço: <?php echo $pedido['end']  ?><br />
-	Email: <?php echo $pedido['email'];?> <br />
+	Endereço: <?php echo $pedido['end']  ?>
+	Email: <?php echo $pedido['email'];?> Telefone: <?php echo $pedido['contato_telefone']; ?> <br />
 	<p>Valor total: R$<?php echo $pedido['valor'];?> (<?php echo $pedido['valor_extenso']; ?>)</p>
 	
 	<p><b>Forma de pagamento:</b> 30 dias após a entrega do serviço, depositado em conta corrente da empresa, conforme segue:</p>
