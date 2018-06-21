@@ -378,7 +378,7 @@ case 549: // OS para FIP2018
 	<td colspan="4">Local de aplicação do serviço ou evento:<br /><?php echo $pedido['local']; ?></td>
 	</tr>
 	<tr>
-	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
+
 	</tr>
 	<tr>
 	<td colspan="4">	<p>Contratação de empresa <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade <b><?php  echo $pedido['integrantes'] ?></b> para  realização de apresentação, inserida na programação do XVIII Festival de Inverno de Paranapiacaba em Santo André.</p>
@@ -566,7 +566,7 @@ case 549: // OS para FIP2018
 		<br /><br /><br /> 
 		<p class="style_01">À <br />
 		Gerência de Compras e Licitações | <br />
-		Sr. Gerente</p>
+		Senhor(a) Gerente</p>
 		<br />
 
 		
@@ -581,7 +581,7 @@ case 549: // OS para FIP2018
 		
 		<br /><br />
 		
-		<p><center>Marco Moretto Neto<br />
+		<p>Marco Moretto Neto<br />
 		Departamento de Planejamento e Projetos Especiais
 		</p></center>
 		
@@ -602,7 +602,7 @@ case 549: // OS para FIP2018
 		<p class="rodape">------------------------------------------------------------</p>
 		<p class="rodape">Secretaria de Cultura - Departamento de Planejamento e Projetos Especiais <br />
 		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
-		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
+		Telefone (11) 4433-0711/ 4433-0421</p>
 		
 		
 		
