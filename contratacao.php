@@ -1620,7 +1620,7 @@ break;
 									<br />
 						<div class="row">
 						<div class="col-12">
-							<label>Integrantes do Grupo </label>
+							<label>Contratado </label>
 								<textarea name="integrantes" class="form-control" rows="10" ><?php echo $pedido['integrantesGrupo']; ?></textarea>					
 						</div>
 					</div>
