@@ -183,7 +183,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<p>Santo André, <?php echo exibeHoje(); ?>.
 
 		
-		?>. </center></p>
+		</center></p>
 		
 		<br /><br />
 		
