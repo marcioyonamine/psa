@@ -183,7 +183,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<p>Santo André, <?php echo exibeHoje(); ?>.
 
 		
-		?>. </center></p>
+	 </center></p>
 		
 		<br /><br />
 		
@@ -381,7 +381,7 @@ case 549: // OS para FIP2018
 	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
 	</tr>
 	<tr>
-	<td colspan="4">	<p>Contratação de empresa <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade <b><?php  echo $pedido['integrantes'] ?></b> para  realização de apresentação, inserido na programação do XVIII Festival de Inverno de Paranapiacaba em Santo André.</p>
+	<td colspan="4">	<p>Contratação de empresa <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade <b><?php  echo $pedido['integrantes'] ?></b> para  realização de apresentação, inserida na programação do XVIII Festival de Inverno de Paranapiacaba em Santo André.</p>
 		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
 	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
 	Endereço: <?php echo $pedido['end']  ?><br />
@@ -575,12 +575,7 @@ case 549: // OS para FIP2018
 
 		<br />
 		<br />
-		<p>Santo André, <?php 
-		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-		date_default_timezone_set('America/Sao_Paulo');
-		echo strftime('%A, %d de %B de %Y', strtotime('today'));
-		
-		?>. </p>
+ <p>Santo André, <?php echo exibeHoje(); ?>.</p>
 		
 		<br /><br />
 		
@@ -596,12 +591,7 @@ case 549: // OS para FIP2018
 		
 		<p>De acordo,</p>
 
-		<p>Santo André, <?php 
-		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-		date_default_timezone_set('America/Sao_Paulo');
-		echo strftime('%A, %d de %B de %Y', strtotime('today'));
-		
-		?>. </p>
+		<p>Santo André, <p>Santo André, <?php echo exibeHoje(); ?>. </p>
 
 		<br /><br />
 		
@@ -610,7 +600,7 @@ case 549: // OS para FIP2018
 			Secretaria de Cultura</p>
 		
 		<p class="rodape">------------------------------------------------------------</p>
-		<p class="rodape">Secretaria de Cultura - <?php echo $pedido['area']; ?> <br />
+		<p class="rodape">Secretaria de Cultura - Departamento de Planejamento e Projetos Especiais <br />
 		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
 		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
 		
