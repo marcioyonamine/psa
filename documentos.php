@@ -581,7 +581,7 @@ case 549: // OS para FIP2018
 		
 		<br /><br />
 		
-		<p>Marco Moretto Neto<br />
+		<p><b>Marco Moretto Neto</b><br />
 		Departamento de Planejamento e Projetos Especiais
 		</p></center>
 		
@@ -596,7 +596,7 @@ case 549: // OS para FIP2018
 		<br /><br />
 		
 		<br /><br />
-			<p>Simone Zárate<br />
+			<p><b>Simone Zárate</b><br />
 			Secretaria de Cultura</p>
 		
 		<p class="rodape">------------------------------------------------------------</p>
