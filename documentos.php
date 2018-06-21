@@ -479,7 +479,7 @@ case 549: // OS para FIP2018
 		</style>
 		<br /><br /><br /> 
 		<p class="style_01">À <br />
-		Gerência de Compras e Licitações | <br />
+		Gerência de Compras e Licitações I <br />
 		Sr. Gerente</p>
 		<br />
 
@@ -570,7 +570,7 @@ case 549: // OS para FIP2018
 		</style>
 		<br /><br /><br /> 
 		<p class="style_01">À <br />
-		Gerência de Compras e Licitações | <br />
+		Gerência de Compras e Licitações I <br />
 		Senhor(a) Gerente:</p>
 		<br />
 
@@ -596,7 +596,7 @@ case 549: // OS para FIP2018
 		
 		<p>De acordo,</p>
 
-		<p>Santo André, <p>Santo André, <?php echo exibeHoje(); ?>. </p>
+		<p>Santo André, <?php echo exibeHoje(); ?>. </p>
 
 		<br /><br />
 		
