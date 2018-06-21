@@ -651,7 +651,7 @@ case 549: // OS para FIP2018
 		<br />
 
 		
-		<p>Ref: Contratação de <?php echo $pedido['tipoPessoa'] ?> <?php echo $pedido['nome'] ?> representando com exclusividade, <?php echo $pedido['autor'] ?>.
+		<p>Ref: Contratação de empresa <?php echo $pedido['nome'] ?> representando com exclusividade, <?php echo $pedido['integrantes'] ?>.
 
 
 		<br />
@@ -665,12 +665,10 @@ case 549: // OS para FIP2018
 		<p>
 		Declaro que a despesa pretendida tem a correspondente adequação orçamentária e financeira de acordo com a lei orçamentária anual e possui dotação específica e suficiente, ou seja, está abrangida por crédito genérico, de forma que somadas todas as despesas da mesma espécie, realizadas e a realizar, previstas no programa de trabalho da unidade, não serão ultrapassados os limetes estabelecidos para o exercício, estando adequada também a Lei de Diretrizes Orçamentárias e o Plano Plurianual vigentes.</p>
 		</p>
-		<p>Santo André, <?php 
-		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-		date_default_timezone_set('America/Sao_Paulo');
-		echo strftime('%A, %d de %B de %Y', strtotime('today'));
+				<p>Santo André, <?php echo exibeHoje(); ?>.
+
 		
-		?>. </p>
+	 </center></p>
 		
 		<br /><br />
 		
@@ -689,9 +687,9 @@ case 549: // OS para FIP2018
 			
 		
 		<p class="rodape">------------------------------------------------------------</p>
-		<p class="rodape">Secretaria de Cultura - <?php echo $pedido['area']; ?> <br />
+		<p class="rodape">Secretaria de Cultura - Departamento de Planejamento e Projetos Especiais <br />
 		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
-		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
+		Telefone (11) 4433-0421</p>
 	<?php 
 	break;
 
