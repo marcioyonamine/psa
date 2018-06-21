@@ -169,7 +169,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<br />
 		<br />
 		<br />
-		<p>Assunto: Inexigibilidade - contratação da <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?> </b> para representar <b><?php echo $pedido['integrantes']  ?> </b> para programação do XVIII Festival de Inverno de Paranapiacaba.
+		<p>Assunto: Inexigibilidade - contratação da <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?> </b> para representar <b><?php if($pedido['integrantes'] == ""){ echo "(colocar o nome do artista)"}else{ echo $pedido['integrantes']; } ?> </b> para programação do XVIII Festival de Inverno de Paranapiacaba.
 
 		<br />
 		<br />
