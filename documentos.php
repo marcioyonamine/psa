@@ -201,7 +201,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		
 		<p class="rodape">------------------------------------------------------------</p>
 		<p class="rodape">Secretaria de Cultura - Departamento de Planejamento e Projetos Especiais <br />
-		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
+		Praça IV Centenário, S/N - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
 		Telefone 4433-0421 / email: (email do funcionário)</p>
 		
 		
@@ -606,7 +606,7 @@ case 549: // OS para FIP2018
 		
 		<p class="rodape">------------------------------------------------------------</p>
 		<p class="rodape">Secretaria de Cultura - Departamento de Planejamento e Projetos Especiais <br />
-		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
+		Praça IV Centenário, S/N - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
 		Telefone (11) 4433-0711/ 4433-0421</p>
 		
 		
@@ -661,7 +661,7 @@ case 549: // OS para FIP2018
 
 		<br />
 		<br />
-		<p>Dotação: <?php echo $pedido['cod_dotacao']?> - Projeto: <?php echo $pedido['projeto']?> - Ficha: <?php echo $pedido['ficha']?> </p>
+		<p>Dotação: <?php echo resumoDotacao($pedido['cod_dotacao'])?> - Projeto: <?php echo $pedido['projeto']?> - Ficha: <?php echo $pedido['ficha']?> </p>
 <br /><br />
 <p>Valor: R$ <?php echo $pedido['valor'] ?> ( <?php echo $pedido['valor_extenso'] ?>)		
 		
