@@ -180,7 +180,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<br />
 		<br />
 		<center>
-		<p>Santo André, <?php 
+		<p>Santo André, <?php echo exibeHoje(); ?>
 
 		
 		?>. </center></p>
