@@ -1753,7 +1753,7 @@ break;
 					</div>
 					<div class="row">
 						<div class="col-12">
-					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=561&id=<?php echo $id_pedido?>" target="_blank">Caput / Gerencia de Compras 2018</a><br />
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=561&id=<?php echo $id_pedido?>" target="_blank">Caput / Gerencia de Compras FIP 2018</a><br />
 						</div>
 					</div>						
 					<div class="row">
