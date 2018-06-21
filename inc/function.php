@@ -34,12 +34,12 @@ function checar($id){
 	}
 }
 
-/*
+
 function exibeHoje(){
 	$dia = date('d');
 	$ano = date('Y');
 	
-	switch(date('m'){
+	switch(date('m')){
 		case '1':
 			$mes = "Janeiro";
 		break;
@@ -92,10 +92,10 @@ function exibeHoje(){
 		
 	}
 	
-	return "$dia de $dia de $ano";
+	return "$dia de $mes de $ano";
 	
 }
-*/
+
 
 function saudacao(){ 
 	$hora = date('H');
