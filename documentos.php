@@ -118,6 +118,103 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		
 	<?php 
 	break;	
+	case 563: // Folha de Rosto	FIP
+	
+		$file_name='folha_de_rosto.doc';
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-type: application/vnd.ms-word');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment;filename='.$file_name);
+		header('Content-Transfer-Encoding: binary ');
+
+			?>
+		<html>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8">
+		<body>
+		<style type='text/css'>
+		.style_01 {
+			font-size: 16px;
+
+		}
+		.paragrafo{
+			text-indent:4em
+		}
+		p{
+			font-size: 18px;
+		}
+		
+		.rodape{
+			text-align: center;
+			font-size: 12px;
+			padding: -10px;
+			
+		}
+		</style>
+		<br /><br /><br /> 
+		<p class="style_01">À <br />
+		Encarregatura de Protocolo <br />
+		Sr. Encarregado</p>
+		<br />
+		<br />
+		<br />
+		
+		<p class="paragrafo">Solicitamos a abertura de processo administrativo com os seguintes dados:</p>
+
+		<br /><br />
+		<p>Interessado: (Nome do Setor Gerencia ou Encarregatura) -  CR (do setor)_
+
+		<br />
+		<br />
+		<br />
+		<p>Assunto: Inexigibilidade - contratação da <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?> </b> para representar <b><?php echo $pedido['integrantes']  ?> </b> para programação do XVIII Festival de Inverno de Paranapiacaba.
+
+		<br />
+		<br />
+		<br />
+
+		<p>Atenciosamente,</p>
+				<br />
+		<br />
+		<br />
+		<center>
+		<p>Santo André, <?php 
+
+		
+		?>. </center></p>
+		
+		<br /><br />
+		
+		<br /><br />
+		
+		<p><center>_______________________________________<br />
+		(Nome do Funcionário que abre o processo)<br />
+		(Cargo do Funcionário que abre o processo)<br />
+		IF-_______________________
+		</p></center>
+		
+		<br /><br />
+		
+		<br /><br />
+		
+		<p class="rodape">------------------------------------------------------------</p>
+		<p class="rodape">Secretaria de Cultura - Departamento de Planejamento e Projetos Especiais <br />
+		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
+		Telefone 4433-0421 / email: (email do funcionário)</p>
+		
+		
+		
+		
+		
+		
+		
+		
+	<?php 
+	break;	
+
+
 	case 304: // OS	
 	
 	?>

@@ -520,6 +520,27 @@ function chamaAPI($url,$data){
 
 <?php 
 break;
+case 'fip2018':  
+
+/* 
++ Número de eventos (puxar projeto);
++ Número de agentes artistas 
++ Número de agentes artistas de Santo André
++ Divisão via gênero
++ Valores para contratação de artistas
++ Valores para contratação de infraestrutura
++ Eventos por linguagem
++ Eventos por espaços
+
+
+
+*/
+
+
+?>	
+
+<?php 
+break;
 case 'quantitativo':  
 ?>	
 <div class="container">

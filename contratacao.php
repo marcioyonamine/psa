@@ -1743,6 +1743,10 @@ break;
 					
 					<div class="row">
 						<div class="col-12">
+					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=563&id=<?php echo $id_pedido?>" target="_blank">Folha de Rosto para FIP2018 (não se esqueça de editar com seus dados)</a>
+						</div>
+					</div>
+					<div class="col-12">
 					<a  class="btn btn-theme btn-lg btn-block" href="documentos.php?modelo=549&id=<?php echo $id_pedido?>" target="_blank">OS para pedido de contratação FIP 2018</a>
 						</div>
 					</div>
