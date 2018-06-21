@@ -402,10 +402,15 @@ case 549: // OS para FIP2018
 <td width='33%' height="100px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
 <td height="100px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
 
-
 <tr>
-<td colspan="4"><center><b>Aprovação (assinatura sobre carimbo e data)</b></center></td>
+<td colspan="4"><center><b>A Cargo da Área de Materiais</b></center></td>
 </tr>
+<tr>
+
+<td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Código Serviço/Material</td>
+<td width='33%' height="100px" style="vertical-align:top; text-align: center;">Almoxarifado</td>
+<td height="100px" style="vertical-align:top; text-align: center;">Nº SC/OS(SICOM)</td>
+
 
 <tr>
 <td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
@@ -566,11 +571,11 @@ case 549: // OS para FIP2018
 		<br /><br /><br /> 
 		<p class="style_01">À <br />
 		Gerência de Compras e Licitações | <br />
-		Senhor(a) Gerente</p>
+		Senhor(a) Gerente:</p>
 		<br />
 
 		
-		<p class="paragrafo">Com base nas informações e justificativas, retro que adoto, peço a continuidade da contratação nas bases da O.S. que o presente processo trata, com fulcro na Lei Federal n°8.6666/93.</p>
+		<p class="paragrafo">Com base nas informações e justificativas, retro que adoto, peço a continuidade da contratação nas bases da O.S. que o presente processo trata, com fulcro na Lei Federal n°8.666/93.</p>
 
 
 		<br />
@@ -651,7 +656,7 @@ case 549: // OS para FIP2018
 		<br />
 
 		
-		<p>Ref: Contratação de empresa <?php echo $pedido['nome'] ?> representando com exclusividade, <?php echo $pedido['integrantes'] ?>.
+		<p>Ref: Contratação de empresa <?php echo $pedido['nome'] ?> representando, com exclusividade, <?php echo $pedido['integrantes'] ?>.
 
 
 		<br />
@@ -661,9 +666,9 @@ case 549: // OS para FIP2018
 <p>Valor: R$ <?php echo $pedido['valor'] ?> ( <?php echo $pedido['valor_extenso'] ?>)		
 		
 		<br /><br />
-		<p>Declaração</p>
+		<p><center>Declaração</center></p>
 		<p>
-		Declaro que a despesa pretendida tem a correspondente adequação orçamentária e financeira de acordo com a lei orçamentária anual e possui dotação específica e suficiente, ou seja, está abrangida por crédito genérico, de forma que somadas todas as despesas da mesma espécie, realizadas e a realizar, previstas no programa de trabalho da unidade, não serão ultrapassados os limetes estabelecidos para o exercício, estando adequada também a Lei de Diretrizes Orçamentárias e o Plano Plurianual vigentes.</p>
+		Declaro que a despesa pretendida tem a correspondente adequação orçamentária e financeira de acordo com a lei orçamentária anual e possui dotação específica e suficiente, ou seja, está abrangida por crédito genérico, de forma que somadas todas as despesas da mesma espécie, realizadas e a realizar, previstas no programa de trabalho da unidade, não serão ultrapassados os limetes estabelecidos para o exercício, estando adequada também com a Lei de Diretrizes Orçamentárias e o Plano Plurianual vigentes.</p>
 		</p>
 				<p>Santo André, <?php echo exibeHoje(); ?>.
 
@@ -686,10 +691,7 @@ case 549: // OS para FIP2018
 			</p>
 			
 		
-		<p class="rodape">------------------------------------------------------------</p>
-		<p class="rodape">Secretaria de Cultura - Departamento de Planejamento e Projetos Especiais <br />
-		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
-		Telefone (11) 4433-0421</p>
+
 	<?php 
 	break;
 
