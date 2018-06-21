@@ -183,7 +183,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<p>Santo André, <?php echo exibeHoje(); ?>.
 
 		
-		</center></p>
+		?>. </center></p>
 		
 		<br /><br />
 		
@@ -381,14 +381,14 @@ case 549: // OS para FIP2018
 	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
 	</tr>
 	<tr>
-	<td colspan="4">	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade a(s) apresentação(ões) do(s) seguinte(s) artista(s) <b><?php  echo $pedido['integrantes'] ?></b> para  realização de <?php echo $pedido['objeto']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b> inserido na programação do XVIII Festival de Inverno de Paranapiacaba em Santo André.</p>
+	<td colspan="4">	<p>Contratação de empresa <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade <b><?php  echo $pedido['integrantes'] ?></b> para  realização de apresentação, inserido na programação do XVIII Festival de Inverno de Paranapiacaba em Santo André.</p>
 		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
 	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
 	Endereço: <?php echo $pedido['end']  ?><br />
 	Email: <?php echo $pedido['email'];?> <br />
 	<p>Valor total: R$<?php echo $pedido['valor'];?> (<?php echo $pedido['valor_extenso']; ?>)</p>
 	
-	<p><b>Forma de pagamento:</b> <?php echo $pedido['forma_pagamento'];?> </p>
+	<p><b>Forma de pagamento:</b> 30 dias após a entrega do serviço, depositado em conta corrente da empresa, conforme segue:</p>
 	<p><?php echo $pedido['banco'];?> </p>		
 
 	</td>

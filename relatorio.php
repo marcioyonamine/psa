@@ -538,7 +538,62 @@ case 'fip2018':
 
 
 ?>	
+         <h1>Relatório FIP 2018</h1>
 
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+				<th></th>
+				<th></th>
+     			</tr>
+              </thead>
+              <tbody>
+				<tr>
+				<td>Orçamento Aprovado</td>
+				<td><?php echo dinheiroParaBr($orcamento['orcamento']); ?></td>
+				</tr>
+				<tr>
+				<td>Contigenciado</td>
+				<td><?php echo dinheiroParaBr($orcamento['contigenciado']); ?></td>
+				</tr>
+				<tr>
+				<td>Descontigenciado</td>
+				<td><?php echo dinheiroParaBr($orcamento['descontigenciado']); ?></td>
+				</tr>
+				<tr>
+				<td>Suplementado</td>
+				<td><?php echo dinheiroParaBr($orcamento['suplementado']); ?></td>
+				</tr>
+				<tr>
+				<td>Anulado</td>
+				<td><?php echo dinheiroParaBr($orcamento['anulado']); ?></td>
+				</tr>
+				<tr>
+				<td>Liberado</td>
+				<td><?php echo dinheiroParaBr($orcamento['liberado']); ?></td>
+				</tr>
+								<tr>
+				<td>Planejado</td>
+				<td><?php echo dinheiroParaBr($orcamento['planejado']); ?></td>
+				</tr>
+								<tr>
+				<td>Executado</td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>Saldo </td>
+				<td><?php echo dinheiroParaBr($orcamento['total']); ?></td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>Saldo Planejado</td>
+				<td><?php echo dinheiroParaBr($orcamento['total'] - $orcamento['planejado']); ?></td>
+
+				</tr>				
+				</tbody>
+            </table>
+          </div> 
 <?php 
 break;
 case 'quantitativo':  

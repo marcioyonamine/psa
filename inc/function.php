@@ -1035,22 +1035,24 @@ function retornaPessoa($id,$tipo){
 		$sql = "SELECT Nome, CPF, Email, codBanco, agencia, conta FROM sc_pf WHERE Id_PessoaFisica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$b = tipo($res['codBanco']);
+		$codBanco = json_decode($b['descricao'],true);
 
 		$x['nome'] = $res['Nome'];
 		$x['cpf_cnpj'] = $res['CPF'];
 		$x['tipoPessoa'] = "Pessoa Física";
 		$x['email'] = $res['Email'];
-		$x['banco'] = "Banco: ".$b['tipo']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
+		$x['banco'] = "Banco: ".$b['tipo']." (".$codBanco['codBanco'].") / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
 		
 	}else{
 		$sql = "SELECT RazaoSocial, CNPJ, Email, codBanco, agencia, conta FROM sc_pj WHERE Id_PessoaJuridica = '$id'";
 		$res = $wpdb->get_row($sql,ARRAY_A);	
 		$b = tipo($res['codBanco']);
+		$codBanco = json_decode($b['descricao'],true);
 		$x['nome'] = $res['RazaoSocial'];
 		$x['cpf_cnpj'] = $res['CNPJ'];
 		$x['tipoPessoa'] = "Pessoa Jurídica";
 		$x['email'] = $res['Email'];
-		$x['banco'] = "Banco: ".$b['tipo']." / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
+		$x['banco'] = "Banco: ".$b['tipo']." (".$codBanco['codBanco'].") / Agência: ".$res['agencia']." / Conta Corrente: ".$res['conta'];
 	}
 	return $x;
 
