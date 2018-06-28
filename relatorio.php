@@ -529,8 +529,10 @@ case 'fip2018':
 + Divisão via gênero
 + Valores para contratação de artistas
 + Valores para contratação de infraestrutura
-+ Eventos por linguagem
-+ Eventos por espaços
++ Eventos por linguagem (bartira)
++ Eventos por espaços (bartira)
++ Horas de programação
+
 
 
 
@@ -538,7 +540,7 @@ case 'fip2018':
 
 
 ?>	
-         <h1>Relatório FIP 2018</h1>
+         <h1>Festival de Inverno de 2018</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
@@ -550,24 +552,71 @@ case 'fip2018':
               </thead>
               <tbody>
 				<tr>
-				<td>Orçamento Aprovado</td>
-				<td><?php echo dinheiroParaBr($orcamento['orcamento']); ?></td>
+				<td>Número de Eventos</td>
+				<td>
+				<?php 
+				$sql_n_eventos_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' AND dataEnvio IS NOT NULL";
+				$x = $wpdb->get_results($sql_n_eventos_publicados);
+				$sql_n_eventos_n_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1'";
+				$y = $wpdb->get_results($sql_n_eventos_n_publicados);
+				echo "Eventos planejados: ".count($y)." / Eventos Publicados: ".count($x);			
+				?>
+				</td>
 				</tr>
 				<tr>
-				<td>Contigenciado</td>
-				<td><?php echo dinheiroParaBr($orcamento['contigenciado']); ?></td>
+				<td>Número de Inscrições no Chamamento</td>
+				<td><?php 
+				$sql_n_inscricoes = "SELECT id FROM ava_inscricao WHERE id_mapas = '349'";
+				$x = $wpdb->get_results($sql_n_inscricoes);
+				$sql_n_inscricoes_2017 = "SELECT id FROM ava_inscricao WHERE id_mapas = '185'";
+				$y = $wpdb->get_results($sql_n_inscricoes_2017);
+				$aumento = (count($x)/count($y))*100;
+				
+				
+				echo "2018: ".count($x)." / 2017: ".count($y)." / aumento de ".$aumento."%"; 
+				
+				
+				?></td>
 				</tr>
 				<tr>
-				<td>Descontigenciado</td>
-				<td><?php echo dinheiroParaBr($orcamento['descontigenciado']); ?></td>
+				<td>Número de Agentes Inscritos no Chamamento</td>
+				<td><?php 
+				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '349'";
+				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($x);
+			
+				
+				?></td>
 				</tr>
 				<tr>
-				<td>Suplementado</td>
-				<td><?php echo dinheiroParaBr($orcamento['suplementado']); ?></td>
+				<td>Número de cidades</td>
+				<td><?php
+					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '349' ORDER BY cidade";
+					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
+					echo count($cidades);
+					for($i = 0; $i < count($cidades); $i++){
+						$city = $cidades[$i]['cidade'];
+						$sql_sel_city = "SELECT id FROM ava_inscricao WHERE id_mapas = '349' AND cidade = '$city'";
+						$n_city = $wpdb->get_results($sql_sel_city);
+						echo $city."( ".count($n_city)." ), ";
+		
+		
+		
+	}
+
+				?></td>
 				</tr>
 				<tr>
-				<td>Anulado</td>
-				<td><?php echo dinheiroParaBr($orcamento['anulado']); ?></td>
+				<td>Eventos</td>
+				<td><?php
+				$sql_n_eventos_n_publicados = "SELECT nomeEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' ORDER BY nomeEvento ";
+				$y = $wpdb->get_results($sql_n_eventos_n_publicados,ARRAY_A);				
+				for($i = 0; $i < count($y); $i++){
+					echo $y[$i]['nomeEvento']."<br />";
+				}
+
+				?>
+				</td>
 				</tr>
 				<tr>
 				<td>Liberado</td>
