@@ -91,7 +91,7 @@ for ($i = 0; $i < count($x); $i++){
 	$geo = $y['Agente responsável pela inscrição -']."<br />";
 	
 	if($cidade == "" AND ($geo != "-23.533563948913,-46.5756915811594" AND $geo == 0)){
-		$gmaps = new gMaps('AIzaSyBG7ihPBJpG9lj1rhOZelf-ne0_eL9qjXg');
+		$gmaps = new gMaps($_GET['key']);
 		// Pega os dados (latitude, longitude e zoom) do endereço:
 		$endereco = $agente;
 		$dados = converterObjParaArray($gmaps->geoEndereco($endereco));
