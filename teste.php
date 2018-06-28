@@ -93,7 +93,7 @@ for ($i = 0; $i < count($x); $i++){
 	if($cidade == "" AND ($geo != "-23.533563948913,-46.5756915811594" AND $geo == 0)){
 		$gmaps = new gMaps('AIzaSyBG7ihPBJpG9lj1rhOZelf-ne0_eL9qjXg');
 		// Pega os dados (latitude, longitude e zoom) do endereço:
-		$endereco = "-21.1980153951351,-47.7719673756757";
+		$endereco = $agente;
 		$dados = converterObjParaArray($gmaps->geoEndereco($endereco));
 		var_dump($dados);
 		$cidade = strtoupper(tirarAcentos($dados['address_components'][3]['long_name']));

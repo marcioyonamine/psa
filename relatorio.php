@@ -546,7 +546,7 @@ case 'fip2018':
             <table class="table table-striped">
               <thead>
                 <tr>
-				<th></th>
+				<th width="15%"></th>
 				<th></th>
      			</tr>
               </thead>
@@ -573,7 +573,7 @@ case 'fip2018':
 				$aumento = (count($x)/count($y))*100;
 				
 				
-				echo "2018: ".count($x)." / 2017: ".count($y)." / aumento de ".$aumento."%"; 
+				echo "2018: ".count($x)." / 2017: ".count($y)." / aumento de ".dinheiroParaBr($aumento)."%"; 
 				
 				
 				?></td>
@@ -619,12 +619,29 @@ case 'fip2018':
 				</td>
 				</tr>
 				<tr>
-				<td>Liberado</td>
-				<td><?php echo dinheiroParaBr($orcamento['liberado']); ?></td>
+				<td>Eventos por Linguagem</td>
+				<td>
+				<?php 
+				$sql_linguagem = "SELECT DISTINCT idTipo FROM sc_evento WHERE idProjeto = '91'";
+				$x = $wpdb->get_results($sql_linguagem, ARRAY_A);
+				for($i = 0; $i < count($x); $i++){
+					$tipo = $x[$i]['idTipo'];
+					$linguagem = tipo($tipo);
+					$sql_conta = "SELECT idEvento FROM sc_evento WHERE idTipo = '$tipo' AND idProjeto = '91'";
+					$y = $wpdb->get_results($sql_conta,ARRAY_A);
+					
+				echo $linguagem['tipo']."(".count($y)."), ";
+					
+					
+				}
+				
+				
+				?>
+				</td>
 				</tr>
 								<tr>
-				<td>Planejado</td>
-				<td><?php echo dinheiroParaBr($orcamento['planejado']); ?></td>
+				<td>Eventos por Espaço</td>
+				<td></td>
 				</tr>
 								<tr>
 				<td>Executado</td>
@@ -632,12 +649,12 @@ case 'fip2018':
 				</tr>
 				<tr>
 				<td>Saldo </td>
-				<td><?php echo dinheiroParaBr($orcamento['total']); ?></td>
+				<td></td>
 				<td></td>
 				</tr>
 				<tr>
 				<td>Saldo Planejado</td>
-				<td><?php echo dinheiroParaBr($orcamento['total'] - $orcamento['planejado']); ?></td>
+				<td></td>
 
 				</tr>				
 				</tbody>
