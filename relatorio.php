@@ -648,7 +648,12 @@ case 'fip2018':
 				$x = $wpdb->get_results($sql_espaco,ARRAY_A);
 				for($i = 0; $i < count($x); $i++){
 					$local = tipo($x[$i]['local']);
-					echo $local['tipo'].", ";		
+					$sql_local = "SELECT DISTINCT local FROM sc_ocorrencia WHERE local = '".$x[$i]['local']."' AND idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' )";
+					$y = $wpdb->get_results($sql_local);
+					
+					
+					
+					echo $local['tipo']."(".count($y)."), ";		
 				}
 				
 				?>
