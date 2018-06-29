@@ -593,14 +593,11 @@ case 'fip2018':
 				<td><?php
 					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '349' ORDER BY cidade";
 					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
-					echo count($cidades);
 					for($i = 0; $i < count($cidades); $i++){
 						$city = $cidades[$i]['cidade'];
 						$sql_sel_city = "SELECT id FROM ava_inscricao WHERE id_mapas = '349' AND cidade = '$city'";
 						$n_city = $wpdb->get_results($sql_sel_city);
 						echo $city."( ".count($n_city)." ), ";
-		
-		
 		
 	}
 
@@ -663,22 +660,41 @@ case 'fip2018':
 				</tr>
 								<tr>
 				<td>Horas de atividade</td>
+				<td>
+				<?php 
+				$minutos = 0;
+				$sql_evento = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1'";
+				$x = $wpdb->get_results($sql_evento,ARRAY_A);
+				for($i = 0; $i < count($x); $i++){
+					$t = diasEfetivos($x[$i]['idEvento']);
+					$minutos = $minutos + $t['minutos'];
+				//echo $i." ".$x[$i]['idEvento']."-";
+				//var_dump($t);	
+				}
+				
+				echo $minutos/60 ." horas";
+				
+				?>
 				
 				
-				
-				
+				</td>
+				</tr>
+				<tr>
+				<td>Orçamento Executado</td>
+				<td></td>
 				<td></td>
 				</tr>
 				<tr>
-				<td>Saldo </td>
-				<td></td>
-				<td></td>
-				</tr>
-				<tr>
-				<td>Saldo Planejado</td>
+				<td>Orçamento Executado por dotação </td>
 				<td></td>
 
 				</tr>				
+				<tr>
+				<td>Orçamento Executado por linguagem </td>
+				<td></td>
+
+				</tr>				
+
 				</tbody>
             </table>
           </div> 

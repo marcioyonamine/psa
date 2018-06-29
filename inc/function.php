@@ -114,6 +114,10 @@ function numeroSemana($date){
 	return date("W", strtotime($date)); 
 }
 
+function nSemana($date){
+	return date("w", strtotime($date)); 
+}
+
 //soma(+) ou substrai(-) dias de um date(a-m-d)
 function somarDatas($data,$dias){ 
 	$data_final = date('Y-m-d', strtotime("$dias days",strtotime($data)));	
@@ -817,6 +821,70 @@ function atualizarAgenda($id){ //01
 			
 		}//03
 	}	
+} //01 
+
+function diasEfetivos($id){ //01
+	global $wpdb;
+	$sql = "SELECT * FROM sc_ocorrencia WHERE idEvento = '$id' AND publicado = '1'";
+	$res = $wpdb->get_results($sql,ARRAY_A);
+	$ndias = 0;
+	$minutos = 0;
+	if(count($res) > 0){ //02
+		for($i = 0; $i < count($res); $i++){ //03
+			if($res[$i]['dataFinal'] != '0000-00-00'){ // temporada //04
+				$di = $res[$i]['dataInicio'];
+
+				while(strtotime($di) <= strtotime($res[$i]['dataFinal'])){
+					$n = nSemana($di);
+					//echo strtotime($di)." <= ".strtotime($res[$i]['dataFinal'])."($n)<br /> ";
+					if($n == 0 AND $res[$i]['domingo'] == 1){
+						$ndias++;
+						$minutos = $minutos + $res[$i]['duracao'];
+						//echo "domingo";
+					}
+								
+					if($n == 1 AND $res[$i]['segunda'] == 1){
+						$ndias++;
+						$minutos = $minutos + $res[$i]['duracao'];
+
+					
+					}					
+					if($n == 2 AND $res[$i]['terca'] == 1){
+						$ndias++;
+						$minutos = $minutos + $res[$i]['duracao'];
+
+
+						}					
+					if($n == 3 AND $res[$i]['quarta'] == 1){
+						$ndias++;
+						$minutos = $minutos + $res[$i]['duracao'];
+					}					
+					if($n == 4 AND $res[$i]['quinta'] == 1){
+						$ndias++;
+						$minutos = $minutos + $res[$i]['duracao'];
+
+					}					
+					if($n == 5 AND $res[$i]['sexta'] == 1){
+						$ndias++;
+						$minutos = $minutos + $res[$i]['duracao'];
+
+					}					
+					if($n == 6 AND $res[$i]['sabado'] == 1){
+						$ndias++;
+						$minutos = $minutos + $res[$i]['duracao'];
+					}					
+					$di = somarDatas($di,"+1");
+				}	
+			}else{ // data única //04
+				$ndias++;
+				$minutos = $minutos + $res[$i]['duracao'];
+			
+			}
+			
+		}//03
+	}
+	$tempo = array('dias' => $ndias, 'minutos' => $minutos);
+	return $tempo;
 } //01 
 
 function orcamento($id,$fim = NULL,$inicio = NULL){
