@@ -698,7 +698,7 @@ case 'fip2018':
 				}					
 				
 				echo "Total de Contratações Artísticas: ".dinheiroParaBr($total_art)." <br />";				
-				echo "Total de Infraestrutura: ".dinheiroParaBr($total_infra)." <br />";
+				echo "Total de Infraestrutura e Serviços: ".dinheiroParaBr($total_infra)." <br />";
 				echo "Total Geral: ".dinheiroParaBr($total_art+$total_infra);
 				
 
@@ -709,7 +709,31 @@ case 'fip2018':
 				</tr>
 				<tr>
 				<td>Orçamento Executado por dotação </td>
-				<td></td>
+				<td>
+				<?php 
+				$sql_dot = "SELECT DISTINCT dotacao FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1') OR idAtividade IN(SELECT id FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1'))";				
+				$dot = $wpdb->get_results($sql_dot,ARRAY_A);
+				for($i = 0; $i < count($dot); $i++){
+					$total = 0;;		
+					$sql_titulo = "SELECT descricao, projeto, ficha FROM sc_orcamento WHERE id = '".$dot[$i]['dotacao']."'";
+					$y = $wpdb->get_row($sql_titulo,ARRAY_A);
+					$sql_soma = "SELECT valor FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1') OR idAtividade IN(SELECT id FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1')) AND dotacao = '".$dot[$i]['dotacao']."'";
+					$soma = $wpdb->get_results($sql_soma,ARRAY_A);
+					for ($k = 0; $k < count($soma); $k++){
+						$total = $total + $soma[$k]['valor'];
+						
+					}
+					
+					echo $y['descricao']." (".$y['projeto']."/".$y['ficha'].") = ".dinheiroParaBr($total)."<br />";
+					
+				}
+				
+				
+				?>
+				
+				
+				
+				</td>
 
 				</tr>				
 				<tr>
