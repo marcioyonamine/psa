@@ -681,7 +681,30 @@ case 'fip2018':
 				</tr>
 				<tr>
 				<td>Orçamento Executado</td>
-				<td></td>
+				<td>
+				<?php 
+				$sql_orc = "SELECT valor FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1') AND publicado = 1";
+				$orc_exec = $wpdb->get_results($sql_orc,ARRAY_A);
+				$total_art = 0;
+				for($i = 0; $i < count($orc_exec); $i++){
+					$total_art = $total_art + $orc_exec[$i]['valor'];
+				}
+				
+				$sql_orc = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT idAtividade FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1') AND publicado = 1";
+				$orc_exec = $wpdb->get_results($sql_orc,ARRAY_A);
+				$total_infra = 0;
+				for($i = 0; $i < count($orc_exec); $i++){
+					$total_infra = $total_infra + $orc_exec[$i]['valor'];
+				}					
+				
+				echo "Total de Contratações Artísticas: $total_art <br />";				
+				echo "Total de Infraestrutura: $total_infra <br />";
+				echo "Total Geral: ".($total_art+$total_infra);
+				
+
+				?>
+				
+				</td>
 				<td></td>
 				</tr>
 				<tr>
