@@ -697,9 +697,9 @@ case 'fip2018':
 					$total_infra = $total_infra + $orc_infra[$i]['valor'];
 				}					
 				
-				echo "Total de Contratações Artísticas: $total_art <br />";				
-				echo "Total de Infraestrutura: $total_infra <br />";
-				echo "Total Geral: ".($total_art+$total_infra);
+				echo "Total de Contratações Artísticas: ".dinheiroParaBr($total_art)." <br />";				
+				echo "Total de Infraestrutura: ".dinheiroParaBr($total_infra)." <br />";
+				echo "Total Geral: ".dinheiroParaBr($total_art+$total_infra);
 				
 
 				?>
