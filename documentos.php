@@ -74,7 +74,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<br />
 		<br />
 		<br />
-		<p>Assunto: Dispensa de Licitação - contratação da <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?> </b> para representar <b><?php echo $pedido['nome_razaosocial']  ?> </b> no evento "<b><?php echo $pedido['objeto'] ?></b>" que fará parte da programação cultural da Secretaria de Cultura.</p>
+		<p>Assunto: Inexigibilidade - contratação da <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?> </b> para representar <b><?php echo $pedido['nome_razaosocial']  ?> </b> no evento "<b><?php echo $pedido['objeto'] ?></b>" que fará parte da programação cultural da Secretaria de Cultura.</p>
 
 		<br />
 		<br />
