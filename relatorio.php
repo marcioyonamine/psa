@@ -690,7 +690,7 @@ case 'fip2018':
 					$total_art = $total_art + $orc_exec[$i]['valor'];
 				}
 				
-				$sql_infra = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT idAtividade FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1') AND publicado = 1";
+				$sql_infra = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1') AND publicado = 1";
 				$orc_infra = $wpdb->get_results($sql_infra,ARRAY_A);
 				$total_infra = 0;
 				for($i = 0; $i < count($orc_infra); $i++){
