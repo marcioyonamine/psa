@@ -672,7 +672,7 @@ case 'fip2018':
 				//var_dump($t);	
 				}
 				
-				echo $minutos/60 ." horas";
+				echo round($minutos/60) ." horas";
 				
 				?>
 				
