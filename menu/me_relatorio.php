@@ -14,10 +14,6 @@
 
 
 		  <ul class="nav nav-pills flex-column">
-          <!--  <li class="nav-item">
-              <a class="nav-link" href="<?php echo $_SESSION['entidade']; ?>.php?p=editar">Voltar</a>
-            </li> -->
-        
 			<li class="nav-item">
               <a class="nav-link" href="?p=orcamento">Orçamento</a>
             </li>
@@ -30,17 +26,11 @@
 			<li class="nav-item">
               <a class="nav-link" href="relatoriofip2018.php" target="_blank">Relatório do Edital de FIP2018 para Impressão</a>
             </li>
-			<!--
+
 			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=busca_pf">Insere Contratação PF</a>
+              <a class="nav-link" href="?p=fip2018" >Números do FIP2018</a>
             </li>
-			<li class="nav-item">
-              <a class="nav-link" href="contratacao.php?p=busca_pj">Insere Contratação PJ</a>
-            </li>
-			-->
-			
-			
-			</ul>
+		</ul>
 
 
 

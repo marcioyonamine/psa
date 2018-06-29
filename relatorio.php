@@ -662,7 +662,11 @@ case 'fip2018':
 				</td>
 				</tr>
 								<tr>
-				<td>Executado</td>
+				<td>Horas de atividade</td>
+				
+				
+				
+				
 				<td></td>
 				</tr>
 				<tr>
