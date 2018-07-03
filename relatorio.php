@@ -637,7 +637,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 					if($n != 0){
 						echo $city."( ".($n)." ), ";
 					}
-					$n_abc = $n_abc + $n;
+					//$n_abc = $n_abc + $n;
 				}
 				
 				echo $n_abc."<br />";
