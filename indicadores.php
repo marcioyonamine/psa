@@ -480,7 +480,7 @@ $mensagem = alerta("Erro.","");
 		  <?php } else { ?>
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-				<p> Não há disciplinas/cursos cadastrados. </p>
+				<p> Não há relatórios cadastrados. </p>
 				</div>		
 		</div>
 
@@ -1330,10 +1330,38 @@ if(isset($_POST['inserir'])){
 		<?php } ?>
 
 <?php 
+
 break;
-
+case "grafico":
+include ("inc/phplot/phplot.php");
 ?>
+<?php 
 
+$grafico = new PHPlot();
+//SetFileFormat("png");
+
+//Define the object
+$plot = new PHPlot();
+
+//Define some data
+$example_data = array(
+     array('a',3),
+     array('b',5),
+     array('c',7),
+     array('d',8),
+     array('e',2),
+     array('f',6),
+     array('g',7)
+);
+$plot->SetDataValues($example_data);
+
+//Turn off X axis ticks and labels because they get in the way:
+$plot->SetXTickLabelPos('none');
+$plot->SetXTickPos('none');
+
+//Draw it
+$plot->DrawGraph();
+?>
 
 
 <?php 
