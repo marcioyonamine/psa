@@ -1087,7 +1087,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 					$cor = $x[$i]['cor'];
 					$sql_dis = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE cor = '$cor'";
 					$y = $wpdb->get_results($sql_dis);
-					echo $cor."(".count($y)."),";
+					echo $cor."(".count($y)."), ";
 					
 				}
 				?>
@@ -1101,7 +1101,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 					$cor = $x[$i]['cor'];
 					$sql_dis = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE cor = '$cor'";
 					$y = $wpdb->get_results($sql_dis);
-					echo $cor."(".count($y)."),";
+					echo $cor."(".count($y)."), ";
 					
 				}
 				
