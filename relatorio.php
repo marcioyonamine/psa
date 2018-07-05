@@ -878,7 +878,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				<tr>
 				<td>Inscritos por cidade</td>
 				<td><?php
-					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '349' ORDER BY cidade";
+					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '156' ORDER BY cidade";
 					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
 					for($i = 0; $i < count($cidades); $i++){
 						$city = $cidades[$i]['cidade'];
@@ -899,7 +899,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 					for($i = 0; $i < count($cidades); $i++){
 						$city = $cidades[$i]['cidade'];
 
-						$sql_sel_city = "SELECT id FROM ava_inscricao WHERE id_mapas = '349' AND cidade = '$city'";
+						$sql_sel_city = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND cidade = '$city'";
 						$n_city = $wpdb->get_results($sql_sel_city);
 						if($city == "" ){
 							$city = "OUTROS";
