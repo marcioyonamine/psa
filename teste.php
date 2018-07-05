@@ -69,7 +69,6 @@ class gMaps {
   
 }
 
-/*
 $sql = "SELECT * FROM ava_inscricao WHERE id_mapas = '$m' ";
 $x = $wpdb->get_results($sql,ARRAY_A);
 
@@ -140,7 +139,7 @@ for ($i = 0; $i < count($x); $i++){
 	}
 
 
-*/	
+
 function validarCep($cep) {
     // retira espacos em branco
     $cep = trim($cep);
