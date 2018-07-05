@@ -871,7 +871,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($x);
 				
-				
+				?>
 				</tr>
 				<tr>
 				<td>Inscritos por cidade</td>
