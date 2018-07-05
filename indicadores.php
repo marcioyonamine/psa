@@ -1338,30 +1338,81 @@ include ("inc/phplot/phplot.php");
 <?php 
 
 $grafico = new PHPlot();
-//SetFileFormat("png");
 
-//Define the object
-$plot = new PHPlot();
+$grafico->SetFileFormat("png");
 
-//Define some data
-$example_data = array(
-     array('a',3),
-     array('b',5),
-     array('c',7),
-     array('d',8),
-     array('e',2),
-     array('f',6),
-     array('g',7)
+# Indicamos o títul do gráfico e o título dos dados no eixo X e Y do mesmo
+$grafico->SetTitle("Gráfico de exemplo");
+$grafico->SetXTitle("Eixo X");
+$grafico->SetYTitle("Eixo Y");
+
+
+# Definimos os dados do gráfico
+$dados = array(
+		array('Janeiro', 10),
+		array('Fevereiro', 5),
+		array('Março', 4),
+		array('Abril', 8),
+		array('Maio', 7),
+		array('Junho', 5),
 );
-$plot->SetDataValues($example_data);
 
-//Turn off X axis ticks and labels because they get in the way:
-$plot->SetXTickLabelPos('none');
-$plot->SetXTickPos('none');
+$grafico->SetDataValues($dados);
+ 
+# Neste caso, usariamos o gráfico em barras
+$grafico->SetPlotType("bars");
 
-//Draw it
-$plot->DrawGraph();
+# Exibimos o gráfico
+$grafico->DrawGraph();
 ?>
+<?php 
+
+break;
+case "culturaz":
+
+function chamaAPI($url,$data){
+	$get_addr = $url.'?'.http_build_query($data);
+	$ch = curl_init($get_addr);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	$page = curl_exec($ch);
+	$evento = json_decode($page);
+	$ccsp = converterObjParaArray($evento);
+	return $ccsp;
+	
+}
+
+
+$url_mapas = "http://culturaz.santoandre.sp.gov.br/api/";
+$data = array(
+	'@select' => 'createTimestamp'
+);
+
+
+
+$agente = chamaAPI($url_mapas."agent/find/",$data);
+//$espaco = chamaAPI($url_mapas."space/find/",$data);
+//$projeto = chamaAPI($url_mapas."project/find/",$data);
+//$evento = chamaAPI($url_mapas."event/find/",$data);
+
+
+	$k = array();
+
+for($i = 0; $i < count($agente); $i++){
+	$x = exibirDataBr($agente[$i]['createTimestamp']['date']);
+	//echo $i." : ".$x;
+	$y = explode("/",$x);	
+
+	$k[$y[2]][$y[1]][$i] = $x;
+	
+
+	
+}
+
+echo "Total de agentes: ".count($k)."<br />";
+echo "Total de agentes: ".sizeof($k)."<br />";
+ 
+?>
+
 
 
 <?php 

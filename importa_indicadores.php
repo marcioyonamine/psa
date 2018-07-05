@@ -1,0 +1,168 @@
+<?php include "header.php"; ?>
+
+  <body>
+  
+  <?php //include "menu/me_inicio.php"; 
+  set_time_limit(0);
+  ?>
+ 
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+          <h1>Importação de Indicadores</h1>
+
+		  <?php echo exibeHoje();?>
+<?php 
+
+if(isset($_GET['p'])){
+	$p = $_GET['p'];
+}else{
+	$p = "inicio";
+}
+
+
+switch($p){
+	case "inicio":
+	?>
+	
+	<h2>Escolha uma opção</h2>
+	<p><a href="?p=verifica_culturaz"> Verificar tabela temp_culturaz, sc_evento e temp_eventos</a></p>
+	
+	<?php 
+	break;
+	case "verifica_culturaz";
+	?>
+	
+	<h1>Verificar tabela temp_culturaz e sc_evento</h1>
+	
+	<table border="1">
+<h3>Eventos do CulturAZ que não estão no Bartira</h3>
+	<tr>
+	<th>#</th>
+	<th>Nome do Evento</th>
+	<th></th>
+	<th></th>
+	</tr>
+	<?php 
+	$sql_evento = "SELECT * FROM `temp_culturaz` WHERE Id NOT IN(SELECT mapas FROM sc_evento WHERE mapas <> 0)";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+	
+	for($i = 0; $i < count($evento); $i++){	
+	?>
+	<tr>
+	<td><?php echo $i ?></td>
+	<td><?php echo $evento[$i]["Nome"]?></td>
+	</tr>
+	<?php } ?>
+	<tr><td>
+	Total:<?php echo count($evento) ?> 
+	</td></tr>
+	</table>
+	
+<hr >
+
+	<table border="1">
+	<h3>Eventos do Bartira que não estão no CulturAZ</h3>
+	<tr>
+		<th>#</th>
+	<th>Nome do Evento</th>
+	<th></th>
+	<th></th>
+	</tr>
+	<?php 
+	$sql_evento = "SELECT * FROM `sc_evento` WHERE mapas = 0 AND dataEnvio IS NOT NULL AND publicado = 1";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+	
+	for($i = 0; $i < count($evento); $i++){	
+	?>
+	<tr>
+	<td><?php echo $i ?></td>
+
+	<td><?php echo $evento[$i]["nomeEvento"]?></td>
+	</tr>
+	<?php } ?>
+	<tr><td>
+	Total:<?php echo count($evento) ?> 
+	</td></tr>
+	</table>
+<hr >
+		<table border="1">
+		<h3>Eventos que estão no Bartira e no CulturAZ</h3>
+	<tr>
+		<th>#</th>
+	<th>Nome do Evento</th>
+	<th></th>
+	<th></th>
+	</tr>
+	<?php 
+	$sql_evento = "SELECT * FROM `sc_evento` WHERE mapas <> 0 AND dataEnvio IS NOT NULL AND publicado = 1";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+	
+	for($i = 0; $i < count($evento); $i++){	
+	?>
+	<tr>
+	<td><?php echo $i ?></td>
+	<td><?php echo $evento[$i]["nomeEvento"]?></td>
+	</tr>
+	<?php } ?>
+	<tr><td>
+	Total:<?php echo count($evento) ?> 
+	</td></tr>
+	</table>
+<hr >
+		<table border="1">
+		<h3>Eventos que estão no CulturAZ e no temp_eventos</h3>
+	<tr>
+		<th>#</th>
+	<th>Nome[ temp_eventos ]</th>
+	<th>Nome [ CulturAZ ]</th>
+	<th></th>
+	</tr>
+	<?php 
+	$sql_evento = "SELECT DISTINCT `NOME DO EVENTO` FROM `temp_eventos`";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+	
+	for($i = 0; $i < count($evento); $i++){
+		$sql_culturaz = "SELECT Nome FROM temp_culturaz WHERE Nome LIKE'%".addslashes($evento[$i]["NOME DO EVENTO"])."%'";
+		$culturaz = $wpdb->get_results($sql_culturaz,ARRAY_A);
+		$str_culturaz = "";
+		for($k = 0; $k < count($culturaz); $k++){
+			$str_culturaz .= $culturaz[$k]['Nome'].", ";
+		}
+		// verifica se existe na tabela temp_culturaz
+		
+		
+	
+	
+	?>
+	<tr>
+	<td><?php echo $i ?></td>
+	<td><?php echo $evento[$i]["NOME DO EVENTO"]?></td>
+	<td><?php echo $str_culturaz; ?></td>
+	</tr>
+	<?php } ?>
+	<tr><td>
+	Total:<?php echo count($evento) ?> 
+	</td></tr>
+	</table>
+	<?php
+	break; //fim da switch
+}
+
+
+
+
+
+
+
+
+?>
+		  
+		  
+		  
+
+        </main>
+      </div>
+    </div>
+	
+<?php 
+include "footer.php";
+?>

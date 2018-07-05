@@ -556,18 +556,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
      			</tr>
               </thead>
               <tbody>
-				<tr>
-				<td>Número de Eventos</td>
-				<td>
-				<?php 
-				$sql_n_eventos_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' AND dataEnvio IS NOT NULL";
-				$x = $wpdb->get_results($sql_n_eventos_publicados);
-				$sql_n_eventos_n_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1'";
-				$y = $wpdb->get_results($sql_n_eventos_n_publicados);
-				echo "Eventos planejados: ".count($y)." / Eventos Publicados: ".count($x);			
-				?>
-				</td>
-				</tr>
+			  <tr><td colspan='2'><h3>Processo de Seleção</h3><td></tr>
 				<tr>
 				<td>Número de Inscrições no Chamamento</td>
 				<td><?php 
@@ -600,8 +589,12 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
 					for($i = 0; $i < count($cidades); $i++){
 						$city = $cidades[$i]['cidade'];
+
 						$sql_sel_city = "SELECT id FROM ava_inscricao WHERE id_mapas = '349' AND cidade = '$city'";
 						$n_city = $wpdb->get_results($sql_sel_city);
+						if($city == "" ){
+							$city = "OUTROS";
+						}
 						echo $city."( ".count($n_city)." ), ";
 		
 	}
@@ -640,15 +633,29 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 					//$n_abc = $n_abc + $n;
 				}
 				
-				echo $n_abc."<br />";
+				//echo $n_abc."<br />";
 				$porc = ($n_abc/count($selecionados))*100;
 				
-				echo "% de selecionados do ABC: ".round($porc)."%";
+				echo "<br />% de selecionados do ABC: ".round($porc)."%";
 				
 				
 				
 				?></td>
 				</tr>
+			  <tr><td colspan='2'><h3>Programação</h3><td></tr>
+				<tr>
+				<td>Número de Eventos</td>
+				<td>
+				<?php 
+				$sql_n_eventos_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' AND dataEnvio IS NOT NULL";
+				$x = $wpdb->get_results($sql_n_eventos_publicados);
+				$sql_n_eventos_n_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1'";
+				$y = $wpdb->get_results($sql_n_eventos_n_publicados);
+				echo "Eventos planejados: ".count($y)." / Eventos Publicados: ".count($x);			
+				?>
+				</td>
+				</tr>
+
 				<tr>
 				<td>Eventos</td>
 				<td><?php
@@ -705,7 +712,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				</td>
 				</tr>
 								<tr>
-				<td>Horas de atividade</td>
+				<td>Horas de atividade concomitantes</td>
 				<td>
 				<?php 
 				$minutos = 0;
