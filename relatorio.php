@@ -1010,10 +1010,10 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				echo count($x)." mulheres / ";
 				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Homem'";
 				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
-				echo count($y). "homens / ";
+				echo count($y). " homens / ";
 				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero <> 'Homem' AND genero <> 'Mulher'";
 				$w = $wpdb->get_results($sql_n_agentes,ARRAY_A);
-				echo count($w). "outras";
+				echo count($w). " outras";
 			
 				
 				?></td>
@@ -1040,10 +1040,10 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				echo count($x)." mulheres / ";
 				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Homem' AND aprovado = '1'";
 				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
-				echo count($y). "homens / ";
+				echo count($y). " homens / ";
 				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero <> 'Homem' AND genero <> 'Mulher' AND aprovado = '1'";
 				$w = $wpdb->get_results($sql_n_agentes,ARRAY_A);
-				echo count($w). "outras";
+				echo count($w). " outras";
 			
 				
 				?></td>
