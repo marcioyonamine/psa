@@ -160,8 +160,9 @@ for($i = 0; $i < count($sem_end); $i++){
 	//var_dump($json);
 	$busca = explode(",",$json);
 	foreach($busca as $string){
+		echo "<pre>";
 		var_dump(validarCep($string));
-	
+		echo "</pre>";
 	}
 	
 		
