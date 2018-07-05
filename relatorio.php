@@ -798,6 +798,289 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				</tbody>
             </table>
           </div> 
+		  
+<?php 
+break;
+case 'territorios':  
+
+/* 
++ Número de eventos (puxar projeto);
++ Número de agentes artistas 
++ Número de agentes artistas de Santo André
++ Divisão via gênero
++ Valores para contratação de artistas
++ Valores para contratação de infraestrutura
++ Eventos por linguagem (bartira)
++ Eventos por espaços (bartira)
++ Horas de programação
+
+
+
+
+*/
+$selecionados = array("on-1773097257","on-783829307","on-1761685716","on-352832","on-1453010115","on-1442268823","on-1566051262","on-1683241002","on-1714966032","on-118036985","on-743253080","on-1048183298","on-757466696","on-816928171","on-206463587","on-802625839","on-1577808338","on-1911167732","on-21575494","on-692984084","on-1619996948","on-597512233","on-238034968","on-1968119092","on-833444987","on-947680953","on-1738877893","on-1820229336","on-2052139008","on-1717118768","on-1400064695","on-275136340","on-764674688","on-81144614","on-1097209228","on-2083747890","on-772235373","on-1489454805","on-1064335160","on-575366804","on-199453234","on-1038431609","on-1386686453","on-998397921","on-1901353153","on-63316958","on-1093220644","on-31740023","on-467012070","on-1511533568","on-549538762","on-1542680140","on-1762919233","on-840918750","on-1579498570","on-144863959","on-998053853","on-1014304746","on-1873687417","on-2059946682","on-1637835576","on-1213339754","on-1790838746","on-1686202074","on-1335892498","on-700738777","on-924806377","on-2114852335");
+
+$abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEMA", "MAUA","RIBEIRAO PIRES","RIO GRANDE DA SERRA");
+
+
+
+?>	
+         <h1>Territórios de Cultura</h1>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+				<th width="15%"></th>
+				<th>2017</th>
+				<th>2018</th>
+				<th width='20%'>Obs</th>
+     			</tr>
+              </thead>
+              <tbody>
+			  <tr><td colspan='2'><h3>Processo de Seleção</h3><td></tr>
+				<tr>
+				<td>Número de Inscrições no Chamamento</td>
+				<td><?php 
+				$sql_n_inscricoes = "SELECT id FROM ava_inscricao WHERE id_mapas = '349'";
+				$x = $wpdb->get_results($sql_n_inscricoes);
+				$sql_n_inscricoes_2017 = "SELECT id FROM ava_inscricao WHERE id_mapas = '185'";
+				$y = $wpdb->get_results($sql_n_inscricoes_2017);
+				$aumento = (count($x)/count($y))*100;
+				
+				
+				echo "2018: ".count($x)." / 2017: ".count($y)." / aumento de ".dinheiroParaBr($aumento)."%"; 
+				
+				
+				?></td>
+				</tr>
+				<tr>
+				<td>Número de Agentes Inscritos no Chamamento</td>
+				<td><?php 
+				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '349'";
+				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($x);
+			
+				
+				?></td>
+				</tr>
+				<tr>
+				<td>Inscritos por cidade</td>
+				<td><?php
+					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '349' ORDER BY cidade";
+					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
+					for($i = 0; $i < count($cidades); $i++){
+						$city = $cidades[$i]['cidade'];
+
+						$sql_sel_city = "SELECT id FROM ava_inscricao WHERE id_mapas = '349' AND cidade = '$city'";
+						$n_city = $wpdb->get_results($sql_sel_city);
+						if($city == "" ){
+							$city = "OUTROS";
+						}
+						echo $city."( ".count($n_city)." ), ";
+		
+	}
+
+				?></td>
+				</tr>
+				<td>Selecionados por cidade</td>
+				<td><?php
+				echo count($selecionados)." selecionados.<br />" ;	
+				$n_abc = 0;
+				
+				$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '349' ORDER BY cidade";
+				$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
+				for($i = 0; $i < count($cidades); $i++){
+					$city = $cidades[$i]['cidade'];
+
+					$sql_sel_city = "SELECT inscricao FROM ava_inscricao WHERE id_mapas = '349' AND cidade = '$city'";
+					$inscricao = $wpdb->get_results($sql_sel_city,ARRAY_A);
+					$n = 0;
+					for($k = 0; $k < count($inscricao); $k++){
+						if(in_array($inscricao[$k]['inscricao'],$selecionados)){
+							$n++;
+							if(in_array($city,$abc)){
+								$n_abc++;
+							}
+					}
+
+					}
+					if($city == "" ){
+						$city = "OUTROS";
+					}
+					
+					if($n != 0){
+						echo $city."( ".($n)." ), ";
+					}
+					//$n_abc = $n_abc + $n;
+				}
+				
+				//echo $n_abc."<br />";
+				$porc = ($n_abc/count($selecionados))*100;
+				
+				echo "<br />% de selecionados do ABC: ".round($porc)."%";
+				
+				
+				
+				?></td>
+				</tr>
+			  <tr><td colspan='2'><h3>Programação</h3><td></tr>
+				<tr>
+				<td>Número de Eventos</td>
+				<td>
+				<?php 
+				$sql_n_eventos_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' AND dataEnvio IS NOT NULL";
+				$x = $wpdb->get_results($sql_n_eventos_publicados);
+				$sql_n_eventos_n_publicados = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1'";
+				$y = $wpdb->get_results($sql_n_eventos_n_publicados);
+				echo "Eventos planejados: ".count($y)." / Eventos Publicados: ".count($x);			
+				?>
+				</td>
+				</tr>
+
+				<tr>
+				<td>Eventos</td>
+				<td><?php
+				$sql_n_eventos_n_publicados = "SELECT nomeEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' ORDER BY nomeEvento ";
+				$y = $wpdb->get_results($sql_n_eventos_n_publicados,ARRAY_A);				
+				for($i = 0; $i < count($y); $i++){
+					echo $y[$i]['nomeEvento']."<br />";
+				}
+
+				?>
+				</td>
+				</tr>
+				<tr>
+				<td>Eventos por Linguagem</td>
+				<td>
+				<?php 
+				$sql_linguagem = "SELECT DISTINCT idTipo FROM sc_evento WHERE idProjeto = '91'";
+				$x = $wpdb->get_results($sql_linguagem, ARRAY_A);
+				for($i = 0; $i < count($x); $i++){
+					$tipo = $x[$i]['idTipo'];
+					$linguagem = tipo($tipo);
+					$sql_conta = "SELECT idEvento FROM sc_evento WHERE idTipo = '$tipo' AND idProjeto = '91'";
+					$y = $wpdb->get_results($sql_conta,ARRAY_A);
+					
+				echo $linguagem['tipo']."(".count($y)."), ";
+					
+					
+				}
+				
+				
+				?>
+				</td>
+				</tr>
+								<tr>
+				<td>Eventos por Espaço</td>
+				
+				<td>
+				<?php 
+				$sql_espaco = "SELECT DISTINCT local FROM sc_ocorrencia WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' )";
+				$x = $wpdb->get_results($sql_espaco,ARRAY_A);
+				for($i = 0; $i < count($x); $i++){
+					$local = tipo($x[$i]['local']);
+					$sql_local = "SELECT local FROM sc_ocorrencia WHERE local = '".$x[$i]['local']."' AND idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1' )";
+					$y = $wpdb->get_results($sql_local);
+					
+					
+					
+					echo $local['tipo']."(".count($y)."), ";		
+				}
+				
+				?>
+				
+				
+				</td>
+				</tr>
+								<tr>
+				<td>Horas de atividade concomitantes</td>
+				<td>
+				<?php 
+				$minutos = 0;
+				$sql_evento = "SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1'";
+				$x = $wpdb->get_results($sql_evento,ARRAY_A);
+				for($i = 0; $i < count($x); $i++){
+					$t = diasEfetivos($x[$i]['idEvento']);
+					$minutos = $minutos + $t['minutos'];
+				//echo $i." ".$x[$i]['idEvento']."-";
+				//var_dump($t);	
+				}
+				
+				echo round($minutos/60) ." horas";
+				
+				?>
+				
+				
+				</td>
+				</tr>
+				<tr>
+				<td>Orçamento Executado</td>
+				<td>
+				<?php 
+				$sql_orc = "SELECT valor FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1') AND publicado = 1";
+				$orc_exec = $wpdb->get_results($sql_orc,ARRAY_A);
+				$total_art = 0;
+				for($i = 0; $i < count($orc_exec); $i++){
+					$total_art = $total_art + $orc_exec[$i]['valor'];
+				}
+				
+				$sql_infra = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1') AND publicado = 1";
+				$orc_infra = $wpdb->get_results($sql_infra,ARRAY_A);
+				$total_infra = 0;
+				for($i = 0; $i < count($orc_infra); $i++){
+					$total_infra = $total_infra + $orc_infra[$i]['valor'];
+				}					
+				
+				echo "Total de Contratações Artísticas: ".dinheiroParaBr($total_art)." <br />";				
+				echo "Total de Infraestrutura e Serviços: ".dinheiroParaBr($total_infra)." <br />";
+				echo "Total Geral: ".dinheiroParaBr($total_art+$total_infra);
+				
+
+				?>
+				
+				</td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>Orçamento Executado por dotação </td>
+				<td>
+				<?php 
+				$sql_dot = "SELECT DISTINCT dotacao FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1') OR idAtividade IN(SELECT id FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1'))";				
+				$dot = $wpdb->get_results($sql_dot,ARRAY_A);
+				for($i = 0; $i < count($dot); $i++){
+					$total = 0;;		
+					$sql_titulo = "SELECT descricao, projeto, ficha FROM sc_orcamento WHERE id = '".$dot[$i]['dotacao']."'";
+					$y = $wpdb->get_row($sql_titulo,ARRAY_A);
+					$sql_soma = "SELECT valor FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '91' AND publicado = '1') OR idAtividade IN(SELECT id FROM sc_atividade WHERE idProjeto = '91' AND publicado = '1')) AND dotacao = '".$dot[$i]['dotacao']."'";
+					$soma = $wpdb->get_results($sql_soma,ARRAY_A);
+					for ($k = 0; $k < count($soma); $k++){
+						$total = $total + $soma[$k]['valor'];
+						
+					}
+					
+					echo $y['descricao']." (".$y['projeto']."/".$y['ficha'].") = ".dinheiroParaBr($total)."<br />";
+					
+				}
+				
+				
+				?>
+				
+				
+				
+				</td>
+
+				</tr>				
+				<tr>
+				<td>Orçamento Executado por linguagem </td>
+				<td></td>
+
+				</tr>				
+
+				</tbody>
+            </table>
+          </div> 		  
+		  
 <?php 
 break;
 case 'quantitativo':  
