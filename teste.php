@@ -20,6 +20,8 @@ if(isset($_GET['mapas'])){
 	
 	$m = $_GET['mapas'];
 
+				require_once dirname(__FILE__) . '/classes/PHPExcel.php';
+	
 class gMaps {
   private $mapsKey;
   function __construct($key = null) {
@@ -86,6 +88,7 @@ for ($i = 0; $i < count($x); $i++){
 	$id = $x[$i]['id'];
 	$agente = $y['Agente responsável pela inscrição - Id'];
 	$raca = $y['Agente responsável pela inscrição - Raça/cor'];
+	$date_formated = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($y['Agente responsável pela inscrição - Data de Nascimento/Fundação']));
 	
 	echo $atuacao."<br />";
 	echo ($cidade)."<br />";
