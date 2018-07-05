@@ -159,9 +159,14 @@ for($i = 0; $i < count($sem_end); $i++){
 	//var_dump($json);
 	$busca = explode(",",$json);
 	foreach($busca as $string){
-		echo "<pre>";
-		var_dump(validarCep($string));
-		echo "</pre>";
+		$cep = validarCep($string);
+		$upd = "UPDATE ava_inscricao SET 
+		cidade = '".strtoupper(tirarAcentos($cep['cidade']))."',
+		bairro = '".strtoupper(tirarAcentos($cep['bairro']))."
+		WHERE id = '".$sem_end[$i]['id']."'
+		";
+		$wpdb->query($upd);
+
 	}
 	
 		
