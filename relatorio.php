@@ -832,8 +832,8 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
               <thead>
                 <tr>
 				<th width="15%"></th>
-				<th>2017</th>
-				<th>2018</th>
+				<th width='30%'>2017</th>
+				<th width='30%'>2018</th>
 				<th width='20%'>Obs</th>
      			</tr>
               </thead>
@@ -912,15 +912,17 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				</tr>
 				<td>Selecionados por cidade</td>
 				<td><?php
+				$sql_sel = "SELECT id FROM ava_inscricao WHERE aprovado = '1' AND id_mapas = '156'";
+				$selecionados = $wpdb->get_results($sql_sel);
 				echo count($selecionados)." selecionados.<br />" ;	
 				$n_abc = 0;
 				
-				$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '349' ORDER BY cidade";
+				$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '156' ORDER BY cidade";
 				$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
 				for($i = 0; $i < count($cidades); $i++){
 					$city = $cidades[$i]['cidade'];
 
-					$sql_sel_city = "SELECT inscricao FROM ava_inscricao WHERE id_mapas = '349' AND cidade = '$city'";
+					$sql_sel_city = "SELECT inscricao FROM ava_inscricao WHERE id_mapas = '156' AND cidade = '$city'";
 					$inscricao = $wpdb->get_results($sql_sel_city,ARRAY_A);
 					$n = 0;
 					for($k = 0; $k < count($inscricao); $k++){
@@ -950,6 +952,48 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				
 				
 				?></td>
+				<td><?php
+				$sql_sel = "SELECT id FROM ava_inscricao WHERE aprovado = '1' AND id_mapas = '286'";
+				$selecionados = $wpdb->get_results($sql_sel);
+
+				echo count($selecionados)." selecionados.<br />" ;	
+				$n_abc = 0;
+				
+				$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '286' ORDER BY cidade";
+				$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
+				for($i = 0; $i < count($cidades); $i++){
+					$city = $cidades[$i]['cidade'];
+
+					$sql_sel_city = "SELECT inscricao FROM ava_inscricao WHERE id_mapas = '286' AND cidade = '$city'";
+					$inscricao = $wpdb->get_results($sql_sel_city,ARRAY_A);
+					$n = 0;
+					for($k = 0; $k < count($inscricao); $k++){
+						if(in_array($inscricao[$k]['inscricao'],$selecionados)){
+							$n++;
+							if(in_array($city,$abc)){
+								$n_abc++;
+							}
+					}
+
+					}
+					if($city == "" ){
+						$city = "OUTROS";
+					}
+					
+					if($n != 0){
+						echo $city."( ".($n)." ), ";
+					}
+					//$n_abc = $n_abc + $n;
+				}
+				
+				//echo $n_abc."<br />";
+				$porc = ($n_abc/count($selecionados))*100;
+				
+				echo "<br />% de selecionados do ABC: ".round($porc)."%";
+				
+				
+				
+				?></td>				
 				</tr>
 			  <tr><td colspan='2'><h3>Programação</h3><td></tr>
 				<tr>
