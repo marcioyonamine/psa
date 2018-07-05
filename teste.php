@@ -165,6 +165,7 @@ for($i = 0; $i < count($sem_end); $i++){
 		bairro = '".strtoupper(tirarAcentos($cep['bairro']))."
 		WHERE id = '".$sem_end[$i]['id']."'
 		";
+		echo $upd."<br />";
 		$wpdb->query($upd);
 
 	}
