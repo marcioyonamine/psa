@@ -62,12 +62,13 @@
 				}
 			
 
-			/*	
+				
 			echo "<pre>";
 			var_dump($matriz);
 			echo "</pre>";
-			*/
 			
+			
+
 			
 			global $wpdb;
 			$json = addslashes(json_encode($matriz,JSON_UNESCAPED_UNICODE));		
