@@ -1002,7 +1002,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				
 				?></td>				
 				</tr>
-
+<tr>
 <td>Gênero dos Inscritos</td>
 <td><?php 
 				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Mulher'";
@@ -1023,16 +1023,45 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				echo count($x)." mulheres / ";
 				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero = 'Homem'";
 				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
-				echo count($y). "homens / ";
+				echo count($y). " homens / ";
 				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero <> 'Homem' AND genero <> 'Mulher'";
 				$w = $wpdb->get_results($sql_n_agentes,ARRAY_A);
-				echo count($w). "outras";
+				echo count($w). " outras";
 				
 				?>
 				</td>
-				<td>Aumento de <?php echo $aumento; ?>%</td>
+				
 				</tr>
-
+<tr>
+<td>Gênero dos Selecionados</td>
+<td><?php
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Mulher' AND Aprovados = '1'";
+				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($x)." mulheres / ";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Homem' AND Aprovados = '1'";
+				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($y). "homens / ";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero <> 'Homem' AND genero <> 'Mulher' AND Aprovados = '1'";
+				$w = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($w). "outras";
+			
+				
+				?></td>
+				<td><?php 
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero = 'Mulher' AND Aprovados = '1'";
+				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($x)." mulheres / ";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero = 'Homem' AND Aprovados = '1'";
+				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($y). " homens / ";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero <> 'Homem' AND genero <> 'Mulher' AND Aprovados = '1'";
+				$w = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($w). " outras";
+				
+				?>
+				</td>
+				
+				</tr>
 				
 				
 				</tbody>
