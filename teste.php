@@ -85,7 +85,7 @@ for ($i = 0; $i < count($x); $i++){
 	$genero = $y['Agente responsável pela inscrição - Gênero'];
 	$id = $x[$i]['id'];
 	$agente = $y['Agente responsável pela inscrição - Id'];
-	$raca = $y['Agente responsável pela inscrição - Raça\/cor'];
+	$raca = $y['Agente responsável pela inscrição - Raça/cor'];
 	
 	echo $atuacao."<br />";
 	echo ($cidade)."<br />";
