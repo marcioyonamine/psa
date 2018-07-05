@@ -868,15 +868,34 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				?></td>
 				<td><?php 
 				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '286'";
-				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
-				echo count($x);
+				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($y);
 				
 				?>
+				</td>
+				<td>Aumento de <?php echo $aumento; ?>%</td>
 				</tr>
 				<tr>
 				<td>Inscritos por cidade</td>
 				<td><?php
 					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '349' ORDER BY cidade";
+					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
+					for($i = 0; $i < count($cidades); $i++){
+						$city = $cidades[$i]['cidade'];
+
+						$sql_sel_city = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND cidade = '$city'";
+						$n_city = $wpdb->get_results($sql_sel_city);
+						if($city == "" ){
+							$city = "OUTROS";
+						}
+						echo $city."( ".count($n_city)." ), ";
+		
+	}
+
+				?></td>
+				<td>Inscritos por cidade</td>
+				<td><?php
+					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '286' ORDER BY cidade";
 					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
 					for($i = 0; $i < count($cidades); $i++){
 						$city = $cidades[$i]['cidade'];
