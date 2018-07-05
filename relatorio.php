@@ -852,7 +852,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				?>
 				</td>		
 				<td>
-				<?php echo count($x); ?>
+				<?php echo count($y); ?>
 
 				</td>
 				<td>Aumento de <?php echo $aumento; ?>%</td>
@@ -860,12 +860,18 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				<tr>
 				<td>Número de Agentes Inscritos no Chamamento</td>
 				<td><?php 
-				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '349'";
+				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '156'";
 				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($x);
 			
 				
 				?></td>
+				<td><?php 
+				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '386'";
+				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
+				echo count($x);
+				
+				
 				</tr>
 				<tr>
 				<td>Inscritos por cidade</td>
