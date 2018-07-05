@@ -893,7 +893,6 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 	}
 
 				?></td>
-				<td>Inscritos por cidade</td>
 				<td><?php
 					$sql_cidades = "SELECT DISTINCT cidade FROM ava_inscricao WHERE id_mapas = '286' ORDER BY cidade";
 					$cidades = $wpdb->get_results($sql_cidades,ARRAY_A);
