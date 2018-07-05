@@ -113,6 +113,8 @@ for ($i = 0; $i < count($x); $i++){
 	cor = '$raca',
 	cidade = '$cidade',
 	bairro = '$bairro',
+	idade = '$date_formated',
+
 	aprovado = '$aprovado',
 	id_agente = '$agente'
 	WHERE id = '$id'";
