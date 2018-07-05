@@ -85,6 +85,7 @@ for ($i = 0; $i < count($x); $i++){
 	$genero = $y['Agente responsável pela inscrição - Gênero'];
 	$id = $x[$i]['id'];
 	$agente = $y['Agente responsável pela inscrição - Id'];
+	$raca = $y['Agente responsável pela inscrição - Raça\/cor'];
 	
 	echo $atuacao."<br />";
 	echo ($cidade)."<br />";
@@ -106,6 +107,7 @@ for ($i = 0; $i < count($x); $i++){
 	$sql_update = "UPDATE ava_inscricao SET 
 	genero = '$genero',
 	segmento = '$atuacao',
+	cor = '$raca',
 	cidade = '$cidade',
 	bairro = '$bairro',
 	aprovado = '$aprovado',
@@ -171,6 +173,10 @@ for($i = 0; $i < count($sem_end); $i++){
 		}
 	}
 }
+
+// raca
+
+
 
 	
 	
