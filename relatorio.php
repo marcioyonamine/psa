@@ -838,21 +838,24 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
      			</tr>
               </thead>
               <tbody>
-			  <tr><td colspan='2'><h3>Processo de Seleção</h3><td></tr>
 				<tr>
 				<td>Número de Inscrições no Chamamento</td>
 				<td><?php 
-				$sql_n_inscricoes = "SELECT id FROM ava_inscricao WHERE id_mapas = '349'";
+				$sql_n_inscricoes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156'";
 				$x = $wpdb->get_results($sql_n_inscricoes);
-				$sql_n_inscricoes_2017 = "SELECT id FROM ava_inscricao WHERE id_mapas = '185'";
-				$y = $wpdb->get_results($sql_n_inscricoes_2017);
+				$sql_n_inscricoes_2018 = "SELECT id FROM ava_inscricao WHERE id_mapas = '286'";
+				$y = $wpdb->get_results($sql_n_inscricoes_2018);
 				$aumento = (count($x)/count($y))*100;
 				
 				
-				echo "2018: ".count($x)." / 2017: ".count($y)." / aumento de ".dinheiroParaBr($aumento)."%"; 
-				
-				
-				?></td>
+				echo count($x);
+				?>
+				</td>		
+				<td>
+				<?php echo count($x); ?>
+
+				</td>
+				<td>Aumento de <?php echo $aumento; ?>%</td>
 				</tr>
 				<tr>
 				<td>Número de Agentes Inscritos no Chamamento</td>
