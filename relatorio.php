@@ -912,8 +912,12 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				</tr>
 				<td>Selecionados por cidade</td>
 				<td><?php
-				$sql_sel = "SELECT id FROM ava_inscricao WHERE aprovado = '1' AND id_mapas = '156'";
-				$selecionados = $wpdb->get_results($sql_sel);
+				$sql_sel = "SELECT inscricao FROM ava_inscricao WHERE aprovado = '1' AND id_mapas = '156'";
+				$sel = $wpdb->get_results($sql_sel);
+				$selecionados = array();
+				for($g = 0; $g < count($sel); $g++){
+					array_push($selecionados,$sel[$g]['inscricao']);
+				}
 				echo count($selecionados)." selecionados.<br />" ;	
 				$n_abc = 0;
 				
@@ -953,9 +957,12 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				
 				?></td>
 				<td><?php
-				$sql_sel = "SELECT id FROM ava_inscricao WHERE aprovado = '1' AND id_mapas = '286'";
-				$selecionados = $wpdb->get_results($sql_sel);
-
+				$sql_sel = "SELECT inscricao FROM ava_inscricao WHERE aprovado = '1' AND id_mapas = '286'";
+				$sel = $wpdb->get_results($sql_sel);
+				$selecionados = array();
+				for($g = 0; $g < count($sel); $g++){
+					array_push($selecionados,$sel[$g]['inscricao']);
+				}
 				echo count($selecionados)." selecionados.<br />" ;	
 				$n_abc = 0;
 				
