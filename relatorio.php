@@ -867,7 +867,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				
 				?></td>
 				<td><?php 
-				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '386'";
+				$sql_n_agentes = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE id_mapas = '286'";
 				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($x);
 				
