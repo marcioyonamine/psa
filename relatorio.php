@@ -1035,26 +1035,26 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 <tr>
 <td>Gênero dos Selecionados</td>
 <td><?php
-				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Mulher' AND Aprovados = '1'";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Mulher' AND aprovados = '1'";
 				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($x)." mulheres / ";
-				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Homem' AND Aprovados = '1'";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero = 'Homem' AND aprovados = '1'";
 				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($y). "homens / ";
-				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero <> 'Homem' AND genero <> 'Mulher' AND Aprovados = '1'";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '156' AND genero <> 'Homem' AND genero <> 'Mulher' AND aprovados = '1'";
 				$w = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($w). "outras";
 			
 				
 				?></td>
 				<td><?php 
-				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero = 'Mulher' AND Aprovados = '1'";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero = 'Mulher' AND aprovados = '1'";
 				$x = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($x)." mulheres / ";
-				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero = 'Homem' AND Aprovados = '1'";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero = 'Homem' AND aprovados = '1'";
 				$y = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($y). " homens / ";
-				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero <> 'Homem' AND genero <> 'Mulher' AND Aprovados = '1'";
+				$sql_n_agentes = "SELECT id FROM ava_inscricao WHERE id_mapas = '286' AND genero <> 'Homem' AND genero <> 'Mulher' AND aprovados = '1'";
 				$w = $wpdb->get_results($sql_n_agentes,ARRAY_A);
 				echo count($w). " outras";
 				
