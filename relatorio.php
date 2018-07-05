@@ -1119,11 +1119,11 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				<td>Número de Agentes selecionados por raça/cor</td>
 				<td>
 				<?php 
-				$sql = "SELECT DISTINCT cor FROM ava_inscricao WHERE id_mapas = '156' AND aprovado = '1'";
+				$sql = "SELECT DISTINCT cor FROM ava_inscricao WHERE id_mapas = '156' ";
 				$x = $wpdb->get_results($sql,ARRAY_A);
 				for($i = 0; $i < count($x); $i++){
 					$cor = $x[$i]['cor'];
-					$sql_dis = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE cor = '$cor'";
+					$sql_dis = "SELECT DISTINCT id_agente FROM ava_inscricao WHERE cor = '$cor'AND aprovado = '1'";
 					$y = $wpdb->get_results($sql_dis);
 					if($cor != ""){
 					echo $cor."(".count($y)."), ";
