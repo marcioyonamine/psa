@@ -163,7 +163,7 @@ for($i = 0; $i < count($sem_end); $i++){
 		if($cep != NULL){
 			$upd = "UPDATE ava_inscricao SET 
 			cidade = '".strtoupper(tirarAcentos($cep['cidade']))."',
-			bairro = '".strtoupper(tirarAcentos($cep['bairro']))."
+			bairro = '".strtoupper(tirarAcentos($cep['bairro']))."'
 			WHERE id = '".$sem_end[$i]['id']."'
 			";
 			echo $upd."<br />";
