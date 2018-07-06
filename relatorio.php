@@ -1167,7 +1167,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				foreach($area as $a){
 					$sql = "SELECT id FROM ava_inscricao WHERE segmento LIKE '%".$a."%' AND id_mapas = '156'";
 					$x = $wpdb->get_results($sql);
-					if($count($x) != 0){
+					if(count($x) != 0){
 					echo $a."(".count($x)."), ";
 					}
 				}		
@@ -1181,7 +1181,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				foreach($area as $a){
 					$sql = "SELECT id FROM ava_inscricao WHERE segmento LIKE '%".$a."%' AND id_mapas = '156'";
 					$x = $wpdb->get_results($sql);
-					if($count($x) != 0){
+					if(count($x) != 0){
 						echo $a."(".count($x)."), ";
 					}
 				}		
