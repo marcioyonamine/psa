@@ -1152,6 +1152,46 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				<td></td>
 				
 				</tr>
+
+								<tr>
+				<td>Áreas de Interesse dos inscritos</td>
+				<td>
+				<?php 
+				$area = array("Antropologia","Arqueologia","Arquitetura-Urbanismo","Arquivo","Arte de Rua","Artes Visuais",
+				"Artesanato","Audiovisual","Cinema","Circo","Cultura Cigana","Cultura Digital","Cultura Estrangeira (imigrantes)","Cultura Indígena","
+				Cultura LGBT","Cultura Negra","Cultura Popular","Dança","Design","Direito Autoral","Economia Criativa","Educação","Esporte","Filosofia","
+				Fotografia","Gastronomia","Gestão Cultural","História","Jogos Eletrônicos","Jornalismo","Leitura","Literatura","Livro","Meio Ambiente","
+				Moda","Museu","Mídias Sociais","Música","Novas Mídias","Outros Patrimônio","Imaterial Patrimônio","Material Pesquisa","Produção Cultural","
+				Rádio","Saúde","Sociologia","Teatro","Turismo");
+
+				foreach($area as $a){
+					$sql = "SELECT id FROM ava_inscricao WHERE segmento LIKE '%".$a."%' AND id_mapas = '156'";
+					$x = $wpdb->get_results($sql);
+					if($count($x) != 0){
+					echo $a."(".count($x)."), ";
+					}
+				}		
+				
+				
+				?>
+				
+				</td>
+				<td>
+				<?php 
+				foreach($area as $a){
+					$sql = "SELECT id FROM ava_inscricao WHERE segmento LIKE '%".$a."%' AND id_mapas = '156'";
+					$x = $wpdb->get_results($sql);
+					if($count($x) != 0){
+						echo $a."(".count($x)."), ";
+					}
+				}		
+				
+				?>
+				
+				</td>
+				<td></td>
+				
+				</tr>
 				
 				</tbody>
             </table>
