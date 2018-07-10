@@ -489,12 +489,7 @@ case 549: // OS para FIP2018
 
 		<br />
 		<br />
-		<p>Santo André, <?php 
-		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-		date_default_timezone_set('America/Sao_Paulo');
-		echo strftime('%A, %d de %B de %Y', strtotime('today'));
-		
-		?>. </p>
+		<?php echo exibeHoje(); ?>.
 		
 		<br /><br />
 		
