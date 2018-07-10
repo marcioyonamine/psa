@@ -302,15 +302,17 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 
 
 <tr>
-<td colspan="4"><center><b>Aprovação (assinatura sobre carimbo e data)</b></center></td>
+<td colspan="4"><center><b>A Cargo da Área de Materiais</b></center></td>
 </tr>
 <tr>
 
-<td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
-<td width='33%' height="50px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
-<td height="50px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
+<td colspan="2" width='33%' height="35px" style="vertical-align:top; text-align: center;">Código Serviço/Material</td>
+<td width='33%' height="35px" style="vertical-align:top; text-align: center;">Almoxarifado</td>
+<td height="35px" style="vertical-align:top; text-align: center;">Nº SC/OS(SICOM)</td>
 
 
+<tr>
+<td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
 </tr>
 <tr>
 <td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
