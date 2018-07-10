@@ -489,7 +489,7 @@ case 549: // OS para FIP2018
 
 		<br />
 		<br />
-		<?php echo exibeHoje(); ?>.
+		<p>Santo André, <?php echo exibeHoje(); ?>.</p>
 		
 		<br /><br />
 		
@@ -513,9 +513,9 @@ case 549: // OS para FIP2018
 			Secretaria de Cultura</p>
 		
 		<p class="rodape">------------------------------------------------------------</p>
-		<p class="rodape">Secretaria de Cultura - <?php echo $pedido['area']; ?> <br />
+		<p class="rodape">Secretaria de Cultura - <?php //echo $pedido['area']; ?> <br />
 		Praça IV Centenário, 02 - Centro - Paço Municipal - Prédio da Biblioteca - Santo André - SP, <br /> 
-		Telefone (11) 4433-0711/ 4433-0632 / email: musica@santoandre.sp.gov.br</p>
+		Telefone (11) 4433-0711/ 4433-0632 </p>
 		
 		
 		
