@@ -297,8 +297,8 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 <tr>
 
 <td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
-<td width='33%' height="100px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
-<td height="100px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
+<td width='33%' height="100px" style="vertical-align:top; text-align: center;">Diretor(a) da Área<br />C.R. Requisitante</td>
+<td height="100px" style="vertical-align:top; text-align: center;">Secretário(a) da Área <br />C.R. Requisitante</td>
 
 
 <tr>
