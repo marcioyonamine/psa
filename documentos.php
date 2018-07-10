@@ -311,9 +311,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 <td height="35px" style="vertical-align:top; text-align: center;">Nº SC/OS(SICOM)</td>
 
 
-<tr>
-<td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
-</tr>
+
 <tr>
 <td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
 </tr>
