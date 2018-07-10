@@ -399,8 +399,8 @@ case 549: // OS para FIP2018
 <tr>
 
 <td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
-<td width='33%' height="100px" style="vertical-align:top; text-align: center;">Diretor(a) da Área Área<br />C.R. Requisitante</td>
-<td height="100px" style="vertical-align:top; text-align: center;">Secretário(a) da Área Área<br />C.R. Requisitante</td>
+<td width='33%' height="100px" style="vertical-align:top; text-align: center;">Diretor(a) da Área <br />C.R. Requisitante</td>
+<td height="100px" style="vertical-align:top; text-align: center;">Secretário(a) da Área <br />C.R. Requisitante</td>
 
 <tr>
 <td colspan="4"><center><b>A Cargo da Área de Materiais</b></center></td>
