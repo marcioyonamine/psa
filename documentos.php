@@ -727,7 +727,7 @@ case 549: // OS para FIP2018
 
 		<br />
 		<br />
-		<p>Dotação: <?php echo $pedido['cod_dotacao']?> - Projeto: <?php echo $pedido['projeto']?> - Ficha: <?php echo $pedido['ficha']?> </p>
+		<p>Dotação: <?php echo resumoDotacao($pedido['cod_dotacao'])?> - Projeto: <?php echo $pedido['projeto']?> - Ficha: <?php echo $pedido['ficha']?> </p>
 <br /><br />
 <p>Valor: R$ <?php echo $pedido['valor'] ?> ( <?php echo $pedido['valor_extenso'] ?>)		
 		
