@@ -772,7 +772,7 @@ case 549: // OS para FIP2018
 		Valor a ser reservado para empenho de contratação para ".$pedido['objeto']; 
 		}
 		
-		$justificativa .= " a ser realizado por ".$pedido['nome_razaosocial']." representando ".$pedido['autor']."(".$pedido['cpf_cnpj'].") em data/período ".$pedido['periodo']  ;
+		$justificativa .= " a ser realizado por ".$pedido['nome_razaosocial']."(".$pedido['cpf_cnpj'].") representando ".$pedido['integrantes']." em data/período ".$pedido['periodo']  ;
 
 		if($pedido['local'] != ""){
 			$justificativa .= " em ".$pedido['local'];
