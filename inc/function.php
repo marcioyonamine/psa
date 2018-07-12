@@ -752,14 +752,14 @@ function verificaDataAgenda($data,$id,$hora,$local){
 	return $num;
 }
 
-function insereAgenda($data,$id,$hora,$local){
+function insereAgenda($data,$id,$hora,$local,$log == false){
 		global $wpdb;
 		
 		// limpa a ocorrencia na agenda
 		$sql_ins = "INSERT INTO `sc_agenda` (`idEvento`, `data`, `hora`, `idLocal`) 
 					VALUES ('$id', '$data', '$hora', '$local')"; 			
 		$insere = $wpdb->query($sql_ins);
-		//var_dump($insere)."<br />";
+		if($log == true){var_dump($insere)."<br />"};
 		return $wpdb->insert_id;
 
 }
@@ -779,43 +779,43 @@ function atualizarAgenda($id,$log = false){ //01
 					$n = numeroSemana($di);
 					//echo $di."<br />";
 					if($n == 0 AND $res[$i]['domingo'] == 1){
-						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
 					}
 								
 					if($n == 1 AND $res[$i]['segunda'] == 1){
-						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
 						
 					}					
 					if($n == 2 AND $res[$i]['terca'] == 1){
-						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
 						
 					}					
 					if($n == 3 AND $res[$i]['quarta'] == 1){
-						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
 						
 					}					
 					if($n == 4 AND $res[$i]['quinta'] == 1){
-						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
 						
 					}					
 					if($n == 5 AND $res[$i]['sexta'] == 1){
-						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
 						
 					}					
 					if($n == 6 AND $res[$i]['sabado'] == 1){
-						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
 					}					
 					$di = somarDatas($di,"+1");
 				}	
 			}else{ // data única //04
-						$x = insereAgenda($res[$i]['dataInicio'],$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
+						$x = insereAgenda($res[$i]['dataInicio'],$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
 						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$res[$i]['dataInicio']." <br />";}
 
 			}
