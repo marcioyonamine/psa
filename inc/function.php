@@ -775,6 +775,7 @@ function atualizarAgenda($id,$log = false){ //01
 			if($res[$i]['dataFinal'] != '0000-00-00'){ // temporada //04
 				$di = $res[$i]['dataInicio'];
 				while(strtotime($di) < strtotime($res[$i]['dataFinal'])){
+					if($log == true){ echo strtotime($di)." / ".strtotime(strtotime($res[$i]['dataFinal'])."<br />"; }
 					$n = numeroSemana($di);
 					//echo $di."<br />";
 					if($n == 0 AND $res[$i]['domingo'] == 1){
