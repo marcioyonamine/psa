@@ -759,7 +759,7 @@ function insereAgenda($data,$id,$hora,$local,$log = false){
 		$sql_ins = "INSERT INTO `sc_agenda` (`idEvento`, `data`, `hora`, `idLocal`) 
 					VALUES ('$id', '$data', '$hora', '$local')"; 			
 		$insere = $wpdb->query($sql_ins);
-		if($log == true){var_dump($sql_insere)."<br />";};
+		if($log == true){var_dump($sql_ins)."<br />";};
 		return $wpdb->insert_id;
 
 }
