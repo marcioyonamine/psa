@@ -752,7 +752,7 @@ function verificaDataAgenda($data,$id,$hora,$local){
 	return $num;
 }
 
-function insereAgenda($data,$id,$hora,$local,$log == false){
+function insereAgenda($data,$id,$hora,$local,$log = false){
 		global $wpdb;
 		
 		// limpa a ocorrencia na agenda
