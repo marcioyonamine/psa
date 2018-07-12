@@ -776,7 +776,7 @@ function atualizarAgenda($id,$log = false){ //01
 				$di = $res[$i]['dataInicio'];
 				while(strtotime($di) < strtotime($res[$i]['dataFinal'])){
 					if($log == true){ echo strtotime($di)." / ".strtotime($res[$i]['dataFinal'])."<br />"; }
-					$n = numeroSemana($di);
+					$n = nSemana($di);
 					//echo $di."<br />";
 					if($n == 0 AND $res[$i]['domingo'] == 1){
 						$x = insereAgenda($di,$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local'],$log);
