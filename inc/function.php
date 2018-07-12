@@ -774,7 +774,7 @@ function atualizarAgenda($id,$log = false){ //01
 		for($i = 0; $i < count($res); $i++){ //03
 			if($res[$i]['dataFinal'] != '0000-00-00'){ // temporada //04
 				$di = $res[$i]['dataInicio'];
-				while(strtotime($di) <= strtotime($res[$i]['dataFinal'])){
+				while(strtotime($di) < strtotime($res[$i]['dataFinal'])){
 					$n = numeroSemana($di);
 					//echo $di."<br />";
 					if($n == 0 AND $res[$i]['domingo'] == 1){
@@ -815,7 +815,7 @@ function atualizarAgenda($id,$log = false){ //01
 				}	
 			}else{ // data única //04
 						$x = insereAgenda($res[$i]['dataInicio'],$res[$i]['idEvento'],$res[$i]['horaInicio'],$res[$i]['local']);
-						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$di." <br />";}
+						if($log == true){var_dump($x); echo " - idEvento: ".$id." / ".$res[$i]['dataInicio']." <br />";}
 
 			}
 			
