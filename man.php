@@ -205,6 +205,28 @@ var_dump(json_encode($sub));
 ?>	
 
 <?php 
+break;
+case 'atualiza_agenda':  
+set_time_limit(0);
+
+$sql_evento = "SELECT idEvento FROM sc_evento WHERE publicado = '1'";
+$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+for($i = 0; $i < count($evento); $i++){
+	atualizarAgenda($evento[$i]['idEvento']);
+}
+	
+	
+
+?>		  
+					 <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Não há Edital indicado</h1>
+				</div>
+        </div>
+		</div>
+
+<?php 
 //break;
 //case '':  
 ?>		  

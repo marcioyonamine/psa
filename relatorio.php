@@ -1154,7 +1154,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				</tr>
 
 								<tr>
-				<td>Áreas de Interesse dos inscritos</td>
+				<td>Áreas de Interesse dos inscritos (multiplas opções)</td>
 				<td>
 				<?php 
 				$area = array("Antropologia","Arqueologia","Arquitetura-Urbanismo","Arquivo","Arte de Rua","Artes Visuais",
@@ -1193,7 +1193,7 @@ $abc = array("SANTO ANDRE","SAO BERNARDO DO CAMPO","SAO CAETANO DO SUL", "DIADEM
 				
 				</tr>
 								<tr>
-				<td>Áreas de Interesse dos selecionados</td>
+				<td>Áreas de Interesse dos selecionados (multiplas opções)</td>
 				<td>
 				<?php 
 				$area = array("Antropologia","Arqueologia","Arquitetura-Urbanismo","Arquivo","Arte de Rua","Artes Visuais",

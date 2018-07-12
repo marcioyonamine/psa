@@ -414,7 +414,6 @@ if(isset($_POST['duplicar'])){
 
 if(isset($_POST['agenda'])){
 	atualizarAgenda($_POST['agenda']);	
-	
 }
 
 ?>
