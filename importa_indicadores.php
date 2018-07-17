@@ -69,7 +69,15 @@ switch($p){
 	<th></th>
 	<th></th>
 	</tr>
-	<?php 
+	<?php
+	if(isset($_POST['id_culturaz'])){
+		$sql_upd = "UPDATE sc_evento SET mapas = '".$_POST['id_culturaz']."' WHERE idEvento = '".$_POST['id_evento']."'";
+		$upd = $wpdb->query($sql_upd);
+		
+	}
+
+
+	
 	$sql_evento = "SELECT * FROM `sc_evento` WHERE mapas = 0 AND dataEnvio IS NOT NULL AND publicado = 1";
 	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
 	
@@ -103,6 +111,12 @@ switch($p){
 	<tr>
 	<td><?php echo $i ?></td>
 	<td><?php echo $evento[$i]["nomeEvento"]?></td>
+	<form action="?p=verifica_culturaz" method="POST">
+	<td><input type="text" name="id_culturaz"></td>
+	<input type="hidden" value="<?php echo $evento[$i]['idEvento'];?>" name="id_evento">
+	<td><input type="submit" value="Enviar"></td>
+	</form>
+
 	</tr>
 	<?php } ?>
 	<tr><td>
