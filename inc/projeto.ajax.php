@@ -9,7 +9,6 @@ $programa = '"programa":"'.$cod.'"';
 $sql = 'SELECT *
 		FROM sc_tipo
 		WHERE abreviatura = "projeto" 
-		AND publicado = "1" 
 		AND descricao LIKE "%'.addslashes($programa).'%"';
 
 		$res = $wpdb->get_results($sql);
