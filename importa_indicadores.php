@@ -172,8 +172,8 @@ switch($p){
 	
 	
 		$sql_ins = "INSERT INTO sc_evento (`nomeEvento`,`sinopse`,`releaseCom`,`mapas`,`linksCom`,`idResponsavel`) VALUES ('$nomeEvento','$sinopse','$releaseCom', '$mapas','$linksCom','1');";
-		$wpdb->query($sql_ins);
-
+		$x = $wpdb->query($sql_ins);
+		echo $x->insert_id."<br />";
 
 	}	
 	?>
