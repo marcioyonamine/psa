@@ -87,6 +87,16 @@ switch($p){
 	<td><?php echo $i ?></td>
 
 	<td><?php echo $evento[$i]["nomeEvento"]?></td>
+		<tr>
+	<td><?php echo $i ?></td>
+	<td><?php echo $evento[$i]["nomeEvento"]?></td>
+	<form action="?p=verifica_culturaz" method="POST">
+	<td><input type="text" name="id_culturaz"></td>
+	<input type="hidden" value="<?php echo $evento[$i]['idEvento'];?>" name="id_evento">
+	<td><input type="submit" value="Enviar"></td>
+	</form>
+
+
 	</tr>
 	<?php } ?>
 	<tr><td>
@@ -108,16 +118,7 @@ switch($p){
 	
 	for($i = 0; $i < count($evento); $i++){	
 	?>
-	<tr>
-	<td><?php echo $i ?></td>
-	<td><?php echo $evento[$i]["nomeEvento"]?></td>
-	<form action="?p=verifica_culturaz" method="POST">
-	<td><input type="text" name="id_culturaz"></td>
-	<input type="hidden" value="<?php echo $evento[$i]['idEvento'];?>" name="id_evento">
-	<td><input type="submit" value="Enviar"></td>
-	</form>
 
-	</tr>
 	<?php } ?>
 	<tr><td>
 	Total:<?php echo count($evento) ?> 
