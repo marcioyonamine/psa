@@ -50,6 +50,8 @@ switch($p){
 	<tr>
 	<td><?php echo $i ?></td>
 	<td><?php echo $evento[$i]["Nome"]?></td>
+	<td></td>
+	<td><a href="http://culturaz.santoandre.sp.gov.br/evento/<?php echo $evento[$i]["Id"]?>/" target=_blank ><?php echo $evento[$i]["Id"]?></a></td>
 	</tr>
 	<?php } ?>
 	<tr><td>
