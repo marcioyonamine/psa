@@ -85,10 +85,6 @@ switch($p){
 	?>
 	<tr>
 	<td><?php echo $i ?></td>
-
-	<td><?php echo $evento[$i]["nomeEvento"]?></td>
-		<tr>
-	<td><?php echo $i ?></td>
 	<td><?php echo $evento[$i]["nomeEvento"]?></td>
 	<form action="?p=verifica_culturaz" method="POST">
 	<td><input type="text" name="id_culturaz"></td>
