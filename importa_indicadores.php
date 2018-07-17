@@ -156,6 +156,29 @@ switch($p){
 	Total:<?php echo count($evento) ?> 
 	</td></tr>
 	</table>
+	<?php 
+	break;
+	case "importa_culturaz":
+	$sql_evento = "SELECT * FROM `temp_culturaz` WHERE Id NOT IN(SELECT mapas FROM sc_evento WHERE mapas <> 0)";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+	
+	for($i = 0; $i < count($evento); $i++){	
+		$nomeEvento = $evento[$i]['Nome'];
+		$sinopse = $evento[$i]['Descrição Curta'];
+		$releaseCom = $evento[$i]['Descrição Longa'];
+		$mapas = $evento[$i]['Id'];
+		$linksCom = $evento[$i]['Ocorrências'];
+		
+	
+	
+		$sql_ins = "INSERT INTO sc_evento (`nomeEvento`,`sinopse`,`releaseCom`,`mapas`,`linksCom`,`idResponsavel`) VALUES ('$nomeEvento','$sinopse','$releaseCom', '$mapas','$linksCom','1');";
+		$wpdb->query($sql_ins);
+
+
+	}	
+	?>
+	
+	
 	<?php
 	break; //fim da switch
 }
