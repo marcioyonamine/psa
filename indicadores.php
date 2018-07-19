@@ -190,7 +190,12 @@ $(function() {
 		
 		<?php 
 		$idUsuario = $user->ID;
+		if($idUsuario != '1'){
 		$sql_lista_evento = "SELECT nomeEvento,idEvento FROM sc_evento WHERE (idUsuario = '$idUsuario' OR idResponsavel = '$idUsuario' OR idSuplente = '$idUsuario') AND (dataEnvio IS NOT NULL) ORDER BY nomeEvento ASC";
+		}else{
+		$sql_lista_evento = "SELECT nomeEvento,idEvento FROM sc_evento WHERE (dataEnvio IS NOT NULL) ORDER BY nomeEvento ASC";
+			
+		}
 		$eventos = $wpdb->get_results($sql_lista_evento,ARRAY_A);
 		?>
 		<div class="row">
