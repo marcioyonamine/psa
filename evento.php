@@ -437,6 +437,24 @@ break;
 							<input type="text" name="outra_cidade" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
 						</div> 
 					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Número de agentes envolvidos</label>
+							<input type="text" name="n_agentes" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
+						</div> 
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Número de agentes envolvidos Santo André e Região</label>
+							<input type="text" name="n_agentes_abc" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
+						</div> 
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Número de Inscrição CulturAZ (caso tenha sido selecionado via plataforma)</label>
+							<input type="text" name="inscricao" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
+						</div> 
+					</div>
 					
 					<div class="form-group">
 						<div class="col-md-offset-2">
@@ -513,6 +531,11 @@ case "editar":
 		$linksCom    = addslashes($_POST["linksCom"]);
 		$artista_cidade = $_POST['artista_cidade'];
 		$outra_cidade = $_POST['outra_cidade'];
+		$n_agentes = $_POST['n_agentes'];
+		$n_agentes_abc = $_POST['n_agentes_abc'];
+		$inscricao = $_POST['inscricao'];
+		
+		
 
 		if(isset($_POST['subEvento'])){
 			$subEvento = $_POST['subEvento'];
@@ -534,8 +557,8 @@ case "editar":
 
 	// Inserir evento
 	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade')";		
+		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao` ) 
+		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao')";		
 		$ins = $wpdb->query($sql);
 		if($ins){
 			$mensagem = "Inserido com sucesso";
@@ -573,7 +596,10 @@ case "editar":
 		`planejamento` = '$planejamento',
 		`subEvento` = '$subEvento',
 		`artista_local` = '$artista_cidade',
-		`cidade` = '$outra_cidade'
+		`cidade` = '$outra_cidade',
+		`n_agentes` = '$n_agentes',
+		`n_agentes_abc` = '$n_agentes_abc',
+		`inscricao` = '$inscricao'
 		
 		WHERE `idEvento` = '$atualizar';
 		";
@@ -729,6 +755,26 @@ case "editar":
 							<input type="text" name="outra_cidade" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['cidade']; ?>"/>
 						</div> 
 					</div>
+					
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Número de agentes envolvidos</label>
+							<input type="text" name="n_agentes" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['n_agentes']; ?>"/>
+						</div> 
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Número de agentes envolvidos Santo André e Região</label>
+							<input type="text" name="n_agentes_abc" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['n_agentes_abc']; ?>"/>
+						</div> 
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Número de Inscrição CulturAZ (caso tenha sido selecionado via plataforma)</label>
+							<input type="text" name="inscricao" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['inscricao']; ?>"/>
+						</div> 
+					</div>
+					
 					
 					<div class="form-group">
 						<div class="col-md-offset-2">
