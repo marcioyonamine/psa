@@ -17,6 +17,13 @@ if(isset($_GET['p'])){
 switch($p){
 case 'inicio':
 ?>
+<ul>
+<li><a href="?p=atualiza_categoria_ranking">Atualiza a categoria das inscrições</a> : é preciso definir o id_mapas </li>
+<li><a href="?p=atualiza_agenda">Atualiza a agenda</a> : todos os eventos do Bartira. </li>
+<li><a href="">Atualiza a categoria das inscrições</a> </li>
+
+</ul>
+
   
 <?php 
 break;

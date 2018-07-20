@@ -214,6 +214,7 @@ if(isset($_POST['editar']) OR isset($_POST['inserir'])){
 	$retiradaIngresso   = $_POST["retiradaIngresso"];
 	$local   = $_POST["local"];
 	$ingressos   = $_POST["ingressos"];
+	$horaFinal = somaMinutos($horaInicio,$duracao);
 
 	if(isset($_POST["domingo"])){$domingo  = 1; }else{ $domingo  = 0;}
 	if(isset($_POST["segunda"])){$segunda  = 1; }else{ $segunda  = 0;}
@@ -230,8 +231,8 @@ if(isset($_POST['editar']) OR isset($_POST['inserir'])){
 if(isset($_POST['inserir'])){
 	global $wpdb;
 	$id_evento = $_SESSION['id'];
-	$sql = "INSERT INTO `sc_ocorrencia` (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`) 
-	VALUES ('$local', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_final', '$hora', '$valorIngresso', '$retiradaIngresso',  '$ingressos',  '$duracao',  '1')";	
+	$sql = "INSERT INTO `sc_ocorrencia` (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`, `horaFinal`) 
+	VALUES ('$local', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_final', '$hora', '$valorIngresso', '$retiradaIngresso',  '$ingressos',  '$duracao',  '1','$horaFinal')";	
 	$res = $wpdb->query($sql);
 	$id_ocorrencia = $wpdb->insert_id;
 	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
@@ -255,6 +256,7 @@ if(isset($_POST['editar'])){
 	`dataInicio` = '$data_inicio',
 	`dataFinal` = '$data_final',
 	`horaInicio` = '$hora',
+	`horaFinal` = '$horaFinal',
 	`valorIngresso` = '$valorIngresso',
 	`retiradaIngresso` = '$retiradaIngresso',
 	`lotacao` = '$ingressos', 
