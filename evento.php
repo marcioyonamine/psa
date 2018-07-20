@@ -426,6 +426,7 @@ break;
 						<div class="col-md-offset-2">
 							<label>Cidade do Autor/Grupo/Artista</label>
 							<select class="form-control" name="artista_cidade" id="inputSubject" >
+															<option></option>
 								<?php geraTipoOpcao("artista_local") ?>
 							</select>
 						</div>
@@ -744,6 +745,7 @@ case "editar":
 						<div class="col-md-offset-2">
 							<label>Cidade do Autor/Grupo/Artista</label>
 							<select class="form-control" name="artista_cidade" id="inputSubject" >
+								<option></option>
 								<?php geraTipoOpcao("artista_local",$evento['artista_local']) ?>
 							</select>
 						</div>

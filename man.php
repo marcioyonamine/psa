@@ -227,9 +227,32 @@ for($i = 0; $i < count($evento); $i++){
 		</div>
 
 <?php 
+break;
+case 'atualiza_hora_final': 
+
+// Gera os horários finais das ocorrências
+$sql_oc = "SELECT idOcorrencia, horaInicio, duracao FROM sc_ocorrencia";
+$ocor = $wpdb->get_results($sql_oc,ARRAY_A);
+for($i = 0; $i < count($ocor); $i++){
+	$idOcorrencia = $ocor[$i]['idOcorrencia'];
+	$horaInicio = $ocor[$i]['horaInicio'];
+	$duracao = $ocor[$i]['duracao'];
+	$horaFinal = somaMinutos($horaInicio,$duracao).":00";
+	if($duracao != 0){
+		$upd = "UPDATE sc_ocorrencia SET horaFinal = '$horaFinal' WHERE idOcorrencia = '$idOcorrencia'";
+		$x = $wpdb->query($upd);
+		if($x == 1){
+			echo $i." - ".$horaInicio." + ".$duracao." minutos = ".$horaFinal."<br />";
+		}
+	}
+}
+ 
+?>		  
+<?php 
 //break;
 //case '':  
-?>		  
+?>	
+
 <!--
 					 <div class="container">
         <div class="row">    

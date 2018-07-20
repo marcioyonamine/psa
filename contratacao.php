@@ -223,6 +223,16 @@ if(isset($_POST['inserir_pj'])){
 	}
  
 
+if($_SESSION['entidade'] == 'evento'){
+	$e = evento($_SESSION['id']);
+	$n = $e['titulo'];
+}else{
+	$e = atividade($_SESSION['id']);
+	$n = $e['titulo'];
+}
+
+ 
+ 
 ?>
 
 <section id="contact" class="home-section bg-white">
@@ -230,6 +240,7 @@ if(isset($_POST['inserir_pj'])){
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Pedidos de Contratação</h1>
+					<h2><?php echo $n;?></h2>
 					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 				</div>
         </div>

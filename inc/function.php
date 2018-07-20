@@ -237,6 +237,12 @@ function exibirHora($data){
 	return date('H:i', $timestamp);	
 }
 
+//soma minutos
+
+function somaMinutos($hora,$minutos){
+	return date("H:i",strtotime($hora." ".$minutos." minutes"));	
+}
+
 //retorna o endereço da página atual
 function urlAtual(){ 
 	$dominio= $_SERVER['HTTP_HOST'];
@@ -1556,6 +1562,7 @@ function parcela($id){
 
 
 
+
 function verificaEvento($idEvento){
 	/*
 	Evento 
@@ -1569,6 +1576,10 @@ function verificaEvento($idEvento){
 		Autor
 		Classificação
 		Sinopse
+		Cidade
+		Número de Agentes envolvidos
+		Número de Agentes envolvidos de Santo André e Região
+		
 	
 	
 	
@@ -1637,6 +1648,16 @@ function verificaEvento($idEvento){
 		$r++;	
 	}
 
+	if($evento['artista_local'] == 0){
+		$relatorio .= "É preciso informar a origem do artista (local).<br />";
+		$r++;	
+	}	
+	
+	if($evento['n_agentes'] == 0){
+		$relatorio .= "É preciso informar o número de agentes culturais envolvidos. Informe também o número de agentes culturais de Santo André e região<br />";
+	}	
+	
+	
 	//Ocorrencias
 	$ocorrencias = periodo($idEvento);
 	if($ocorrencias['bool'] == FALSE){
