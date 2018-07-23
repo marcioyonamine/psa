@@ -320,6 +320,124 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	
 <?php 
 break;
+
+	case 001: // OS	
+			$file_name='teste.doc';
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Content-Type: application/force-download');
+		header('Content-type: application/vnd.ms-word');
+		header('Content-Type: application/download');
+		header('Content-Disposition: attachment;filename='.$file_name);
+		header('Content-Transfer-Encoding: binary ');
+	
+	?>
+	<!-- CSS para impressão -->
+	
+	
+	
+	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+
+	
+	
+	
+	<table  width="100%" border="1">
+	<tr>
+	<td rowspan="5" width="15%"><center><img src="images/logo.png" /></center></td>
+	
+	</tr>
+	<tr>
+	<td colspan="2"><center><b>Prefeitura Municipal de Santo André</b></center></td>
+	</tr>
+	<tr>
+	<td colspan="2"><center><b>Solicitação de Serviços</b></center></td>
+	</tr>	
+		<tr>
+		<td><center>Data da Emissão<br /><b><?php echo date("d/m/Y")?></b></center></td>
+	<td><center>CR Requisitante<br /></center><b><?php echo $pedido['cr']; ?></b></td>
+
+	</tr>
+	<tr>
+	<td colspan="3"><center><b>Nome da área requisitante: Secretaria de Cultura - <?php echo $pedido['area']; ?></b></center></td>
+	<tr/>	
+	</table>
+	<table border="1">
+	<tr>
+	<td colspan="4"><center><b>Dotação orçamentária</b></center></td>
+
+	</tr>
+
+	<tr>
+	<td>Cód. Dotação:<br /><b><?php echo resumoDotacao($pedido['cod_dotacao']); ?></b></td>
+	<td>Projeto:<br /><b><?php echo $pedido['projeto']; ?><b/></td>
+	<td>Ficha: <br /> <b><?php echo $pedido['ficha']; ?></b></td>
+	<td>Sub-elemente Despesa: <br /><center>22</center></td>	
+	</tr>
+	</tr>
+	<tr>
+	<td colspan="3">Cód. Vinculação de Despesa<br /><center>110.000</center></td>
+	<td>Fonte de Recursos: <br /><center>  <?php echo $pedido['fonte']; ?></center></td>
+	</tr>
+	<tr>
+	<td colspan="3">Nome do Contato <br /><?php echo $pedido['usuario']; ?></td>
+	<td>Telefone Contato<br /><?php echo $pedido['telefone']; ?></td>
+	</tr>
+	<tr><td colspan="4">Conta corrente codReduzido/DB<br /><center>252</center></td></tr>	
+	<tr>
+	<td colspan="4">Data Período do evento: <br /><?php echo $pedido['periodo']; ?></td>
+	</tr>	
+	<tr>
+	<td colspan="4">Local de aplicação do serviço ou evento:<br /><?php echo $pedido['local']; ?></td>
+	</tr>
+	<tr>
+	<td colspan="4">Especificação (a maior quantidade necessária de informações para a correta contratação)</td>
+	</tr>
+	<tr>
+	<td colspan="4">	<p>Contratação de <?php echo $pedido['tipoPessoa']; ?> <b><?php echo $pedido['nome_razaosocial']  ?></b>, representando com exclusividade a(s) apresentação(ões) do(s) seguinte(s) artista(s) <b><?php  echo $pedido['integrantes'] ?></b> para  realização de <?php echo $pedido['objeto']; ?> em <?php echo $pedido['local']; ?> no(s) dia(s)  <?php echo $pedido['periodo']; ?> </b></p>
+		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
+	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
+	Endereço: <?php echo $pedido['end']  ?><br />
+	Email: <?php echo $pedido['email'];?> <br />
+	<p>Valor total: R$<?php echo $pedido['valor'];?> (<?php echo $pedido['valor_extenso']; ?>)</p>
+	
+	<p><b>Forma de pagamento:</b> <?php echo $pedido['forma_pagamento'];?> </p>
+	<p><?php echo $pedido['banco'];?> </p>		
+
+	</td>
+	</tr>
+<tr>
+<td colspan="4"><center><b>Aprovação (assinatura sobre carimbo e data)</b></center></td>
+</tr>
+<tr>
+
+<td colspan="2" width='33%' height="100px" style="vertical-align:top; text-align: center;">Responsável pela Área<br />C.R. Requisitante</td>
+<td width='33%' height="100px" style="vertical-align:top; text-align: center;">Diretor(a) da Área<br />C.R. Requisitante</td>
+<td height="100px" style="vertical-align:top; text-align: center;">Secretário(a) da Área <br />C.R. Requisitante</td>
+
+
+<tr>
+<td colspan="4"><center><b>A Cargo da Área de Materiais</b></center></td>
+</tr>
+<tr>
+
+<td colspan="2" width='33%' height="35px" style="vertical-align:top; text-align: center;">Código Serviço/Material</td>
+<td width='33%' height="35px" style="vertical-align:top; text-align: center;">Almoxarifado</td>
+<td height="35px" style="vertical-align:top; text-align: center;">Nº SC/OS(SICOM)</td>
+
+
+
+<tr>
+<td colspan="4"><center><b>1ª via - Processo          2ª via - Requisitante</b></center></td>
+</tr>
+<tr>	
+		</table>
+	
+<?php 
+break;
+
+
+
 case 549: // OS para FIP2018
 
 ?>
@@ -437,6 +555,9 @@ case 549: // OS para FIP2018
 	
 	<?php 
 	break;	
+
+	
+
 	case 305: //Justificativa	
 	?>
 
