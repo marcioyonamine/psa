@@ -517,8 +517,6 @@ function evento($id){
 		'valor_entrada' => '',
 		'imagem' => '',
 		'planejamento' => $res['planejamento'],
-		'n_agentes' => $res['n_agentes'],
-		'artista_local' => $res['artista_local'],
 		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
 		'tipo' => $tipo_evento['tipo'],
 		'dataEnvio' => $res['dataEnvio']
@@ -1641,6 +1639,7 @@ function verificaEvento($idEvento){
 		$r++;	
 	}
 
+	/*
 	if($evento['artista_local'] == 0){
 		$relatorio .= "É preciso informar a origem do artista (local).<br />";
 		$r++;	
@@ -1649,7 +1648,7 @@ function verificaEvento($idEvento){
 	if($evento['n_agentes'] == 0){
 		$relatorio .= "É preciso informar o número de agentes culturais envolvidos. Informe também o número de agentes culturais de Santo André e região<br />";
 	}	
-	
+	*/
 	
 	//Ocorrencias
 	$ocorrencias = periodo($idEvento);
