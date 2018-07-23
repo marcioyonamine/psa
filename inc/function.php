@@ -517,6 +517,8 @@ function evento($id){
 		'valor_entrada' => '',
 		'imagem' => '',
 		'planejamento' => $res['planejamento'],
+		'n_agentes' => $res['n_agentes'],
+		'artista_local' => $res['artista_local'],
 		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
 		'tipo' => $tipo_evento['tipo'],
 		'dataEnvio' => $res['dataEnvio']
