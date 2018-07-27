@@ -1377,7 +1377,7 @@ case "listar_evento_sem_indicador":
 
 $sql = "SELECT idEvento,nomeEvento FROM sc_evento WHERE idEvento NOT IN(SELECT DISTINCT idEvento FROM sc_indicadores) AND dataEnvio IS NOT NULL";
 $evento = $wpdb->get_results($sql,ARRAY_A);
-echo "<h1>".count($evento)." eventos sem informação de público.</h1><br />"
+echo "<h1>".count($evento)." eventos sem informação de público.</h1><br />";
 for($i = 0; $i < count($evento); $i++){
 	echo $evento[$i]['nomeEvento']."<br />";
 	
