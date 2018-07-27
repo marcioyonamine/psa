@@ -46,7 +46,14 @@ case "inicio":
 break;	 
 case "alunos": 
 	switch($action){
+		
+		
+	case "insere":
+?>
 
+		
+<?php 		
+	break;
 	default:
 ?>
 <section id="contact" class="home-section bg-white">
@@ -99,19 +106,24 @@ case "alunos":
 </section>
 <?php 
 break;
-case "busca":
+case "professor":
 ?>
 
 
 <?php 
 break;
-case "inserir":
+case "escola":
 ?>
 
 
 <?php 
 break;
-case "editar":
+case "disciplina":
+?>
+
+<?php 
+break;
+case "frequencia":
 ?>
 
 

@@ -22,14 +22,14 @@
             </li>
               <a class="nav-link" href="indicadores.php?p=inserirbiblioteca">Inserir Relatório Biblioteca</a>
             </li>
-
+			<!--
             <li class="nav-item">
               <a class="nav-link" href="indicadores.php?p=listarincentivo">Listar Disciplinas/Cursos - Incentivo à Criação</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="indicadores.php?p=inseririncentivo">Inserir Disciplinas/Cursos Incentivo à Criação</a>
             </li>
-
+			-->
             <li class="nav-item">
               <a class="nav-link" href="indicadores.php?p=listarevento">Listar Relatório Eventos</a>
 		    </li>
