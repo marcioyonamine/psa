@@ -214,7 +214,7 @@ if(isset($_POST['editar']) OR isset($_POST['inserir'])){
 	$retiradaIngresso   = $_POST["retiradaIngresso"];
 	$local   = $_POST["local"];
 	$ingressos   = $_POST["ingressos"];
-	$horaFinal = somaMinutos($horaInicio,$duracao);
+	$horaFinal = somaMinutos($hora,$duracao);
 
 	if(isset($_POST["domingo"])){$domingo  = 1; }else{ $domingo  = 0;}
 	if(isset($_POST["segunda"])){$segunda  = 1; }else{ $segunda  = 0;}

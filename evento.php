@@ -348,7 +348,7 @@ break;
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<input type="checkbox" name="planejamento" id="subEvento" <?php //checar($campo['subEvento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>
+							<!--<input type="checkbox" name="planejamento" id="subEvento" <?php //checar($campo['subEvento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>-->
 						</div>
 					</div>
 				<div class="form-group">
@@ -521,15 +521,15 @@ case "editar":
 		$linguagem    = $_POST["linguagem"];
 		$tipo_evento = $_POST["tipo_evento"];
 		$projeto = $_POST["projeto"];
-		$nomeResponsavel    = $_POST["nomeResponsavel"];
-		$suplente    = $_POST["suplente"];
-		$autor    = addslashes($_POST["autor"]);
-		$nomeGrupo    = addslashes($_POST["nomeGrupo"]);
-		$fichaTecnica    = addslashes($_POST["fichaTecnica"]);
-		$faixaEtaria    = $_POST["faixaEtaria"];
-		$sinopse    = addslashes($_POST["sinopse"]);
-		$releaseCom    = addslashes($_POST["releaseCom"]);
-		$linksCom    = addslashes($_POST["linksCom"]);
+		$nomeResponsavel = $_POST["nomeResponsavel"];
+		$suplente = $_POST["suplente"];
+		$autor = addslashes($_POST["autor"]);
+		$nomeGrupo = addslashes($_POST["nomeGrupo"]);
+		$fichaTecnica = addslashes($_POST["fichaTecnica"]);
+		$faixaEtaria = $_POST["faixaEtaria"];
+		$sinopse = addslashes($_POST["sinopse"]);
+		$releaseCom = addslashes($_POST["releaseCom"]);
+		$linksCom = addslashes($_POST["linksCom"]);
 		$artista_cidade = $_POST['artista_cidade'];
 		$outra_cidade = $_POST['outra_cidade'];
 		$n_agentes = $_POST['n_agentes'];
@@ -665,7 +665,7 @@ case "editar":
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<input type="checkbox" name="planejamento" id="subEvento" <?php checar($evento['planejamento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>
+							<!--<input type="checkbox" name="planejamento" id="subEvento" <?php checar($evento['planejamento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>-->
 						</div>
 					</div>
 

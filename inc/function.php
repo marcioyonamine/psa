@@ -424,7 +424,7 @@ function vGlobais(){
 
 function geraTipoOpcao($abreviatura,$select = 0){
 	global $wpdb;
-	$sql = "SELECT * FROM sc_tipo WHERE abreviatura = '$abreviatura' AND publicado = '1' ORDER BY tipo ASC";
+	$sql = "SELECT * FROM sc_tipo WHERE abreviatura = '$abreviatura' ORDER BY tipo ASC";
 	$query = $wpdb->get_results($sql,ARRAY_A);
 	for($i = 0; $i < count($query); $i++){
 		if($select == $query[$i]['id_tipo']){
