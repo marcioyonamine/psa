@@ -14,29 +14,23 @@
 
 		  
 <?php 
-// Teste de soma de minutos
-
-echo somaMinutos($_GET['minutos'],$_GET['soma']);
-
-// Gera os horários finais das ocorrências
-$sql_oc = "SELECT idOcorrencia, horaInicio, duracao FROM sc_ocorrencia";
-$ocor = $wpdb->get_results($sql_oc,ARRAY_A);
-for($i = 0; $i < count($ocor); $i++){
-	$idOcorrencia = $ocor[$i]['idOcorrencia'];
-	$horaInicio = $ocor[$i]['horaInicio'];
-	$duracao = $ocor[$i]['duracao'];
-	$horaFinal = somaMinutos($horaInicio,$duracao).":00";
-	if($duracao != 0){
-		$upd = "UPDATE sc_ocorrencia SET horaFinal = '$horaFinal' WHERE idOcorrencia = '$idOcorrencia'";
-		$x = $wpdb->query($upd);
-		if($x == 1){
-			echo $i." - ".$horaInicio." + ".$duracao." minutos = ".$horaFinal."<br />";
-		}
-	}
-}
 
 
+$url = "http://culturaz.santoandre.sp.gov.br/api/space/find/";
+$data = array(
+"@select" => "id, name, shortDescription, longDescription, emailPublico, telefonePublico, endereco, site, updateTimestamp, acessibilidade, acessibilidade_fisica, capacidade, horario",
+"@seals" => "eq(5)"
+);
 
+$get_addr = $url.'?'.http_build_query($data);
+$ch = curl_init($get_addr);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$page = curl_exec($ch);
+$evento = json_decode($page);
+$ccsp = converterObjParaArray($evento);
+
+echo $get_addr;
+var_dump($ccsp);
 
 /*
 // Atualiza tabela de inscricao

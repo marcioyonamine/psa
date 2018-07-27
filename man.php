@@ -12,7 +12,7 @@ if(isset($_GET['p'])){
   <?php include "menu/me_inicio.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-	<h1>Área de Manutenção</h1>		
+	<h1>Manutenção</h1>		
 <?php 
 switch($p){
 case 'inicio':
@@ -20,6 +20,7 @@ case 'inicio':
 <ul>
 <li><a href="?p=atualiza_categoria_ranking">Atualiza a categoria das inscrições</a> : é preciso definir o id_mapas </li>
 <li><a href="?p=atualiza_agenda">Atualiza a agenda</a> : todos os eventos do Bartira. </li>
+<li><a href="?p=atualiza_hora_final">Atualiza as ocorrências com hora final</a> : todos os eventos do Bartira. </li>
 <li><a href="">Atualiza a categoria das inscrições</a> </li>
 
 </ul>
