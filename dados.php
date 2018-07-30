@@ -1945,12 +1945,12 @@ case "eventos":
 				$x = $wpdb->get_results($sql_evento,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
-					//$sql_count = "SELECT idEvento FROM sc_evento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
-					//$y = $wpdb->get_results($sql_count,ARRAY_A);
+					$sql_count = "SELECT idEvento FROM sc_evento WHERE idEvento = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
+					$y = $wpdb->get_results($sql_count,ARRAY_A);
 					?>
 					<tr>
 					  <td><?php echo $res[$i]['tipo']; ?></td>
-					<td><?php //echo count($y); ?></td>
+					<td><?php echo count($y); ?></td>
 
 					  <td><?php //echo round((count($y)/count($x))*100,2) ." %"; ?></td>
 					</tr>
