@@ -17,10 +17,19 @@
 		?>
 		  <ul class="nav nav-pills flex-column">
 			<li class="nav-item">
-              <a class="nav-link" href="dados.php?p=visaogeral">Visão Geral / Orçamento</a>
+              <a class="nav-link" href="dados.php?p=visaogeral">Orçamento Planejado</a>
             </li>
+
 			<li class="nav-item">
-              <a class="nav-link" href="dados.php?p=visaogeral">Eventos</a>
+              <a class="nav-link" href="dados.php?p=eventos">Eventos</a>
+            </li>
+
+			<li class="nav-item">
+              <a class="nav-link" href="dados.php?p=atividades">Atividades</a>
+            </li>
+
+			<li class="nav-item">
+              <a class="nav-link" href="#">Público</a>
             </li>
 			</ul>
 
