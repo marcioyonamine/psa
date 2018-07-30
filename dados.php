@@ -1906,11 +1906,11 @@ case "eventos":
 				global $wpdb;
 				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_programa, ARRAY_A);
-				$sql_evento = "SELECT id FROM sc_atividade WHERE publicado = '1'";
+				$sql_evento = "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL";
 				$x = $wpdb->get_results($sql_evento,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
-					$sql_count = "SELECT id FROM sc_atividade WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1'" ;
+					$sql_count = "SELECT idEvento FROM sc_evento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
 					$y = $wpdb->get_results($sql_count,ARRAY_A);
 					?>
 					<tr>
@@ -2070,11 +2070,11 @@ case "atividades":
 				global $wpdb;
 				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_programa, ARRAY_A);
-				$sql_evento = "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL";
+				$sql_evento = "SELECT id FROM sc_atividade WHERE publicado = '1'";
 				$x = $wpdb->get_results($sql_evento,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
-					$sql_count = "SELECT idEvento FROM sc_evento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
+					$sql_count = "SELECT id FROM sc_atividade WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
 					$y = $wpdb->get_results($sql_count,ARRAY_A);
 					?>
 					<tr>
