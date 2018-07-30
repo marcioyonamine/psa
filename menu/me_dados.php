@@ -17,7 +17,7 @@
 		?>
 		  <ul class="nav nav-pills flex-column">
 			<li class="nav-item">
-              <a class="nav-link" href="dados.php?p=visaogeral">Visão Geral</a>
+              <a class="nav-link" href="dados.php?p=visaogeral">Visão Geral / Orçamento</a>
             </li>
 			</ul>
 

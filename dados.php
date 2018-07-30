@@ -1877,7 +1877,73 @@ case "editaprograma":
 ?>
 
 
+<?php 
+break;
+case "eventos":
+?>
 
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Dotações</h1>
+					<?php if(isset($mensagem)){echo $mensagem;}?>
+				</div>
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Projeto</th>
+				<th>Ficha</th>
+
+                  <th>Dotação</th>
+                  <th>Descricao</th>
+                  <th>Valor</th>
+                  <th>Ano Base</th>
+				<th></th>
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_list =  "SELECT * FROM sc_orcamento WHERE planejamento = '0' AND publicado = '1' ORDER BY projeto ASC, ficha ASC";
+				$res = $wpdb->get_results($sql_list,ARRAY_A);
+				for($i = 0; $i < count($res); $i++){
+					
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['projeto']; ?></td>
+					<td><?php echo $res[$i]['ficha']; ?></td>
+
+					  <td><?php echo $res[$i]['dotacao']; ?></td>
+					  <td><?php echo $res[$i]['descricao']; ?></td>
+					  <td><?php echo dinheiroParaBr($res[$i]['valor']); ?></td>
+					  <td><?php echo $res[$i]['ano_base']; ?></td>
+					  <td>	
+							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+							<input type="hidden" name="carregar" value="<?php echo $res[$i]['id']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
+							</form>
+							<?php 
+					  
+					  ?></td>
+					  					  <td>	
+							<form method="POST" action="?p=listar" class="form-horizontal" role="form">
+							<input type="hidden" name="apagar" value="<?php echo $res[$i]['id']; ?>" />
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Apagar">
+							</form>
+							<?php 
+					  
+					  ?></td>
+					</tr>
+				<?php } // fim do for?>	
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
 
 
 <?php 
