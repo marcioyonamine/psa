@@ -1920,7 +1920,7 @@ case "eventos":
 					  <td><?php echo round((count($y)/count($x))*100,2) ." %"; ?></td>
 					</tr>
 				<?php } // fim do for?>	
-				<tr><td></td><td></td></tr>
+				<tr><td>Total:</td><td><?php echo count($x);?></td><td></td></tr>
               </tbody>
             </table>
           </div>
