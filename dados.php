@@ -1945,7 +1945,7 @@ case "eventos":
 //				$x = $wpdb->get_results($sql_evento,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
-					$sql_count = "SELECT DISTINCT local FROM sc_ocorrencia WHERE local = '".$res[$i]['id_tipo']."' AND publicado = '1'";
+					$sql_count = "SELECT idOcorrencia FROM sc_ocorrencia WHERE local = '".$res[$i]['id_tipo']."' AND publicado = '1'";
 					$y = $wpdb->get_results($sql_count,ARRAY_A);
 					?>
 					<tr>
