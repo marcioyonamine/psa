@@ -1925,6 +1925,41 @@ case "eventos":
             </table>
           </div>
 
+		<h3>Por Espaço</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Espaço</th>
+				<th>Quantidade</th>
+
+                  <th>Porcentagem</th>
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'local' ORDER BY tipo ASC";
+				$res = $wpdb->get_results($sql_programa, ARRAY_A);
+				$sql_evento = "SELECT  FROM sc_ocorrencia WHERE publicado = '1' AND idEvento IN(SELECT idEvento FROM sc_evento AND publicado = '1' AND dataEnvio IS NOT NULL)";
+				$x = $wpdb->get_results($sql_evento,ARRAY_A);
+				
+				for($i = 0; $i < count($res); $i++){
+					//$sql_count = "SELECT idEvento FROM sc_evento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
+					//$y = $wpdb->get_results($sql_count,ARRAY_A);
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['tipo']; ?></td>
+					<td><?php //echo count($y); ?></td>
+
+					  <td><?php //echo round((count($y)/count($x))*100,2) ." %"; ?></td>
+					</tr>
+				<?php } // fim do for?>	
+				<tr><td>Total:</td><td><?php echo count($res);?></td><td></td></tr>
+              </tbody>
+            </table>
+          </div>		  
+		  
 		</div>
 </section>
 
