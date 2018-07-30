@@ -7,7 +7,7 @@ global $wpdb;
 $cod = $_GET['idEvento'];
 $sql = 'SELECT *
 		FROM sc_ocorrencia
-		WHERE idEvento = "$cod" 
+		WHERE idEvento = "'.$cod.'" 
 		AND publicado = "1"';
 
 		$res = $wpdb->get_results($sql);
