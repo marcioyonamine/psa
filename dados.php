@@ -1959,10 +1959,48 @@ case "eventos":
 				<?php 
 					}
 				} // fim do for?>	
-				<tr><td>Total:</td><td><?php echo count($res);?></td><td></td></tr>
-              </tbody>
+				</tbody>
             </table>
           </div>		  
+
+		  		<h3>Por Linguagem</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Linguagem</th>
+				<th>Quantidade</th>
+
+                  <th>Porcentagem</th>
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				global $wpdb;
+				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'linguagem' ORDER BY tipo ASC";
+				$res = $wpdb->get_results($sql_programa, ARRAY_A);
+				$sql_evento = "(SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL)";
+				$x = $wpdb->get_results($sql_evento,ARRAY_A);
+				
+				for($i = 0; $i < count($res); $i++){
+					$sql_count = "(SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL AND idLinguagem = '".$res[$i]['id_tipo']."')";
+					$y = $wpdb->get_results($sql_count,ARRAY_A);
+					if(count($y) != 0){
+					?>
+					<tr>
+					  <td><?php echo $res[$i]['tipo']; ?></td>
+					<td><?php echo count($y); ?></td>
+
+					  <td><?php echo round((count($y)/count($x))*100,2) ." %"; ?></td>
+					</tr>
+					
+				<?php 
+					}
+				} // fim do for?>	
+				</tbody>
+            </table>
+          </div>
+
 		  
 		</div>
 </section>
