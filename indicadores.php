@@ -113,6 +113,7 @@ tipo = geral
 contagem = média aritmética
 		   total		
 	*/
+	
 	?>
 <?php include "header.php"; ?>
 <?php 
@@ -124,6 +125,7 @@ if(isset($_GET['p'])){
 //session_start(); // carrega a sessão
 
 ?>
+
 
 
   <body>
@@ -172,7 +174,33 @@ $(function() {
 
 </script>
 
-
+ <script type="application/javascript">
+	$(function()
+	{
+		$('#idEvento').change(function()
+		{
+			if( $(this).val() )
+			{
+				$('#idOcorrencia').hide();
+				$('.carregando').show();
+				$.getJSON('inc/ind.ocor.ajax.php?idEvento=',{idEvento: $(this).val(), ajax: 'true'}, function(j)
+				{
+					var options = '<option value="0"></option>';	
+					for (var i = 0; i < j.length; i++)
+					{
+						options += '<option value="' + j[i].idOcorrencia + '">' + j[i].data + '</option>';
+					}	
+					$('#idOcorrencia').html(options).show();
+					$('.carregando').hide();
+				});
+			}
+			else
+			{
+				$('#idOcorrencia').html('<option value="">-- Escolha um projeto --</option>');
+			}
+		});
+	});
+</script>
 
 <section id="contact" class="home-section bg-white">
 	<div class="container">
@@ -203,10 +231,18 @@ $(function() {
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Evento/Atividade</label>
-							<select class="form-control" name="idEvento" id="inputSubject" ><option>Selecione</option>
+							<select class="form-control" name="idEvento" id="idEvento" ><option>Selecione</option>
 							<?php for($i = 0; $i < count($eventos); $i++){?>
 							<option value='<?php echo $eventos[$i]['idEvento']; ?>'><?php echo $eventos[$i]['nomeEvento']; ?></option>
 							<?php } ?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Local</label>
+							<select class="form-control" name="idOcorrencia" id="idOcorrencia" >
+
 							</select>
 						</div>
 					</div>
@@ -1239,8 +1275,10 @@ if(isset($_POST['apagar'])){
 
 if(isset($_POST['inserir'])){
 
+	
   $idEvento = $_POST['idEvento'];
   $tipo = $_POST['tipo'];
+  $idOcorrencia = $_POST['idOcorrencia'];
   $periodoInicio = exibirDataMysql($_POST['periodoInicio']);
    if($_POST['periodoFim'] != ''){
 	$periodoFim = exibirDataMysql($_POST['periodoFim']);
@@ -1254,7 +1292,7 @@ if(isset($_POST['inserir'])){
   $relato = $_POST['relato'];
   $idUsuario = $user->ID;
 
-  $sql_inserir = "INSERT INTO `sc_indicadores` (`id`, `idEvento`, `valor`, `contagem`, `tipo`, `periodoInicio`, `periodoFim`, `ndias`, `idUsuario`, `relato`, `publicado`) VALUES (NULL, '$idEvento','$valor','$contagem', '$tipo','$periodoInicio', '$periodoFim', '$ndias', '$idUsuario', '$relato', '1')";
+  $sql_inserir = "INSERT INTO `sc_indicadores` (`id`, `idEvento`, `valor`, `contagem`, `tipo`, `periodoInicio`, `periodoFim`, `ndias`, `idUsuario`, `relato`, `publicado`, `idOcorrencia`) VALUES (NULL, '$idEvento','$valor','$contagem', '$tipo','$periodoInicio', '$periodoFim', '$ndias', '$idUsuario', '$relato', '1','$idOcorrencia')";
   $ex = $wpdb->query($sql_inserir);
   if($ex == 1){
 	  $mensagem = alerta("Relatório inserido com sucesso.","success");
