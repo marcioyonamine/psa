@@ -183,7 +183,7 @@ $(function() {
 			{
 				$('#idOcorrencia').hide();
 				$('.carregando').show();
-				$.getJSON('inc/ind.ocor.ajax.php?idEvento=',{idEvento: $(this).val(), ajax: 'true'}, function(j)
+				$.getJSON('inc/ind.ocor.ajax.php?',{idEvento: $(this).val(), ajax: 'true'}, function(j)
 				{
 					var options = '<option value="0"></option>';	
 					for (var i = 0; i < j.length; i++)
