@@ -1906,7 +1906,7 @@ case "eventos":
 				global $wpdb;
 				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_programa, ARRAY_A);
-				$sql_evento = "SELECT idEvento FROM idEvento WHERE publicado = '1' AND dataEnvio IS NOT NULL";
+				$sql_evento = "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL";
 				$x = $wpdb->get_results($sql_evento,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
