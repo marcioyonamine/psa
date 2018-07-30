@@ -1917,9 +1917,10 @@ case "eventos":
 					  <td><?php echo $res[$i]['tipo']; ?></td>
 					<td><?php echo count($y); ?></td>
 
-					  <td><?php echo dinheiroParaBr((count($y)/count($x))*100) ." %"; ?></td>
+					  <td><?php echo round((count($y)/count($x))*100,2) ." %"; ?></td>
 					</tr>
 				<?php } // fim do for?>	
+				<tr><td></td><td></td></tr>
               </tbody>
             </table>
           </div>
