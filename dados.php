@@ -1942,12 +1942,11 @@ case "eventos":
 				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'local' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_programa, ARRAY_A);
 				$sql_evento = "SELECT idOcorrencia FROM sc_ocorrencia WHERE publicado = '1' AND idEvento IN(SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL)";
-//				$x = $wpdb->get_results($sql_evento,ARRAY_A);
+				$x = $wpdb->get_results($sql_evento,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
 					$sql_count = "SELECT idOcorrencia FROM sc_ocorrencia WHERE local = '".$res[$i]['id_tipo']."' AND publicado = '1' AND idEvento IN(SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL)";
 					$y = $wpdb->get_results($sql_count,ARRAY_A);
-					echo $s
 					if(count($y) != 0){
 					?>
 					<tr>
