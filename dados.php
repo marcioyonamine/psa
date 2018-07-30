@@ -1906,15 +1906,18 @@ case "eventos":
 				global $wpdb;
 				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_programa, ARRAY_A);
+				$sql_evento = "SELECT idEvento FROM idEvento WHERE publicado = '1' AND dataEnvio IS NOT NULL";
+				$x = $wpdb->get_results($sql_evento,ARRAY_A);
+				
 				for($i = 0; $i < count($res); $i++){
-					$sql_count = "SELECT idEvent FROM idEvento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
+					$sql_count = "SELECT idEvento FROM idEvento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
 					$y = $wpdb->get_results($sql_count,ARRAY_A);
 					?>
 					<tr>
 					  <td><?php echo $res[$i]['tipo']; ?></td>
 					<td><?php echo count($y); ?></td>
 
-					  <td></td>
+					  <td><?php echo count($y)/count($x)." %"; ?></td>
 					</tr>
 				<?php } // fim do for?>	
               </tbody>
