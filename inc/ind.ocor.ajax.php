@@ -14,6 +14,7 @@ $sql = 'SELECT *
 		//echo "<pre>";
 		//var_dump($res);
 		//echo "</pre>";
+		echo $sql;
 for($i = 0; $i < count($res); $i++){
 	$data = ocorrencia($res[$i]->idOcorrencia);
 	$k[] = array(	
