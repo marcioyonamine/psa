@@ -1907,11 +1907,12 @@ case "eventos":
 				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa' ORDER BY tipo ASC";
 				$res = $wpdb->get_results($sql_programa, ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
-					
+					$sql_count = "SELECT idEvent FROM idEvento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
+					$y = $wpdb->get_results($sql_count,ARRAY_A);
 					?>
 					<tr>
 					  <td><?php echo $res[$i]['tipo']; ?></td>
-					<td></td>
+					<td><?php echo count($y); ?></td>
 
 					  <td></td>
 					</tr>
