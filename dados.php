@@ -1917,7 +1917,7 @@ case "eventos":
 					  <td><?php echo $res[$i]['tipo']; ?></td>
 					<td><?php echo count($y); ?></td>
 
-					  <td><?php echo count($y)/count($x)." %"; ?></td>
+					  <td><?php echo (count($y)/count($x))*100 ." %"; ?></td>
 					</tr>
 				<?php } // fim do for?>	
               </tbody>
