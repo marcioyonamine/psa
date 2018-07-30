@@ -1945,7 +1945,7 @@ case "eventos":
 				$x = $wpdb->get_results($sql_evento,ARRAY_A);
 				
 				for($i = 0; $i < count($res); $i++){
-					$sql_count = "SELECT idEvento FROM sc_evento WHERE idEvento = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
+					$sql_count = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$res[$i]['id_tipo']."' AND publicado = '1'";
 					$y = $wpdb->get_results($sql_count,ARRAY_A);
 					?>
 					<tr>
