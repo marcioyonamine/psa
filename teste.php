@@ -15,22 +15,36 @@
 		  
 <?php 
 
+// Código para página do comdephapaasa
 
 $url = "http://culturaz.santoandre.sp.gov.br/api/space/find/";
 $data = array(
 "@select" => "id, name, shortDescription, longDescription, emailPublico, telefonePublico, endereco, site, updateTimestamp, acessibilidade, acessibilidade_fisica, capacidade, horario",
-"@seals" => "eq(5)"
+"@seals" => "5",
+"@order" => "name ASC",
+"@files"=> "(avatar):url"
 );
 
 $get_addr = $url.'?'.http_build_query($data);
 $ch = curl_init($get_addr);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $page = curl_exec($ch);
-$evento = json_decode($page);
-$ccsp = converterObjParaArray($evento);
+$evento = json_decode($page,true);
 
-echo $get_addr;
-var_dump($ccsp);
+echo "<table border='1'>";
+
+for($i = 0;$i < count($evento); $i++){
+echo "<tr><td>";
+if($evento[$i]['@files:avatar']['url'] != ''){
+	echo "<img style='padding: 10px;' src='".$evento[$i]['@files:avatar']['url']."'  width='200px' height='auto' align='left' />";
+}
+echo "</td>
+<td>";
+echo "<a href='http://culturaz.santoandre.sp.gov.br/espaco/".$evento[$i]["id"]."' target='_blank' >".$evento[$i]['name']."</a></td>
+<td>".$evento[$i]['endereco']."</td>
+";
+}
+echo "</table>";
 
 /*
 // Atualiza tabela de inscricao
