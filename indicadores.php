@@ -1367,8 +1367,14 @@ $total = 0;
 				</td>
                 </tr>
 			
-				<?php } ?>
-	<tr><td>Total:</td><td></td><td><?php echo $total; ?></td></tr>
+				<?php } 
+				
+				$sql = "SELECT idEvento,nomeEvento FROM sc_evento WHERE idEvento NOT IN(SELECT DISTINCT idEvento FROM sc_indicadores) AND dataEnvio IS NOT NULL";
+$evento = $wpdb->get_results($sql,ARRAY_A);
+				
+				
+				?>
+	<tr><td>Total:</td><td><?php echo count($evento); ?> eventos sem indicação de público </td><td><?php echo $total; ?></td><td></td></tr>
 				</tbody>
             </table>
 			
