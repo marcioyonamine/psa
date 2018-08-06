@@ -1300,6 +1300,11 @@ if(isset($_POST['inserir'])){
   
 }
 
+if(isset($_GET['filter'])){
+	$order = ' ORDER BY "'.$_GET['filter'].'" '.$_GET['order'];
+}else{
+	$order = ' ORDER BY id DESC ';
+}
 
 ?>
         <div class="row">    
@@ -1315,7 +1320,13 @@ if(isset($_POST['inserir'])){
 		</div>
 		
 		<?php 
-				$sel = "SELECT * FROM sc_indicadores WHERE publicado = '1' AND idUsuario = '".$user->ID."' ORDER BY id DESC";
+			if($user->ID != 1){
+		
+				$sel = "SELECT * FROM sc_indicadores WHERE publicado = '1' AND idUsuario = '".$user->ID."' $order";
+			}else{
+				$sel = "SELECT * FROM sc_indicadores WHERE publicado = '1' $order";
+				
+			}
 				$ocor = $wpdb->get_results($sel,ARRAY_A);
 				if(count($ocor) > 0){
 		?>
