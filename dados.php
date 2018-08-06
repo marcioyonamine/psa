@@ -2048,7 +2048,7 @@ case "publico":
 <?php 
 $sql = "SELECT SUM(valor) FROM sc_indicadores WHERE publicado = 1";
 $x = $wpdb->query($sql);
-echo $x;
+var_dump($x);
 
 ?>
 
