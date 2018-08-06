@@ -1307,6 +1307,7 @@ if(isset($_GET['filter'])){
 }
 
 $total = 0;
+$k = 1;
 ?>
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
@@ -1336,6 +1337,7 @@ $total = 0;
             <table class="table table-striped">
               <thead>
                 <tr>
+				<th></th>
                   <th>Evento</th>
                   <th>Período/Data</th>
                   <th>Contagem</th>
@@ -1350,6 +1352,7 @@ $total = 0;
 					$evento = evento($ocor[$i]['idEvento']);
 				?>
 				<tr>
+					<td><?php echo $k; $k++; ?></td>	
                   <td><?php echo $evento['titulo'];  ?></td>
                   <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?><?php if($ocor[$i]['periodoFim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodoFim']);} ?></td>
                   <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  
@@ -1374,7 +1377,7 @@ $evento = $wpdb->get_results($sql,ARRAY_A);
 				
 				
 				?>
-	<tr><td>Total:</td><td><?php echo count($evento); ?> eventos sem indicação de público </td><td><?php echo $total; ?></td><td></td></tr>
+	<tr><td></td><td>Total:</td><td><?php echo count($evento); ?> eventos sem indicação de público </td><td><?php echo $total; ?></td><td></td></tr>
 				</tbody>
             </table>
 			
