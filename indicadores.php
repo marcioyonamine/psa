@@ -1306,6 +1306,7 @@ if(isset($_GET['filter'])){
 	$order = ' ORDER BY id DESC ';
 }
 
+$total = 0;
 ?>
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
@@ -1351,7 +1352,10 @@ if(isset($_GET['filter'])){
 				<tr>
                   <td><?php echo $evento['titulo'];  ?></td>
                   <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?><?php if($ocor[$i]['periodoFim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodoFim']);} ?></td>
-                  <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  ?></td>				  
+                  <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  
+				  $total = $total + $ocor[$i]['valor'];
+				  
+				  ?></td>				  
                   <td>
 					
 				 </td>
@@ -1362,6 +1366,7 @@ if(isset($_GET['filter'])){
 					</form>
 				</td>
                 </tr>
+				<tr><td>Total:</td><td></td><td><?php echo $total; ?></td></tr>
 				<?php } ?>
 
 				</tbody>
