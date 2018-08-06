@@ -1366,9 +1366,9 @@ $total = 0;
 					</form>
 				</td>
                 </tr>
-				<tr><td>Total:</td><td></td><td><?php echo $total; ?></td></tr>
+			
 				<?php } ?>
-
+	<tr><td>Total:</td><td></td><td><?php echo $total; ?></td></tr>
 				</tbody>
             </table>
 			
