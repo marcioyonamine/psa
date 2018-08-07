@@ -42,7 +42,9 @@
 			<li class="nav-item">
               <a class="nav-link" href="contratacao.php">Pedidos de Contratação</a>
             </li>
-
+			<li class="nav-item">
+              <a class="nav-link" href="producao.php">Infraestrutura</a>
+            </li>
 	<li class="nav-item">
 		<a class="nav-link" href="enviar.php">Enviar</a>
    </li>
