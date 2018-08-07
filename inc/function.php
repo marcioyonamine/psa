@@ -2155,6 +2155,8 @@ function alerta($string,$tipo){
 	return '<div class="alert alert-'.$tipo.'">'.$string.'</div>';
 }
 
+//infraestrutura
+
 function insereAta($idEvento,$idAta,$qte){
 		global $wpdb;
 	$sql = "SELECT id,quantidade FROM sc_producao WHERE id_ata = '$idAta' AND id_evento = '$idEvento'";
@@ -2178,5 +2180,47 @@ function recAta($idEvento,$idAta){
 	}else{
 		return 0;
 	}
+}
+
+function infraAta($idEvento){
+	global $wpdb;
+	$x = array();
+	$geral = 0;	
+	// distinct das empresas ()
+	$sql_empresa = "SELECT DISTINCT pj FROM sc_ata";
+	$emp = $wpdb->get_results($sql_empresa,ARRAY_A);
+	for($i = 0; $i < count($emp); $i++){
+		$empresa = retornaPessoa($emp[$i]['pj'],2);
+		$x[$i]['razao_social'] = $empresa['nome'];
+		$x[$i]['cnpj'] = $empresa['cpf_cnpj'];	
+		// soma valor
+		$sql_soma = "SELECT * FROM sc_producao WHERE id_ata IN (SELECT id FROM sc_ata WHERE pj = '".$emp[$i]['pj']."') AND id_evento = '$idEvento'";
+		$soma = $wpdb->get_results($sql_soma,ARRAY_A);
+		$total = 0;
+		for($k = 0; $k < count($soma); $k++){
+			$sql_valor = "SELECT valor_diaria FROM sc_ata WHERE id = '".$soma[$k]['id_ata']."'";
+			$valor = $wpdb->get_results($sql_valor,ARRAY_A);
+			$total = $total + ($soma[$k]['quantidade'] * $valor[0]['valor_diaria']);
+		}
+		$x[$i]['total'] = $total;
+		$geral = $geral + $total;
+
+
+
+		
+	}
+
+	$x['total'] = $geral;
+	return $x;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 

@@ -55,7 +55,7 @@ if(isset($_SESSION['id'])){
                   <th>#</th>
                   <th>Título</th>
                   <th>Data</th>
-                  <th>Status</th>
+                  <th>Total</th>
                   <th></th>
                 </tr>
               </thead>
@@ -87,7 +87,11 @@ if(isset($_SESSION['id'])){
 
 					  
 					  <td><?php echo $evento['periodo']['legivel']; ?></td>
-					  <td><?php echo $evento['status']; ?></td>
+					  <td><?php 
+						$valor = infraAta($res[$i]['idEvento']);
+						echo dinheiroParaBr($valor['total']);
+
+					  ?></td>
 					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
 							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
