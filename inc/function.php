@@ -2155,3 +2155,28 @@ function alerta($string,$tipo){
 	return '<div class="alert alert-'.$tipo.'">'.$string.'</div>';
 }
 
+function insereAta($idEvento,$idAta,$qte){
+		global $wpdb;
+	$sql = "SELECT id,quantidade FROM sc_producao WHERE id_ata = '$idAta' AND id_evento = '$idEvento'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+
+	if(count($x) > 0){ //atualiza
+		$sql_upd = "UPDATE sc_producao SET quantidade = '$qte' WHERE id = '".$x[0]['id']."'";	
+		$wpdb->query($sql_upd);	
+	}else{ //insere
+		$sql_ins = "INSERT INTO sc_producao (id_ata,id_evento,quantidade) VALUES ('$idAta','$idEvento','$qte')";
+		$wpdb->query($sql_ins);
+	}
+}
+
+function recAta($idEvento,$idAta){
+	global $wpdb;
+	$sql = "SELECT id,quantidade FROM sc_producao WHERE id_ata = '$idAta' AND id_evento = '$idEvento'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	if(count($x) > 0){
+		return $x[0]['quantidade'];
+	}else{
+		return 0;
+	}
+}
+
