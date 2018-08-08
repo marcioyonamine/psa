@@ -23,7 +23,10 @@
             <li class="nav-item">
               <a class="nav-link" href="infraestrutura.php">Listar Eventos</a>
             </li>
-          </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="infraestrutura.php?p=pedido">Gerar Pedido de Contratação</a>
+            </li>
+		</ul>
 
 
 
