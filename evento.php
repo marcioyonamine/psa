@@ -39,6 +39,13 @@ if(isset($_POST['enviar'])){  // envia
 if(isset($_SESSION['id'])){
 	unset($_SESSION['id']);
 }
+
+if(isset($_GET['order'])){
+	$order = ' ORDER BY nomeEvento ASC ';
+}else{
+	$order = ' ORDER BY idEvento DESC ';
+}
+
 ?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
@@ -53,7 +60,7 @@ if(isset($_SESSION['id'])){
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Título</th>
+                  <th><a href="?<?php if(isset($_GET['order'])){ echo "";}else{ echo "order"; } ?>">Título</a></th>
                   <th>Data</th>
                   <th>Status</th>
                   <th></th>
@@ -64,9 +71,9 @@ if(isset($_SESSION['id'])){
 				global $wpdb;
 				$idUser = $user->ID;
 				if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77 OR $idUser == 15){
-					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' ORDER BY idEvento DESC";					
+					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' $order";					
 				}else{
-				$sql_list =  "SELECT idEvento FROM sc_evento WHERE  publicado = '1' AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser')  ORDER BY idEvento DESC";
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE  publicado = '1' AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser')  $order";
 				}
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
@@ -883,6 +890,12 @@ $event = evento($_SESSION['id']);
 <?php 
 break;
 case "pedido":
+if(isset($_GET['order'])){
+	$order = ' ORDER BY nomeEvento ASC ';
+}else{
+	$order = ' ORDER BY sc_evento.idEvento DESC ';
+}
+
 ?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
@@ -915,7 +928,7 @@ case "pedido":
 				<th>Liberação</th>
                   <th>Pessoa</th>
                   <th>Nome / Razão Social</th>
-                  <th>Objeto</th>
+                  <th><a href="?p=pedido<?php if(isset($_GET['order'])){ echo ""; }else{ echo "&order"; }  ?>">Objeto</a></th>
 				  <th>Período</th>
 				  <th>Valor</th>
 				  <th></th>
@@ -932,9 +945,12 @@ case "pedido":
 				}
 				
 				
-				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser'))) $f ORDER BY idPedidoContratacao DESC";
-				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
+				//$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') $order )) $f ";
 				
+				$sql_seleciona = "SELECT DISTINCT idPedidoContratacao,sc_evento.idEvento FROM sc_contratacao,sc_evento WHERE sc_contratacao.publicado = 1 AND sc_evento.dataEnvio IS NOT NULL AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND sc_contratacao.idEvento = sc_evento.idEvento $order";
+				
+				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
+				echo $sql_seleciona;
 				
 				for($i = 0; $i < count($peds); $i++){
 					if($peds[$i]['idEvento'] != 0 AND $peds[$i]['idEvento'] != NULL){
