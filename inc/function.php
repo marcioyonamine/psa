@@ -2191,6 +2191,7 @@ function infraAta($idEvento){
 	$emp = $wpdb->get_results($sql_empresa,ARRAY_A);
 	for($i = 0; $i < count($emp); $i++){
 		$empresa = retornaPessoa($emp[$i]['pj'],2);
+		$x[$i]['id'] = $emp[$i]['pj'];
 		$x[$i]['razao_social'] = $empresa['nome'];
 		$x[$i]['cnpj'] = $empresa['cpf_cnpj'];	
 		// soma valor
