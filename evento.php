@@ -950,7 +950,7 @@ if(isset($_GET['order'])){
 				$sql_seleciona = "SELECT DISTINCT idPedidoContratacao,sc_evento.idEvento FROM sc_contratacao,sc_evento WHERE sc_contratacao.publicado = 1 AND sc_evento.dataEnvio IS NOT NULL AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND sc_contratacao.idEvento = sc_evento.idEvento $order";
 				
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
-				echo $sql_seleciona;
+				//echo $sql_seleciona;
 				
 				for($i = 0; $i < count($peds); $i++){
 					if($peds[$i]['idEvento'] != 0 AND $peds[$i]['idEvento'] != NULL){
