@@ -308,7 +308,7 @@ case "pedido":
 				<?php 
 				global $wpdb;
 				$idUser = $user->ID;
-					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND idEvento IN(SELECT DISTINCT id_evento from sc_producao) AND dataEnvio IS NOT NULL ORDER BY idEvento DESC";					
+					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND idEvento IN(SELECT DISTINCT id_evento from sc_producao) ORDER BY idEvento DESC";					
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
