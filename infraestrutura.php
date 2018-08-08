@@ -241,11 +241,15 @@ $valor = infraAta($_SESSION['id']);
 					<h1>Infraesturtura</h1>
 					<h2><?php echo $n;?> / Total:<?php echo dinheiroParaBr($valor['total']);?> </h2>
 					<?php 
-					echo "<pre>";
-					var_dump($valor);
-					echo "</pre>";
+					for($i = 0; $i < count($valor) - 1; $i++){
 					?>
-					
+					<?php if($valor[$i]['total'] != 0){ ?>
+					<p><?php echo $valor[$i]['razao_social']?> : <?php echo dinheiroParaBr($valor[$i]['total']); ?> </p>
+					<?php } ?>
+
+					<?php	
+					}
+					?>
 					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 				</div>
         </div>
