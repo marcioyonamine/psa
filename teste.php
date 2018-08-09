@@ -7,17 +7,65 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
 
-		  <?php echo exibeHoje();?>
+		  <?php //echo exibeHoje();?>
 
 
 
 
 		  
 <?php 
-var_dump(recAta(11,1));
+if(isset($_GET['dotacao'])){
+	$dotacao = $_GET['dotacao'];
+}else{
+	$dotacao = '12';
+}
+$total = 0;
+// nomeEvento e o programa
+echo "<table border='1'>";
+$sql = "SELECT nomeEvento,idProjeto, valor, nLiberacao FROM sc_evento,sc_contratacao WHERE sc_evento.idEvento = sc_contratacao.idEvento AND dotacao = '$dotacao' AND dataEnvio IS NOT NULL ORDER BY nLiberacao";
+$x = $wpdb->get_results($sql,ARRAY_A);
+
+for($i = 0; $i < count($x); $i++){
+	$projeto = tipo($x[$i]['idProjeto']);
+	if($x[$i]['nLiberacao'] != ""){
+		echo "<tr>";
+		echo "<td>".$x[$i]['nomeEvento']."</td>";
+		echo "<td>".$projeto['tipo']."</td>";
+		echo "<td>".$x[$i]['valor']."</td>";
+		echo "<td>".$x[$i]['nLiberacao']."</td>";
+		echo "<tr />";
+		$total = $total + $x[$i]['valor'];
+	}
+	
+}
+
+$sql = "SELECT titulo,idProjeto, valor, nLiberacao FROM sc_atividade,sc_contratacao WHERE sc_atividade.id = sc_contratacao.idAtividade AND dotacao = '$dotacao' ORDER BY nLiberacao";
+$x = $wpdb->get_results($sql,ARRAY_A);
+for($i = 0; $i < count($x); $i++){
+	$projeto = tipo($x[$i]['idProjeto']);
+	if($x[$i]['nLiberacao'] != ""){
+		echo "<tr>";
+		echo "<td>".$x[$i]['titulo']."</td>";
+		echo "<td>".$projeto['tipo']."</td>";
+		echo "<td>".$x[$i]['valor']."</td>";
+		echo "<td>".$x[$i]['nLiberacao']."</td>";
+		echo "<tr />";
+		$total = $total + $x[$i]['valor'];
+	}
+	
+}
+echo "<tr>
+<td>Total:</td>";
+echo "<td></td>";
+
+echo "<td>".$total."</td>";
+echo "<td></td>";
+echo "</tr>";
+
+echo "<table>";
 
 
-
+/*
 // Código para página do comdephapaasa
 
 $url = "http://culturaz.santoandre.sp.gov.br/api/space/find/";
