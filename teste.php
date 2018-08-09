@@ -19,9 +19,13 @@ if(isset($_GET['dotacao'])){
 }else{
 	$dotacao = '12';
 }
+
+$dot = recuperaDados("sc_orcamento",$dotacao,"id");
+echo "<h1>".$dot['descricao']." - ".$dot['projeto']."/".$dot['ficha']."</h1>";
+
 $total = 0;
 // nomeEvento e o programa
-echo "<table border='1'>";
+echo "<table>";
 $sql = "SELECT nomeEvento,idProjeto, valor, nLiberacao FROM sc_evento,sc_contratacao WHERE sc_evento.idEvento = sc_contratacao.idEvento AND dotacao = '$dotacao' AND sc_evento.dataEnvio IS NOT NULL AND cancelamento = '0' ORDER BY nLiberacao";
 $x = $wpdb->get_results($sql,ARRAY_A);
 
