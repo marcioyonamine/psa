@@ -31,7 +31,7 @@ for($i = 0; $i < count($x); $i++){
 		echo "<tr>";
 		echo "<td>".$x[$i]['nomeEvento']."</td>";
 		echo "<td>".$projeto['tipo']."</td>";
-		echo "<td>".$x[$i]['valor']."</td>";
+		echo "<td>".dinheiroParaBr($x[$i]['valor'])."</td>";
 		echo "<td>".$x[$i]['nLiberacao']."</td>";
 		echo "<tr />";
 		$total = $total + $x[$i]['valor'];
@@ -39,7 +39,7 @@ for($i = 0; $i < count($x); $i++){
 	
 }
 
-$sql = "SELECT titulo,idProjeto, valor, nLiberacao FROM sc_atividade,sc_contratacao WHERE sc_atividade.id = sc_contratacao.idAtividade AND dotacao = '$dotacao' ORDER BY nLiberacao";
+$sql = "SELECT titulo,idProjeto, valor, nLiberacao FROM sc_atividade,sc_contratacao WHERE sc_atividade.id = sc_contratacao.idAtividade AND dotacao = '$dotacao' AND cancelado = '0' ORDER BY nLiberacao";
 $x = $wpdb->get_results($sql,ARRAY_A);
 for($i = 0; $i < count($x); $i++){
 	$projeto = tipo($x[$i]['idProjeto']);
@@ -47,7 +47,7 @@ for($i = 0; $i < count($x); $i++){
 		echo "<tr>";
 		echo "<td>".$x[$i]['titulo']."</td>";
 		echo "<td>".$projeto['tipo']."</td>";
-		echo "<td>".$x[$i]['valor']."</td>";
+		echo "<td>".dinheiroParaBr($x[$i]['valor'])."</td>";
 		echo "<td>".$x[$i]['nLiberacao']."</td>";
 		echo "<tr />";
 		$total = $total + $x[$i]['valor'];
@@ -58,7 +58,7 @@ echo "<tr>
 <td>Total:</td>";
 echo "<td></td>";
 
-echo "<td>".$total."</td>";
+echo "<td>".dinheiroParaBr($total)."</td>";
 echo "<td></td>";
 echo "</tr>";
 
