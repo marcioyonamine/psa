@@ -22,7 +22,7 @@ if(isset($_GET['dotacao'])){
 $total = 0;
 // nomeEvento e o programa
 echo "<table border='1'>";
-$sql = "SELECT nomeEvento,idProjeto, valor, nLiberacao FROM sc_evento,sc_contratacao WHERE sc_evento.idEvento = sc_contratacao.idEvento AND dotacao = '$dotacao' AND sc_evento.dataEnvio IS NOT NULL ORDER BY nLiberacao";
+$sql = "SELECT nomeEvento,idProjeto, valor, nLiberacao FROM sc_evento,sc_contratacao WHERE sc_evento.idEvento = sc_contratacao.idEvento AND dotacao = '$dotacao' AND sc_evento.dataEnvio IS NOT NULL AND cancelado = '0' ORDER BY nLiberacao";
 $x = $wpdb->get_results($sql,ARRAY_A);
 
 for($i = 0; $i < count($x); $i++){
@@ -39,7 +39,7 @@ for($i = 0; $i < count($x); $i++){
 	
 }
 
-$sql = "SELECT titulo,idProjeto, valor, nLiberacao FROM sc_atividade,sc_contratacao WHERE sc_atividade.id = sc_contratacao.idAtividade AND dotacao = '$dotacao' AND cancelado = '0' ORDER BY nLiberacao";
+$sql = "SELECT titulo,idProjeto, valor, nLiberacao FROM sc_atividade,sc_contratacao WHERE sc_atividade.id = sc_contratacao.idAtividade AND dotacao = '$dotacao' ORDER BY nLiberacao";
 $x = $wpdb->get_results($sql,ARRAY_A);
 for($i = 0; $i < count($x); $i++){
 	$projeto = tipo($x[$i]['idProjeto']);
