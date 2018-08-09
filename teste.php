@@ -22,7 +22,7 @@ if(isset($_GET['dotacao'])){
 $total = 0;
 // nomeEvento e o programa
 echo "<table border='1'>";
-$sql = "SELECT nomeEvento,idProjeto, valor, nLiberacao FROM sc_evento,sc_contratacao WHERE sc_evento.idEvento = sc_contratacao.idEvento AND dotacao = '$dotacao' AND dataEnvio IS NOT NULL ORDER BY nLiberacao";
+$sql = "SELECT nomeEvento,idProjeto, valor, nLiberacao FROM sc_evento,sc_contratacao WHERE sc_evento.idEvento = sc_contratacao.idEvento AND dotacao = '$dotacao' AND sc_evento.dataEnvio IS NOT NULL ORDER BY nLiberacao";
 $x = $wpdb->get_results($sql,ARRAY_A);
 
 for($i = 0; $i < count($x); $i++){
