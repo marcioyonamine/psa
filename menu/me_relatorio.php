@@ -26,7 +26,9 @@
 			<li class="nav-item">
               <a class="nav-link" href="relatoriofip2018.php" target="_blank">Relatório do Edital de FIP2018 para Impressão</a>
             </li>
-
+			<li class="nav-item">
+              <a class="nav-link" href="relatorio.php?p=excel" target="_blank">Para Excel</a>
+            </li>
 			<li class="nav-item">
               <a class="nav-link" href="?p=fip2018" >Números do FIP2018</a>
             </li>
