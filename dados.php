@@ -56,6 +56,7 @@ if(isset($_POST['apagar'])){
               <thead>
                 <tr>
                   <th>Projeto</th>
+				  <th>Descrição</th>
 				<th>Ficha</th>
 
                   <th>Dotação</th>
@@ -882,6 +883,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  
 				<th width='10%'>Proj/Fic</th>
 				<th width='10%'>Nat/Fon</th>
+				<th>Desc</th>
                   <th>Ini</th>
                   <th>Con</th>
                   <th>Des</th>
@@ -923,6 +925,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 					  
 				<th width='10%'>Proj/Fic</th>
 				<th width='10%'>Nat/Fon</th>
+				<th>Des</th>
 				<th>Ini</th>
                   <th>Con</th>
                   <th>Des</th>
@@ -939,6 +942,8 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 
 					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
 					  <td><?php echo $orc['natureza']; ?></td>
+					  <td><?php echo $orc['descricao']; ?></td>
+
 					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
@@ -963,6 +968,7 @@ if(isset($_GET['ficha']) AND $_GET['ficha'] != 0){
 
 					  <td title="<?php echo $orc['descricao']; ?>"><a href="?p=historico&id=<?php echo $res[$i]['id']?>" target='_blank' ><?php echo $orc['visualizacao']; ?></a></td>
 					  <td><?php echo $orc['natureza']; ?></td>
+					  <td><?php echo $orc['descricao']; ?></td>
 					  <td><?php echo dinheiroParaBr($orc['total']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['contigenciado']); ?></td>
 					  <td><?php echo dinheiroParaBr($orc['descontigenciado']); ?></td>
@@ -2216,7 +2222,143 @@ case "atividades":
 		</div>
 </section>
 
+<?php
+break;
+case "graficos":
+?>
+<style>
 
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+</style>
+
+
+
+		  </div>
+
+<div id="pieChart" align="center"></div>
+
+<!--<div id="pieChart2" align="center"></div>-->
+  <div>
+	<?php 
+	//var_dump($programa);
+	?>
+</div>
+
+
+<script src="js/jquery-3.2.1.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="visual/d3/d3pie.js"></script>
+
+<?php 
+				global $wpdb;
+				$sql_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa' ORDER BY tipo ASC";
+				$res = $wpdb->get_results($sql_programa, ARRAY_A);
+				$sql_evento = "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL";
+				$x = $wpdb->get_results($sql_evento,ARRAY_A);
+				
+				for($i = 0; $i < count($res); $i++){
+					$sql_count = "SELECT idEvento FROM sc_evento WHERE idPrograma = '".$res[$i]['id_tipo']."' AND publicado = '1' AND dataEnvio IS NOT NULL";
+					$y = $wpdb->get_results($sql_count,ARRAY_A);
+					$programa[$i]['tipo'] = $res[$i]['tipo'];
+					$programa[$i]['valor'] =  count($y);
+					 } // fim do for?>	
+<script>
+				
+				var pie = new d3pie("pieChart", {
+	"header": {
+		"title": {
+			"text": "Planejamento por Programa",
+			"fontSize": 24,
+			"font": "open sans"
+		},
+		"subtitle": {
+			"text": "",
+			"color": "#999999",
+			"fontSize": 12,
+			"font": "open sans"
+		},
+		"titleSubtitlePadding": 9
+	},
+	"footer": {
+		"color": "#999999",
+		"fontSize": 10,
+		"font": "open sans",
+		"location": "bottom-left"
+	},
+	"size": {
+		"canvasWidth": 800,
+		"pieOuterRadius": "90%"
+	},
+	"data": {
+		"sortOrder": "value-desc",
+		"content": [
+		
+		<?php 
+		
+		
+		?>
+		
+		<?php for ($i = 0; $i < count($programa); $i++){ ?>
+			{
+				"label": "<?php echo $programa[$i]['programa']?>",
+				"value": <?php echo $programa[$i]['valor'] ?>,
+				"color": "<?php echo '#' . dechex(rand(256,16777215)) ?>"
+			},
+		<?php } ?>
+
+		]
+	},
+	"labels": {
+		"outer": {
+			"pieDistance": 32
+		},
+		"inner": {
+			"hideWhenLessThanPercentage": 3
+		},
+		"mainLabel": {
+			"fontSize": 11
+		},
+		"percentage": {
+			"color": "#ffffff",
+			"decimalPlaces": 0
+		},
+		"value": {
+			"color": "#adadad",
+			"fontSize": 11
+		},
+		"lines": {
+			"enabled": true
+		},
+		"truncation": {
+			"enabled": true
+		}
+	},
+	"effects": {
+		"pullOutSegmentOnClick": {
+			"effect": "linear",
+			"speed": 400,
+			"size": 8
+		}
+	},
+	"misc": {
+		"gradient": {
+			"enabled": true,
+			"percentage": 100
+		}
+	}
+});
+</script>
 <?php 
 break;
 } // fim da switch p
