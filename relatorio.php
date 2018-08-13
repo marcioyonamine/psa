@@ -1279,6 +1279,25 @@ case 'quantitativo':
 break;
 case "excel":
 ?>
+
+
+							<form method="POST" action="?p=excel" class="form-horizontal" role="form">
+							<select class="form-control" name="dotacao" id="dotacao" >
+								<?php 
+								$sql_orc = "SELECT * FROM sc_orcamento ORDER BY descricao ASC";
+								$orc = $wpdb->get_results($sql_orc,ARRAY_A);
+								for($i = 0; $i < count($orc);$i++){ ?>
+								<option value="<?php echo $orc[$i]['id']; ?>" >
+								<?php echo $orc[$i]['descricao']; ?>
+								</option>	
+									
+								<?php } ?>
+							</select>
+							<input type="submit" class="btn btn-theme" value="Filtrar">
+							</form>
+							<br /><br />
+
+
 <?php 
 if(isset($_GET['dotacao'])){
 	$dotacao = $_GET['dotacao'];
