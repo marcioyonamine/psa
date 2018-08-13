@@ -22,17 +22,17 @@
 		?>
 		  <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=editar">Informações</a>
+              <a class="nav-link" href="edicao.php?p=editar">Informações</a>
             </li>
-	  <li class="nav-item">
+	 <li class="nav-item">
               <a class="nav-link" href="ocorrencias.php?p=listar">Listar Ocorrências</a>
             </li>
-			<li class="nav-item">
+			<!-- <li class="nav-item">
               <a class="nav-link" href="ocorrencias.php?p=inserir">Inserir Ocorrências</a>
-            </li>
+            </li>-->
 
         
-	<li class="nav-item">
+<!--	<li class="nav-item">
               <a class="nav-link" href="arquivo.php">Listar Arquivos</a>
             </li>
 
@@ -42,7 +42,7 @@
 			<li class="nav-item">
               <a class="nav-link" href="contratacao.php">Pedidos de Contratação</a>
             </li>
-			<li class="nav-item">
+			<li class="nav-item">-->
               <a class="nav-link" href="producao.php">Infraestrutura</a>
             </li>
 	<li class="nav-item">
@@ -58,14 +58,14 @@
 
 		<ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="evento.php">Listar Meus Eventos</a>
+              <a class="nav-link" href="edicao.php">Listar Meus Eventos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=fip2018">Listar Eventos FIP2018</a>
+              <a class="nav-link" href="edicao.php?p=fip2018">Listar Eventos FIP2018</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="evento.php?p=inserir">Inserir Novo Evento</a>
-		    </li>
+            <!--<li class="nav-item">
+              <a class="nav-link" href="edicao.php?p=inserir">Inserir Novo Evento</a>
+		    </li>-->
 
           </ul>
 
