@@ -1282,17 +1282,24 @@ case "excel":
 
 
 							<form method="POST" action="?p=excel" class="form-horizontal" role="form">
+												<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Programa</label>
 							<select class="form-control" name="dotacao" id="dotacao" >
 								<?php 
-								$sql_orc = "SELECT * FROM sc_orcamento ORDER BY descricao ASC";
+								global $wpdb;
+								$sql_orc = "SELECT * FROM sc_orcamento WHERE idPai = '0' AND unidade IS NOT NULL ORDER BY descricao ASC";
 								$orc = $wpdb->get_results($sql_orc,ARRAY_A);
-								for($i = 0; $i < count($orc);$i++){ ?>
-								<option value="<?php echo $orc[$i]['id']; ?>" >
-								<?php echo $orc[$i]['descricao']; ?>
-								</option>	
+								for($j = 0; $j < count($orc); $j++){ ?>
+								<option value="<?php echo $orc[$j]['id']; ?>" >
+								<?php echo $orc[$j]['descricao']; ?> -  <?php echo $orc[$j]['projeto']; ?> / <?php echo $orc[$j]['ficha']; ?>
+								</option>
 									
 								<?php } ?>
 							</select>
+											</div>
+					</div>
+	
 							<input type="submit" class="btn btn-theme" value="Filtrar">
 							</form>
 							<br /><br />
@@ -1301,6 +1308,12 @@ case "excel":
 <?php 
 if(isset($_GET['dotacao'])){
 	$dotacao = $_GET['dotacao'];
+}else{
+	$dotacao = '12';
+}
+
+if(isset($_POST['dotacao'])){
+	$dotacao = $_POST['dotacao'];
 }else{
 	$dotacao = '12';
 }
@@ -1352,6 +1365,10 @@ echo "<td></td>";
 echo "</tr>";
 
 echo "<table>";
+
+								echo "<pre>";
+								var_dump($orc);
+								echo "</pre>";
 ?>
 
 <?php 
