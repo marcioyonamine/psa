@@ -57,7 +57,7 @@ if(isset($_POST['apagar'])){
 				<?php 
 				global $wpdb;
 				$id_user = $user->ID;
-				if($user->ID == 1){
+				if($user->ID == 1 OR $user->ID == 5 ){
 					$sql_list =  "SELECT * FROM sc_atividade WHERE publicado = '1' ORDER BY id DESC";
 				}else{
 					$sql_list =  "SELECT * FROM sc_atividade WHERE publicado = '1' AND (idRes = '$id_user' OR idSuplente = '$id_user' OR id_usuario = '$id_user' ) ORDER BY id DESC";
