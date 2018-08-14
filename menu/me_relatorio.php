@@ -32,7 +32,10 @@
 			<li class="nav-item">
               <a class="nav-link" href="?p=fip2018" >Números do FIP2018</a>
             </li>
-		</ul>
+			<li class="nav-item">
+              <a class="nav-link" href="?p=grafico" >Graficos</a>
+            </li>
+			</ul>
 
 
 

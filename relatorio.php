@@ -1266,6 +1266,18 @@ case 'quantitativo':
 //break;
 //case '':  
 ?>		  
+<?php 
+break;
+case 'grafico':  
+?>	
+
+<fieldset>
+                 <img src="grafico.php" alt="" title="" />
+             </fieldset>  
+
+<fieldset>
+                 <img src="grafico.php?p=biblioteca" alt="" title="" />
+             </fieldset> 
 <!--
 					 <div class="container">
         <div class="row">    

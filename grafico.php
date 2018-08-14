@@ -144,10 +144,10 @@ $data = array(
 
              );     
 # Cria um novo objeto do tipo PHPlot com 500px de largura x 350px de altura                 
-$plot = new PHPlot(800 , 600);     
+$plot = new PHPlot(700 , 500);     
   
 // Organiza Gráfico -----------------------------
-$plot->SetTitle('Público da Cultura Santo André');
+$plot->SetTitle(utf8_decode('Público da Cultura Santo André'));
 # Precisão de uma casa decimal
 //$plot->SetPrecisionY(1);
 # tipo de Gráfico em barras (poderia ser linepoints por exemplo)
@@ -193,10 +193,10 @@ $data = array(
 
              );     
 # Cria um novo objeto do tipo PHPlot com 500px de largura x 350px de altura                 
-$plot = new PHPlot(800 , 600);     
+$plot = new PHPlot(700 , 500);     
   
 // Organiza Gráfico -----------------------------
-$plot->SetTitle('Publico da Biblioteca Santo André');
+$plot->SetTitle(utf8_decode('Publico da Biblioteca Santo André'));
 # Precisão de uma casa decimal
 //$plot->SetPrecisionY(1);
 # tipo de Gráfico em barras (poderia ser linepoints por exemplo)
