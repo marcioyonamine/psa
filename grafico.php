@@ -25,6 +25,24 @@ function ultimoDiaMes($m,$y){
 	return $y."-".$m."-".cal_days_in_month(CAL_GREGORIAN, $m , $y);
 }
 
+function pubBiblio($ano,$mes){
+		  global $wpdb;
+		  $primeiro_dia = $ano."-".$mes."-01";
+		  $ultimo_dia = ultimoDiaMes($mes,$ano);
+		$y = array();
+		$sel = "SElECT * FROM sc_ind_biblioteca WHERE periodo_fim = '$ultimo_dia'";
+		$x = $wpdb->get_results($sel,ARRAY_A);
+		for($i = 0; $i < count($x); $i++){
+			$y['pub_total'] = $x[$i]['pub_central'] + $x[$i]['pub_central'];
+			$y['emp_total'] = $x[$i]['emp_central'] + $x[$i]['emp_central'];
+		    $y['downloads'] = $x[$i]['downloads'];
+			
+		}
+		return $y['pub_total'];	
+		
+		  
+}
+
 function publico ($ano, $mes){
 	global $wpdb;
 		  $primeiro_dia = $ano."-".$mes."-01";
@@ -159,6 +177,56 @@ $plot->DrawGraph();
 // -----------------------------------------------
 
 break;
+
+case "biblioteca":
+
+var_dump(pubBiblio(2018,1));
+
+$data = array(
+             array('janeiro' , pubBiblio(2018,1) ), 
+             array('fevereiro' , pubBiblio(2018,2) ),
+             array('marco' , pubBiblio(2018,3) ),
+             array('abril' , pubBiblio(2018,4) ),
+             array('maio' , pubBiblio(2018,5) )
+
+             );     
+# Cria um novo objeto do tipo PHPlot com 500px de largura x 350px de altura                 
+$plot = new PHPlot(800 , 600);     
+  
+// Organiza Gráfico -----------------------------
+$plot->SetTitle('Público da Cultura Santo André');
+# Precisão de uma casa decimal
+//$plot->SetPrecisionY(1);
+# tipo de Gráfico em barras (poderia ser linepoints por exemplo)
+$plot->SetPlotType("bars");
+# Tipo de dados que preencherão o Gráfico text(label dos anos) e data (valores de porcentagem)
+$plot->SetDataType("text-data");
+# Adiciona ao gráfico os valores do array
+$plot->SetDataValues($data);
+// -----------------------------------------------
+  
+// Organiza eixo X ------------------------------
+# Seta os traços (grid) do eixo X para invisível
+$plot->SetXTickPos('none');
+# Texto abaixo do eixo X
+$plot->SetXLabel("");
+# Tamanho da fonte que varia de 1-5
+$plot->SetXLabelFontSize(2);
+$plot->SetAxisFontSize(2);
+// -----------------------------------------------
+  
+// Organiza eixo Y -------------------------------
+# Coloca nos pontos os valores de Y
+$plot->SetYDataLabelPos('plotin');
+// -----------------------------------------------
+  
+// Desenha o Gráfico -----------------------------
+//$plot->DrawGraph();
+// -----------------------------------------------
+
+break;
+
+
 
 }
 

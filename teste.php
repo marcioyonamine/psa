@@ -112,9 +112,12 @@ function ultimoDiaMes($m,$y){
 		</table>
 		  
 <fieldset>
-                 <img src="grafico.php" alt="Índice de Fecundidade Brasileira 1940-2000" title="Índice de Fecundidade Brasileira 1940-2000" />
+                 <img src="grafico.php" alt="" title="" />
              </fieldset>  
-		  
+
+<fieldset>
+                 <img src="grafico.php?p=biblioteca" alt="" title="" />
+             </fieldset> 			 
 <?php 
 
 
