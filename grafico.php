@@ -31,9 +31,10 @@ function pubBiblio($ano,$mes){
 		  $ultimo_dia = ultimoDiaMes($mes,$ano);
 		$y = array();
 		$sel = "SElECT * FROM sc_ind_biblioteca WHERE periodo_fim = '$ultimo_dia'";
+		//echo $sel;
 		$x = $wpdb->get_results($sel,ARRAY_A);
 		for($i = 0; $i < count($x); $i++){
-			$y['pub_total'] = $x[$i]['pub_central'] + $x[$i]['pub_central'];
+			$y['pub_total'] = $x[$i]['pub_central'] + $x[$i]['pub_ramais'];
 			$y['emp_total'] = $x[$i]['emp_central'] + $x[$i]['emp_central'];
 		    $y['downloads'] = $x[$i]['downloads'];
 			
@@ -180,7 +181,8 @@ break;
 
 case "biblioteca":
 
-var_dump(pubBiblio(2018,1));
+
+ 
 
 $data = array(
              array('janeiro' , pubBiblio(2018,1) ), 
@@ -194,7 +196,7 @@ $data = array(
 $plot = new PHPlot(800 , 600);     
   
 // Organiza Gráfico -----------------------------
-$plot->SetTitle('Público da Cultura Santo André');
+$plot->SetTitle('Publico da Biblioteca Santo André');
 # Precisão de uma casa decimal
 //$plot->SetPrecisionY(1);
 # tipo de Gráfico em barras (poderia ser linepoints por exemplo)
