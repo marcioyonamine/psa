@@ -8,12 +8,108 @@
           <h1>Ambiente teste</h1>
 
 		  <?php //echo exibeHoje();?>
+<?php 
+function ultimoDiaMes($m,$y){
+
+	return $y."-".$m."-".cal_days_in_month(CAL_GREGORIAN, $m , $y);
+}
 
 
+?>
+		  <h1><?php echo $_GET['mes']." / ".$_GET['ano']?></h1>
+		<h2>Eventos que não possuem indicadores</h2>	
 
+		  
+		  <?php 
+		  $primeiro_dia = $_GET['ano']."-".$_GET['mes']."-01";
+		  $ultimo_dia = ultimoDiaMes($_GET['mes'],$_GET['ano']);
+		  
+		  
+		  // recupero os eventos de janeiro
+		  $sql_s = "SELECT DISTINCT idEvento FROM sc_agenda WHERE data >= '$primeiro_dia' AND data <= '$ultimo_dia' AND idEvento NOT IN(SELECT DISTINCT idEvento FROM sc_indicadores WHERE periodoInicio  >= '$primeiro_dia' AND periodoInicio <= '$ultimo_dia')";
+		  $e = $wpdb->get_results($sql_s,ARRAY_A);
+		  for($i = 0; $i < count($e); $i++){
+			$evento = evento($e[$i]['idEvento']);
+			echo $evento['titulo']."<br />";		
+		  }
+
+		  $total = 0;
+		  
+			// soma os grupos
+			$sql_op = "SELECT * FROM sc_opcoes WHERE entidade = 'grupo'";
+			$op = $wpdb->get_results($sql_op,ARRAY_A);
+				//var_dump($op);
+
+			$arr_grupo = array();	
+				
+			for($i = 0;$i < count($op); $i++){
+				$opc = json_decode($op[$i]['opcao'],true);
+
+				
+				//soma o público
+				$sql_soma = "SELECT * FROM sc_indicadores WHERE periodoInicio  >= '$primeiro_dia' AND periodoInicio <= '$ultimo_dia' AND publicado = '1' AND idEvento IN(".$opc['evento'].")";
+				$s = $wpdb->get_results($sql_soma,ARRAY_A);
+				$t = 0;
+				for($i = 0; $i < count($s); $i++){
+					if($s[$i]['contagem'] == 1){
+						$t = $t + $s[$i]['valor'];
+						//echo $s[$i]['idEvento']." ".$s[$i]['valor'];
+						//echo "<br />";
+					}else{
+						$t = $t + ($s[$i]['valor'] * $s[$i]['ndias'] );
+						//echo $s[$i]['idEvento']." ".$s[$i]['valor'];
+						//echo "<br />";
+
+						}
+				}
+				$total = $total + ($t/count($s));
+				
+				
+			}
+
+
+		  //soma o público
+		  $sql_soma = "SELECT * FROM sc_indicadores WHERE periodoInicio  >= '$primeiro_dia' AND periodoInicio <= '$ultimo_dia' AND publicado = '1' AND idEvento NOT IN(".$opc['evento'].")";
+		  $s = $wpdb->get_results($sql_soma,ARRAY_A);
+
+		  for($i = 0; $i < count($s); $i++){
+			  if($s[$i]['contagem'] == 1){
+				  $total = $total + $s[$i]['valor'];
+						//echo $s[$i]['idEvento']." ".$s[$i]['valor'];
+						//echo "<br />";
+
+			  }else{
+				  $total = $total + ($s[$i]['valor'] * $s[$i]['ndias'] );
+						//echo $s[$i]['idEvento']." ".$s[$i]['valor'];
+						//echo "<br />";
+
+			  }
+			  
+		  }
+		  
+		  
+		  
+		  
+		  
+		  ?>
+		  <hr>
+		<h2>Público</h2>	
+		<table>
+		<tr>
+		<td>Público total dos eventos:</td>
+		<td><?php echo $total; ?> </td>
+		
+		</tr>
+		
+		
+		
+		</table>
+		  
 
 		  
 <?php 
+// relatório de dados
+/*
 if(isset($_GET['dotacao'])){
 	$dotacao = $_GET['dotacao'];
 }else{
