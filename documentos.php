@@ -283,7 +283,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
 	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
 	Endereço: <?php echo $pedido['end']  ?><br />
-	Email: <?php echo $pedido['email'];?> - Email: <?php echo $pedido['telefone'];?>  <br />
+	Email: <?php echo $pedido['email'];?> - Telefone: <?php echo $pedido['telefone'];?>  <br />
 	<p>Valor total: R$<?php echo $pedido['valor'];?> (<?php echo $pedido['valor_extenso']; ?>)</p>
 	
 	<p><b>Forma de pagamento:</b> <?php echo $pedido['forma_pagamento'];?> </p>
