@@ -25,7 +25,7 @@ function ultimoDiaMes($m,$y){
 		  $ultimo_dia = ultimoDiaMes($_GET['mes'],$_GET['ano']);
 		  
 		  
-		  // recupero os eventos de janeiro
+		  // recupero os eventos de mês
 		  $sql_s = "SELECT DISTINCT idEvento FROM sc_agenda WHERE data >= '$primeiro_dia' AND data <= '$ultimo_dia' AND idEvento NOT IN(SELECT DISTINCT idEvento FROM sc_indicadores WHERE periodoInicio  >= '$primeiro_dia' AND periodoInicio <= '$ultimo_dia')";
 		  //echo $sql_s;
 		  $e = $wpdb->get_results($sql_s,ARRAY_A);
@@ -35,6 +35,7 @@ function ultimoDiaMes($m,$y){
 		  }
 
 		  $total = 0;
+
 		  
 			// soma os grupos
 			$sql_op = "SELECT * FROM sc_opcoes WHERE entidade = 'grupo'";
@@ -56,10 +57,12 @@ function ultimoDiaMes($m,$y){
 				for($i = 0; $i < count($s); $i++){
 					if($s[$i]['contagem'] == 1){
 						$t = $t + $s[$i]['valor'];
+						array_push($arr_grupo,$s[$i]['idEvento']);
 						//echo $s[$i]['idEvento']." ".$s[$i]['valor'];
 						//echo "<br />";
 					}else{
 						$t = $t + ($s[$i]['valor'] * $s[$i]['ndias'] );
+						array_push($arr_grupo,$s[$i]['idEvento']);
 						//echo $s[$i]['idEvento']." ".$s[$i]['valor'];
 						//echo "<br />";
 
