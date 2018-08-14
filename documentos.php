@@ -266,7 +266,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 	</tr>
 	<tr>
 	<td colspan="3">Nome do Contato <br /><?php echo $pedido['usuario']; ?></td>
-	<td>Telefone Contato<br /><?php echo $pedido['telefone']; ?></td>
+	<td>Telefone Contato<br /><?php echo $pedido['contato_telefone']; ?></td>
 	</tr>
 	<tr><td colspan="4">Conta corrente codReduzido/DB<br /><center>252</center></td></tr>	
 	<tr>
@@ -283,7 +283,7 @@ if(!isset($_GET['id']) OR !isset($_GET['modelo'])){
 		<p>Empresa: <?php echo $pedido['nome_razaosocial']  ?><br />
 	CNPJ: <?php echo $pedido['cpf_cnpj']  ?><br />
 	Endereço: <?php echo $pedido['end']  ?><br />
-	Email: <?php echo $pedido['email'];?> <br />
+	Email: <?php echo $pedido['email'];?> - Email: <?php echo $pedido['telefone'];?>  <br />
 	<p>Valor total: R$<?php echo $pedido['valor'];?> (<?php echo $pedido['valor_extenso']; ?>)</p>
 	
 	<p><b>Forma de pagamento:</b> <?php echo $pedido['forma_pagamento'];?> </p>
