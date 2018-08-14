@@ -27,6 +27,7 @@ function ultimoDiaMes($m,$y){
 		  
 		  // recupero os eventos de janeiro
 		  $sql_s = "SELECT DISTINCT idEvento FROM sc_agenda WHERE data >= '$primeiro_dia' AND data <= '$ultimo_dia' AND idEvento NOT IN(SELECT DISTINCT idEvento FROM sc_indicadores WHERE periodoInicio  >= '$primeiro_dia' AND periodoInicio <= '$ultimo_dia')";
+		  echo $sql_s;
 		  $e = $wpdb->get_results($sql_s,ARRAY_A);
 		  for($i = 0; $i < count($e); $i++){
 			$evento = evento($e[$i]['idEvento']);
