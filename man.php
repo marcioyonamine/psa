@@ -22,7 +22,7 @@ case 'inicio':
 <li><a href="?p=atualiza_agenda">Atualiza a agenda</a> : todos os eventos do Bartira. </li>
 <li><a href="?p=atualiza_hora_final">Atualiza as ocorrências com hora final</a> : todos os eventos do Bartira. </li>
 <li><a href="">Atualiza a categoria das inscrições</a> </li>
-
+<li><a href="?p=importa_contatos">Importa contatos das inscrições</a> </li>
 </ul>
 
   
@@ -233,7 +233,85 @@ for($i = 0; $i < count($evento); $i++){
 				</div>
         </div>
 		</div>
+<?php 
+break;
+case 'importa_contatos':  
+set_time_limit(0);
 
+$x =array("on-58078286","on-2101871521","on-2135100180","on-1302100216","on-316231794","on-688002562","on-1954495637","on-1776752054","on-779107560","on-1800557621","on-1865705822","on-260727837","on-1539060598","on-1517359845","on-83570770","on-1973229016","on-1866929251","on-1024162598","on-650254741","on-250367787","on-1310481067","on-1403335167","on-22818438","on-101546906","on-1054155689","on-1601848067","on-2022854575","on-445536142","on-221062963","on-509705695","on-783504660","on-1860378557","on-646718992","on-307571087","on-465126408","on-643633308","on-1443264217","on-259882278","on-1878208231","on-921197314","on-442527509","on-1134166409");
+
+
+//$x = array("on-58078286");
+
+// Cria uma string para verificação
+$y = "";
+foreach($x as $value){
+	$y .= $value.",";
+}
+$y = substr($y,0,-1);
+
+
+for($i = 0; $i < count($x); $i++){
+
+		$ins = retornaInscricao($x[$i]);
+		$insc = json_decode($ins['descricao'],true);
+
+		$nome = $insc["Agente responsável pela inscrição - Nome completo ou Razão Social"];
+		$sql_ver = "SELECT id FROM sc_contatos WHERE nome LIKE '%$nome%'";
+		$ver = $wpdb->get_results($sql_ver,ARRAY_A);
+		if(count($ver) == 0){ //insere
+		
+	
+	$nomeartistico   =  $insc["Agente responsável pela inscrição"];
+	$localnascimento   = "";
+	$datanascimento   = "";
+	$cep   = $insc["Agente responsável pela inscrição - CEP"];
+	$numero   = $insc["Agente responsável pela inscrição - Número"];
+	$complemento   = $insc["Agente responsável pela inscrição - Complemento"];
+	$telefone1   =  $insc["Agente responsável pela inscrição - Telefone 1"];
+	$telefone2   =  $insc["Agente responsável pela inscrição - Telefone 2"];
+	$telefone3   = $insc["Agente responsável pela inscrição - Telefone Público"];
+	$email   = $insc["Agente responsável pela inscrição - Email Privado"];
+	$biografia   = addslashes("Participou da programação de Aniversário 2018 com o projeto '".$insc["3.1 - Título"]."'");
+	$area_atuacao   = $insc["Agente responsável pela inscrição - Área de Atuação"];
+	$local_atuacao   = $insc["Agente responsável pela inscrição - Área de Atuação"];
+	$acervo   = "";
+	$links   = $insc["Agente responsável pela inscrição - Site"];
+	$culturaz   = $insc["Agente responsável pela inscrição - Id"];
+	$usuario = $user->ID;
+	$hoje = date('Y-m-d');
+
+	
+	$sql_inserir = "INSERT INTO `sc_contatos` (`nome`, `nome_artistico`, `telefone1`, `nascimento`, `area`, `local`, `bio`, `origem`, `email`, `outro_contato`, `atividade`, `funcao_social`, `acervo`, `culturaz`, `foto`, `atualizacao`, `publicado`, `telefone2`, `telefone3`, `cep`, `numero`, `complemento`,`local_atuacao`,`links`,`idUsuario`) VALUES ('$nome', '$nomeartistico', '$telefone1', '$datanascimento', '$area_atuacao', '$localnascimento', '$biografia', '', '$email', '', '', '', '$acervo', '$culturaz', '', '$hoje', '1', '$telefone2', '$telefone3', '$cep', '$numero', '$complemento', '$local_atuacao','$links','$usuario')";
+
+	$ins = $wpdb->query($sql_inserir);
+		if($ins){
+			$mensagem = alerta("Contato inserido com sucesso.","success");
+		}else{
+			$mensagem = alerta("Erro. Tente novamente.","warning");
+		}
+		
+		}
+		
+		
+
+		echo "<pre>";
+		var_dump($insc);
+		echo "</pre>";
+	
+	
+}
+	
+	
+
+?>		  
+					 <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					
+				</div>
+        </div>
+		</div>
 <?php 
 break;
 case 'atualiza_hora_final': 

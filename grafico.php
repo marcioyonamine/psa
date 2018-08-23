@@ -142,10 +142,15 @@ $data = array(
              array('abril' , publico(2018,4) ),
              array('maio' , publico(2018,5) )
 
-             );     
+             );
+
+
+
+			 
 # Cria um novo objeto do tipo PHPlot com 500px de largura x 350px de altura                 
 $plot = new PHPlot(700 , 500);     
-  
+
+//$plot->SetDefaultTTFont('arial.ttf');  
 // Organiza Gráfico -----------------------------
 $plot->SetTitle(utf8_decode('Público da Cultura Santo André'));
 # Precisão de uma casa decimal
