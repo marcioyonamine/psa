@@ -58,16 +58,41 @@
 				}else{
 					for($k = 0; $k < count($rowData[0]); $k++){
 						$matriz[$indice[$k]] = $rowData[0][$k];
+					
 					}
-				}
+						}
+						$empenho = $matriz["Empenho"];
+						$ano  = $matriz["Ano Empenho"];
+						$unixTimestamp = PHPExcel_Shared_Date::ExcelToPHP($matriz["Data"]);
+						$data  =  date('Y-m-d', $unixTimestamp);
+						$ficha  = $matriz["Ficha"];
+						$projeto  = $matriz["Projeto"];
+						$v_empenho  = $matriz["Empenho2"];
+						$v_estorno  = $matriz["Estorno"];
+						$v_anulado  = $matriz["Anulado"];
+						$v_n_processado  = $matriz["Não processado"];
+						$v_processado = $matriz["Processado"];
+						$v_op  = $matriz["Valor OP"];
+						$v_op_baixado = $matriz["OP Baixada"];
+						$v_saldo = $matriz["Saldo a pagar"];
+						$n_processo = $matriz["Processo"];
+						$historico = $matriz["Histórico"];		
+						
+						$sql_ins = "INSERT INTO `sc_giap` (`id`, `empenho`, `ano`, `data`, `ficha`, `projeto`, `v_empenho`, `v_estorno`, `v_anulado`, `v_n_processado`, `v_processado`, `v_op`, `v_op_baixado`, `v_saldo`, `nProcesso`, `historico`) VALUES (NULL, '$empenho', '$ano', '$data', '$ficha', '$projeto', '$v_empenho', '$v_estorno', '$v_anulado', '$v_n_processado', '$v_processado', '$v_op', '$v_op_baixado', '$v_saldo', '$n_processo', '$historico')";
+						
+						$x = $wpdb->query($sql_ins);
+					
+					
+		
 			
 
 				
 			echo "<pre>";
 			var_dump($matriz);
 			echo "</pre>";
-			
-			
+			}
+			}
+	/*		
 
 			
 			global $wpdb;
@@ -105,14 +130,14 @@
 			echo "</pre>";
 			*/
 			
-		
+		/*
 		$edital = editais($user->ID);
 		
 		echo "var_dump da funcao edital";
 		echo "<pre>";
 		var_dump($edital);
 		echo "</pre>";
-		
+	*/	
 		?>
 			
 			
