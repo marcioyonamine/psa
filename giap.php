@@ -2,7 +2,7 @@
 
   <body>
   
-  <?php include "menu/me_inicio.php"; ?>
+  <?php //include "menu/me_inicio.php"; ?>
  
  <?php 
  if(isset($_GET['p'])){
@@ -171,11 +171,7 @@ $peds = $wpdb->get_results($sql,ARRAY_A);
 
 ?>
 
-<section id="contact" class="home-section bg-white">
-    <div class="container">
-        <div class="row">    
-        </div>
-          <div class="table-responsive">
+
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -211,10 +207,7 @@ $peds = $wpdb->get_results($sql,ARRAY_A);
 				
               </tbody>
             </table>
-          </div>
 
-		</div>
-</section>	
 
 
 <?php 
