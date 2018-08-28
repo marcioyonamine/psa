@@ -165,7 +165,7 @@
 break;
 case "lista":
 
-$sql = "SELECT DISTINCT idPedidoContratacao, idEvento, idAtividade, data, empenho, sc_contabil.nProcesso, v_empenho  FROM sc_contratacao,sc_contabil WHERE sc_contabil.nProcesso = sc_contratacao.nProcesso AND publicado = 1"; 
+$sql = "SELECT DISTINCT idPedidoContratacao, data, empenho, sc_contabil.nProcesso, v_empenho, nLiberacao  FROM sc_contratacao,sc_contabil WHERE sc_contabil.nProcesso = sc_contratacao.nProcesso AND publicado = 1 ORDER BY data DESC"; 
 
 $peds = $wpdb->get_results($sql,ARRAY_A);
 
@@ -178,7 +178,9 @@ $peds = $wpdb->get_results($sql,ARRAY_A);
                   <th>Evento/Atividade</th>
                   <th>Data</th>
                   <th>Empenho</th>
-                  <th width="20%">Processo</th>
+                  <th>Processo</th>
+                  <th>N de Liberação</th>
+
                   <th>Valor do Emepnho</th>
 				  <th></th>
 
@@ -192,10 +194,10 @@ $peds = $wpdb->get_results($sql,ARRAY_A);
 					?>
 					<tr>
 					  <td><?php echo $pedido['objeto']; ?></td>
-					  <td><?php echo $peds[$i]['data']; ?></td>
+					  <td><?php echo exibirDataBr($peds[$i]['data']); ?></td>
 					  <td><?php echo $peds[$i]['empenho']; ?></td>
 					  <td><?php echo $peds[$i]['nProcesso']; ?></td>
-					  <td><?php echo $peds[$i]['v_empenho']; ?></td>
+					  <td><?php echo $peds[$i]['nLiberacao']; ?></td>					  <td><?php echo $peds[$i]['v_empenho']; ?></td>
 					  <td>	
 
 							<?php 
