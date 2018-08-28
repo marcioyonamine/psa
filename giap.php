@@ -4,6 +4,17 @@
   
   <?php include "menu/me_inicio.php"; ?>
  
+ <?php 
+ if(isset($_GET['p'])){
+	 $p = $_GET['p'];
+ }else{
+	 $p = 'inicio';
+ }
+ 
+ switch($p){
+ case 'inicio':
+ ?>
+ 
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Importar GIAP</h1>
 
@@ -146,61 +157,72 @@
 		<?php
 		
 	}
-	
-	
-	/*		
-
-			
-			global $wpdb;
-			$json = addslashes(json_encode($matriz,JSON_UNESCAPED_UNICODE));		
-			$sql = "INSERT INTO `ava_inscricao` (`id`, `id_mapas`, `inscricao`, `edital`, `aprovado`, `descricao`) 
-			VALUES (NULL, '".$_GET['mapas']."', '".($matriz['Número'])."', '".$_GET['edital']."', '', '".$json."')";
-			$insert = $wpdb->query($sql);
-			if($insert == FALSE){
-				echo $sql."<br /><br />";
-			}else{
-				echo "Sucesso<br /><br />";
-			}
-			
-			}									
-									
-			}else{
-				echo "<h2>Nenhum arquivo foi selecionado.</h2>";	
-				
-			}	
-
-			
-			/*
-			echo "<pre>";
-			var_dump($matriz);
-			echo "</pre>";
-		
-			$json = json_encode($matriz);
-
-			echo $json;
-		
-			$json_de = json_decode($json);
-			
-			echo "<pre>";
-			var_dump($json_de);
-			echo "</pre>";
-			*/
-			
-		/*
-		$edital = editais($user->ID);
-		
-		echo "var_dump da funcao edital";
-		echo "<pre>";
-		var_dump($edital);
-		echo "</pre>";
-	*/	
 		?>
 			
 			
 			</div>	
+<?php 
+break;
+case "lista":
+
+$sql = "SELECT idPedidoContratacao, idEvento, idAtividade, data, empenho, sc_contabil.nProcesso, v_empenho  FROM sc_contratacao,sc_contabil WHERE sc_contabil.nProcesso = sc_contratacao.nProcesso AND publicado = 1"; 
+
+$peds = $wpdb->get_results($sql,ARRAY_A);
+
+?>
+
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Evento/Atividade</th>
+                  <th>Data</th>
+                  <th>Empenho</th>
+                  <th width="20%">Processo</th>
+                  <th>Valor do Emepnho</th>
+				  <th></th>
+
+				  </tr>
+              </thead>
+              <tbody>
+				<?php 
+				for($i = 0; $i < count($peds); $i++){
+					$pedido = pedido($peds[$i]['idPedidoContratacao']);
+					
+					?>
+					<tr>
+					  <td><?php echo $pedido['objeto']; ?></td>
+					  <td><?php echo $peds[$i]['data']; ?></td>
+					  <td><?php echo $peds[$i]['empenho']; ?></td>
+					  <td><?php echo $peds[$i]['nProcesso']; ?></td>
+					  <td><?php echo $peds[$i]['v_empenho']; ?></td>
+					  <td>	
+
+							<?php 
+					  
+					  ?></td>
+
+					  </tr>
+				<?php } // fim do for?>	
+				
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>	
+
+
+<?php 
+break;
+?>
+			
 		  
-		  
-  	
+ <?php } //fim da switch ?> 	
 <?php 
 include "footer.php";
 ?>
