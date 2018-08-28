@@ -165,7 +165,7 @@
 break;
 case "lista":
 
-$sql = "SELECT idPedidoContratacao, idEvento, idAtividade, data, empenho, sc_contabil.nProcesso, v_empenho  FROM sc_contratacao,sc_contabil WHERE sc_contabil.nProcesso = sc_contratacao.nProcesso AND publicado = 1"; 
+$sql = "SELECT DISTINCT idPedidoContratacao, idEvento, idAtividade, data, empenho, sc_contabil.nProcesso, v_empenho  FROM sc_contratacao,sc_contabil WHERE sc_contabil.nProcesso = sc_contratacao.nProcesso AND publicado = 1"; 
 
 $peds = $wpdb->get_results($sql,ARRAY_A);
 
