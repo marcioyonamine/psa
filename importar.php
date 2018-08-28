@@ -5,7 +5,7 @@
   <?php include "menu.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-          <h1>Importar inscrições</h1>
+          <h1>Importar GIAP</h1>
 
 			<div>
 			
@@ -91,7 +91,7 @@
 			var_dump($matriz);
 			echo "</pre>";
 			}
-			}
+	}
 	/*		
 
 			
