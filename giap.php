@@ -191,7 +191,7 @@ $peds = $wpdb->get_results($sql,ARRAY_A);
               <tbody>
 				<?php 
 				for($i = 0; $i < count($peds); $i++){
-					$pedido = pedido($peds[$i]['idPedidoContratacao']);
+					$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
 					
 					?>
 					<tr>
