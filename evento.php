@@ -898,7 +898,7 @@ if(isset($_GET['order'])){
 
 ?>
 <section id="contact" class="home-section bg-white">
-    <div class="container">
+    <div class="container" style="margin-left:0px">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Pedidos de Contratação</h1>
