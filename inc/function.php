@@ -2236,4 +2236,5 @@ function retornaInfra($idEvento){
 		}
 		return $string;
 	}
-`}
+}
+
