@@ -131,9 +131,10 @@
 						$v_op_baixado = $matriz["OP Baixada"];
 						$v_saldo = $matriz["Saldo a pagar"];
 						$n_processo = $matriz["Processo"];
-						$historico = $matriz["Histórico"];		
+						$historico = $matriz["Histórico"];
+						$hoje = date("Y-m-d H:i:s");		
 						
-						$sql_ins = "INSERT INTO `sc_contabil` (`id`, `empenho`, `ano`, `data`, `ficha`, `projeto`, `v_empenho`, `v_estorno`, `v_anulado`, `v_n_processado`, `v_processado`, `v_op`, `v_op_baixado`, `v_saldo`, `nProcesso`, `historico`) VALUES (NULL, '$empenho', '$ano', '$data', '$ficha', '$projeto', '$v_empenho', '$v_estorno', '$v_anulado', '$v_n_processado', '$v_processado', '$v_op', '$v_op_baixado', '$v_saldo', '$n_processo', '$historico')";
+						$sql_ins = "INSERT INTO `sc_contabil` (`id`, `empenho`, `ano`, `data`, `ficha`, `projeto`, `v_empenho`, `v_estorno`, `v_anulado`, `v_n_processado`, `v_processado`, `v_op`, `v_op_baixado`, `v_saldo`, `nProcesso`, `historico`, `atualizacao`) VALUES (NULL, '$empenho', '$ano', '$data', '$ficha', '$projeto', '$v_empenho', '$v_estorno', '$v_anulado', '$v_n_processado', '$v_processado', '$v_op', '$v_op_baixado', '$v_saldo', '$n_processo', '$historico','$hoje')";
 						
 						$x = $wpdb->query($sql_ins);
 				

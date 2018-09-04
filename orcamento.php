@@ -1883,6 +1883,115 @@ case "editaprograma":
 
 ?>
 
+<?php 
+break;
+case 'giap':  
+
+$sql_giap = "SELECT DISTINCT projeto, ficha, atualizacao FROM `sc_contabil` ORDER BY projeto, ficha ASC";
+$giap = $wpdb->get_results($sql_giap,ARRAY_A);
+
+$mensagem = "Atualizado em ".exibirDataBr($giap[0]['atualizacao']);
+
+
+
+?>
+
+
+
+
+
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>GIAP</h1>
+					<?php if(isset($mensagem)){echo $mensagem;}?>
+				</div>
+        </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+<tr>
+<th>Projeto</th>
+<th>Ficha</th>
+<th>Empenho</th>
+<th>Estorno</th>
+<th>Anulado</th>
+<th>Não processado</th>
+<th>Processado</th>
+<th>Ordem de Pagamento</th>
+<th>Ordem Baixado</th>
+<th>Saldo dos Empenhos</th>
+
+</tr>
+              </thead>
+              <tbody>
+<?php 
+
+
+for($i = 1; $i < count($giap); $i++){
+	$ficha = $giap[$i]['ficha'];
+	$projeto = $giap[$i]['projeto'];
+	$sql_soma = "SELECT SUM(v_op) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma = $wpdb->get_results($sql_soma,ARRAY_A);
+	
+	$sql_soma2 = "SELECT SUM(v_empenho) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma2 = $wpdb->get_results($sql_soma2,ARRAY_A);
+
+	$sql_soma3 = "SELECT SUM(v_estorno) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma3 = $wpdb->get_results($sql_soma3,ARRAY_A);	
+
+	$sql_soma4 = "SELECT SUM(v_n_processado) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma4 = $wpdb->get_results($sql_soma4,ARRAY_A);
+
+	$sql_soma5 = "SELECT SUM(v_anulado) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma5 = $wpdb->get_results($sql_soma5,ARRAY_A);	
+
+	$sql_soma6 = "SELECT SUM(v_processado) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma6 = $wpdb->get_results($sql_soma6,ARRAY_A);
+
+	$sql_soma7 = "SELECT SUM(v_op_baixado) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma7 = $wpdb->get_results($sql_soma7,ARRAY_A);	
+
+	$sql_soma8 = "SELECT SUM(v_saldo) FROM sc_contabil WHERE projeto = '$projeto' AND ficha = '$ficha'";
+	$soma8 = $wpdb->get_results($sql_soma8,ARRAY_A);	
+	
+	
+	
+	
+	
+	?>
+
+<tr>
+<td><?php echo $projeto ?></td>
+<td><?php echo $ficha ?></td>
+<td><?php echo dinheiroParaBr($soma2[0]['SUM(v_empenho)']); // empenho ?></td>
+<td><?php echo dinheiroParaBr($soma3[0]['SUM(v_estorno)']); // estorno ?></td>
+<td><?php echo dinheiroParaBr($soma5[0]['SUM(v_anulado)']); // anulado ?></td>
+<td><?php echo dinheiroParaBr($soma4[0]['SUM(v_n_processado)']); // nao processado?></td>
+<td><?php echo dinheiroParaBr($soma6[0]['SUM(v_processado)']); // processado?></td>
+<td><?php echo dinheiroParaBr($soma[0]['SUM(v_op)']); // ordem de pagamento?></td>
+<td><?php echo dinheiroParaBr($soma7[0]['SUM(v_op_baixado)']); // ordem de pagamento baixado ?></td>
+<td><?php echo dinheiroParaBr($soma8[0]['SUM(v_saldo)']); ?></td>
+
+
+
+</tr>
+
+<?php
+
+}
+
+
+
+?>	
+              </tbody>
+            </table>
+          </div>
+
+		</div>
+</section>
+
 
 
 
