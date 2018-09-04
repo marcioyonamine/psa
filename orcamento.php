@@ -1887,7 +1887,7 @@ case "editaprograma":
 break;
 case 'giap':  
 
-$sql_giap = "SELECT DISTINCT projeto, ficha, atualizacao FROM `sc_contabil` ORDER BY projeto, ficha ASC";
+$sql_giap = "SELECT DISTINCT projeto, ficha FROM `sc_contabil` ORDER BY projeto, ficha ASC";
 $giap = $wpdb->get_results($sql_giap,ARRAY_A);
 
 $mensagem = "Atualizado em ".exibirDataBr($giap[0]['atualizacao']);

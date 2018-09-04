@@ -41,6 +41,9 @@
   	  <li class="nav-item">
               <a class="nav-link" href="orcamento.php?p=listaprojeto">Projetos</a>
             </li> 
+			  	  <li class="nav-item">
+              <a class="nav-link" href="orcamento.php?p=giap">GIAP</a>
+            </li> 
 			<?php } ?>
 			</ul>
 
