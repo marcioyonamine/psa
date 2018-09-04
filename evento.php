@@ -916,7 +916,7 @@ if(isset($_GET['order'])){
 		
 		?>
 		
-    <div class="container">
+    <div class="container" style="margin-left:0px;width=1400px;" >
         <div class="row">    
         </div>
           <div class="table-responsive">
