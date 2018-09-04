@@ -897,6 +897,14 @@ if(isset($_GET['order'])){
 }
 
 ?>
+<style>
+@media (min-width: 1200px)
+.container {
+    width: 1440px;
+    max-width: 100%;
+}
+
+</style>
 <section id="contact" class="home-section bg-white">
     <div class="container" style="margin-left:0px;width:1400px !important">
         <div class="row">    
