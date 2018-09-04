@@ -1404,7 +1404,7 @@ $historico = orcamento($id_hist);
 $sql_lista = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND 'projeto' = '$projeto' ORDER BY data DESC";
 $x = $wpdb->get_results($sql_lista,ARRAY_A);
 
-echo $x;
+echo $sql_lista;
 for($i = 1; $i < count($x); $i++){
 
 
