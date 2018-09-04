@@ -2213,15 +2213,27 @@ function infraAta($idEvento){
 
 	$x['total'] = $geral;
 	return $x;
-	
-	
-	
-	
-	
-	
-	
-	
-	
+}
+
+function retornaItemInfra($id){
+	global $wpdb;
+	$sql = "SELECT nome FROM sc_infra WHERE id = '$id'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	return $x[0]['nome'];
 	
 }
 
+function retornaInfra($idEvento){
+	global $wpdb;
+	$sql = "SELECT * FROM sc_producao WHERE id_evento = '$idEvento' AND quantidade <> '0'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	$string = "";
+	if(count($x) == 0){
+		return NULL;
+	}else{
+		for($i = 0; $i < count($x); $i++){
+			$string .= retornaItemInfra($x[$i]['id_ata'])."(".$x[$i]['quantiadade'].")<br />";
+		}
+		return $string;
+	}
+`}

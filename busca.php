@@ -167,10 +167,12 @@ case "view":
 		<?php if($evento['mapas']['id'] != 0){ ?>
 		<p>CulturAZ: <a href='<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?>' ><?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?></a>
 		<?php } ?>
+		
+		
 		<?php 
-			
-			
-			
+		if(retornaInfra($_GET['id']) != NULL){
+			echo retornaInfra($_GET['id']);
+		}
 		?>
 	</div>
 	</div>
