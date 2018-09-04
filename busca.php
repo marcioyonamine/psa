@@ -191,14 +191,13 @@ case "view":
 	<div class="row">
 	<div class="col-md-offset-1 col-md-10">
 	<p><b>Pedidos Relacionados</b><br />
-	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome/Razão Social:</b> <a href="busca.php?p=view&tipo=pj&id=<?php echo $ped[$i]['idPessoa']?>" ><?php echo $ped[$i]['nome'] ?> </a>/ <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><?php echo $pedido['valor'] ?> / <b>Processo: </b><?php echo $pedido['nProcesso'] ?> 
+	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome/Razão Social:</b> <a href="busca.php?p=view&tipo=pj&id=<?php echo $ped[$i]['idPessoa']?>" ><?php echo $ped[$i]['nome'] ?> </a>/ <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><?php echo $pedido['valor'] ?> / 
 	<?php 
 	$cont = retornaContabil($pedido['nProcesso']);
 	if(count($cont > 0)){
-		echo "<br />";
 		for($k = 0; $k < count($cont);$k++){
 		?>
-		<b>Processo: </b><?php echo $cont[$k]['nProcesso']; ?> ,<b>Número da Liberação:  </b> <?php echo $pedido['nLiberacao'] ?>  , <b>Número do Empenho: </b><?php echo $cont[$k]['empenho']; ?> <br />
+		<b>Processo: </b><?php echo $cont[$k]['nProcesso']; ?>, <b>Número da Liberação:  </b> <?php echo $pedido['nLiberacao'] ?>, <b>Número do Empenho: </b><?php echo $cont[$k]['empenho']; ?> <br />
 		
 		<?php 
 		}
