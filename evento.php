@@ -1005,7 +1005,7 @@ if(isset($_GET['order'])){
 					  <td>	
 							<form method="POST" action="contratacao.php?p=editar_pj" class="form-horizontal" role="form">
 							<input type="hidden" name="editar_pj" value="<?php echo $peds[$i]['idPessoa']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pessoa">
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Ed Pessoa">
 							</form>
 							</td>
 					<?php } ?>
@@ -1013,7 +1013,7 @@ if(isset($_GET['order'])){
 					  <td>	
 							<form method="POST" action="contratacao.php?p=editar_pedido" class="form-horizontal" role="form">
 							<input type="hidden" name="editar_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pedido">
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Ed Pedido">
 							</form>
 							<?php 
 					  
