@@ -1890,7 +1890,10 @@ case 'giap':
 $sql_giap = "SELECT DISTINCT projeto, ficha FROM `sc_contabil` ORDER BY projeto, ficha ASC";
 $giap = $wpdb->get_results($sql_giap,ARRAY_A);
 
-$mensagem = "Atualizado em ".exibirDataBr($giap[0]['atualizacao']);
+$sql_msg = "SELECT DISTINCT atualizacao FROM `sc_contabil` ORDER BY projeto, ficha ASC";
+$msg = $wpdb->get_results($sql_msg,ARRAY_A);
+
+$mensagem = "Atualizado em ".exibirDataBr($msg[0]['atualizacao']);
 
 
 
