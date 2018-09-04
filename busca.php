@@ -198,7 +198,7 @@ case "view":
 		echo "<br />";
 		for($k = 0; $k < count($cont);$k++){
 		?>
-		<b>Processo: <?php echo $cont[$k]['nProcesso']; ?> </b>,<b>Número da Liberação:  </b> <?php echo $pedido['nLiberacao'] ?>  , <b>Número do Empenho: <?php echo $cont[$k]['empenho']; ?></b><br />
+		<b>Processo: </b><?php echo $cont[$k]['nProcesso']; ?> ,<b>Número da Liberação:  </b> <?php echo $pedido['nLiberacao'] ?>  , <b>Número do Empenho: </b><?php echo $cont[$k]['empenho']; ?><br />
 		
 		<?php 
 		}
