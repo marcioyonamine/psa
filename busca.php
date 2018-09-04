@@ -334,7 +334,7 @@ case "view":
 		break;	
 		case "pedido":
 		$pedido = retornaPedido($_GET['id']);
-	
+		$evento = evento($pedido['id']);
 
 	?>	
 		
@@ -362,6 +362,11 @@ case "view":
 			 echo "<pre>";
 			 var_dump($pedido);
 			 echo "</pre>";
+
+ 			 echo "<pre>";
+			 var_dump($evento);
+			 echo "</pre>";
+
 			 
 			 ?>
 	</div>
