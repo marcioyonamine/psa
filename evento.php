@@ -898,7 +898,7 @@ if(isset($_GET['order'])){
 
 ?>
 <section id="contact" class="home-section bg-white">
-    <div class="container" style="margin-left:0px">
+    <div class="container" style="margin-left:0px;width:1400px">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Pedidos de Contratação</h1>
@@ -931,6 +931,9 @@ if(isset($_GET['order'])){
                   <th><a href="?p=pedido<?php if(isset($_GET['order'])){ echo ""; }else{ echo "&order"; }  ?>">Objeto</a></th>
 				  <th>Período</th>
 				  <th>Valor</th>
+				  <th>Empenho</th>
+				  <th>OP</th>
+				  
 				  <th></th>
 				  <th></th>
 				  </tr>
@@ -959,11 +962,16 @@ if(isset($_GET['order'])){
 				for($i = 0; $i < count($peds); $i++){
 					if($peds[$i]['idEvento'] != 0 AND $peds[$i]['idEvento'] != NULL){
 						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
+						$contabil = retornaContabil($pedido['nProcesso']);
+						
+						
 					}else{
 						//$pedido = atividade($peds[$i]['idAtividade']);
 						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
 					}
 					//var_dump($pedido);
+					
+					
 					?>
 					<tr>
 					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
@@ -975,6 +983,9 @@ if(isset($_GET['order'])){
 					  <td><?php echo $pedido['objeto']; ?></td>
 					  <td><?php echo $pedido['periodo']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
+					  <td><?php if(isset($contabil[0]['empenho'])){echo $contabil[0]['empenho'] }?></td>
+					  <td><?php if(isset($contabil[0]['v_op_baixado'])){echo dinheiroParaBr($contabil[0]['v_op_baixado']) }?></td>
+					  
 					  <?php if($pedido['tipo'] == 'Pessoa Física'){ ?>
 					  <td>	
 							<form method="POST" action="contratacao.php?p=editar_pf" class="form-horizontal" role="form">
