@@ -2232,7 +2232,7 @@ function retornaInfra($idEvento){
 		return NULL;
 	}else{
 		for($i = 0; $i < count($x); $i++){
-			$string .= retornaItemInfra($x[$i]['id_ata'])."(".$x[$i]['quantiadade'].")<br />";
+			$string .= retornaItemInfra($x[$i]['id_ata'])."(".$x[$i]['quantidade'].")<br />";
 		}
 		return $string;
 	}

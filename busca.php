@@ -170,9 +170,11 @@ case "view":
 		
 		
 		<?php 
+		echo "<p>Infraestrutura:";
 		if(retornaInfra($_GET['id']) != NULL){
 			echo retornaInfra($_GET['id']);
 		}
+		echo "</p>";
 		?>
 	</div>
 	</div>
