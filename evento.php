@@ -900,7 +900,7 @@ if(isset($_GET['order'])){
 <style>
 @media (min-width: 1200px)
 .container {
-    width: 1440px;
+    width: 1440px !important;
     max-width: 100%;
 }
 
@@ -932,7 +932,6 @@ if(isset($_GET['order'])){
             <table class="table table-striped">
               <thead>
                 <tr>
-				<th>Num</th>
 
 				<th>Liberação</th>
                   <th>Pessoa</th>
@@ -983,7 +982,7 @@ if(isset($_GET['order'])){
 					
 					?>
 					<tr>
-					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
+
 					  <td><?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?></td>
 
 					  
