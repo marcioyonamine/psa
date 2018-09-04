@@ -1328,7 +1328,7 @@ $historico = orcamento($id_hist);
 				  
               </tbody>
             </table>				  
-<h3>Valores Planejados<h3>
+<h3>Valores Planejados</h3>
   <table class="table table-striped">
               <thead>
 
