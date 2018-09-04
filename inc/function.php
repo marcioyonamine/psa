@@ -1258,7 +1258,7 @@ function retornaPedido($id){
 	if($res_tipo['idEvento'] != 0){
 	
 	
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo, nLiberacao, sc_evento.dataEnvio  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo, nLiberacao, nProcesso,  sc_evento.dataEnvio  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
@@ -1346,6 +1346,7 @@ function retornaPedido($id){
 	$x['integrantes'] = $res['integrantesGrupo'];
 	$x['obs'] = $res['observacao'];
 	$x['nLiberacao'] = $res['nLiberacao'];
+	$x['nProcesso'] = $res['nProcesso'];
 	$x['dataEnvio'] = $res['dataEnvio'];
 	return $x;
 	}
@@ -2232,9 +2233,19 @@ function retornaInfra($idEvento){
 		return NULL;
 	}else{
 		for($i = 0; $i < count($x); $i++){
-			$string .= retornaItemInfra($x[$i]['id_ata'])."(".$x[$i]['quantidade'].")<br />";
+			$string .= "+ ".retornaItemInfra($x[$i]['id_ata'])."(".$x[$i]['quantidade'].")<br />";
 		}
 		return $string;
 	}
+}
+
+function retornaContabil($nProcesso){
+	global $wpdb;
+	$sql = "SELECT * FROM sc_contabil WHERE nProcesso = 'nProcesso'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	return $x;
+	
+	
+	
 }
 
