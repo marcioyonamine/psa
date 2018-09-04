@@ -333,7 +333,8 @@ case "view":
 	<?php
 		break;	
 		case "pedido":
-		$pessoa = pedido($_GET['id']);	
+		$pedido = retornaPedido($_GET['id']);
+	
 
 	?>	
 		
@@ -350,30 +351,19 @@ case "view":
 		
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-		<h2><?php echo $evento['titulo']; ?></h2>
-		<br />
-		<p>Programa : <?php echo $evento['programa']; ?> / Projeto: <?php echo $evento['projeto']; ?> <p>
-		<p>Linguagem: <?php echo $evento['linguagem']; ?></p>
-		<p>Responsavel: <?php echo $evento['responsavel']; ?></p>
-		<p>Autor: <?php echo $evento['autor']; ?></p>
-		<p>Ficha Técnica: <br /> <?php echo $evento['ficha_tecnica']; ?></p>
-		<p>Sinopse: <br /><?php echo $evento['sinopse']; ?></p>
-		<p>Período: <?php echo $evento['periodo']['legivel']; ?> / Local: <?php echo $evento['local']; ?></p>
-		<p>Faixa etária: <?php echo $evento['faixa_etaria']?></p>
-		<?php if($evento['mapas']['id'] != 0){ ?>
-		<p>CulturAZ: <a href='<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?>' ><?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?></a>
-		<?php } ?>
-		<?php 
-			echo "<pre>";
-			var_dump($evento);
-			echo "</pre>";
-			?>
+		<h2></h2>
+
 	</div>
 	</div>
 	
 			<div class="row">
 			<div class="col-md-offset-1 col-md-10">
+			 <?php 
+			 echo "<pre>";
+			 var_dump($pedido);
+			 echo "</pre>";
 			 
+			 ?>
 	</div>
 	</div>
 	<div>
