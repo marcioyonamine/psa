@@ -983,8 +983,8 @@ if(isset($_GET['order'])){
 					  <td><?php echo $pedido['objeto']; ?></td>
 					  <td><?php echo $pedido['periodo']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
-					  <td><?php if(isset($contabil[0]['empenho'])){echo $contabil[0]['empenho'] }?></td>
-					  <td><?php if(isset($contabil[0]['v_op_baixado'])){echo dinheiroParaBr($contabil[0]['v_op_baixado']) }?></td>
+					  <td><?php if(isset($contabil[0]['empenho'])){echo $contabil[0]['empenho']; }?></td>
+					  <td><?php if(isset($contabil[0]['v_op_baixado'])){echo dinheiroParaBr($contabil[0]['v_op_baixado']); }?></td>
 					  
 					  <?php if($pedido['tipo'] == 'Pessoa Física'){ ?>
 					  <td>	
