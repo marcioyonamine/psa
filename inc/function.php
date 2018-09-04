@@ -2241,7 +2241,7 @@ function retornaInfra($idEvento){
 
 function retornaContabil($nProcesso){
 	global $wpdb;
-	$sql = "SELECT * FROM sc_contabil WHERE nProcesso = 'nProcesso'";
+	$sql = "SELECT * FROM sc_contabil WHERE nProcesso LIKE '$nProcesso'";
 	$x = $wpdb->get_results($sql,ARRAY_A);
 	return $x;
 	
