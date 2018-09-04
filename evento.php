@@ -902,6 +902,7 @@ if(isset($_GET['order'])){
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Pedidos de Contratação</h1>
+					<p>Para que as informações de Empenho e Pagamento sejam visualizadas, é preciso que seja inserido o número do processo (XXXXX/2018). </p>
 					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 				</div>
         </div>
@@ -910,7 +911,7 @@ if(isset($_GET['order'])){
 
 				</div>
         </div>
-
+</div>
 		<?php 
 		// se existe pedido, listar
 		
