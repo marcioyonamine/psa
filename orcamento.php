@@ -1325,12 +1325,13 @@ $historico = orcamento($id_hist);
 			<?php } ?>
 				  </tr>
 
-<tr>
-<td colspan="6"></td>
-</tr>
-<tr>
-<td colspan="6"><h3>Valores Planejados<h3></td>
-</tr>
+				  
+              </tbody>
+            </table>				  
+<h3>Valores Planejados<h3>
+  <table class="table table-striped">
+              <thead>
+
                 <tr>
 				<th>#</th>
 			  <th>Projeto</th>
@@ -1377,9 +1378,73 @@ $historico = orcamento($id_hist);
 <td><?php echo dinheiroParaBr(($historico['total'] - $historico['contigenciado'] + $historico['descontigenciado'] + $historico['suplementado'] - $historico['anulado'] - $total_planejado ) ); ?><td>
 
 </tr>
-			
+   </tbody>
+   </table>
+
+<h3>GIAP</h3>
+            <table class="table table-striped">
+              <thead>
+<tr>
+<th>Descrição</th>
+<th>Empenho</th>
+<th>Estorno</th>
+<th>Anulado</th>
+<th>Não processado</th>
+<th>Processado</th>
+<th>Ordem de Pagamento</th>
+<th>Ordem Baixado</th>
+<th>Saldo dos Empenhos</th>
+
+</tr>
+              </thead>
+              <tbody>
+<?php 
+	$ficha = $historico['ficha'];
+	$projeto = $historico['projeto'];
+$sql_lista = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND 'projeto' = '$projeto' ORDER BY data DESC";
+$x = $wpdb->get_results($sql_lista,ARRAY_A);
+
+
+for($i = 1; $i < count($x); $i++){
+
+
+	
+	?>
+
+<tr>
+<td><?php echo $x[$i]['historico']; ?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_empenho']); // empenho ?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_estorno']); // estorno ?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_anulado']); // anulado ?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_n_processado']); // nao processado?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_processado']); // processado?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_op']); // ordem de pagamento?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_op_baixado']); // ordem de pagamento baixado ?></td>
+<td><?php echo dinheiroParaBr($x[$i]['v_saldo']); ?></td>
+
+
+
+</tr>
+
+<?php
+
+}
+
+
+
+?>	
               </tbody>
             </table>
+          </div>
+
+		</div>
+</section>   
+			
+			
+			
+			
+			
+			
 			</div>
 
 		  

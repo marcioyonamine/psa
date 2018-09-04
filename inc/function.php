@@ -1001,7 +1001,9 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'natureza' => $val['natureza']."/".$val['fonte'],	
 	'liberado' => $valor_lib,
 	'planejado' => $valor_pla,
-	'anulado' => $valor_anul
+	'anulado' => $valor_anul,
+	'projeto' =>  $val['projeto'],
+	'ficha' => $val['ficha']
 
 	);
 	
