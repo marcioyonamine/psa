@@ -57,7 +57,8 @@ require "inc/function.php";
 			defaultDate: '<?php echo date('Y-m-d'); ?>',
 			navLinks: true, // can click day/week names to navigate views
 			editable: true,
-			eventLimit: true, // allow "more" link when too many events
+			height: 'auto',
+			eventLimit: false, // allow "more" link when too many events
 			events: [
 			<?php 
 			global $wpdb;
@@ -133,14 +134,17 @@ require "inc/function.php";
 	}
 
 	#calendar {
-		max-width: 900px;
 		margin: 0 auto;
-		margin-top: 40px;
-		
+				padding-left: 270px;
 	}
+
+	.fc-scroller{
+		overflow: none !important;
+	}
+
 	@media (min-width: 992px){
 	#calendar{
-		padding-left: 150px;
+		padding-left: 270px;
 	}
 	@media print { 
 		.sidebar { display:none; } 
@@ -160,13 +164,12 @@ require "inc/function.php";
 	<div id='calendar'>
 	<?php //echo $sql_busca; ?>
 	<br /><br />
-	Legendas
-	<p style="background:red; color: white; align = center;" >Não enviados</p> 
-	<p style="background:#0275d8; color: white; align = center;" >Enviados</p> 
-	<p style="background:green; color: white; align = center;" >Publicados no CulturAZ</p> 
 	</div>
     <div class="container">
-      
+   	Legendas
+	<p style="background:red; color: white; align = center;" >Não enviados</p> 
+	<p style="background:#0275d8; color: white; align = center;" >Enviados</p> 
+	<p style="background:green; color: white; align = center;" >Publicados no CulturAZ</p>    
 		
 	<form action="?" method="GET">
 

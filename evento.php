@@ -24,7 +24,7 @@ if(isset($_POST['enviar'])){  // envia
 	$idEvento = $_SESSION['id'];
 	$hoje = date("Y-m-d H:i:s");
 	global $wpdb;
-	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje', status = '2' WHERE idEvento = '$idEvento'";
 	$upd = $wpdb->query($sql_enviar);
 	if($upd == 1){
 		atualizarAgenda($idEvento);
@@ -396,6 +396,12 @@ break;
 						</div>
 					</div>
 					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Processo Colaborativo / Projeto Interno  </label>
+							<input type="text" name="pInterno" class="form-control" id="inputSubject" />
+						</div> 
+					</div>	
+					<div class="form-group">
 						<br />
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
 						<div class="col-md-offset-2">
@@ -414,6 +420,15 @@ break;
 								<?php geraOpcaoUsuario();	?>							
 
 								</select>	
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Responsável pela Aprovação</label>
+							<select class="form-control" name="id_aprovacao" id="inputSubject" >
+								<option value="0"></option>
+								<?php geraOpcaoUsuario()	?>						
+							</select>	
 						</div>
 					</div>
 
@@ -542,6 +557,8 @@ case "editar":
 		$n_agentes = $_POST['n_agentes'];
 		$n_agentes_abc = $_POST['n_agentes_abc'];
 		$inscricao = $_POST['inscricao'];
+		$p_interno = addslashes($_POST['pInterno']);
+		$id_aprovacao = $_POST['id_aprovacao'];
 		
 		
 
@@ -565,8 +582,8 @@ case "editar":
 
 	// Inserir evento
 	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao')";		
+		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao`, `pInterno` , `idRespAprovacao`, `status` ) 
+		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao','$pInterno', '$id_aprovacao','1')";		
 		$ins = $wpdb->query($sql);
 		if($ins){
 			$mensagem = "Inserido com sucesso";
@@ -607,6 +624,8 @@ case "editar":
 		`cidade` = '$outra_cidade',
 		`n_agentes` = '$n_agentes',
 		`n_agentes_abc` = '$n_agentes_abc',
+		`pInterno` = '$p_interno',
+		`idRespAprovacao` = '$id_aprovacao',
 		`inscricao` = '$inscricao'
 		
 		WHERE `idEvento` = '$atualizar';
@@ -715,6 +734,12 @@ case "editar":
 						</div>
 					</div>
 					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Processo Colaborativo / Projeto Interno  </label>
+							<input type="text" name="pInterno" class="form-control" id="inputSubject" value="<?php echo $evento['pInterno']; ?>"/>
+						</div> 
+					</div>					
+					<div class="form-group">
 						<br />
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
 						<div class="col-md-offset-2">
@@ -736,6 +761,16 @@ case "editar":
 								</select>	
 						</div>
 					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Responsável pela Aprovação</label>
+							<select class="form-control" name="id_aprovacao" id="inputSubject" >
+								<option value="0"></option>
+								<?php geraOpcaoUsuario($evento['idRespAprovacao'])	?>						
+							</select>	
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Autor*</label>

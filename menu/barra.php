@@ -20,11 +20,11 @@
             <a class="nav-link" href="#">Help</a>
           </li> -->
 		</ul>
-        <form class="form-inline mt-2 mt-md-0">
+        <form class="form-inline mt-2 mt-md-0" method="POST" action="busca.php?p=busca" >
 		   <a class="navbar-brand" style="color:white;" > Olá, <?php echo $user->display_name; ?></a>
         		
-        <!--  <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+         <input class="form-control mr-sm-2" type="text" placeholder="Busca" name="busca">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Busca</button>
         </form>
       </div>
     </nav>

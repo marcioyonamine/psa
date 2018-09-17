@@ -489,6 +489,13 @@ function evento($id){
 	}else{
 		$usercon = "";
 	}
+	$aprovacao = get_userdata($res['idRespAprovacao']);
+	if($aprovacao != NULL){
+		$user_aprovacao = $aprovacao->first_name." ".$aprovacao->last_name;
+	}else{
+		$user_aprovacao = "";
+	}
+	
 	$etaria = tipo($res['faixaEtaria']);
 	$periodo = periodo($res['idEvento']);
 	$status = retornaStatus($res['idEvento']);
@@ -519,6 +526,7 @@ function evento($id){
 		'planejamento' => $res['planejamento'],
 		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
 		'tipo' => $tipo_evento['tipo'],
+		'aprovacao' => $user_aprovacao,
 		'dataEnvio' => $res['dataEnvio']
 	);
 
@@ -1575,6 +1583,7 @@ function verificaEvento($idEvento){
 		Linguagem
 		Tipo de Evento
 		Responsável
+		Aprovação
 		Autor
 		Classificação
 		Sinopse
@@ -1634,6 +1643,12 @@ function verificaEvento($idEvento){
 		$r++;	
 	}
 
+	if($evento['aprovacao'] == "" OR $evento['aprovacao'] == ""){
+		$relatorio .= "O evento não possui indicação de pessoa responsável pela aprovação.<br />";
+		$r++;	
+	}
+	
+	
 	if($evento['autor'] == "" OR $evento['autor'] == ""){
 		$relatorio .= "O evento não possui um autor.<br />";
 		$r++;	

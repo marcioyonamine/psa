@@ -1,0 +1,108 @@
+[ Evento ]
+
++ Expectativa de Público (INT)
++ Vistoria no local, data e presentes (LONGTEXT)
++ Condições Meteorológica (API) ?
+
+[ Comunicação ]
+
++ Inserir CulturAZ (Bool)
++ Reunião de Planejamento (LONGTEXT)
++ Públic Alvo (VARCHAR 120)
++ Estratégia de Comunicação Proposta (LONGTEXT)
++ Parceiros Potenciais Multiplicadores (LONGTEXT)
++ Release (BOOL)
++ Arte Whatsapp (BOOL)
++ Arte Facebook (BOOL)
++ Faixa (BOOL)
++ Cartazes (Quantidade)
++ Filipetas (Quantidade)
++ Locução (BOOL)
++ Roteiro de Locução (LONGTEXT)
++ Banner
++ Testeira
++ Saia
++ Fundo de Palco
+
+[ Infra-estrutura ]
+
++ Rádio HT´s
++ Camarim
++ Marmitex Equipe
++ Lanche Equipe
++ Coffee Break
++ Seguranças
+
+[ Apoio Institucional ]
+
++ Agendamento do espaço
++ Ambulância no Local do Evento (SS - SAMU)
++ Posto de Atendimento (SS - Samu)
++ Ronda no local do evento (GCM - Guarda)
++ Monitoramento do trânsito (SMU - Trânsito)
++ Fechamento de via (SMU - Trânsito)
++ Transporte Público Extra (SM - Trânsito)
++ Controle de Ruídos (SEMASA - Ruídos)
++ Varrição do Espaço (SEMASA - Varrição)
++ Solicitação de Caixas com Água (SEMASA - Água)
++ Solicitação Caminhão Pipa Local (SEMASA - Pipa)
++ Gerador (SMSU)
++ Grafitagem (SMSU)
++ Eletricista (SMSU)
++ Outros (SMSU)
++ Ronda no Local do Evento (PM 41 BPM)
++ Autorização para Uso de Parques (SMA - Dpav)
++ Controle de Ambulantes (CRAISA)
++ Alimentação de Camarim (CRAISA)
++ Termo de Ciência (ECAD)
++ Formulário Lista da Execução (ECAD)
++ Apoio Defesa Cívil
++ AVCB - Bombeiro
+
+ 
+
+
+http://servicos.cptec.inpe.br/XML/cidade/7dias/4704/previsao.xml (santo andré)
+http://servicos.cptec.inpe.br/XML/cidade/7dias/-23.7787867/-46.314059/previsaoLatLon.xml (paranapiacaba) -23.7787867,-46.314059
+
+Sigla	Descrição
+ec	Encoberto com Chuvas Isoladas
+ci	Chuvas Isoladas
+c	Chuva
+in	Instável
+pp	Poss. de Pancadas de Chuva
+cm	Chuva pela Manhã
+cn	Chuva a Noite
+pt	Pancadas de Chuva a Tarde
+pm	Pancadas de Chuva pela Manhã
+np	Nublado e Pancadas de Chuva
+pc	Pancadas de Chuva
+pn	Parcialmente Nublado
+cv	Chuvisco
+ch	Chuvoso
+t	Tempestade
+ps	Predomínio de Sol
+e	Encoberto
+n	Nublado
+cl	Céu Claro
+nv	Nevoeiro
+g	Geada
+ne	Neve
+nd	Não Definido
+pnt	Pancadas de Chuva a Noite
+psc	Possibilidade de Chuva
+pcm	Possibilidade de Chuva pela Manhã
+pct	Possibilidade de Chuva a Tarde
+pcn	Possibilidade de Chuva a Noite
+npt	Nublado com Pancadas a Tarde
+npn	Nublado com Pancadas a Noite
+ncn	Nublado com Poss. de Chuva a Noite
+nct	Nublado com Poss. de Chuva a Tarde
+ncm	Nubl. c/ Poss. de Chuva pela Manhã
+npm	Nublado com Pancadas pela Manhã
+npp	Nublado com Possibilidade de Chuva
+vn	Variação de Nebulosidade
+ct	Chuva a Tarde
+ppn	Poss. de Panc. de Chuva a Noite
+ppt	Poss. de Panc. de Chuva a Tarde
+ppm	Poss. de Panc. de Chuva pela Manhã

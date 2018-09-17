@@ -46,7 +46,7 @@
               <a class="nav-link" href="producao.php">Infraestrutura</a>
             </li>
 	<li class="nav-item">
-		<a class="nav-link" href="enviar.php">Enviar</a>
+		<a class="nav-link" href="enviar.php">Status</a>
    </li>
 
 			</ul>
