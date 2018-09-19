@@ -9,6 +9,10 @@
 
 		  <?php //echo exibeHoje();?>
 <?php 
+	$dias = opcaoDados("lim_dias",0);
+$hoje = somarDatas(date('Y-m-d'),$dias['limite']);
+echo $hoje;
+/*
 function ultimoDiaMes($m,$y){
 
 	return $y."-".$m."-".cal_days_in_month(CAL_GREGORIAN, $m , $y);

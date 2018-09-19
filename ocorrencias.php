@@ -12,7 +12,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu/me_edicao.php"; ?>
+  <?php include "menu/me_evento.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 

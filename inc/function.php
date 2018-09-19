@@ -496,9 +496,40 @@ function evento($id){
 		$user_aprovacao = "";
 	}
 	
+	
 	$etaria = tipo($res['faixaEtaria']);
 	$periodo = periodo($res['idEvento']);
-	$status = retornaStatus($res['idEvento']);
+	
+	switch($res['status']){
+		case 1:
+			$status = "Rascunho";
+		break;
+
+		case 2:
+			$status = "Planejado";
+		break;
+
+		case 3:
+			$status = "Aprovado";
+		break;
+
+		case 4:
+			$status = "Publicado Comunicação/Mapas";
+		break;
+		
+		case 5:
+			$status = "Cancelado";
+		break;
+
+		default:
+			$status = "Não definido. Comunicar ao administrador do sistema.";	
+		break;
+	}
+	
+	//$status = retornaStatus($res['idEvento']);
+	
+	
+	
 	$local = retornaLocais($id);
 	
 	
@@ -514,7 +545,7 @@ function evento($id){
 		'ficha_tecnica' => $res['fichaTecnica'],
 		'sinopse' => $res['sinopse'],
 		'release' => $res['releaseCom'],
-		'status' => $status['status'],
+		'status' => $status,
 		'usuario' => '',
 		'sub' => '',
 		'envio' => '',
@@ -1665,6 +1696,16 @@ function verificaEvento($idEvento){
 		$r++;	
 	}
 
+	// Trava de data
+	$periodo = periodo($idEvento);
+	$dias = opcaoDados("lim_dias",0);
+	$hoje30 = somarDatas(date('Y-m-d'),$dias['limite']);
+	
+
+
+	
+	
+	
 	/*
 	if($evento['artista_local'] == 0){
 		$relatorio .= "É preciso informar a origem do artista (local).<br />";
@@ -1699,6 +1740,12 @@ function verificaEvento($idEvento){
 				$r++;
 			} 
 		}
+			echo $hoje30." - ".$periodo['inicio'];
+
+		if(strtotime($hoje30) > strtotime($periodo['inicio'])){
+			$relatorio .= "O início do evento está a menos de ".$dias['limite']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
+			$r++;	
+		}
 	}
 
 	$pedidos = listaPedidos($idEvento,'evento');	
@@ -1716,8 +1763,9 @@ function verificaEvento($idEvento){
 			}
 		}		
 		
-		
-		
+	
+
+	
 		
 		
 		
@@ -2266,3 +2314,27 @@ function retornaContabil($nProcesso){
 	
 }
 
+
+function geraCampo($tipo,$nome,$titulo,$valor = ""){
+
+	switch($tipo){
+		case "text":
+			echo "<label>".$titulo."</label>";
+			echo "<input type='text' name='".$nome."' class='form-control' maxlength='120' id='inputSubject' placeholder='' value='".$valor."'/>";	
+			echo "<br /><br />";
+		break;
+
+		case "textarea":
+			echo "<label>".$titulo."</label>";
+			echo '<textarea name="'.$nome.'" class="form-control" rows="10" placeholder="">'.$valor.'</textarea>';
+			echo "<br /><br />";
+		break;
+
+		case "check":
+			echo '<input type="checkbox" name="'.$nome.'"/> '.$titulo;
+			echo "<br /><br />";
+		break;
+	}
+}
+
+function insereProducao($id_lista)

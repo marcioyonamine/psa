@@ -1,14 +1,13 @@
 [ Evento ]
-
++ Públic Alvo (VARCHAR 120)
 + Expectativa de Público (INT)
 + Vistoria no local, data e presentes (LONGTEXT)
 + Condições Meteorológica (API) ?
 
 [ Comunicação ]
-
 + Inserir CulturAZ (Bool)
++ Home Site da Prefeitura
 + Reunião de Planejamento (LONGTEXT)
-+ Públic Alvo (VARCHAR 120)
 + Estratégia de Comunicação Proposta (LONGTEXT)
 + Parceiros Potenciais Multiplicadores (LONGTEXT)
 + Release (BOOL)
@@ -23,8 +22,11 @@
 + Testeira
 + Saia
 + Fundo de Palco
+ 
 
 [ Infra-estrutura ]
+
+{"descricao":"","tipo":"text","nome":""}
 
 + Rádio HT´s
 + Camarim

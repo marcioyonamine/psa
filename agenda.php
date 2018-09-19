@@ -97,7 +97,35 @@ require "inc/function.php";
 				
 			}
 			
-			$sql_busca = "SELECT sc_evento.idEvento,nomeEvento,data,hora,mapas,dataEnvio,idLocal FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento $aniversario $linguagem $local $projeto";
+			if(isset($_GET['status'])){
+				switch($_GET['status']){
+					case 1:
+						$sql_status = " AND status = '2' ";
+					break;
+					
+					case 2:
+						$sql_status = " AND status = '3' ";
+
+					break;
+					
+					case 4:
+						$sql_status = " AND status = '4' ";
+					
+					break;
+					
+					default:
+						$sql_status = "";
+					break;
+				}
+				
+				
+			}else{
+				$sql_status = "";
+			}
+			
+			
+			
+			$sql_busca = "SELECT sc_evento.idEvento,nomeEvento,data,hora,mapas,dataEnvio,idLocal,status FROM sc_agenda, sc_evento WHERE sc_evento.idEvento = sc_agenda.idEvento AND dataEnvio IS NOT NULL $aniversario $linguagem $local $projeto $sql_status" ;
 			$res = $wpdb->get_results($sql_busca,ARRAY_A);
 			for($i = 0; $i < count($res); $i++){
 				$local = tipo($res[$i]['idLocal']);
@@ -108,10 +136,15 @@ require "inc/function.php";
 				echo "{title: '".$title."',";
 				echo "start: '".$data."T".$hora."',";
 				echo " url:'busca.php?p=view&tipo=evento&id=".$res[$i]['idEvento']."'";	
-				if($res[$i]['dataEnvio'] == NULL){
+				if($res[$i]['status'] == 2){
 					echo " , backgroundColor: 'red'";
-				}else
-				if($res[$i]['mapas'] != 0){
+				}
+				if($res[$i]['status'] == 3){
+					echo " , backgroundColor: 'blue'";
+				}
+				
+				
+				if($res[$i]['status'] == 4){
 					echo " , backgroundColor: 'green'";	
 				}
 				echo "},";
@@ -165,37 +198,7 @@ require "inc/function.php";
 	<?php //echo $sql_busca; ?>
 	<br /><br />
 	</div>
-    <div class="container">
-   	Legendas
-	<p style="background:red; color: white; align = center;" >Não enviados</p> 
-	<p style="background:#0275d8; color: white; align = center;" >Enviados</p> 
-	<p style="background:green; color: white; align = center;" >Publicados no CulturAZ</p>    
-		
-	<form action="?" method="GET">
-
-			<label><center>Local</center></label>
-			<select class="form-control" name="local" id="inputSubject" >
-			<option value="0">Todos os locais</option>
-			<?php geraTipoOpcao("local",$_GET['local']) ?>
-			</select>
-<br /><br />
-			<label><center>Linguagem</center></label>
-			<select class="form-control" name="linguagem" id="inputSubject" >
-			<option value="0">Todas as linguagens</option>
-			<?php geraTipoOpcao("linguagens",$_GET['linguagem']) ?>
-			</select>
-<br /><br />
-			<label><center>Projeto</center></label>
-			<select class="form-control" name="projeto" id="inputSubject" >
-			<option value="0">Todos os projetos</option>
-			<?php geraTipoOpcao("projeto",$_GET['projeto']) ?>
-			</select>
-<br /><br />
-<input type="submit" class="btn btn-theme btn-md btn-block" name="filtro" value="Aplicar filtro" />
-</form>  	
-	
-		</div>
-       
+ 
 
 	
 <?php 
