@@ -10,7 +10,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu/me_producao.php"; ?>
+  <?php include "menu/me_comunicacao.php"; ?>
       <link href="css/jquery-ui.css" rel="stylesheet">
  <script src="js/jquery-ui.js"></script>
  <script src="js/mask.js"></script>
@@ -41,7 +41,7 @@ case "inicio":
     <div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h1>Produção - Resumo</h1>
+					<h1>Comunicação</h1>
 					<h2></h2>
 					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 				</div>
@@ -83,13 +83,7 @@ case "inicio":
 				  </tr>
               </thead>
               <tbody>
-<?php 
-$infra = infraAta($_SESSION['id']);
-echo "<pre>";
-var_dump($infra);
-echo "</pre>";
 
- ?>
               </tbody>
             </table>
 			<br />
@@ -131,97 +125,96 @@ echo "</pre>";
 
 <?php 
 break;	 
-case "infraestrutura": //Lista as contratações
-
-if(isset($_SESSION['idPessoa'])){
-	unset($_SESSION['idPessoa']);
-	unset($_SESSION['tipo']);
-}
-
-
-
-if($_SESSION['entidade'] == 'evento'){
-	$e = evento($_SESSION['id']);
-	$n = $e['titulo'];
-}else{
-	$e = atividade($_SESSION['id']);
-	$n = $e['titulo'];
-}
-
-
-
-if(isset($_POST['prod'])){
-
-	foreach($_POST as $post=>$valor){
-		if($post != 'prod'){
-			insereAta($_SESSION['id'],substr($post,3),dinheiroDeBr($valor));
-		}	
+case "agenda": //Lista as contratações
+$mensagem = "";
+if(isset($_POST['gerar'])){
+	if($_POST['inicio'] == ""){
+		$mensagem .= alerta("É preciso inserir uma data inicial","warning");
 	}
+
+	if($_POST['fim'] == ""){
+		$mensagem .= alerta("É preciso inserir uma data final","warning");
+	}
+	
+	if($_POST['inicio'] != "" AND $_POST['fim'] != ""){
+		$sql = "SELECT DISTINCT idEvento FROM sc_agenda WHERE data >= '".exibirDataMysql($_POST['inicio'])."' AND data <= '".exibirDataMysql($_POST['fim'])."'  ORDER BY data,hora ASC";
+		$id_evento = $wpdb->get_results($sql,ARRAY_A);
+		
+		
+		
+	}
+	
+	
+	
 }
- 
- 
+
 ?>
+	<script type="text/javascript">
+	$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+</script>
 
-<section id="contact" class="home-section bg-white">
+
+
+ <section id="inserir" class="home-section bg-white">
     <div class="container">
-        <div class="row">    
-				<div class="col-md-offset-2 col-md-8">
-					<h1>Infraestrutura</h1>
-					<h2><?php echo $n;?></h2>
-					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
-				</div>
-        </div>
-		<?php 
-		// se existe pedido, listar
-		$total = 0;
-		$sql = "SELECT * FROM sc_ata ORDER BY cod";
-		$peds = $wpdb->get_results($sql,ARRAY_A);
-		?>
-</div>
-</section>		
-<section id="contact" class="home-section bg-white">
-    <div class="container">
-        <div class="row">    
-        </div>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Cód</th>
-                  <th>Infra</th>
-                  <th>Descrição</th>
-                  <th>Valor/Diária</th>
-				  <th width='5%'>Qde</th>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
 
-				  </tr>
-              </thead>
-              <tbody>
-			<form method="POST" action="?p=infraestrutura" class="form-horizontal" role="form">
-				<?php 
-				for($i = 0; $i < count($peds); $i++){
-					?>
-					<tr>
-					  <td><?php echo $peds[$i]['cod']; ?></td>
-					  <td><?php echo $peds[$i]['nome']; ?></td>
-					  <td><?php echo $peds[$i]['descricao']; ?></td>
-					  <td><?php echo dinheiroParaBr($peds[$i]['valor_diaria']); ?></td>
-					<td><input type="text" name="id_<?php echo $peds[$i]['id']; ?>" value="<?php echo recAta($_SESSION['id'],$peds[$i]['id']); ?>" ></td>
-					<?php $total = $total + ($peds[$i]['valor_diaria'] * recAta($_SESSION['id'],$peds[$i]['id']));?>
-					  </tr>
-				<?php } // fim do for?>	
-				<tr>
-				<td></td>
-				<td>Total:</td>
-				<td><?php echo dinheiroParaBr($total);?></td>
-				<td></td>
-				<td>
-				<input type="hidden" name="prod">
-				<input type="submit" class="btn btn-theme btn-sm btn-block" value="Salvar"></form></td></tr>
-              </tbody>
-            </table>
-          </div>
+                    <h3>Agenda do Prefeito</h3>
+                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
 
+			</div>
+		</div> 
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="?p=agenda" class="form-horizontal" role="form">
+
+					<div class="row">
+						<div class="col-6">
+							<label>Data Inicial</label>
+							<input type="text" class="form-control calendario" name="inicio"> 
+						</div>
+						<div class="col-6">
+							<label>Data Final</label>
+							<input type="text" class="form-control calendario" name="fim"> 
+						</div>
+					</div>	
+					<br />
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="gerar" value="1" />
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gerar Agenda do Prefeito">
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
+		<div class="row">
+		<?php 
+		if(isset($id_evento)){
+			for($i = 0; $i < count($id_evento); $i++){
+				$evento = evento($id_evento[$i]['idEvento']);
+				//echo "<pre>";
+				//echo var_dump($evento);
+				//echo "</pre>";
+				
+				
+				echo "<li>".$evento['titulo']." - ".$evento['periodo']['legivel']." - ".$evento['local']."</li>";		
+				
+			}
+			
+		}
+		?>
+		
+		</div>
+	</div>
 </section>		
 
 <?php 

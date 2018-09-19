@@ -1740,7 +1740,7 @@ function verificaEvento($idEvento){
 				$r++;
 			} 
 		}
-			echo $hoje30." - ".$periodo['inicio'];
+			//echo $hoje30." - ".$periodo['inicio'];
 
 		if(strtotime($hoje30) > strtotime($periodo['inicio'])){
 			$relatorio .= "O início do evento está a menos de ".$dias['limite']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
@@ -2331,10 +2331,42 @@ function geraCampo($tipo,$nome,$titulo,$valor = ""){
 		break;
 
 		case "check":
-			echo '<input type="checkbox" name="'.$nome.'"/> '.$titulo;
+			if($valor == 'on'){
+				$check = ' checked ';
+			}else{
+				$check = '';
+			}	
+		
+			echo '<input type="checkbox" name="'.$nome.'" '.$check.' /> '.$titulo;
 			echo "<br /><br />";
 		break;
 	}
 }
 
-function insereProducao($id_lista)
+function insereProducao($campo,$valor,$idEvento){
+	// verifica se existe 
+	global $wpdb;
+	$sql_ver = "SELECT id FROM sc_producao_ext WHERE id_lista_producao = '$campo' AND id_evento = '$idEvento'";
+	$x = $wpdb->get_results($sql_ver,ARRAY_A);
+	
+	if(count($x) > 0){ //se existe, atualiza
+		$sql_upd = "UPDATE sc_producao_ext SET valor = '$valor' WHERE id = '".$x[0]['id']."'";
+		$wpdb->query($sql_upd);	
+	}else{ // se não, insere
+		$sql_ins = "INSERT INTO `sc_producao_ext` (`id`, `id_lista_producao`, `id_evento`, `valor`) VALUES (NULL, '$campo', '$idEvento', '$valor')";
+		$wpdb->query($sql_ins);
+	}
+}
+
+function recuperaProducao($campo,$idEvento){
+	global $wpdb;
+	$sql = "SELECT valor FROM sc_producao_ext WHERE id_lista_producao = '$campo' AND id_evento = '$idEvento'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	if(count($x) > 0){
+		return $x[0]['valor'];
+	}else{
+		return "";	
+	}
+	
+}
+

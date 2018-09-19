@@ -12,40 +12,26 @@
 		</ul>
 	
 
-		<?php 
-		if((isset($_GET['p']) AND $_GET['p'] == 'editar') OR isset($_SESSION['id'])){
-		
-		?>
+
 		  <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link" href="<?php echo $_SESSION['entidade']; ?>.php?p=editar">Voltar</a>
             </li>
 
 			<li class="nav-item">
-              <a class="nav-link" href="producao.php?p=inicio">Resumo</a>
+              <a class="nav-link" href="comunicacao.php?p=agenda">Agenda do Prefeito</a>
             </li>			
 			<li class="nav-item">
-              <a class="nav-link" href="producao.php?p=infraestrutura">Infraestrutura ATA</a>
+              <a class="nav-link" href="comunicacao.php?p=revisao">Revisão de Sinopses</a>
             </li>
 
 			<li class="nav-item">
-              <a class="nav-link" href="producao.php?p=infra">Infraestrutura</a>
+              <a class="nav-link" href="comunicacao.php?p=material">Relatório de Pedido de Material Gráfico</a>
             </li>
-			<li class="nav-item">
-              <a class="nav-link" href="producao.php?p=comunicacao">Comunicação</a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="producao.php?p=apoio">Apoio Institucional</a>
-            </li>
-			<li class="nav-item">
-              <a class="nav-link" href="">Termo de Responsabilidade (download)</a>
-            </li>			
 			
 			</ul>
 
-		  <?php 
-		}
-		?>
+
 
 
 

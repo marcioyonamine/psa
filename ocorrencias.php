@@ -399,7 +399,7 @@ $(function() {
 break;
 case "listar":
 
-var_dump($_SESSION);
+
 
 if(isset($_POST['apagar'])){
 	global $wpdb;

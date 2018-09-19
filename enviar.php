@@ -70,9 +70,11 @@ $evento = evento($_SESSION['id']);
 			
 			$evento = evento($_SESSION['id']);
 			?>
+<hr>			
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<h3>Dados do Evento</h3>
+			<br />
 			<p>Programa: <?php echo $evento['programa']; ?></p>
 			<p>Projeto: <?php echo $evento['projeto']; ?></p>
 			<p>Linguagem principal: <?php echo $evento['linguagem']; ?></p>
@@ -99,10 +101,79 @@ $evento = evento($_SESSION['id']);
 				echo "Não há ocorrências cadastradas.";
 				
 			}
+			
+			
 
-
+			
+			
+			
 			//echo $evento['']; ?></p>
-			<p>Arquivos:<br /> <?php $arquivo = listaArquivos("evento",$_SESSION['id']); 
+			<hr>
+			<h3>Pedidos de Contratação</h3>
+				<?php 
+		$ped = listaPedidos($_SESSION['id'],'evento');
+		//var_dump($ped);
+		for($i = 0; $i < count($ped); $i++){
+			$pedido = retornaPedido($ped[$i]['idPedidoContratacao']);
+			?>
+	<div class="row">
+	<div class="col-md-offset-1 col-md-10">
+	<p><br />
+	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome/Razão Social:</b> <a href="busca.php?p=view&tipo=pj&id=<?php echo $ped[$i]['idPessoa']?>" ><?php echo $ped[$i]['nome'] ?> </a>/ <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><a style="text-decoration: underline;"><?php echo $pedido['valor'] ?></a>  
+	<?php 
+	$cont = retornaContabil($pedido['nProcesso']);
+	if(count($cont > 0)){
+		for($k = 0; $k < count($cont);$k++){
+		?>
+		/ <b>Processo: </b><?php echo $cont[$k]['nProcesso']; ?>/ <b>Número da Liberação:  </b> <?php echo $pedido['nLiberacao'] ?>/ <b>Número do Empenho: </b><?php echo $cont[$k]['empenho']; ?> / <b>Ordem de Pagamento: </b><?php echo dinheiroParaBr($cont[$k]['v_op_baixado']); ?><br />
+		
+		<?php 
+		}
+	}
+	
+	?>
+	
+	
+	</li>
+	
+	
+		<?php //var_dump($ped); ?>	
+		<?php } ?>
+			
+			<hr>
+			<h3>Infraestrutura ATA</h3>
+							<?php 
+
+		if(retornaInfra($_SESSION['id']) != NULL){
+			echo retornaInfra($_SESSION['id']);
+			echo "</p>";
+
+		}
+
+		$valor = infraAta($_SESSION['id']);
+
+		?>
+		 <br />
+					<?php 
+					for($i = 0; $i < count($valor) - 1; $i++){
+					?>
+					<?php if($valor[$i]['total'] != 0){ ?>
+					<p><?php echo $valor[$i]['razao_social']?> : <?php echo dinheiroParaBr($valor[$i]['total']); ?> </p>
+					<?php } ?>
+
+					<?php	
+					}
+					?>	
+		 Total:<a style="text-decoration: underline;"><?php echo dinheiroParaBr($valor['total']);?> </a>
+			<hr>
+			<h3>Produção</h3>
+
+			<hr>
+			<h3>Comunicação</h3>
+			
+		 <hr>
+			<h3>Arquivos</h3>
+			<br /> <?php $arquivo = listaArquivos("evento",$_SESSION['id']); 
 		
 			for($i = 0; $i < count($arquivo); $i++){
 				echo "<a href='upload/".$arquivo[$i]['arquivo']."' target='_blank' >".$arquivo[$i]['arquivo']."</a><br />";	
@@ -117,28 +188,7 @@ $evento = evento($_SESSION['id']);
 		</div>  
 		
 
-		<?php /*
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			<h3>Dados de Contratação</h3>
-			<p>Programa: <?php echo $evento['']; ?></p>
-			<p>Projeto: <?php echo $evento['']; ?></p>
-			<p>Linguagem principal: <?php echo $evento['']; ?></p>
-			<p>Tipo de evento: <?php echo $evento['']; ?></p>
-			<p>Responsável: <?php echo $evento['']; ?></p>
-			<p>Autor/Artista: <?php echo $evento['']; ?></p>
-			<p>Ficha técnica: <?php echo $evento['']; ?></p>
-			<p>Classificação etária: <?php echo $evento['']; ?></p>
-			<p>Sinopse: <?php echo $evento['']; ?></p>
-			<p>Release: <?php echo $evento['']; ?></p>
-			<p>Links: <?php echo $evento['']; ?></p>
-			<p>Ocorrências: <?php echo $evento['']; ?></p>
-			<p>Arquivos: <?php echo $evento['']; ?></p>
-	
-			</div>
-		</div>  	
-		
-		*/	?>
+<hr>
 		<br /><br />
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
