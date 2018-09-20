@@ -57,7 +57,7 @@ require "inc/function.php";
 			defaultDate: '<?php echo date('Y-m-d'); ?>',
 			navLinks: true, // can click day/week names to navigate views
 			editable: true,
-			eventLimit: true, // allow "more" link when too many events
+			eventLimit: false, // allow "more" link when too many events
 			events: [
 			<?php 
 			global $wpdb;
@@ -133,7 +133,6 @@ require "inc/function.php";
 	}
 
 	#calendar {
-		max-width: 900px;
 		margin: 0 auto;
 		margin-top: 40px;
 		
