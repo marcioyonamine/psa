@@ -2370,3 +2370,14 @@ function recuperaProducao($campo,$idEvento){
 	
 }
 
+function chamaAPI($url,$data){
+	$get_addr = $url.'?'.http_build_query($data);
+	$ch = curl_init($get_addr);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	$page = curl_exec($ch);
+	$evento = json_decode($page,true);
+	return $evento;
+	echo $get_addr;
+}
+
+

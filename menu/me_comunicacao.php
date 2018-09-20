@@ -19,8 +19,12 @@
             </li>
 
 			<li class="nav-item">
-              <a class="nav-link" href="comunicacao.php?p=agenda">Agenda do Prefeito</a>
+              <a class="nav-link" href="comunicacao.php?p=agenda">Agenda do Prefeito (Bartira)</a>
             </li>			
+			<li class="nav-item">
+              <a class="nav-link" href="comunicacao.php?p=agenda_culturaz">Agenda do Prefeito (CulturAZ)</a>
+            </li>			
+
 			<li class="nav-item">
               <a class="nav-link" href="comunicacao.php?p=revisao">Revisão de Sinopses</a>
             </li>
