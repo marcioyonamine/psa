@@ -26,6 +26,8 @@ $funcao = $_POST['funcao'];
 $cr = $_POST['cr'];
 $chave01 = $_POST['chave01'];
 $chave02 = $_POST['chave02'];
+$chave01est = $_POST['chave01est'];
+$chave02est = $_POST['chave02est'];
 $idMapas = $_POST['idMapas'];
 $telefone = $_POST['telefone'];
 	
@@ -36,6 +38,8 @@ $telefone = $_POST['telefone'];
 		'funcao' => $funcao,
 		'chave01' => $chave01,
 		'chave02' => $chave02,
+		'chave01est' => $chave01est,
+		'chave02est' => $chave02est,
 		'idMapas' => $idMapas,
 		'telefone' => $telefone
 	);
@@ -119,16 +123,29 @@ $meta = metausuario($user->ID);
 					<br />	
 					<div class="row">
 						<div class="col-12">
-							<label>Mapas Chave 01</label>
+							<label>CulturAZ Chave 01</label>
  <input type="text" name="chave01" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave01'])){echo $meta['chave01'];} ?>"/>
 						</div>
 					</div>
 					<br />					<div class="row">
 						<div class="col-12">
-							<label>Mapas Chave 02</label>
+							<label>CulturAZ Chave 02</label>
 							<input type="text" name="chave02" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave02'])){echo $meta['chave02'];} ?>" />
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-12">
+							<label>Estado Chave 01</label>
+ <input type="text" name="chave01est" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave01est'])){echo $meta['chave01est'];} ?>"/>
+						</div>
+					</div>
+					<br />					<div class="row">
+						<div class="col-12">
+							<label>Estado Chave 02</label>
+							<input type="text" name="chave02est" class="form-control" id="inputSubject" value="<?php if(isset($meta['chave02est'])){echo $meta['chave02est'];} ?>" />
+						</div>
+					</div>
+
 					<br />					
 					
 					<div class="form-group">

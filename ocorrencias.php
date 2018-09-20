@@ -399,6 +399,8 @@ $(function() {
 break;
 case "listar":
 
+
+
 if(isset($_POST['apagar'])){
 	global $wpdb;
 	$id = $_POST['apagar'];

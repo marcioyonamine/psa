@@ -43,10 +43,10 @@
               <a class="nav-link" href="contratacao.php">Pedidos de Contratação</a>
             </li>
 			<li class="nav-item">
-              <a class="nav-link" href="producao.php">Infraestrutura</a>
+              <a class="nav-link" href="producao.php">Produção / Comunicação</a>
             </li>
 	<li class="nav-item">
-		<a class="nav-link" href="enviar.php">Enviar</a>
+		<a class="nav-link" href="enviar.php">Status</a>
    </li>
 
 			</ul>
@@ -60,9 +60,9 @@
             <li class="nav-item">
               <a class="nav-link" href="evento.php">Listar Meus Eventos</a>
             </li>
-            <li class="nav-item">
+            <!--<li class="nav-item">
               <a class="nav-link" href="evento.php?p=fip2018">Listar Eventos FIP2018</a>
-            </li>
+            </li>-->
             <li class="nav-item">
               <a class="nav-link" href="evento.php?p=inserir">Inserir Novo Evento</a>
 		    </li>

@@ -315,7 +315,7 @@ case "pedido":
 					
 					?>
 					<tr>
-					  <td>< <input type="checkbox" class="form-check-input" id="exampleCheck1" name="<?php echo $res[$i]['idEvento'] ?>"></td>
+					  <td><center><input type="checkbox" class="form-check-input" id="exampleCheck1" name="<?php echo $res[$i]['idEvento'] ?>"></center></td>
 					  <td>
 					<?php
 						if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){

@@ -489,9 +489,47 @@ function evento($id){
 	}else{
 		$usercon = "";
 	}
+	$aprovacao = get_userdata($res['idRespAprovacao']);
+	if($aprovacao != NULL){
+		$user_aprovacao = $aprovacao->first_name." ".$aprovacao->last_name;
+	}else{
+		$user_aprovacao = "";
+	}
+	
+	
 	$etaria = tipo($res['faixaEtaria']);
 	$periodo = periodo($res['idEvento']);
-	$status = retornaStatus($res['idEvento']);
+	
+	switch($res['status']){
+		case 1:
+			$status = "Rascunho";
+		break;
+
+		case 2:
+			$status = "Planejado";
+		break;
+
+		case 3:
+			$status = "Aprovado";
+		break;
+
+		case 4:
+			$status = "Publicado Comunicação/Mapas";
+		break;
+		
+		case 5:
+			$status = "Cancelado";
+		break;
+
+		default:
+			$status = "Não definido. Comunicar ao administrador do sistema.";	
+		break;
+	}
+	
+	//$status = retornaStatus($res['idEvento']);
+	
+	
+	
 	$local = retornaLocais($id);
 	
 	
@@ -507,7 +545,7 @@ function evento($id){
 		'ficha_tecnica' => $res['fichaTecnica'],
 		'sinopse' => $res['sinopse'],
 		'release' => $res['releaseCom'],
-		'status' => $status['status'],
+		'status' => $status,
 		'usuario' => '',
 		'sub' => '',
 		'envio' => '',
@@ -519,6 +557,7 @@ function evento($id){
 		'planejamento' => $res['planejamento'],
 		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
 		'tipo' => $tipo_evento['tipo'],
+		'aprovacao' => $user_aprovacao,
 		'dataEnvio' => $res['dataEnvio']
 	);
 
@@ -1575,6 +1614,7 @@ function verificaEvento($idEvento){
 		Linguagem
 		Tipo de Evento
 		Responsável
+		Aprovação
 		Autor
 		Classificação
 		Sinopse
@@ -1634,6 +1674,12 @@ function verificaEvento($idEvento){
 		$r++;	
 	}
 
+	if($evento['aprovacao'] == "" OR $evento['aprovacao'] == ""){
+		$relatorio .= "O evento não possui indicação de pessoa responsável pela aprovação.<br />";
+		$r++;	
+	}
+	
+	
 	if($evento['autor'] == "" OR $evento['autor'] == ""){
 		$relatorio .= "O evento não possui um autor.<br />";
 		$r++;	
@@ -1650,6 +1696,16 @@ function verificaEvento($idEvento){
 		$r++;	
 	}
 
+	// Trava de data
+	$periodo = periodo($idEvento);
+	$dias = opcaoDados("lim_dias",0);
+	$hoje30 = somarDatas(date('Y-m-d'),$dias['limite']);
+	
+
+
+	
+	
+	
 	/*
 	if($evento['artista_local'] == 0){
 		$relatorio .= "É preciso informar a origem do artista (local).<br />";
@@ -1684,6 +1740,12 @@ function verificaEvento($idEvento){
 				$r++;
 			} 
 		}
+			//echo $hoje30." - ".$periodo['inicio'];
+
+		if(strtotime($hoje30) > strtotime($periodo['inicio'])){
+			$relatorio .= "O início do evento está a menos de ".$dias['limite']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
+			$r++;	
+		}
 	}
 
 	$pedidos = listaPedidos($idEvento,'evento');	
@@ -1701,8 +1763,9 @@ function verificaEvento($idEvento){
 			}
 		}		
 		
-		
-		
+	
+
+	
 		
 		
 		
@@ -2250,4 +2313,71 @@ function retornaContabil($nProcesso){
 	
 	
 }
+
+
+function geraCampo($tipo,$nome,$titulo,$valor = ""){
+
+	switch($tipo){
+		case "text":
+			echo "<label>".$titulo."</label>";
+			echo "<input type='text' name='".$nome."' class='form-control' maxlength='120' id='inputSubject' placeholder='' value='".$valor."'/>";	
+			echo "<br /><br />";
+		break;
+
+		case "textarea":
+			echo "<label>".$titulo."</label>";
+			echo '<textarea name="'.$nome.'" class="form-control" rows="10" placeholder="">'.$valor.'</textarea>';
+			echo "<br /><br />";
+		break;
+
+		case "check":
+			if($valor == 'on'){
+				$check = ' checked ';
+			}else{
+				$check = '';
+			}	
+		
+			echo '<input type="checkbox" name="'.$nome.'" '.$check.' /> '.$titulo;
+			echo "<br /><br />";
+		break;
+	}
+}
+
+function insereProducao($campo,$valor,$idEvento){
+	// verifica se existe 
+	global $wpdb;
+	$sql_ver = "SELECT id FROM sc_producao_ext WHERE id_lista_producao = '$campo' AND id_evento = '$idEvento'";
+	$x = $wpdb->get_results($sql_ver,ARRAY_A);
+	
+	if(count($x) > 0){ //se existe, atualiza
+		$sql_upd = "UPDATE sc_producao_ext SET valor = '$valor' WHERE id = '".$x[0]['id']."'";
+		$wpdb->query($sql_upd);	
+	}else{ // se não, insere
+		$sql_ins = "INSERT INTO `sc_producao_ext` (`id`, `id_lista_producao`, `id_evento`, `valor`) VALUES (NULL, '$campo', '$idEvento', '$valor')";
+		$wpdb->query($sql_ins);
+	}
+}
+
+function recuperaProducao($campo,$idEvento){
+	global $wpdb;
+	$sql = "SELECT valor FROM sc_producao_ext WHERE id_lista_producao = '$campo' AND id_evento = '$idEvento'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	if(count($x) > 0){
+		return $x[0]['valor'];
+	}else{
+		return "";	
+	}
+	
+}
+
+function chamaAPI($url,$data){
+	$get_addr = $url.'?'.http_build_query($data);
+	$ch = curl_init($get_addr);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	$page = curl_exec($ch);
+	$evento = json_decode($page,true);
+	return $evento;
+	echo $get_addr;
+}
+
 
