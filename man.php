@@ -23,6 +23,8 @@ case 'inicio':
 <li><a href="?p=atualiza_hora_final">Atualiza as ocorrências com hora final</a> : todos os eventos do Bartira. </li>
 <li><a href="">Atualiza a categoria das inscrições</a> </li>
 <li><a href="?p=importa_contatos">Importa contatos das inscrições</a> </li>
+<li><a href="?p=atualiza_status">Atualiza Status</a> </li>
+
 </ul>
 
   
