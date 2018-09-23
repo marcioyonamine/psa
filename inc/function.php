@@ -663,7 +663,11 @@ function atividade($id){
 	$programa = tipo($res['idPrograma']);
 	$projeto = tipo($res['idProjeto']);
 	$usuario = get_userdata($res['idRes']);
-	
+	if($usuario){
+		$u = $usuario->first_name." ".$usuario->last_name;
+	}else{
+		$u = "";
+	}
 	//$status = retornaStatus($res['idEvento']);
 	
 	$evento = array(
@@ -674,7 +678,7 @@ function atividade($id){
 		'tipoPessoa' => 'Pessoa jurídica',
 		'programa' => $programa['tipo'],
 		'projeto' => $projeto['tipo'],
-		'responsavel' => $usuario->first_name." ".$usuario->last_name,
+		'responsavel' => $u,
 		//'status' => $status['status'],
 		'usuario' => ''
 	);
