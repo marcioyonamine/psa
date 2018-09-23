@@ -12,7 +12,7 @@ if(isset($_GET['p'])){
 
   <body>
   
-  <?php include "menu/me_evento.php"; ?>
+  <?php include "menu/me_aprovacao.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
  <?php 
@@ -24,7 +24,7 @@ if(isset($_POST['enviar'])){  // envia
 	$idEvento = $_SESSION['id'];
 	$hoje = date("Y-m-d H:i:s");
 	global $wpdb;
-	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje', status = '2' WHERE idEvento = '$idEvento'";
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
 	$upd = $wpdb->query($sql_enviar);
 	if($upd == 1){
 		atualizarAgenda($idEvento);
@@ -36,6 +36,27 @@ if(isset($_POST['enviar'])){  // envia
 	}
 	
 }
+
+if(isset($_POST['aprovar'])){
+	$mensagem = "";
+	foreach($_POST as $x=>$y){
+		if(is_int($x)){
+			$update = "UPDATE sc_evento SET status = '3' WHERE idEvento = '".$x."'";
+			$w = $wpdb->query($update);
+			if($w == 1){
+				$e = evento($x);
+				$mensagem .= alerta("O status do evento ".$e['titulo']." foi atualizado com sucesso.","success");
+			}else{
+				$mensagem .= alerta("Erro","warning");
+			}	
+		}
+
+
+		
+	}
+}
+
+
 if(isset($_SESSION['id'])){
 	unset($_SESSION['id']);
 }
@@ -51,7 +72,7 @@ if(isset($_GET['order'])){
     <div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h1>Meus Eventos</h1>
+					<h1>Meus Eventos para Aprovação</h1>
 					<?php if(isset($mensagem)){echo $mensagem;}?>
 				</div>
         </div>
@@ -69,12 +90,9 @@ if(isset($_GET['order'])){
               <tbody>
 				<?php 
 				global $wpdb;
-				$idUser = $user->ID;
-				if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77 OR $idUser == 15){
-					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' $order";					
-				}else{
-				$sql_list =  "SELECT idEvento FROM sc_evento WHERE  publicado = '1' AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser')  $order";
-				}
+					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' AND idRespAprovacao = '".$user->ID."' $order";					
+
+
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
@@ -83,30 +101,23 @@ if(isset($_GET['order'])){
 					<tr>
 					  <td><?php echo $res[$i]['idEvento']; ?></td>
 					  <td>
-					<?php
-						if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){
-					  ?>
+					
 					  <a href="busca.php?p=view&tipo=evento&id=<?php echo $res[$i]['idEvento'] ?>" target=_blank>
-						<?php  } ?>
+						
 					  <?php echo $evento['titulo']; ?>
-					<?php
-						if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77){
-					  ?>
+					
 						</a>
-						<?php } ?>
+						
 					  </td>
 
 					  
 					  <td><?php echo $evento['periodo']['legivel']; ?></td>
 					  <td><?php echo $evento['status']; ?></td>
-					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
-							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
+					  <td>	<form method="POST" action="?p=editar" class="form-horizontal" role="form">
 							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
 							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
 							</form>
-							<?php 
-							}
-					  ?></td>
+							</td>
 					</tr>
 				<?php } // fim do for?>	
 				
@@ -119,7 +130,14 @@ if(isset($_GET['order'])){
 
 <?php 
 break;
-case "aniversario": 
+case "serie": 
+
+if(isset($_GET['order'])){
+	$order = ' ORDER BY nomeEvento ASC ';
+}else{
+	$order = ' ORDER BY idEvento DESC ';
+}
+
 if(isset($_POST['enviar'])){  // envia
 	// muda status de dataEnvio para hoje
 	// atualiza a agenda
@@ -145,7 +163,7 @@ if(isset($_SESSION['id'])){
     <div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
-					<h1>Meus Eventos - Aniversário 2018</h1>
+					<h1>Meus Eventos para Aprovação</h1>
 					<?php if(isset($mensagem)){echo $mensagem;}?>
 				</div>
         </div>
@@ -154,24 +172,19 @@ if(isset($_SESSION['id'])){
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Título</th>
+                  <th><a href="?<?php if(isset($_GET['order'])){ echo "";}else{ echo "order"; } ?>">Título</a></th>
                   <th>Data</th>
-                  <th>Status</th>
-				  <th>Categoria</th>
-				  <th>CulturAZ</th>
+                  <th>Responsável</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
+			  <form method="POST" action="?" class="form-horizontal" role="form">
 				<?php 
 				global $wpdb;
-				$idUser = $user->ID;
-				if($idUser == 63 OR $idUser == 1 OR $idUser == 5 OR $idUser == 77 OR $idUser == 15){ //admin, juliana, moretto, leonete
-				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1' AND  inscricao <> '' ORDER BY idEvento DESC";
-				}else{
-				$sql_list =  "SELECT idEvento, inscricao, categoria FROM sc_evento WHERE publicado = '1'  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND  inscricao <> '' ORDER BY idEvento DESC";
-					
-				}
+					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' AND idRespAprovacao = '".$user->ID."' $order";					
+
+
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
 				for($i = 0; $i < count($res); $i++){
 					$evento = evento($res[$i]['idEvento']);
@@ -179,26 +192,28 @@ if(isset($_SESSION['id'])){
 					?>
 					<tr>
 					  <td><?php echo $res[$i]['idEvento']; ?></td>
-					  <td><?php echo $evento['titulo']; ?></td>
-					  <td><?php echo $evento['periodo']['legivel']; ?></td>
-					  <td><?php echo $evento['status']; ?></td>
-					  <td><?php echo str_replace("CATEGORIA","",$res[$i]['categoria']); ?></td>
-					  <td><a href="http://culturaz.santoandre.sp.gov.br/inscricao/<?php echo substr($res[$i]['inscricao'],3); ?>" target="_blank" ><?php echo $res[$i]['inscricao']; ?> </a></td>
+					  <td>
+					
+					  <a href="busca.php?p=view&tipo=evento&id=<?php echo $res[$i]['idEvento'] ?>" target=_blank>
+						
+					  <?php echo $evento['titulo']; ?>
+					
+						</a>
+						
+					  </td>
 
-					  <td>	<?php if($evento['dataEnvio'] == NULL){ ?>
-							<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-							<input type="hidden" name="carregar" value="<?php echo $res[$i]['idEvento']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Carregar">
-							</form>
-							<?php 
-							}
-					  ?></td>
+					  
+					  <td><?php echo $evento['periodo']['legivel']; ?></td>
+					  <td><?php echo $evento['responsavel']; ?></td>
+					  <td><input type="checkbox" class="form-check-input" id="exampleCheck1" name="<?php echo $res[$i]['idEvento'] ?>">
+							</td>
 					</tr>
 				<?php } // fim do for?>	
-				
               </tbody>
             </table>
-          </div>
+<input type="submit" name="aprovar" value="Aprovar todos os eventos selecionados." class="btn btn-primary">
+			</form>
+			</div>
 
 		</div>
 </section>
@@ -396,12 +411,6 @@ break;
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Processo Colaborativo / Projeto Interno  </label>
-							<input type="text" name="pInterno" class="form-control" id="inputSubject" />
-						</div> 
-					</div>	
-					<div class="form-group">
 						<br />
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
 						<div class="col-md-offset-2">
@@ -420,15 +429,6 @@ break;
 								<?php geraOpcaoUsuario();	?>							
 
 								</select>	
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Responsável pela Aprovação</label>
-							<select class="form-control" name="id_aprovacao" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario()	?>						
-							</select>	
 						</div>
 					</div>
 
@@ -557,8 +557,6 @@ case "editar":
 		$n_agentes = $_POST['n_agentes'];
 		$n_agentes_abc = $_POST['n_agentes_abc'];
 		$inscricao = $_POST['inscricao'];
-		$p_interno = addslashes($_POST['pInterno']);
-		$id_aprovacao = $_POST['id_aprovacao'];
 		
 		
 
@@ -582,8 +580,8 @@ case "editar":
 
 	// Inserir evento
 	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao`, `pInterno` , `idRespAprovacao`, `status` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao','$p_interno', '$id_aprovacao','1')";		
+		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao` ) 
+		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao')";		
 		$ins = $wpdb->query($sql);
 		if($ins){
 			$mensagem = "Inserido com sucesso";
@@ -624,8 +622,6 @@ case "editar":
 		`cidade` = '$outra_cidade',
 		`n_agentes` = '$n_agentes',
 		`n_agentes_abc` = '$n_agentes_abc',
-		`pInterno` = '$p_interno',
-		`idRespAprovacao` = '$id_aprovacao',
 		`inscricao` = '$inscricao'
 		
 		WHERE `idEvento` = '$atualizar';
@@ -734,12 +730,6 @@ case "editar":
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Processo Colaborativo / Projeto Interno  </label>
-							<input type="text" name="pInterno" class="form-control" id="inputSubject" value="<?php echo $evento['pInterno']; ?>"/>
-						</div> 
-					</div>					
-					<div class="form-group">
 						<br />
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
 						<div class="col-md-offset-2">
@@ -761,16 +751,6 @@ case "editar":
 								</select>	
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Responsável pela Aprovação</label>
-							<select class="form-control" name="id_aprovacao" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario($evento['idRespAprovacao'])	?>						
-							</select>	
-						</div>
-					</div>
-					
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Autor*</label>
@@ -932,20 +912,11 @@ if(isset($_GET['order'])){
 }
 
 ?>
-<style>
-@media (min-width: 1200px)
-.container {
-    width: 1440px !important;
-    max-width: 100%;
-}
-
-</style>
 <section id="contact" class="home-section bg-white">
-    <div class="container" style="margin-left:0px;width:1400px !important">
+    <div class="container">
         <div class="row">    
 				<div class="col-md-offset-2 col-md-8">
 					<h1>Pedidos de Contratação</h1>
-					<p>Para que as informações de Empenho e Pagamento sejam visualizadas, é preciso que seja inserido o número do processo (XXXXX/2018). </p>
 					<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 				</div>
         </div>
@@ -954,19 +925,20 @@ if(isset($_GET['order'])){
 
 				</div>
         </div>
-</div>
+
 		<?php 
 		// se existe pedido, listar
 		
 		?>
 		
-    <div class="container" style="margin-left:0px;width=1400px !important;" >
+    <div class="container">
         <div class="row">    
         </div>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
+				<th>Num</th>
 
 				<th>Liberação</th>
                   <th>Pessoa</th>
@@ -974,9 +946,6 @@ if(isset($_GET['order'])){
                   <th><a href="?p=pedido<?php if(isset($_GET['order'])){ echo ""; }else{ echo "&order"; }  ?>">Objeto</a></th>
 				  <th>Período</th>
 				  <th>Valor</th>
-				  <th>Empenho</th>
-				  <th>OP</th>
-				  
 				  <th></th>
 				  <th></th>
 				  </tr>
@@ -992,32 +961,23 @@ if(isset($_GET['order'])){
 				
 				
 				//$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL  AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') $order )) $f ";
-
-				if($idUser != 1){		
+				
 				$sql_seleciona = "SELECT DISTINCT idPedidoContratacao,sc_evento.idEvento, valor FROM sc_contratacao,sc_evento WHERE sc_contratacao.publicado = 1 AND sc_evento.dataEnvio IS NOT NULL AND (idUsuario = '$idUser' OR idResponsavel = '$idUser' OR idSuplente = '$idUser') AND sc_contratacao.idEvento = sc_evento.idEvento $order";
-				}else{
-				$sql_seleciona = "SELECT DISTINCT idPedidoContratacao,sc_evento.idEvento, valor FROM sc_contratacao,sc_evento WHERE sc_contratacao.publicado = 1 AND sc_evento.dataEnvio IS NOT NULL AND sc_contratacao.idEvento = sc_evento.idEvento $order";
-					
-				}
+				
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
 				//echo $sql_seleciona;
 				
 				for($i = 0; $i < count($peds); $i++){
 					if($peds[$i]['idEvento'] != 0 AND $peds[$i]['idEvento'] != NULL){
 						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
-						$contabil = retornaContabil($pedido['nProcesso']);
-						
-						
 					}else{
 						//$pedido = atividade($peds[$i]['idAtividade']);
 						$pedido = retornaPedido($peds[$i]['idPedidoContratacao']);
 					}
 					//var_dump($pedido);
-					
-					
 					?>
 					<tr>
-
+					  <td><?php echo $peds[$i]['idPedidoContratacao']; ?></td>
 					  <td><?php if($pedido['liberado'] != '0000-00-00'){echo exibirDataBr($pedido['liberado']);} ?></td>
 
 					  
@@ -1026,9 +986,6 @@ if(isset($_GET['order'])){
 					  <td><?php echo $pedido['objeto']; ?></td>
 					  <td><?php echo $pedido['periodo']; ?></td>
 					  <td><?php echo dinheiroParaBr($peds[$i]['valor']); ?></td>
-					  <td><?php if(isset($contabil[0]['empenho'])){echo $contabil[0]['empenho']; }?></td>
-					  <td><?php if(isset($contabil[0]['v_op_baixado'])){echo dinheiroParaBr($contabil[0]['v_op_baixado']); }?></td>
-					  
 					  <?php if($pedido['tipo'] == 'Pessoa Física'){ ?>
 					  <td>	
 							<form method="POST" action="contratacao.php?p=editar_pf" class="form-horizontal" role="form">
@@ -1040,7 +997,7 @@ if(isset($_GET['order'])){
 					  <td>	
 							<form method="POST" action="contratacao.php?p=editar_pj" class="form-horizontal" role="form">
 							<input type="hidden" name="editar_pj" value="<?php echo $peds[$i]['idPessoa']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Ed Pessoa">
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pessoa">
 							</form>
 							</td>
 					<?php } ?>
@@ -1048,7 +1005,7 @@ if(isset($_GET['order'])){
 					  <td>	
 							<form method="POST" action="contratacao.php?p=editar_pedido" class="form-horizontal" role="form">
 							<input type="hidden" name="editar_pedido" value="<?php echo $peds[$i]['idPedidoContratacao']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Ed Pedido">
+							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Editar Pedido">
 							</form>
 							<?php 
 					  

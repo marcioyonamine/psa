@@ -26,14 +26,7 @@
 			<li class="nav-item">
               <a class="nav-link" href="ocorrencias_mapas.php?p=inserir">Inserir Ocorrências</a>
             </li>
-
-        
-
-	<li class="nav-item">
-		<a class="nav-link" href="publicar.php">Publicar</a>
-   </li>
-
-			</ul>
+		</ul>
 
 		  <?php 
 		}

@@ -335,6 +335,49 @@ for($i = 0; $i < count($ocor); $i++){
  
 ?>		  
 <?php 
+break;
+case 'atualiza_status':  
+
+// seleciona todos os eventos publicados
+$sql_evento = "SELECT * FROM sc_evento WHERE publicado = 1";
+$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+
+for($i = 0; $i < count($evento); $i++){
+	
+	if($evento[$i]['dataEnvio'] == NULL){ // enviado
+		$sql_atualiza = "UPDATE sc_evento SET status = '1' WHERE idEvento = '".$evento[$i]['idEvento']."'";
+		$wpdb->query($sql_atualiza);
+	}
+
+	if($evento[$i]['dataEnvio'] != NULL){ // enviado
+		$sql_atualiza = "UPDATE sc_evento SET status = '2' WHERE idEvento = '".$evento[$i]['idEvento']."'";
+		$wpdb->query($sql_atualiza);
+	}
+
+	if($evento[$i]['mapas'] != NULL AND $evento[$i]['mapas'] != 0 ){ // enviado
+		$sql_atualiza = "UPDATE sc_evento SET status = '4' WHERE idEvento = '".$evento[$i]['idEvento']."'";;
+		$wpdb->query($sql_atualiza);
+	}
+
+	
+	
+}
+
+
+
+?>	
+
+<!--
+					 <div class="container">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+					<h1>Não há Edital indicado</h1>
+				</div>
+        </div>
+		</div>
+-->
+
+<?php 
 //break;
 //case '':  
 ?>	
