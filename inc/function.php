@@ -558,6 +558,7 @@ function evento($id){
 		'objeto' => $tipo_evento['tipo']." - ".$res['nomeEvento'],
 		'tipo' => $tipo_evento['tipo'],
 		'aprovacao' => $user_aprovacao,
+		'revisado' => $res['revisado'],
 		'dataEnvio' => $res['dataEnvio']
 	);
 

@@ -172,7 +172,7 @@ if(isset($_POST['gerar'])){
 		</div> 
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?p=agenda" class="form-horizontal" role="form">
+				<form method="POST" action="?p=revisao_lista" class="form-horizontal" role="form">
 
 					<div class="row">
 						<div class="col-6">
@@ -211,6 +211,148 @@ if(isset($_POST['gerar'])){
 			}
 			
 		}
+		?>
+		
+		</div>
+	</div>
+</section>		
+<?php 
+break;
+case "revisao_lista":
+if(isset($_POST['atualizar'])){
+
+	//Apaga os checks
+	foreach($_POST as $x=>$y){
+		$id_evento = substr($x,3);
+		$sql_check = "UPDATE sc_evento SET revisado = '0' WHERE idEvento = '".$id_evento."'";
+		$wpdb->query($sql_check);	
+	}
+
+	foreach($_POST as $x=>$y){
+		$id_evento = substr($x,3);
+		$campo = substr($x,0,2);
+		
+	switch($campo){
+		case "re":
+			$field = "revisado";
+			$y = '1';
+		break;
+		
+		case "ti":
+			$field = "nomeEvento";
+			$y = addslashes($y);
+		break;
+
+		case "si":
+			$field = "sinopse";
+			$y = addslashes($y);
+		break;
+	}
+		
+
+
+		$upd = "UPDATE sc_evento SET ".$field." = '".$y."' WHERE idEvento = '".$id_evento."'";
+		$wpdb->query($upd);
+		
+		
+	}
+	
+}
+
+
+?>
+	<script type="text/javascript">
+	$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+</script>
+
+
+
+ <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+
+                    <h3>Revisão de Sinopses</h3>
+                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
+
+			</div>
+		</div> 
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="?p=revisao_lista" class="form-horizontal" role="form">
+					<?php
+	if(isset($_POST['inicio'])){
+		if($_POST['inicio'] != "" AND $_POST['fim'] != ""){
+
+			$inicio = exibirDataMysql($_POST['inicio']);
+			$fim = exibirDataMysql($_POST['fim']);
+				$sql = "SELECT DISTINCT idEvento FROM sc_agenda WHERE data >= '".$inicio."' AND data <= '".$fim."'ORDER BY data ASC";
+				$id_evento = $wpdb->get_results($sql,ARRAY_A);
+				for($i =0; $i < count($id_evento); $i++){
+					$evento = evento($id_evento[$i]['idEvento']);
+					$sql_o = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$id_evento[$i]['idEvento']."' AND publicado = '1'";
+					$o = $wpdb->get_results($sql_o,ARRAY_A);
+					
+					
+					?>
+					<input type="checkbox" name="re_<?php echo $id_evento[$i]['idEvento'];  ?>" <?php if($evento['revisado'] == 1){ echo "checked";} ?> > Revisado <br />
+					<input type='text' name='ti_<?php echo $id_evento[$i]['idEvento'];  ?>' class="form-control" value="<?php echo $evento['titulo'] ?>">
+					<textarea name="si_<?php echo $id_evento[$i]['idEvento'];  ?>"  class="form-control" rows="10">
+<?php echo $evento['sinopse'] ?>
+					</textarea>
+					
+					<?php  
+					for($w = 0; $w < count($o); $w++){
+						$ocor = ocorrencia($o[$w]['idOcorrencia']);
+						echo "<li>".$ocor['data']."<br />";
+						echo $ocor['local']."</li>";
+
+					}
+											echo "<hr>";
+				}
+				
+			}
+		}
+					?>
+				
+				
+
+					<br />
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="atualizar" value="1" />
+							<input type="hidden" name="inicio" value="<?php echo $_POST['inicio']; ?>" />
+							<input type="hidden" name="fim" value="<?php echo $_POST['fim']; ?>" />
+							
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Salvar">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+		<?php /*
+		if(isset($id_evento)){
+			for($i = 0; $i < count($id_evento); $i++){
+				$evento = evento($id_evento[$i]['idEvento']);
+				//echo "<pre>";
+				//echo var_dump($evento);
+				//echo "</pre>";
+				
+				
+				echo "<li>".$evento['titulo']." - ".$evento['periodo']['legivel']." - ".$evento['local']."</li>";		
+				
+			}
+			
+		}
+		*/
 		?>
 		
 		</div>
@@ -292,7 +434,7 @@ $url = $url_mapas."event/findByLocation";
 		<?php 
 		
 		
-		
+	if(isset($_POST['inicio'])){
 	if($_POST['inicio'] != "" AND $_POST['fim'] != ""){
 
 		$inicio = exibirDataMysql($_POST['inicio']);
@@ -312,6 +454,7 @@ $url = $url_mapas."event/findByLocation";
 			$inicio = somarDatas($inicio,"+1");
 			
 		}
+	}
 	}
 		?>
 		
@@ -394,7 +537,7 @@ $url = $url_mapas."event/findByLocation";
 		<?php 
 		
 		
-		
+	if(isset($_POST['inicio'])){	
 	if($_POST['inicio'] != "" AND $_POST['fim'] != ""){
 
 		$inicio = exibirDataMysql($_POST['inicio']);
@@ -475,6 +618,7 @@ $url = $url_mapas."event/findByLocation";
 			$inicio = somarDatas($inicio,"+1");
 			
 		}
+	}
 	}
 		?>
 		
