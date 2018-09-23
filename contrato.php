@@ -245,7 +245,7 @@ if(isset($_POST['inserir_pj'])){
 				}
 				
 				
-				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL AND status = '3' AND cancelamento = '0') OR idAtividade <> '0') AND (valor <> '0' AND valor IS NOT NULL) AND (dotacao IS NOT NULL AND dotacao <> '0') $f ORDER BY nLiberacao DESC";
+				$sql_seleciona = "SELECT * FROM sc_contratacao WHERE publicado = '1' AND (idEvento IN (SELECT idEvento FROM sc_evento WHERE dataEnvio IS NOT NULL AND (status = '3' OR status = '4') AND cancelamento = '0') OR idAtividade <> '0') AND (valor <> '0' AND valor IS NOT NULL) AND (dotacao IS NOT NULL AND dotacao <> '0') $f ORDER BY nLiberacao DESC";
 				$peds = $wpdb->get_results($sql_seleciona,ARRAY_A);
 				
 				
