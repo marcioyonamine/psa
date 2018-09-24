@@ -698,7 +698,7 @@ case "editar":
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Nome do Evento *</label>
-							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $evento['nomeEvento']; ?>"/>
+							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo stripslashes($evento['nomeEvento']); ?>"/>
 						</div> 
 					</div>
 					<div class="form-group">
@@ -736,7 +736,7 @@ case "editar":
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Processo Colaborativo / Projeto Interno  </label>
-							<input type="text" name="pInterno" class="form-control" id="inputSubject" value="<?php echo $evento['pInterno']; ?>"/>
+							<input type="text" name="pInterno" class="form-control" id="inputSubject" value="<?php echo stripslashes($evento['pInterno']); ?>"/>
 						</div> 
 					</div>					
 					<div class="form-group">
@@ -774,13 +774,13 @@ case "editar":
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Autor*</label>
-							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."><?php echo $evento['autor']; ?></textarea>
+							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."><?php echo stripslashes($evento['autor']); ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $evento['nomeGrupo']; ?>"/>
+							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo stripslashes($evento['nomeGrupo']); ?>"/>
 						</div> 
 					</div>
 										<div class="form-group">
@@ -823,7 +823,7 @@ case "editar":
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Ficha técnica completa*</label>
-							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php echo $evento["fichaTecnica"] ?></textarea>
+							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php echo stripslashes($evento["fichaTecnica"]) ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
@@ -837,19 +837,19 @@ case "editar":
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Sinopse *</label>
-							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php echo $evento["sinopse"] ?></textarea>
+							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php echo stripslashes($evento["sinopse"]) ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Release *</label>
-							<textarea name="releaseCom" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo $evento["releaseCom"] ?></textarea>
+							<textarea name="releaseCom" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo stripslashes($evento["releaseCom"]) ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Links </label>
-							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php echo $evento["linksCom"] ?></textarea>
+							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php echo stripslashes($evento["linksCom"]) ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">

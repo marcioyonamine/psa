@@ -301,9 +301,9 @@ if(isset($_POST['atualizar'])){
 					
 					?>
 					<input type="checkbox" name="re_<?php echo $id_evento[$i]['idEvento'];  ?>" <?php if($evento['revisado'] == 1){ echo "checked";} ?> > Revisado <br />
-					<input type='text' name='ti_<?php echo $id_evento[$i]['idEvento'];  ?>' class="form-control" value="<?php echo $evento['titulo'] ?>">
+					<input type='text' name='ti_<?php echo $id_evento[$i]['idEvento'];  ?>' class="form-control" value="<?php echo stripslashes($evento['titulo']) ?>">
 					<textarea name="si_<?php echo $id_evento[$i]['idEvento'];  ?>"  class="form-control" rows="10">
-<?php echo $evento['sinopse'] ?>
+<?php echo stripslashes($evento['sinopse']) ?>
 					</textarea>
 					
 					<?php  
