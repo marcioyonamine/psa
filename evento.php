@@ -478,6 +478,13 @@ break;
 							<input type="text" name="inscricao" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
 						</div> 
 					</div>
+     				<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Público Previsto</label>
+							<input type="text" name="previsto" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
+						</div> 
+					</div>
+					
 					
 					<div class="form-group">
 						<div class="col-md-offset-2">
@@ -559,7 +566,7 @@ case "editar":
 		$inscricao = $_POST['inscricao'];
 		$p_interno = addslashes($_POST['pInterno']);
 		$id_aprovacao = $_POST['id_aprovacao'];
-		
+		$previsto = $_POST['previsto'];		
 		
 
 		if(isset($_POST['subEvento'])){
@@ -582,8 +589,8 @@ case "editar":
 
 	// Inserir evento
 	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao`, `pInterno` , `idRespAprovacao`, `status` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao','$p_interno', '$id_aprovacao','1')";		
+		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao`, `pInterno` , `idRespAprovacao`, `status` , `previsto` ) 
+		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao','$p_interno', '$id_aprovacao','1','$previsto')";		
 		$ins = $wpdb->query($sql);
 		if($ins){
 			$mensagem = "Inserido com sucesso";
@@ -626,7 +633,8 @@ case "editar":
 		`n_agentes_abc` = '$n_agentes_abc',
 		`pInterno` = '$p_interno',
 		`idRespAprovacao` = '$id_aprovacao',
-		`inscricao` = '$inscricao'
+		`inscricao` = '$inscricao',
+		`previsto` = '$previsto'
 		
 		WHERE `idEvento` = '$atualizar';
 		";
@@ -818,7 +826,12 @@ case "editar":
 							<input type="text" name="inscricao" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['inscricao']; ?>"/>
 						</div> 
 					</div>
-					
+					  <div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Público Previsto</label>
+							<input type="text" name="previsto" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['previsto']; ?>"/>
+						</div> 
+					</div>
 					
 					<div class="form-group">
 						<div class="col-md-offset-2">
