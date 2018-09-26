@@ -1549,8 +1549,7 @@ case "evento":
 			  <td><?php 
 			  if(count($res)){
 				for($k = 0; $k < count($res); $k++){
-					$ocorrencia = ocorrencia($res[$i]['idOcorrencia']);
-					echo $ocorrencia['tipo']."<br />";
+					$ocorrencia = ocorrencia($res[$k]['idOcorrencia']);
 					echo $ocorrencia['data']."<br />";
 					echo $ocorrencia['local']."<br /><br />";
 					
@@ -1559,7 +1558,7 @@ case "evento":
 			}; ?></td>
 			  <td><?php echo $ev[$i]['valor']; ?> </td>
 			  <td><?php echo $infra['total']; ?> </td>
-			  <td><?php echo $ev['valor'] + $infra['total']; ?> </td>
+			  <td><?php echo $ev[$i]['valor'] + $infra['total']; ?> </td>
 			  
 			  
 			  </tr>
