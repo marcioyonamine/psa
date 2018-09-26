@@ -1467,6 +1467,88 @@ echo "<table>";
 
 
 ?>
+<?php 
+break;
+case "evento":
+?>
+ <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+
+                    <h3>Relatório de Eventos</h3>
+                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
+
+			</div>
+		</div> 
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="?p=evento" class="form-horizontal" role="form">
+
+					<div class="row">
+						<div class="col-6">
+							<label>Data Inicial</label>
+							<input type="text" class="form-control calendario" name="inicio"> 
+						</div>
+						<div class="col-6">
+							<label>Data Final</label>
+							<input type="text" class="form-control calendario" name="fim"> 
+						</div>
+					</div>	
+					<br />
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="gerar" value="1" />
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Buscar eventos">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<?php if(isset($_POST['gerar'])){ 
+		$sql_evento = "SELECT idEvento, valor FROM sc_contratacao WHERE sc_evento <> '0' AND publicado = '1' AND dotacao IS NOT NULL AND idEvento IN(SELECT idEvento FROM sc_agenda WHERE data => '".exibirDataMysql($_POST['inicio'])."' AND data =< '".exibirDataMysql($_POST['fim'])."')";
+		$ev = $wpdb->get_results($sql_evento,ARRAY_A);
+		
+		
+		
+		
+		?>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Evento</th>
+                  <th>Data/Local</th>
+				<th>Contratação Artística</th>
+                  <th>Infraestrutura</th>
+                  <th>Total</th>
+				  </tr>
+              </thead>
+              <tbody>
+			  <?php for($i = 0; $i < count($ev); $i++){ 
+				$evento = evento($ev[$i]['idEvento']);
+				$infra = infraAta($ev[$i]['idEvento']);	
+			  ?>
+			  
+			  <tr>
+			  <td><?php echo $evento['titulo']; ?> </td>
+			  <td><?php echo $ev['valor']; ?> </td>
+			  <td><?php echo $infra['total']; ?> </td>
+			  <td><?php echo $ev['valor'] + $infra['total']; ?> </td>
+			  
+			  
+			  </tr>
+			  <?php  } ?>
+
+              </tbody>
+            </table>
+          </div>
+		<?php } ?>
+	</div>
+</section>	
 
 <?php 
 break;
