@@ -1531,11 +1531,33 @@ case "evento":
 			  <?php for($i = 0; $i < count($ev); $i++){ 
 				$evento = evento($ev[$i]['idEvento']);
 				$infra = infraAta($ev[$i]['idEvento']);	
+				
+			$sql_lista_ocorrencia = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$ev[$i]['idEvento']."' AND publicado = '1'";
+			$res = $wpdb->get_results($sql_lista_ocorrencia,ARRAY_A);
+
+			
+			
+
+			
+			
+			
+				
 			  ?>
 			  
 			  <tr>
 			  <td><?php echo $evento['titulo']; ?> </td>
-			  <td><?php echo $ev['valor']; ?> </td>
+			  <td><?php 
+			  if(count($res)){
+				for($k = 0; $k < count($res); $k++){
+					$ocorrencia = ocorrencia($res[$i]['idOcorrencia']);
+					echo $ocorrencia['tipo']."<br />";
+					echo $ocorrencia['data']."<br />";
+					echo $ocorrencia['local']."<br /><br />";
+					
+					}
+				
+			}; ?></td>
+			  <td><?php echo $ev[$i]['valor']; ?> </td>
 			  <td><?php echo $infra['total']; ?> </td>
 			  <td><?php echo $ev['valor'] + $infra['total']; ?> </td>
 			  
