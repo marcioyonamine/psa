@@ -1511,7 +1511,7 @@ case "evento":
 		<?php if(isset($_POST['gerar'])){ 
 		$sql_evento = "SELECT idEvento, valor FROM sc_contratacao WHERE sc_evento <> '0' AND publicado = '1' AND dotacao IS NOT NULL AND idEvento IN(SELECT idEvento FROM sc_agenda WHERE data => '".exibirDataMysql($_POST['inicio'])."' AND data =< '".exibirDataMysql($_POST['fim'])."')";
 		$ev = $wpdb->get_results($sql_evento,ARRAY_A);
-		
+		echo $sql_evento;
 		
 		
 		
