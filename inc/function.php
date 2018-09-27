@@ -2390,10 +2390,11 @@ function retornaProducao($id){
 	global $wpdb;
 	$sql = "SELECT * FROM sc_lista_producao WHERE id = '$id'";
 	$x = $wpdb->get_results($sql,ARRAY_A);
-	$j = json_decode($x[0]['descricao'],true);
+
 	
 	
 	if(count($x) == 1){
+	$j = json_decode($x[0]['descricao'],true);
 	$y = array(
 	"tipo" => $x[0]['tipo'],
  	"titulo" => $x[0]['titulo'],
