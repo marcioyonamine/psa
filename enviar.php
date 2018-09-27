@@ -170,9 +170,15 @@ $evento = evento($_SESSION['id']);
 
 				<?php 
 				$x = producao($_SESSION['id']);
-				echo "<pre>";
-				var_dump($x);
-				echo "</pre>";
+				for($i = 0; $i < count($x); $i++{
+					$y = retorna($x[$i]['id_lista_producao']);
+					echo "<pre>";
+					var_dump($y);
+					echo "</pre>";
+					
+					
+				}
+				
 				
 				?>
 			
