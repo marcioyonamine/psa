@@ -2413,11 +2413,11 @@ function producao($idEvento){
 	for($i = 0;$i = count($x); $i++){
 		$prod = retornaProducao($x[$i]['id_lista_producao']);
 		$p = $prod['tipo'];
-		$producao[$p]['titulo'] = $prod['titulo'];
-		$producao[$p]['descricao'] = $prod['descricao'];
-		$producao[$p]['type'] = $prod['type'];
-		$producao[$p]['name'] = $prod['name'];
-		$producao[$p]['valor'] = $prod['valor'];		
+		$producao[$p][$i]['titulo'] = $prod['titulo'];
+		$producao[$p][$i]['descricao'] = $prod['descricao'];
+		$producao[$p][$i]['type'] = $prod['type'];
+		$producao[$p][$i]['name'] = $prod['name'];
+		$producao[$p][$i]['valor'] = $prod['valor'];		
 	}
 	
 	
