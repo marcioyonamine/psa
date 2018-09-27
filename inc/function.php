@@ -1705,7 +1705,7 @@ function verificaEvento($idEvento){
 	// Trava de data
 	$periodo = periodo($idEvento);
 	$dias = opcaoDados("lim_dias",0);
-	$hoje30 = somarDatas(date('Y-m-d'),$dias['limite']);
+	$hoje30 = somarDatas(date('Y-m-d'),"+30");
 	
 
 
