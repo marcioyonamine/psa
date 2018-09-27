@@ -171,11 +171,12 @@ $evento = evento($_SESSION['id']);
 				<?php 
 				$x = producao($_SESSION['id']);
 				for($i = 0; $i < count($x); $i++){
-					$y = retornaProducao($x[$i]['id_lista_producao']);
-					echo "<pre>";
-					var_dump($y);
-					echo "</pre>";
 					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "infra";
+						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+					}
 					
 				}
 				
@@ -184,6 +185,36 @@ $evento = evento($_SESSION['id']);
 			
 			<hr>
 			<h3>Comunicação</h3>
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "com";
+						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+					}
+					
+				}
+				
+				
+				?>
+			<hr>
+			<h3>Apoio</h3>
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "apoio";
+						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+					}
+					
+				}
+				
+				
+				?>
 			
 		 <hr>
 			<h3>Arquivos</h3>

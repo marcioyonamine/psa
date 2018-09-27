@@ -2392,6 +2392,8 @@ function retornaProducao($id){
 	$x = $wpdb->get_results($sql,ARRAY_A);
 	$j = json_decode($x[0]['descricao'],true);
 	
+	
+	if(count($x) == 1){
 	$y = array(
 	"tipo" => $x[0]['tipo'],
  	"titulo" => $x[0]['titulo'],
@@ -2400,7 +2402,9 @@ function retornaProducao($id){
 	"name" => $j['nome']
 	);
 	return $y;
-	
+	}else{
+	return false;
+	}	
 }
 
 function producao($idEvento){
