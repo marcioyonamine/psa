@@ -2410,16 +2410,7 @@ function producao($idEvento){
 	// producao
 	$sql = "SELECT * FROM sc_producao_ext WHERE id_evento = '$idEvento'";
 	$x = $wpdb->get_results($sql,ARRAY_A);
-	for($i = 0;$i = count($x); $i++){
-		$prod = retornaProducao($x[$i]['id_lista_producao']);
-		$p = $prod['tipo'];
-		$producao[$p][$i]['titulo'] = $prod['titulo'];
-		$producao[$p][$i]['descricao'] = $prod['descricao'];
-		$producao[$p][$i]['type'] = $prod['type'];
-		$producao[$p][$i]['name'] = $prod['name'];
-		$producao[$p][$i]['valor'] = $prod['valor'];		
-	}
-	
+	return $x;
 	
 	
 	
