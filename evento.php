@@ -508,6 +508,13 @@ break;
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
+							<label>Descrição Longa</label>
+							<textarea name="descricao" class="form-control" rows="10" placeholder=""></textarea>
+						</div> 
+					</div>						
+					
+					<div class="form-group">
+						<div class="col-md-offset-2">
 							<label>Release *</label>
 							<textarea name="releaseCom" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php ////echo $campo["releaseCom"] ?></textarea>
 						</div> 
@@ -557,6 +564,7 @@ case "editar":
 		$fichaTecnica = addslashes($_POST["fichaTecnica"]);
 		$faixaEtaria = $_POST["faixaEtaria"];
 		$sinopse = addslashes($_POST["sinopse"]);
+		$descricao = addslashes($_POST["descricao"]);
 		$releaseCom = addslashes($_POST["releaseCom"]);
 		$linksCom = addslashes($_POST["linksCom"]);
 		$artista_cidade = $_POST['artista_cidade'];
@@ -589,8 +597,8 @@ case "editar":
 
 	// Inserir evento
 	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao`, `pInterno` , `idRespAprovacao`, `status` , `previsto` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao','$p_interno', '$id_aprovacao','1','$previsto')";		
+		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao`, `pInterno` , `idRespAprovacao`, `status` , `previsto`, `descricao` ) 
+		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao','$p_interno', '$id_aprovacao','1','$previsto','$descricao')";		
 		$ins = $wpdb->query($sql);
 		if($ins){
 			$mensagem = "Inserido com sucesso";
@@ -634,6 +642,8 @@ case "editar":
 		`pInterno` = '$p_interno',
 		`idRespAprovacao` = '$id_aprovacao',
 		`inscricao` = '$inscricao',
+		`descricao` = '$descricao',
+
 		`previsto` = '$previsto'
 		
 		WHERE `idEvento` = '$atualizar';
@@ -853,6 +863,12 @@ case "editar":
 							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php echo stripslashes($evento["sinopse"]) ?></textarea>
 						</div> 
 					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Descrição Longa</label>
+							<textarea name="descricao" class="form-control" rows="10" placeholder=""><?php echo stripslashes($evento["descricao"]) ?></textarea>
+						</div> 
+					</div>					
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<label>Release *</label>
