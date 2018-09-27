@@ -2386,4 +2386,50 @@ function chamaAPI($url,$data){
 	echo $get_addr;
 }
 
+function retornaProducao($id){
+	global $wpdb;
+	$sql = "SELECT * FROM sc_lista_producao WHERE id = '$id'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	$j = json_decode($x[0]['descricao'],true);
+	
+	$y = array(
+	"tipo" => $x[0]['tipo'],
+ 	"titulo" => $x[0]['titulo'],
+	"descricao" => $j['descricao'],
+	"type" => $j['tipo'],
+	"name" => $j['nome']
+	);
+	return $y;
+	
+}
+
+function producao($idEvento){
+	global $wpdb;
+	$producao = array();
+	
+	// producao
+	$sql = "SELECT * FROM sc_producao_ext WHERE id_evento = '$idEvento'";
+	$x = $wpdb->get_results($sql,ARRAY_A);
+	for($i = 0;$i = count($x); $i++){
+		$prod = retornaProducao($x[$i]['id_lista_producao']);
+		$p = $prod['tipo'];
+		$producao[$p]['titulo'] = $prod['titulo'];
+		$producao[$p]['descricao'] = $prod['descricao'];
+		$producao[$p]['type'] = $prod['type'];
+		$producao[$p]['name'] = $prod['name'];
+		$producao[$p]['valor'] = $prod['valor'];		
+	}
+	
+	
+	
+	
+	// comunicacao
+	
+	// apoio
+	
+	
+	
+	
+}
+
 
