@@ -222,6 +222,27 @@ if(isset($_SESSION['id'])){
 break;
 case "foradeprazo": 
 
+if(isset($_POST['enviar'])){
+	// muda status de dataEnvio para hoje
+	// atualiza a agenda
+	$idEvento = $_POST['idEvento'];
+	$hoje = date("Y-m-d H:i:s");
+	global $wpdb;
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje', status = '2' WHERE idEvento = '$idEvento'";
+	$upd = $wpdb->query($sql_enviar);
+	if($upd == 1){
+		atualizarAgenda($idEvento);
+		$mensagem = alerta("Evento enviado com sucesso.","success");
+		gravarLog($sql_enviar, $user->ID);
+	}else{
+		$mensagem = alerta("Erro. Tente novamente.","warning");
+		gravarLog($sql_enviar, $user->ID);
+	}
+	
+
+	
+}
+
 
 ?>
 <section id="contact" class="home-section bg-white">
@@ -536,7 +557,8 @@ $evento = evento($_POST['carregar']);
 			?>
 				
 				
-			<form action="evento.php" method="POST" class="form-horizontal">
+			<form action="aprovado.php?p=foradeprazo" method="POST" class="form-horizontal">
+			<input type="hidden" name="idEvento" value="<?php echo $_POST['carregar']; ?>">
 			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Mudar Status do evento para 'Aprovado'" />
 			</form>	
 			
