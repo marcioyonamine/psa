@@ -50,7 +50,8 @@ case "inicio":
 	
 		?>
 </div>
-</section>		
+</section>
+<!--		
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">    
@@ -121,7 +122,7 @@ case "inicio":
 			</div>
 
 		</div>
-</section>		
+</section>		-->
 
 <?php 
 break;	 
@@ -185,6 +186,18 @@ if(isset($_POST['gerar'])){
 						</div>
 					</div>	
 					<br />
+										<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Revisado</label>
+							<select class="form-control" name="revisado" id="programa" >
+								<option value='0'>Todos</option>
+								<option value='1'>Somente os revisados</option>
+								<option value='2'>Somente os não revisados</option>
+							</select>
+						</div>
+					</div>
+					<br />
+					
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<input type="hidden" name="gerar" value="1" />
@@ -294,28 +307,72 @@ if(isset($_POST['atualizar'])){
 				$sql = "SELECT DISTINCT idEvento FROM sc_agenda WHERE data >= '".$inicio."' AND data <= '".$fim."'ORDER BY data ASC";
 				$id_evento = $wpdb->get_results($sql,ARRAY_A);
 				for($i =0; $i < count($id_evento); $i++){
-					$evento = evento($id_evento[$i]['idEvento']);
-					$sql_o = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$id_evento[$i]['idEvento']."' AND publicado = '1'";
-					$o = $wpdb->get_results($sql_o,ARRAY_A);
 					
 					
-					?>
-					<input type="checkbox" name="re_<?php echo $id_evento[$i]['idEvento'];  ?>" <?php if($evento['revisado'] == 1){ echo "checked";} ?> > Revisado <br />
-					<input type='text' name='ti_<?php echo $id_evento[$i]['idEvento'];  ?>' class="form-control" value="<?php echo stripslashes($evento['titulo']) ?>">
-					<textarea name="si_<?php echo $id_evento[$i]['idEvento'];  ?>"  class="form-control" rows="10">
-<?php echo stripslashes($evento['sinopse']) ?>
-					</textarea>
-					
-					<?php  
-					for($w = 0; $w < count($o); $w++){
-						$ocor = ocorrencia($o[$w]['idOcorrencia']);
-						echo "<li>".$ocor['data']."<br />";
-						echo $ocor['local']."</li>";
+				$evento = evento($id_evento[$i]['idEvento']);
+				$sql_o = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$id_evento[$i]['idEvento']."' AND publicado = '1'";
+				$o = $wpdb->get_results($sql_o,ARRAY_A);
+						
+					if($_POST['revisado'] == 0){ //todos
+						
+						?>
+						<input type="checkbox" name="re_<?php echo $id_evento[$i]['idEvento'];  ?>" <?php if($evento['revisado'] == 1){ echo "checked";} ?> > Revisado <br />
+						<input type='text' name='ti_<?php echo $id_evento[$i]['idEvento'];  ?>' class="form-control" value="<?php echo stripslashes($evento['titulo']) ?>">
+						<textarea name="si_<?php echo $id_evento[$i]['idEvento'];  ?>"  class="form-control" rows="10">
+						<?php echo stripslashes($evento['sinopse']) ?>
+						</textarea>
+						
+						<?php  
+						for($w = 0; $w < count($o); $w++){
+							$ocor = ocorrencia($o[$w]['idOcorrencia']);
+							echo "<li>".$ocor['data']."<br />";
+							echo $ocor['local']."</li>";
 
+						}
+												echo "<hr>";
+					} else
+					if($_POST['revisado'] == '1'  AND $evento['revisado'] == '1'){ //somente os revisados
+					?>
+						<input type="checkbox" name="re_<?php echo $id_evento[$i]['idEvento'];  ?>" <?php if($evento['revisado'] == 1){ echo "checked";} ?> > Revisado <br />
+						<input type='text' name='ti_<?php echo $id_evento[$i]['idEvento'];  ?>' class="form-control" value="<?php echo stripslashes($evento['titulo']) ?>">
+						<textarea name="si_<?php echo $id_evento[$i]['idEvento'];  ?>"  class="form-control" rows="10">
+						<?php echo stripslashes($evento['sinopse']) ?>
+						</textarea>
+						
+						<?php  
+						for($w = 0; $w < count($o); $w++){
+							$ocor = ocorrencia($o[$w]['idOcorrencia']);
+							echo "<li>".$ocor['data']."<br />";
+							echo $ocor['local']."</li>";
+
+						}
+												echo "<hr>";
+							
+						
+					} else
+						
+					if($_POST['revisado'] == '2'  AND $evento['revisado'] == '0'){ //somente os revisados
+					?>
+						<input type="checkbox" name="re_<?php echo $id_evento[$i]['idEvento'];  ?>" <?php if($evento['revisado'] == 1){ echo "checked";} ?> > Revisado <br />
+						<input type='text' name='ti_<?php echo $id_evento[$i]['idEvento'];  ?>' class="form-control" value="<?php echo stripslashes($evento['titulo']) ?>">
+						<textarea name="si_<?php echo $id_evento[$i]['idEvento'];  ?>"  class="form-control" rows="10">
+						<?php echo stripslashes($evento['sinopse']) ?>
+						</textarea>
+						
+						<?php  
+						for($w = 0; $w < count($o); $w++){
+							$ocor = ocorrencia($o[$w]['idOcorrencia']);
+							echo "<li>".$ocor['data']."<br />";
+							echo $ocor['local']."</li>";
+
+						}
+						echo "<hr>";
+							
+						
 					}
-											echo "<hr>";
-				}
+
 				
+				}
 			}
 		}
 					?>
@@ -626,6 +683,129 @@ $url = $url_mapas."event/findByLocation";
 	</div>
 	</div>
 </section>	
+
+<?php 
+break;
+case "material":
+
+$mensagem = "";
+if(isset($_POST['gerar'])){
+	if($_POST['inicio'] == ""){
+		$mensagem .= alerta("É preciso inserir uma data inicial","warning");
+	}
+
+	if($_POST['fim'] == ""){
+		$mensagem .= alerta("É preciso inserir uma data final","warning");
+	}
+	
+	
+	
+	
+}
+
+$url_mapas = "http://culturaz.santoandre.sp.gov.br/api/";
+$url = $url_mapas."event/findByLocation";
+
+?>
+	<script type="text/javascript">
+	$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+</script>
+
+
+
+ <section id="inserir" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+
+                    <h3>Lista de Material</h3>
+                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
+
+			</div>
+		</div> 
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="?p=material" class="form-horizontal" role="form">
+
+					<div class="row">
+						<div class="col-6">
+							<label>Data Inicial</label>
+							<input type="text" class="form-control calendario" name="inicio"> 
+						</div>
+						<div class="col-6">
+							<label>Data Final</label>
+							<input type="text" class="form-control calendario" name="fim"> 
+						</div>
+					</div>	
+					<br />
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<input type="hidden" name="gerar" value="1" />
+							<?php 
+							?>
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Buscar eventos">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+		   <div class="col-md-offset-2 col-md-8">
+		<?php 
+		
+		
+	if(isset($_POST['inicio'])){
+	if($_POST['inicio'] != "" AND $_POST['fim'] != ""){
+
+		$inicio = exibirDataMysql($_POST['inicio']);
+		$fim = somarDatas(exibirDataMysql($_POST['fim']),"+1");
+		$sql = "SELECT DISTINCT sc_agenda.idEvento FROM sc_agenda, sc_evento WHERE data >= '".$inicio."' AND data <= '".$fim."' AND sc_evento.idEvento = sc_agenda.idEvento AND (sc_evento.status = '3' OR sc_evento.status = '4') ORDER BY data ASC";
+		$id_evento = $wpdb->get_results($sql,ARRAY_A);
+
+		for($i = 0; $i < count($id_evento); $i++){
+			$evento = evento($id_evento[$i]['idEvento']);
+			$x = producao($id_evento[$i]['idEvento']);
+			echo "<h3>".$evento['titulo']."</h3>";
+			echo "<br />";	
+			echo $evento['periodo']['legivel']." - ".$evento['local'] ;
+			echo "<hr>";
+
+
+				for($k = 0; $i < count($x); $k++){
+					
+					$y = retornaProducao($x[$k]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "com"){
+							if($x[$k]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$k]['valor']."</li>";
+							}
+						}
+					}
+					
+				}
+				
+				
+			
+			
+		}
+		
+		
+		
+		
+	}
+	}
+		?>
+		
+		</div>
+	</div>
+	</div>
+</section>	
+
 
 <?php 
 break;
