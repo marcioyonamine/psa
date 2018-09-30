@@ -9,8 +9,13 @@
 
 		  <?php //echo exibeHoje();?>
 <?php 
-	$dias = opcaoDados("lim_dias",0);
-$hoje = somarDatas(date('Y-m-d'),$dias['limite']);
+	$dias = opcaoDados("sistema",0);
+
+	echo "<pre>";
+	var_dump($dias);
+	echo "</pre>";
+	
+$hoje = somarDatas(date('Y-m-d'),$dias['dias']);
 echo $hoje;
 /*
 function ultimoDiaMes($m,$y){

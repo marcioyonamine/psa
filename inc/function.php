@@ -1704,7 +1704,7 @@ function verificaEvento($idEvento){
 
 	// Trava de data
 	$periodo = periodo($idEvento);
-	$dias = opcaoDados("lim_dias",0);
+	$dias = opcaoDados("sistema",0);
 	$hoje30 = somarDatas(date('Y-m-d'),"+30");
 	
 
@@ -1749,7 +1749,7 @@ function verificaEvento($idEvento){
 			//echo $hoje30." - ".$periodo['inicio'];
 
 		if(strtotime($hoje30) > strtotime($periodo['inicio'])){
-			$relatorio .= "O início do evento está a menos de ".$dias['limite']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
+			$relatorio .= "O início do evento está a menos de ".$dias['dias']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
 			$r++;	
 		}
 	}
