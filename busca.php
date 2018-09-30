@@ -178,7 +178,7 @@ case "view":
 
 		}
 		?>
-
+<hr>
 					<h4>Produção</h4>
 
 				<?php 
