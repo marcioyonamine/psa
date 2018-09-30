@@ -168,7 +168,7 @@ case "view":
 		<p>CulturAZ: <a href='<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?>' ><?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?></a>
 		<?php } ?>
 		
-		
+					<h4>Infraestrutura ATA</h4>		
 		<?php 
 
 		if(retornaInfra($_GET['id']) != NULL){
@@ -178,6 +178,67 @@ case "view":
 
 		}
 		?>
+
+					<h4>Produção</h4>
+
+				<?php 
+				$x = producao($_GET['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "infra"){
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
+						}
+					}
+					
+				}
+				
+				
+				?>
+			
+			<hr>
+			<h4>Comunicação</h4>
+				<?php 
+				$x = producao($_GET['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "com"){
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
+						}
+					}
+					
+				}
+				
+				
+				?>
+			<hr>
+			<h4>Apoio</h4>
+				<?php 
+				$x = producao($_GET['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "apoio"){
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
+						}
+					}
+					
+				}
+				
+				
+				?>
+			
+		 <hr>
 		
 		
 	</div>
@@ -310,9 +371,7 @@ case "view":
 		<br />
 
 		<?php 
-			echo "<pre>";
-			var_dump($pessoa);
-			echo "</pre>";
+
 			?>
 	</div>
 	</div>

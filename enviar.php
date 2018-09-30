@@ -175,7 +175,9 @@ $evento = evento($_SESSION['id']);
 					$y = retornaProducao($x[$i]['id_lista_producao']);
 					if($y != false){					
 						if($y['tipo'] == "infra"){
-						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
 						}
 					}
 					
@@ -193,7 +195,9 @@ $evento = evento($_SESSION['id']);
 					$y = retornaProducao($x[$i]['id_lista_producao']);
 					if($y != false){					
 						if($y['tipo'] == "com"){
-						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
 						}
 					}
 					
@@ -210,7 +214,9 @@ $evento = evento($_SESSION['id']);
 					$y = retornaProducao($x[$i]['id_lista_producao']);
 					if($y != false){					
 						if($y['tipo'] == "apoio"){
-						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
 						}
 					}
 					
