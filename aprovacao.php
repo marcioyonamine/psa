@@ -291,533 +291,308 @@ case "foradeprazo":
  
 
 	 
-<?php 	 
-break;	 
- case "inserir":
- if(isset($_SESSION['id'])){
-	unset($_SESSION['id']);
-}
 
- ?>
-
- <script type="application/javascript">
-	$(function()
-	{
-		$('#programa').change(function()
-		{
-			if( $(this).val() )
-			{
-				$('#projeto').hide();
-				$('.carregando').show();
-				$.getJSON('inc/projeto.ajax.php?programa=',{programa: $(this).val(), ajax: 'true'}, function(j)
-				{
-					var options = '<option value="0"></option>';	
-					for (var i = 0; i < j.length; i++)
-					{
-						options += '<option value="' + j[i].id + '">' + j[i].projeto + '</option>';
-					}	
-					$('#projeto').html(options).show();
-					$('.carregando').hide();
-				});
-			}
-			else
-			{
-				$('#projeto').html('<option value="">-- Escolha um projeto --</option>');
-			}
-		});
-	});
-</script>
- 
- <section id="inserir" class="home-section bg-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-
-                    <h3>Evento - Informações Gerais</h3>
-                    <h1></h1>
-                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
-            </div>
-		</div> 
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<!--<input type="checkbox" name="planejamento" id="subEvento" <?php //checar($campo['subEvento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>-->
-						</div>
-					</div>
-				<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Nome do Evento *</label>
-							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value=""/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Programa</label>
-							<select class="form-control" name="programa" id="programa" >
-								<?php geraTipoOpcao("programa") ?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Projeto</label>
-							<select class="form-control" name="projeto" id="projeto" >
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Linguagem principal *</label>
-							<select class="form-control" name="linguagem" id="inputSubject" >
-								<?php geraTipoOpcao("linguagens") ?>
-							</select>					
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Tipo de evento *</label>
-							<select class="form-control" name="tipo_evento" id="inputSubject" >
-								<?php geraTipoOpcao("tipo_evento") ?>
-							</select>					
-						</div>
-					</div>
-					<div class="form-group">
-						<br />
-						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
-						<div class="col-md-offset-2">
-							<label>Primeiro responsável (Fiscal)</label>
-							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario();	?>							
-							</select>	                
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Segundo responsável (Suplente)</label>
-							<select class="form-control" name="suplente" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario();	?>							
-
-								</select>	
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Autor*</label>
-							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value=""/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Cidade do Autor/Grupo/Artista</label>
-							<select class="form-control" name="artista_cidade" id="inputSubject" >
-															<option></option>
-								<?php geraTipoOpcao("artista_local") ?>
-							</select>
-						</div>
-					</div>					
-					
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Outra cidade</label>
-							<input type="text" name="outra_cidade" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Número de agentes envolvidos</label>
-							<input type="text" name="n_agentes" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Número de agentes envolvidos Santo André e Região</label>
-							<input type="text" name="n_agentes_abc" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Número de Inscrição CulturAZ (caso tenha sido selecionado via plataforma)</label>
-							<input type="text" name="inscricao" class="form-control" maxlength="100" id="inputSubject" placeholder="" value=""/>
-						</div> 
-					</div>
-					
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Ficha técnica completa*</label>
-							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php ////echo $campo["fichaTecnica"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Classificação/indicação etária</label>
-							<select class="form-control" name="faixaEtaria" id="inputSubject" >
-								<?php geraTipoOpcao("faixa_etaria") ?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Sinopse *</label>
-							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php //echo $campo["sinopse"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Release *</label>
-							<textarea name="releaseCom" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php ////echo $campo["releaseCom"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Links </label>
-							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php ////echo $campo["linksCom"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<input type="hidden" name="inserir" value="1" />
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</section>
-
-
-
-<?php 
-break;
+<?php
+break ;
 case "editar":
 
-	global $wpdb;	
-	
-	if(isset($_SESSION['id'])){
-		$id = $_SESSION['id'];
-		$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
-		$evento = $wpdb->get_row($sql_select,ARRAY_A);
-	}
-
-	if(isset($_POST['atualizar']) OR isset($_POST['inserir'])){
-		$nomeEvento = addslashes($_POST["nomeEvento"]);
-		$programa    = $_POST["programa"];
-		$linguagem    = $_POST["linguagem"];
-		$tipo_evento = $_POST["tipo_evento"];
-		$projeto = $_POST["projeto"];
-		$nomeResponsavel = $_POST["nomeResponsavel"];
-		$suplente = $_POST["suplente"];
-		$autor = addslashes($_POST["autor"]);
-		$nomeGrupo = addslashes($_POST["nomeGrupo"]);
-		$fichaTecnica = addslashes($_POST["fichaTecnica"]);
-		$faixaEtaria = $_POST["faixaEtaria"];
-		$sinopse = addslashes($_POST["sinopse"]);
-		$releaseCom = addslashes($_POST["releaseCom"]);
-		$linksCom = addslashes($_POST["linksCom"]);
-		$artista_cidade = $_POST['artista_cidade'];
-		$outra_cidade = $_POST['outra_cidade'];
-		$n_agentes = $_POST['n_agentes'];
-		$n_agentes_abc = $_POST['n_agentes_abc'];
-		$inscricao = $_POST['inscricao'];
-		
-		
-
-		if(isset($_POST['subEvento'])){
-			$subEvento = $_POST['subEvento'];
-		}else{
-			$subEvento = NULL;
-		}
-		if(isset($_POST['planejamento'])) : $planejamento = 1; else: $planejamento = NULL; endif;
-	}
-	
-	if(isset($_POST['carregar'])){
-		$id = $_POST['carregar'];
-		$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
-		$evento = $wpdb->get_row($sql_select,ARRAY_A);	
-		$_SESSION['id'] = $id;
-	}
-	
-	$idUser = $user->ID;
-	
-
-	// Inserir evento
-	if(isset($_POST['inserir'])){
-		$sql = "INSERT INTO `sc_evento` (`idEvento`, `idTipo`, `idPrograma`, `idProjeto`, `idLinguagem`, `nomeEvento`, `idResponsavel`, `idSuplente`, `autor`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `subEvento`, `dataEnvio`, `ocupacao`, `planejamento`, `artista_local`, `cidade`, `n_agentes`, `n_agentes_abc`, `inscricao` ) 
-		VALUES (NULL, '$tipo_evento', '$programa', '$projeto', '$linguagem', '$nomeEvento', '$nomeResponsavel', '$suplente', '$autor', '$nomeGrupo', '$fichaTecnica', '$faixaEtaria', '$sinopse', '$releaseCom', '1', '$idUser', '$linksCom', 'subEvento', NULL, NULL, '$planejamento','$artista_cidade','$outra_cidade', '$n_agentes','$n_agentes_abc','$inscricao')";		
-		$ins = $wpdb->query($sql);
-		if($ins){
-			$mensagem = "Inserido com sucesso";
-			$id = $wpdb->insert_id;
-			$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$id'";
-			$evento = $wpdb->get_row($sql_select,ARRAY_A);
-			$_SESSION['id'] = $evento['idEvento'];
-			gravarLog($sql, $user->ID);
-			
-		}else{
-			$mensage = "Erro ao inserir";
-			gravarLog($sql, $user->ID);
-			
-		}
-		
-	}
-
-	if(isset($_POST['atualizar'])){
-	$atualizar    = $_POST["atualizar"];	
-		$sql_atualizar = "UPDATE sc_evento SET
-		`idTipo` = '$tipo_evento',
-		`idPrograma` = '$programa' ,
-		`idProjeto` =  '$projeto',
-		`idLinguagem` = '$linguagem',
-		`nomeEvento` = '$nomeEvento',
-		`idResponsavel` = '$nomeResponsavel',
-		`idSuplente` = '$suplente',
-		`autor` = '$autor',
-		`nomeGrupo` = '$nomeGrupo',
-		`fichaTecnica` = '$fichaTecnica',
-		`faixaEtaria` = '$faixaEtaria',
-		`sinopse` = '$sinopse',
-		`releaseCom` = '$releaseCom',
-		`linksCom` = '$linksCom',
-		`planejamento` = '$planejamento',
-		`subEvento` = '$subEvento',
-		`artista_local` = '$artista_cidade',
-		`cidade` = '$outra_cidade',
-		`n_agentes` = '$n_agentes',
-		`n_agentes_abc` = '$n_agentes_abc',
-		`inscricao` = '$inscricao'
-		
-		WHERE `idEvento` = '$atualizar';
-		";
-		$atual = $wpdb->query($sql_atualizar);
-		$sql_select = "SELECT * FROM sc_evento WHERE idEvento = '$atualizar'";
-		$evento = $wpdb->get_row($sql_select,ARRAY_A);
-		$_SESSION['id'] = $evento['idEvento'];
-		
-		if($atual == 1){
-			$mensagem = alerta("Evento atualizado com sucesso.","success");
-			gravarLog($sql_atualizar, $user->ID);
-		}else{
-			//$mensagem = "Erro ao atualizar.";
-		}
-
-	}
-	
-
-	
-	
 ?>
- <script type="application/javascript">
-	$(function()
-	{
-		$('#programa').change(function()
-		{
-			if( $(this).val() )
-			{
-				$('#projeto').hide();
-				$('.carregando').show();
-				$.getJSON('inc/projeto.ajax.php?programa=',{programa: $(this).val(), ajax: 'true'}, function(j)
-				{
-					var options = '<option value="0"></option>';	
-					for (var i = 0; i < j.length; i++)
-					{
-						options += '<option value="' + j[i].id + '">' + j[i].projeto + '</option>';
-					}	
-					$('#projeto').html(options).show();
-					$('.carregando').hide();
-				});
-			}
-			else
-			{
-				$('#projeto').html('<option value="">-- Escolha um projeto --</option>');
-			}
-		});
-	});
+  <link href="css/jquery-ui.css" rel="stylesheet">
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/mask.js"></script>
+ <script src="js/maskMoney.js"></script> 
+ <script>
+$(function() {
+    $( ".calendario" ).datepicker();
+	$( ".hora" ).mask("99:99");
+	$( ".min" ).mask("999");
+	$( ".valor" ).maskMoney({prefix:'', thousands:'.', decimal:',', affixesStay: true});
+});
+
+
+
 </script>
+ 
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+ <?php 
 
- <section id="inserir" class="home-section bg-white">
+$evento = evento($_POST['carregar']);
+
+
+
+
+
+?>
+
+<section id="contact" class="home-section bg-white">
     <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
+				<h3>Status </h3>
+					<h1><?php echo $evento['objeto'];?></h1>
+					<h2><?php if(isset($mensagem)){echo $mensagem;} ?></h2>
+					<p>O evento está com status de Rascunho. Para que o responsável pela aprovação analise seu evento é preciso mudar o status para "Planejado" clicando no botão abaixo. Caso esteja disponível é porque algum campo obrigatório não foi completado.</p>
+				</div>
+        </div>
+        <div class="row">    
+				<div class="col-md-offset-2 col-md-8">
 
-                    <h3>Evento - Informações Gerais</h3>
-                    <h4><?php if(isset($mensagem)){ echo $mensagem;} ?></h4>
 
-			</div>
-		</div> 
+				</ul>
+				<p>Se houver alguma pendência, o sistema não permitirá o envio.</p>
+				</div>
+        </div>
+		<br /><br />
+		
+		
+		
+		<?php 
+		if(isset($_SESSION['entidade'])){
+		//verifica se todos os campos obrigatórios foram atualizados
+			switch($_SESSION['entidade']){
+			case 'evento':
+			
+			$evento = evento($_POST['carregar']);
+			?>
+<hr>			
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<!--<input type="checkbox" name="planejamento" id="subEvento" <?php checar($evento['planejamento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>-->
-						</div>
-					</div>
+			<h3>Dados do Evento</h3>
+			<br />
+			<p>Programa: <?php echo $evento['programa']; ?></p>
+			<p>Projeto: <?php echo $evento['projeto']; ?></p>
+			<p>Linguagem principal: <?php echo $evento['linguagem']; ?></p>
+			<p>Responsável: <?php echo $evento['responsavel']; ?></p>
+			<p>Autor/Artista: <?php echo $evento['autor']; ?></p>
+			<p>Ficha técnica: <?php echo $evento['grupo']; ?></p>
+			<p>Classificação etária: <?php echo $evento['faixa_etaria']; ?></p>
+			<p>Sinopse: <br /><?php echo $evento['sinopse']; ?></p>
+			<p>Release: <br /><?php echo $evento['release']; ?></p>
+			<p>Links: <?php //echo $evento['links']; ?></p>
+			<p>Ocorrências:<br /> <?php
+			$sql_lista_ocorrencia = "SELECT idOcorrencia FROM sc_ocorrencia WHERE idEvento = '".$_POST['carregar']."' AND publicado = '1'";
+			$res = $wpdb->get_results($sql_lista_ocorrencia,ARRAY_A);
+			if(count($res)){
+				for($i = 0; $i < count($res); $i++){
+					$ocorrencia = ocorrencia($res[$i]['idOcorrencia']);
+					echo $ocorrencia['tipo']."<br />";
+					echo $ocorrencia['data']."<br />";
+					echo $ocorrencia['local']."<br /><br />";
+					
+					}
+				
+			}else{
+				echo "Não há ocorrências cadastradas.";
+				
+			}
+			
+			
 
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Nome do Evento *</label>
-							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $evento['nomeEvento']; ?>"/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Programa</label>
-							<select class="form-control" name="programa" id="programa" >
-								<?php geraTipoOpcao("programa",$evento['idPrograma']) ?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Projeto</label>
-							<select class="form-control" name="projeto" id="projeto" >
-								<?php geraTipoOpcao("projeto",$evento['idProjeto']) ?>								
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Linguagem principal *</label>
-							<select class="form-control" name="linguagem" id="inputSubject" >
-								<?php geraTipoOpcao("linguagens",$evento['idLinguagem']) ?>
-							</select>					
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Tipo de evento *</label>
-							<select class="form-control" name="tipo_evento" id="inputSubject" >
-								<?php geraTipoOpcao("tipo_evento",$evento['idTipo']) ?>
-							</select>					
-						</div>
-					</div>
-					<div class="form-group">
-						<br />
-						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
-						<div class="col-md-offset-2">
-							<label>Primeiro responsável (Fiscal)</label>
-							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
-								<option value="0"></option>	
-								<?php geraOpcaoUsuario($evento['idResponsavel'])	?>							
-
-								</select>	                
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Segundo responsável (Suplente)</label>
-							<select class="form-control" name="suplente" id="inputSubject" >
-								<option value="0"></option>
-								<?php geraOpcaoUsuario($evento['idSuplente'])	?>							
-
-								</select>	
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Autor*</label>
-							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."><?php echo $evento['autor']; ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $evento['nomeGrupo']; ?>"/>
-						</div> 
-					</div>
-										<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Cidade do Autor/Grupo/Artista</label>
-							<select class="form-control" name="artista_cidade" id="inputSubject" >
-								<option></option>
-								<?php geraTipoOpcao("artista_local",$evento['artista_local']) ?>
-							</select>
-						</div>
-					</div>					
-					
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Outra cidade</label>
-							<input type="text" name="outra_cidade" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['cidade']; ?>"/>
-						</div> 
-					</div>
-					
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Número de agentes envolvidos</label>
-							<input type="text" name="n_agentes" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['n_agentes']; ?>"/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Número de agentes envolvidos Santo André e Região</label>
-							<input type="text" name="n_agentes_abc" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['n_agentes_abc']; ?>"/>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Número de Inscrição CulturAZ (caso tenha sido selecionado via plataforma)</label>
-							<input type="text" name="inscricao" class="form-control" maxlength="100" id="inputSubject" placeholder="" value="<?php echo $evento['inscricao']; ?>"/>
-						</div> 
-					</div>
-					
-					
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Ficha técnica completa*</label>
-							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php echo $evento["fichaTecnica"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Classificação/indicação etária</label>
-							<select class="form-control" name="faixaEtaria" id="inputSubject" >
-								<?php geraTipoOpcao("faixa_etaria",$evento['faixaEtaria']) ?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Sinopse *</label>
-							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php echo $evento["sinopse"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Release *</label>
-							<textarea name="releaseCom" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo $evento["releaseCom"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<label>Links </label>
-							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php echo $evento["linksCom"] ?></textarea>
-						</div> 
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<input type="hidden" name="atualizar" value="<?php echo $evento['idEvento']; ?>" />
+			
+			
+			
+			//echo $evento['']; ?></p>
+			<hr>
+			<h3>Pedidos de Contratação</h3>
+				<?php 
+		$ped = listaPedidos($_POST['carregar'],'evento');
+		//var_dump($ped);
+		for($i = 0; $i < count($ped); $i++){
+			$pedido = retornaPedido($ped[$i]['idPedidoContratacao']);
+			?>
+	<div class="row">
+	<div class="col-md-offset-1 col-md-10">
+	<p><br />
+	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome/Razão Social:</b> <a href="busca.php?p=view&tipo=pj&id=<?php echo $ped[$i]['idPessoa']?>" ><?php echo $ped[$i]['nome'] ?> </a>/ <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><a style="text-decoration: underline;"><?php echo $pedido['valor'] ?></a>  
+	<?php 
+	$cont = retornaContabil($pedido['nProcesso']);
+	if(count($cont > 0)){
+		for($k = 0; $k < count($cont);$k++){
+		?>
+		/ <b>Processo: </b><?php echo $cont[$k]['nProcesso']; ?>/ <b>Número da Liberação:  </b> <?php echo $pedido['nLiberacao'] ?>/ <b>Número do Empenho: </b><?php echo $cont[$k]['empenho']; ?> / <b>Ordem de Pagamento: </b><?php echo dinheiroParaBr($cont[$k]['v_op_baixado']); ?><br />
+		
+		<?php 
+		}
+	}
+	
+	?>
+	
+	
+	</li>
+	
+	
+		<?php //var_dump($ped); ?>	
+		<?php } ?>
+			
+			<hr>
+			<h3>Infraestrutura ATA</h3>
 							<?php 
-							?>
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar">
-						</div>
-					</div>
-				</form>
+
+		if(retornaInfra($_SESSION['id']) != NULL){
+			echo retornaInfra($_SESSION['id']);
+			echo "</p>";
+
+		}
+
+		$valor = infraAta($_SESSION['id']);
+
+		?>
+		 <br />
+					<?php 
+					for($i = 0; $i < count($valor) - 1; $i++){
+					?>
+					<?php if($valor[$i]['total'] != 0){ ?>
+					<p><?php echo $valor[$i]['razao_social']?> : <?php echo dinheiroParaBr($valor[$i]['total']); ?> </p>
+					<?php } ?>
+
+					<?php	
+					}
+					?>	
+		 Total:<a style="text-decoration: underline;"><?php echo dinheiroParaBr($valor['total']);?> </a>
+			<hr>
+			<h3>Produção</h3>
+
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "infra"){
+						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+						}
+					}
+					
+				}
+				
+				
+				?>
+			
+			<hr>
+			<h3>Comunicação</h3>
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "com"){
+						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+						}
+					}
+					
+				}
+				
+				
+				?>
+			<hr>
+			<h3>Apoio</h3>
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "apoio"){
+						echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+						}
+					}
+					
+				}
+				
+				
+				?>
+			
+		 <hr>
+			<h3>Arquivos</h3>
+			<br /> <?php $arquivo = listaArquivos("evento",$_SESSION['id']); 
+		
+			for($i = 0; $i < count($arquivo); $i++){
+				echo "<a href='upload/".$arquivo[$i]['arquivo']."' target='_blank' >".$arquivo[$i]['arquivo']."</a><br />";	
+				
+			}
+			
+			
+			
+			?></p>
+	
 			</div>
+		</div>  
+		
+
+<hr>
+		<br /><br />
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			<h3>Pendências</h3>
+			<?php $pendencia = verificaEvento($_SESSION['id']);
+			if($pendencia['erros'] == 0){
+				echo "<p>Não há pendencias.</p>";
+				if($evento['dataEnvio'] == NULL){
+				?>
+				
+				
+			<form action="evento.php" method="POST" class="form-horizontal">
+			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Mudar Status do evento para 'Planejado'" />
+			</form>	
+			
+				<?php }else{
+				echo "<h4>Evento enviado ao sistema.</h4>";	
+					
+				}
+				
+			}else{
+				echo "<p>".$pendencia['relatorio']."</p>";		
+			}
+			
+			
+
+			?>
+
+			</div>
+		</div>  		
+
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			<?php if($evento['planejamento'] == 1){ ?>
+			<form action="?" method="POST" class="form-horizontal">
+			<input type="submit" class="btn btn-theme btn-lg btn-block" name="agenda" value="Atualizar Agenda" />
+			</form>
+
+			<?php } ?>
+			</div>
+		</div>  
+			
+			
+			
+			
+			
+			
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+			<?php if($evento['planejamento'] == 1){ ?>
+			<form action="?" method="POST" class="form-horizontal">
+			<input type="submit" class="btn btn-theme btn-lg btn-block" name="agenda" value="Atualizar Agenda" />
+			</form>
+
+			<?php } ?>
+			</div>
+		</div>  
+			
+			
+			
+			<?php
+			break;
+			}
+		?>
+
+		<?php
+		}
+		?>
+		
 		</div>
-	</div>
 </section>
+
 
 
 <?php 
