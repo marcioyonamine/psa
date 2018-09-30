@@ -428,13 +428,13 @@ $evento = evento($_POST['carregar']);
 			<h3>Infraestrutura ATA</h3>
 							<?php 
 
-		if(retornaInfra($_SESSION['id']) != NULL){
-			echo retornaInfra($_SESSION['id']);
+		if(retornaInfra($_POST['carregar']) != NULL){
+			echo retornaInfra($_POST['carregar']);
 			echo "</p>";
 
 		}
 
-		$valor = infraAta($_SESSION['id']);
+		$valor = infraAta($_POST['carregar']);
 
 		?>
 		 <br />
@@ -453,7 +453,7 @@ $evento = evento($_POST['carregar']);
 			<h3>Produção</h3>
 
 				<?php 
-				$x = producao($_SESSION['id']);
+				$x = producao($_POST['carregar']);
 				for($i = 0; $i < count($x); $i++){
 					
 					$y = retornaProducao($x[$i]['id_lista_producao']);
@@ -471,7 +471,7 @@ $evento = evento($_POST['carregar']);
 			<hr>
 			<h3>Comunicação</h3>
 				<?php 
-				$x = producao($_SESSION['id']);
+				$x = producao($_POST['carregar']);
 				for($i = 0; $i < count($x); $i++){
 					
 					$y = retornaProducao($x[$i]['id_lista_producao']);
@@ -488,7 +488,7 @@ $evento = evento($_POST['carregar']);
 			<hr>
 			<h3>Apoio</h3>
 				<?php 
-				$x = producao($_SESSION['id']);
+				$x = producao($_POST['carregar']);
 				for($i = 0; $i < count($x); $i++){
 					
 					$y = retornaProducao($x[$i]['id_lista_producao']);
@@ -505,7 +505,7 @@ $evento = evento($_POST['carregar']);
 			
 		 <hr>
 			<h3>Arquivos</h3>
-			<br /> <?php $arquivo = listaArquivos("evento",$_SESSION['id']); 
+			<br /> <?php $arquivo = listaArquivos("evento",$_POST['carregar']); 
 		
 			for($i = 0; $i < count($arquivo); $i++){
 				echo "<a href='upload/".$arquivo[$i]['arquivo']."' target='_blank' >".$arquivo[$i]['arquivo']."</a><br />";	
@@ -525,7 +525,7 @@ $evento = evento($_POST['carregar']);
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<h3>Pendências</h3>
-			<?php $pendencia = verificaEvento($_SESSION['id']);
+			<?php $pendencia = verificaEvento($_POST['carregar']);
 			if($pendencia['erros'] == 0){
 				echo "<p>Não há pendencias.</p>";
 				if($evento['dataEnvio'] == NULL){
