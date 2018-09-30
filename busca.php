@@ -167,7 +167,7 @@ case "view":
 		<?php if($evento['mapas']['id'] != 0){ ?>
 		<p>CulturAZ: <a href='<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?>' ><?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']['id']; ?></a>
 		<?php } ?>
-		
+		<hr>
 					<h4>Infraestrutura ATA</h4>		
 		<?php 
 
@@ -251,7 +251,7 @@ case "view":
 			?>
 	<div class="row">
 	<div class="col-md-offset-1 col-md-10">
-	<p><b>Pedidos Relacionados</b><br />
+	<h4><b>Pedidos Relacionados</h4><br />
 	<li><b>Tipo:</b> <?php echo $ped[$i]['tipo'] ?>  / <b>Nome/Razão Social:</b> <a href="busca.php?p=view&tipo=pj&id=<?php echo $ped[$i]['idPessoa']?>" ><?php echo $ped[$i]['nome'] ?> </a>/ <b>Projeto/Ficha:</b> <?php echo $pedido['projeto'] ?>/<?php echo $pedido['ficha'] ?>  / <b>Valor: </b><?php echo $pedido['valor'] ?> / 
 	<?php 
 	$cont = retornaContabil($pedido['nProcesso']);
