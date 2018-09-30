@@ -528,12 +528,16 @@ $evento = evento($_POST['carregar']);
 			<?php $pendencia = verificaEvento($_POST['carregar']);
 			if($pendencia['erros'] == 0){
 				echo "<p>Não há pendencias.</p>";
-				if($evento['dataEnvio'] == NULL){
-				?>
+			}else{
+				echo "<p>".$pendencia['relatorio']."</p>";		
+			}
+				
+			if($evento['dataEnvio'] == NULL){
+			?>
 				
 				
 			<form action="evento.php" method="POST" class="form-horizontal">
-			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Mudar Status do evento para 'Planejado'" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Mudar Status do evento para 'Aprovado'" />
 			</form>	
 			
 				<?php }else{
@@ -541,9 +545,6 @@ $evento = evento($_POST['carregar']);
 					
 				}
 				
-			}else{
-				echo "<p>".$pendencia['relatorio']."</p>";		
-			}
 			
 			
 
