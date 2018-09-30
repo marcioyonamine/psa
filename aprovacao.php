@@ -228,7 +228,7 @@ if(isset($_POST['enviar'])){
 	$idEvento = $_POST['idEvento'];
 	$hoje = date("Y-m-d H:i:s");
 	global $wpdb;
-	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje', status = '2' WHERE idEvento = '$idEvento'";
+	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje', status = '3' WHERE idEvento = '$idEvento'";
 	$upd = $wpdb->query($sql_enviar);
 	if($upd == 1){
 		atualizarAgenda($idEvento);
