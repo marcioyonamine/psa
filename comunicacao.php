@@ -703,9 +703,6 @@ if(isset($_POST['gerar'])){
 	
 }
 
-$url_mapas = "http://culturaz.santoandre.sp.gov.br/api/";
-$url = $url_mapas."event/findByLocation";
-
 ?>
 	<script type="text/javascript">
 	$(function() {
