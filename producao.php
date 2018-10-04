@@ -57,76 +57,92 @@ case "inicio":
         </div>
           <div class="table-responsive">
 		  
-			<h3>Infraestrutura ATA</h3>	
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-				  <th></th>
+			<h3>Infraestrutura ATA</h3>
+							<?php 
 
-				  </tr>
-              </thead>
-              <tbody>
+		if(retornaInfra($_SESSION['id']) != NULL){
+			echo retornaInfra($_SESSION['id']);
+			echo "</p>";
 
-              </tbody>
-            </table>
-			<br />
-			<h3>Infraestrutura</h3>	
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-				  <th></th>
+		}
 
-				  </tr>
-              </thead>
-              <tbody>
-<?php 
-$infra = infraAta($_SESSION['id']);
-echo "<pre>";
-var_dump($infra);
-echo "</pre>";
+		$valor = infraAta($_SESSION['id']);
 
- ?>
-              </tbody>
-            </table>
-			<br />
-			<h3>Comunicação</h3>	
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-				  <th></th>
+		?>
+		 <br />
+					<?php 
+					for($i = 0; $i < count($valor) - 1; $i++){
+					?>
+					<?php if($valor[$i]['total'] != 0){ ?>
+					<p><?php echo $valor[$i]['razao_social']?> : <?php echo dinheiroParaBr($valor[$i]['total']); ?> </p>
+					<?php } ?>
 
-				  </tr>
-              </thead>
-              <tbody>
+					<?php	
+					}
+					?>	
+		 Total:<a style="text-decoration: underline;"><?php echo dinheiroParaBr($valor['total']);?> </a>
+			<hr>
+			<h3>Produção</h3>
 
-              </tbody>
-            </table>
-			<br />
-			<h3>Apoio Institucional</h3>	
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-				  <th></th>
-
-				  </tr>
-              </thead>
-              <tbody>
-
-              </tbody>
-            </table>
-			<br />
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "infra"){
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
+						}
+					}
+					
+				}
+				
+				
+				?>
 			
-			</div>
+			<hr>
+			<h3>Comunicação</h3>
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "com"){
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
+						}
+					}
+					
+				}
+				
+				
+				?>
+			<hr>
+			<h3>Apoio</h3>
+				<?php 
+				$x = producao($_SESSION['id']);
+				for($i = 0; $i < count($x); $i++){
+					
+					$y = retornaProducao($x[$i]['id_lista_producao']);
+					if($y != false){					
+						if($y['tipo'] == "apoio"){
+							if($x[$i]['valor'] != ""){	
+								echo "<li>".$y['titulo']." : ".$x[$i]['valor']."</li>";
+							}
+						}
+					}
+					
+				}
+				
+				
+				?>
 
 		</div>
+	</div>	
 </section>		
 
 <?php 

@@ -315,7 +315,7 @@ $evento = evento($_SESSION['id']);
 		</div>
 </section>
 
- 
+ <br /><br />
 	 
 <?php 	 
 break;	 
