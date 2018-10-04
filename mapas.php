@@ -78,7 +78,8 @@ if(isset($_POST['enviar'])){  // envia
 		
 		
 		for($i = 0; $i < count($oc); $i++){
-
+			
+			
 			$oc_le = ocorrencia($event['mapas']['ocorrencia']['idOcorrencia']);
 			
 

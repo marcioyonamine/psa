@@ -536,6 +536,7 @@ function evento($id){
 	
 	$evento = array(
 		'titulo' => $res['nomeEvento'],
+		'idTipo' => $res['idTipo'],
 		'programa' => $programa['tipo'],
 		'projeto' => $projeto['tipo'],
 		'linguagem' => $linguagem['tipo'],
@@ -1763,7 +1764,7 @@ function verificaEvento($idEvento){
 		}
 			//echo $hoje30." - ".$periodo['inicio'];
 
-		if(strtotime($hoje30) > strtotime($periodo['inicio'])){
+		if((strtotime($hoje30) > strtotime($periodo['inicio'])) AND $evento['idTipo'] != 700 AND $evento['idTipo'] != 57 AND $evento['idTipo'] != 710 ){ //700 reunião fechada, 57 reunião, 710 okupa cultura
 			$relatorio .= "O início do evento está a menos de ".$dias['dias']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
 			$r++;	
 		}
