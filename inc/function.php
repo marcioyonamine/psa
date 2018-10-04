@@ -560,7 +560,8 @@ function evento($id){
 		'aprovacao' => $user_aprovacao,
 		'revisado' => $res['revisado'],
 		'dataEnvio' => $res['dataEnvio'],
-		'previsto' => $res['previsto']
+		'previsto' => $res['previsto'],
+		'cidade' => $res['cidade']
 	);
 
 	
