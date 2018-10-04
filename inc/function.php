@@ -561,7 +561,8 @@ function evento($id){
 		'revisado' => $res['revisado'],
 		'dataEnvio' => $res['dataEnvio'],
 		'previsto' => $res['previsto'],
-		'cidade' => $res['cidade']
+		'cidade' => $res['cidade'],
+		'descricao' => $res['descricao']
 	);
 
 	
@@ -570,7 +571,7 @@ function evento($id){
 		'id' => $res['mapas'],
 		'name' => $res['nomeEvento'],
 		'shortDescription' => substr($res['sinopse'],0,390)."...",
-		'longDescription' => $res['releaseCom'],
+		'longDescription' => $res['descricao'],
 		'classificaoEtaria' => $etaria['tipo'],
 	);
 	
@@ -590,7 +591,12 @@ function evento($id){
 			$evento['mapas']['ocorrencia'][$i]['startsAt'] = substr($res_oc[$i]['horaInicio'],0,5);
 			$evento['mapas']['ocorrencia'][$i]['duration'] = $res_oc[$i]['duracao'];
 			$evento['mapas']['ocorrencia'][$i]['until'] = '';
-			$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			if($oc_legivel['descricao'] == ''){
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			}else{
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['descricao'];
+				
+			}
 			if($res_oc[$i]['valorIngresso'] == 0){
 				$evento['mapas']['ocorrencia'][$i]['price'] = "Grátis";
 			}else{
@@ -603,7 +609,12 @@ function evento($id){
 			$evento['mapas']['ocorrencia'][$i]['startsAt'] = substr($res_oc[$i]['horaInicio'],0,5);
 			$evento['mapas']['ocorrencia'][$i]['duration'] = $res_oc[$i]['duracao'];
 			$evento['mapas']['ocorrencia'][$i]['until'] = $res_oc[$i]['dataFinal'];
-			$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			if($oc_legivel['descricao'] == ''){
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			}else{
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['descricao'];
+				
+			}
 			if($res_oc[$i]['valorIngresso'] == 0){
 				$evento['mapas']['ocorrencia'][$i]['price'] = "Grátis";
 			}else{
@@ -638,6 +649,7 @@ function evento($id){
 			
 		}
 	}
+	
 	
 	return $evento;
 }
@@ -748,7 +760,8 @@ function ocorrencia($id){
 	$ocorrencia = array(
 		'tipo' => $tipo,
 		'data' =>  $data,
-		'local' => $local['tipo']
+		'local' => $local['tipo'],
+		'descricao' => $oc['descricao']
 	);
 	
 	return $ocorrencia;
@@ -1306,7 +1319,7 @@ function retornaPedido($id){
 	if($res_tipo['idEvento'] != 0){
 	
 	
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo, nLiberacao, nProcesso,  sc_evento.dataEnvio  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo, nLiberacao, nProcesso,  sc_evento.dataEnvio, sc_evento.descricao  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
@@ -1396,6 +1409,7 @@ function retornaPedido($id){
 	$x['nLiberacao'] = $res['nLiberacao'];
 	$x['nProcesso'] = $res['nProcesso'];
 	$x['dataEnvio'] = $res['dataEnvio'];
+	$x['descricao'] = $res['descricao'];
 	return $x;
 	}
 	

@@ -188,6 +188,12 @@ $(function() {
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
+						<label>Descricao</label>
+						<input type="text" class="form-control" name="descricao"  />
+						</div>
+					</div>							
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
 						<input type="hidden" name="inserir" value="1" />
 							<button type="submit" class="btn btn-theme btn-lg btn-block">Inserir ocorrência</button>
 						</div>
@@ -214,7 +220,8 @@ if(isset($_POST['editar']) OR isset($_POST['inserir'])){
 	$retiradaIngresso   = $_POST["retiradaIngresso"];
 	$local   = $_POST["local"];
 	$ingressos   = $_POST["ingressos"];
-
+	$descricao   = $_POST["descricao"];
+	
 	if(isset($_POST["domingo"])){$domingo  = 1; }else{ $domingo  = 0;}
 	if(isset($_POST["segunda"])){$segunda  = 1; }else{ $segunda  = 0;}
 	if(isset($_POST["terca"])){$terca = 1; }else{ $terca  = 0;}
@@ -230,8 +237,8 @@ if(isset($_POST['editar']) OR isset($_POST['inserir'])){
 if(isset($_POST['inserir'])){
 	global $wpdb;
 	$id_evento = $_SESSION['id'];
-	$sql = "INSERT INTO `sc_ocorrencia` (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`) 
-	VALUES ('$local', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_final', '$hora', '$valorIngresso', '$retiradaIngresso',  '$ingressos',  '$duracao',  '1')";	
+	$sql = "INSERT INTO `sc_ocorrencia` (`local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `valorIngresso`, `retiradaIngresso`, `lotacao`, `duracao`,  `publicado`,  `descricao`) 
+	VALUES ('$local', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_final', '$hora', '$valorIngresso', '$retiradaIngresso',  '$ingressos',  '$duracao',  '1', '$descricao')";	
 	$res = $wpdb->query($sql);
 	$id_ocorrencia = $wpdb->insert_id;
 	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
@@ -258,7 +265,9 @@ if(isset($_POST['editar'])){
 	`valorIngresso` = '$valorIngresso',
 	`retiradaIngresso` = '$retiradaIngresso',
 	`lotacao` = '$ingressos', 
-	`duracao` = '$duracao'
+	`duracao` = '$duracao',
+	`descricao` = '$descricao'
+
 	WHERE `idOcorrencia` = '$id_ocorrencia'";
 	$res = $wpdb->query($sql);
 	$sql_ocor = "SELECT * FROM sc_ocorrencia WHERE idOcorrencia = '$id_ocorrencia'";
@@ -383,6 +392,12 @@ $(function() {
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
+						<label>Descricao</label>
+						<input type="text" class="form-control" name="descricao" value="<?php echo ($ocor['descricao']); ?>" />
+						</div>
+					</div>							
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
 						<input type="hidden" name="editar" value="<?php echo ($ocor['idOcorrencia']); ?>" />
 						<button type="submit" class="btn btn-theme btn-lg btn-block">Editar ocorrência</button>
 						</div>
@@ -454,7 +469,7 @@ if(isset($_POST['agenda'])){
 				?>
 				<tr>
                   <td><?php 
-				  echo $ocorrencia['tipo']."<br />".$ocorrencia['data']."<br />".$ocorrencia['local'];
+				  echo $ocorrencia['tipo']."<br />".$ocorrencia['data']."<br />".$ocorrencia['local']."<br />".$ocorrencia['descricao'];
 				  
 				  ?></td>
                   <td>
