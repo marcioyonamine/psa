@@ -559,7 +559,7 @@ $evento = evento($_POST['carregar']);
 				echo "<p>".$pendencia['relatorio']."</p>";		
 			}
 				
-			if($evento['dataEnvio'] == NULL){
+			
 			?>
 				
 				
@@ -568,10 +568,7 @@ $evento = evento($_POST['carregar']);
 			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Mudar Status do evento para 'Aprovado'" />
 			</form>	
 			
-				<?php }else{
-				echo "<h4>Evento enviado ao sistema.</h4>";	
-					
-				}
+				<?php 
 				
 			
 			
