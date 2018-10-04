@@ -1721,7 +1721,7 @@ function verificaEvento($idEvento){
 	// Trava de data
 	$periodo = periodo($idEvento);
 	$dias = opcaoDados("sistema",0);
-	$hoje30 = somarDatas(date('Y-m-d'),"+30");
+	$hoje30 = somarDatas(date('Y-m-d'),$dias['dias']);
 	
 
 
@@ -1763,8 +1763,8 @@ function verificaEvento($idEvento){
 			} 
 		}
 			//echo $hoje30." - ".$periodo['inicio'];
-
-		if((strtotime($hoje30) > strtotime($periodo['inicio'])) AND $evento['idTipo'] != 700 AND $evento['idTipo'] != 57 AND $evento['idTipo'] != 710 ){ //700 reunião fechada, 57 reunião, 710 okupa cultura
+			$tipo = opcaoDados("sistema",0);
+		if((strtotime($hoje30) > strtotime($periodo['inicio'])) AND !in_array($evento['idTipo'],$dias['tipo'])){ //700 reunião fechada, 57 reunião, 710 okupa cultura
 			$relatorio .= "O início do evento está a menos de ".$dias['dias']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
 			$r++;	
 		}
