@@ -1,3 +1,7 @@
+body{font-family:Arial;
+  background:url(images/fundo_pdf.png) no-repeat center top fixed;
+   
+}
 fieldset{
  width: 750px;
  margin: 10px auto;
@@ -5,6 +9,9 @@ fieldset{
  border: 5px solid #ccc;
  font-family: Helvetica;
  padding: 15px;
+}
+tr{
+	min-height:100px;
 }
 
 h1{
@@ -21,4 +28,24 @@ p.sub-titulo{
 
 .center{
  text-align: center;
+}
+
+.folha{
+	padding-top: 100px;
+}
+
+.campo{
+	font-size: 12;
+}
+
+.dado{
+	font-size: 18;
+	text-align: top center;
+	
+}
+
+.tabela{
+border: 1px;	
+width: 100%;
+
 }

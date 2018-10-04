@@ -1249,7 +1249,7 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 
 function periodo($id){ //retorna o período
 	global $wpdb;
-	$sql = "SELECT dataInicio, dataFinal FROM sc_ocorrencia WHERE publicado = '1' AND idEvento = '$id' ORDER BY dataInicio ASC";
+	$sql = "SELECT dataInicio, dataFinal, horaInicio FROM sc_ocorrencia WHERE publicado = '1' AND idEvento = '$id' ORDER BY dataInicio ASC";
 	$res = $wpdb->get_results($sql,ARRAY_A);
 
 	$x = array();
@@ -1262,6 +1262,7 @@ function periodo($id){ //retorna o período
 		$x['inicio'] = $res[0]['dataInicio'];
 		$x['final'] = $res[0]['dataInicio'];
 		$x['legivel'] = exibirDataBr($res[0]['dataInicio']);
+		$x['horario'] = $res[0]['horaInicio'];
 	}else{ // temporadas ou multiplas ocorrencias
 		if(count($res) == 1){ // se for apenas uma ocorrência
 			$x['bool'] = TRUE;
