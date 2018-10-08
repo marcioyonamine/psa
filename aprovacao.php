@@ -188,7 +188,12 @@ if(isset($_SESSION['id'])){
 			  <form method="POST" action="?" class="form-horizontal" role="form">
 				<?php 
 				global $wpdb;
-					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' AND idRespAprovacao = '".$user->ID."' $order";					
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' $order";
+				
+				}else{		
+				
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' AND idRespAprovacao = '".$user->ID."' $order";
+				}					
 
 
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
