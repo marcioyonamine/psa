@@ -90,7 +90,13 @@ if(isset($_GET['order'])){
               <tbody>
 				<?php 
 				global $wpdb;
-					$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' AND idRespAprovacao = '".$user->ID."' $order";					
+				if($user->ID == 1){
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' $order";
+				
+				}else{				
+				
+				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' AND idRespAprovacao = '".$user->ID."' $order";
+				}					
 
 
 				$res = $wpdb->get_results($sql_list,ARRAY_A);
