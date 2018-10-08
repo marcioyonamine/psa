@@ -188,6 +188,7 @@ if(isset($_SESSION['id'])){
 			  <form method="POST" action="?" class="form-horizontal" role="form">
 				<?php 
 				global $wpdb;
+								if($user->ID == 1){
 				$sql_list =  "SELECT idEvento FROM sc_evento WHERE publicado = '1' AND status = '2' $order";
 				
 				}else{		
