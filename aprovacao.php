@@ -21,7 +21,7 @@ case "inicio":
 if(isset($_POST['enviar'])){  // envia
 	// muda status de dataEnvio para hoje
 	// atualiza a agenda
-	$idEvento = $_SESSION['id'];
+	$idEvento = $_POST['idEvento'];
 	$hoje = date("Y-m-d H:i:s");
 	global $wpdb;
 	$sql_enviar = "UPDATE sc_evento SET dataEnvio = '$hoje' WHERE idEvento = '$idEvento'";
