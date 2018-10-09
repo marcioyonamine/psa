@@ -575,7 +575,7 @@ $evento = evento($_POST['carregar']);
 			?>
 				
 				
-			<form action="aprovacao.php?p=foradeprazo" method="POST" class="form-horizontal">
+			<form action="aprovacao.php" method="POST" class="form-horizontal">
 			<input type="hidden" name="idEvento" value="<?php echo $_POST['carregar']; ?>">
 			<input type="submit" class="btn btn-theme btn-lg btn-block" name="enviar" value="Mudar Status do evento para 'Aprovado'" />
 			</form>	
