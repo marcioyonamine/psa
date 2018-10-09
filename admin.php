@@ -2,7 +2,7 @@
 
   <body>
   
-  <?php include "menu_admin.php"; ?>
+  <?php include "menu/me_admin.php"; ?>
   <?php 
   //verifica se admin
 	if(!isset($user->caps['administrator'])){ ?>
@@ -254,7 +254,59 @@
 		
 	
 	
+<?php 
+	break;
+	case "usuario":
+
 	
+	?>
+	        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+          <h1>Usuários</h1>
+			<h2></h2>
+		<!--
+          <h2>Section title</h2>
+		<div><select>
+		<option></option>
+		<input class="btn btn-sm btn-default" type="submit" value="Filtrar" />
+		</select></div>
+		-->
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+					<th>#</th>
+                  <th>Nome Completo</th>
+  			</tr>
+              </thead>
+              <tbody>
+				<?php 
+				$args = array();
+				$users = get_users( array( 'fields' => array('ID') ) );
+				foreach($users as $user_id){
+				$user_meta = get_user_meta ( $user_id->ID);
+				$user_data = get_userdata( $user_id->ID );
+				?>	
+    			 <tr>
+                 <td><?php echo $user_id->ID; ?></td>
+				<td><?php echo $user_data->display_name; ?></td>
+                  
+                </tr>
+				<?php 
+				} 
+				?>	
+
+
+				</tbody>
+            </table>
+          </div>
+        </main>	
+		
+		
+		
+		
+		
+	
+		
 	<?php
 	break;
 	}

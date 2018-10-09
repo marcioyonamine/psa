@@ -37,7 +37,7 @@
               <a class="nav-link active" href="?">Início <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="?p=inserir_edital">Inserir Edital</a>
+              <a class="nav-link" href="?p=usuario">Listar Usuários</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="?p=listar_edital">Listar Edital</a>
