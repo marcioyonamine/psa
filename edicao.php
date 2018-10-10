@@ -728,6 +728,16 @@ case "editar":
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
+							<label>Responsável pela Aprovação</label>
+							<select class="form-control" name="id_aprovacao" id="inputSubject" >
+								<option value="0"></option>
+								<?php geraOpcaoUsuario($evento['idRespAprovacao'])	?>						
+							</select>	
+						</div>
+					</div>					
+					
+					<div class="form-group">
+						<div class="col-md-offset-2">
 							<label>Autor*</label>
 							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."><?php echo $evento['autor']; ?></textarea>
 						</div> 
