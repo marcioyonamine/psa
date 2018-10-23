@@ -78,7 +78,7 @@ body{
           </div> 
 		  </div>
 		  
-	<br /><br />	  
+	<br /><br />	  <br /><br />
 
 		
 		
@@ -89,12 +89,13 @@ body{
                 <tr>
 				<th width="25%">Programa</th>
 				<th>Projeto</th>
-				<th>Valor</th>
+
 				<th width="30%">Nota</th>
 				<th>Responsável</th>
 				<th>Projeto/Ficha</th>
 				<th width="15%">Descrição</th>
-
+				<th>Valor planejado</th>
+				<th>Valor liberado</th>
      			</tr>
               </thead>
               <tbody>
@@ -128,7 +129,19 @@ body{
 					<tr>
 					<td></td>
 					<td><?php echo $res_projeto[$k]['tipo'] ?></td>
-					<td>
+					
+					<td><?php echo $res_orc['obs']; ?></td>
+									<td><?php 
+									if($pro_json['responsavel'] != NULL){
+										$pro_json['responsavel'];
+										$userwp = get_userdata($pro_json['responsavel']);
+										if($userwp){
+										echo $userwp->first_name."".$userwp->last_name; //var_dump($orc); 
+										}
+									}
+									?></td>				
+				<td><?php  if(isset($orc['projeto'])){echo $orc['projeto']; } ?> / <?php if(isset($orc['ficha'])){echo $orc['ficha'];} ?></td>				
+				<td><?php  if(isset($orc['descricao'])){echo $orc['descricao']; } ?></td><td>
 					<?php 
 						$sql_orc = "SELECT valor,obs,idPai FROM sc_orcamento WHERE planejamento ='".$res_projeto[$k]['id_tipo']."' AND publicado = '1'";
 						$res_orc = $wpdb->get_row($sql_orc,ARRAY_A);
@@ -157,19 +170,7 @@ body{
 							);
 						}
 						?>
-					</td>
-					<td><?php echo $res_orc['obs']; ?></td>
-									<td><?php 
-									if($pro_json['responsavel'] != NULL){
-										$pro_json['responsavel'];
-										$userwp = get_userdata($pro_json['responsavel']);
-										if($userwp){
-										echo $userwp->first_name."".$userwp->last_name; //var_dump($orc); 
-										}
-									}
-									?></td>				
-				<td><?php  if(isset($orc['projeto'])){echo $orc['projeto']; } ?> / <?php if(isset($orc['ficha'])){echo $orc['ficha'];} ?></td>				
-				<td><?php  if(isset($orc['descricao'])){echo $orc['descricao']; } ?></td>				
+					</td>				
 
 					</tr>
 					<?php } 
