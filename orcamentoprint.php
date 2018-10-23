@@ -9,7 +9,14 @@ if(!is_user_logged_in()): // Impede acesso de pessoas não autorizadas
 endif;
 //Carrega os arquivos de funções
 require "inc/function.php";
-$orcamento = orcamentoTotal(2018);
+
+if(isset($_GET['ano'])){
+	$ano = $_GET['ano'];
+}else{
+	$ano = date('Y');
+}
+
+$orcamento = orcamentoTotal($ano);
 $projeto = array();
 $w = 0;
 ?>
@@ -109,7 +116,7 @@ body{
 
 				</tr>
 					<?php 
-					$sel_projeto = "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto'";
+					$sel_projeto = "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto' AND publicado = '1'";
 					$res_projeto = $wpdb->get_results($sel_projeto,ARRAY_A);
 					//var_dump($res_projeto);	
 					for($k = 0; $k < count($res_projeto); $k++){
@@ -123,7 +130,7 @@ body{
 					<td><?php echo $res_projeto[$k]['tipo'] ?></td>
 					<td>
 					<?php 
-						$sql_orc = "SELECT valor,obs,idPai FROM sc_orcamento WHERE planejamento ='".$res_projeto[$k]['id_tipo']."' AND publicado ='1'";
+						$sql_orc = "SELECT valor,obs,idPai FROM sc_orcamento WHERE planejamento ='".$res_projeto[$k]['id_tipo']."' AND publicado = '1'";
 						$res_orc = $wpdb->get_row($sql_orc,ARRAY_A);
 						
 						if($res_orc['idPai'] != NULL){
