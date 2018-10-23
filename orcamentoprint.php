@@ -113,7 +113,9 @@ body{
 				<td></td>				
 				<td></td>				
 				<td></td>				
-				<td></td>				
+				<td></td>		
+<td></td>				
+				
 
 				</tr>
 					<?php 
@@ -130,7 +132,7 @@ body{
 					<td></td>
 					<td><?php echo $res_projeto[$k]['tipo'] ?></td>
 					
-					<td><?php echo if(isset($res_orc['obs'])){echo $res_orc_['obs'];}; ?></td>
+					<td><?php if(isset($res_orc['obs'])){echo $res_orc['obs'];}; ?></td>
 									<td><?php 
 									if($pro_json['responsavel'] != NULL){
 										$pro_json['responsavel'];
@@ -173,7 +175,10 @@ body{
 					</td>
 
 					<td>
-					
+					<?php 
+					$v = somaProjeto($res_projeto[$k]['id_tipo']);
+					echo dinheiroParaBr($v);
+					?>
 					</td>		
 
 					</tr>
@@ -201,7 +206,8 @@ body{
 				<td></td>
 				<td></td>				
 				<td></td>				
-				<td></td>				
+				<td></td>	
+<td></td>				
 
 				<?php 
 				$programa[$i]['id'] = $res_programa[$i]['id_tipo'];
@@ -210,7 +216,7 @@ body{
 				?>
 				</tr>
 				<tr>
-				<td height="50px" colspan="7"></td>
+				<td height="50px" colspan="8"></td>
 
 
 				</tr>
