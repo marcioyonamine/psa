@@ -246,8 +246,8 @@ body{
 		for ($i = 0; $i < count($programa); $i++){ 
 		?>
 			<tr>
-			<td><?php echo $programa[$i]['id']?></td>
-			<td><?php echo ($programa[$i]['programa'])?></td>
+			<td><?php echo $programa[$i]['id']; ?></td>
+			<td><?php echo ($programa[$i]['programa']);?></td>
 			<td style='align:left;'><?php 
 			
 			echo dinheiroParaBr($programa[$i]['valor']);
@@ -272,8 +272,8 @@ body{
 		<tr>
 		<td></td>
 		<td></td>
-		<td style='align:left;'><?php echo dinheiroParaBr($tot_pla) ?></td>
-		<td style='align:left;'><?php echo dinheiroParaBr($tot_exe) ?></td>
+		<td style='align:left;'><?php echo dinheiroParaBr($tot_pla); ?></td>
+		<td style='align:left;'><?php echo dinheiroParaBr($tot_exe); ?></td>
 		
 		</tr>
 		
