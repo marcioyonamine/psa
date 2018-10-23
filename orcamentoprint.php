@@ -230,7 +230,7 @@ body{
 
 </style>
 <div id="pieChart" align="center"></div>
-<table>
+<table border = '1' width='100%'>
 <tr>
 <th>Programa</th>
 <th>Valor Planejado</th>
@@ -239,7 +239,7 @@ body{
 
 		<?php for ($i = 0; $i < count($programa); $i++){ ?>
 			<tr>
-			<td><?php echo $programa[$i]['programa']?></td>
+			<td><?php echo dinheiroParaBr($programa[$i]['programa'])?></td>
 			<td><?php echo $programa[$i]['valor'] ?></td>
 			<td></td>
 			</tr>
