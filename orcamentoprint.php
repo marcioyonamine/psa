@@ -26,10 +26,6 @@ body{
 <div>
             <table border= "1" class="table table-striped" width='100%'>
               <thead>
-                <tr>
-				<th></th>
-				<th></th>
-     			</tr>
               </thead>
               <tbody>
 				<tr>
@@ -66,7 +62,7 @@ body{
 				<td><?php echo dinheiroParaBr($orcamento['planejado']); ?></td>
 				</tr>
 				<tr>
-				<td>Saldo </td>
+				<td>Saldo (sem lançamentos de folha de pagamento) </td>
 				<td><?php echo dinheiroParaBr($orcamento['revisado'] - $orcamento['liberado']); ?></td>
 				</tr>
 				
