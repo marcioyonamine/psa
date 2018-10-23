@@ -58,7 +58,7 @@ body{
 				</tr>
 
 				<tr>
-				<td>Liberado</td>
+				<td>Liberado (sem lançamentos de folha de pagamento)</td>
 				<td><?php echo dinheiroParaBr($orcamento['liberado']); ?></td>
 				</tr>
 								<tr>
