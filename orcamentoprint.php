@@ -68,13 +68,8 @@ body{
 				<tr>
 				<td>Saldo </td>
 				<td><?php echo dinheiroParaBr($orcamento['revisado'] - $orcamento['liberado']); ?></td>
-				<td></td>
 				</tr>
-				<tr>
-				<td>Saldo Planejado</td>
-				<td><?php echo dinheiroParaBr($orcamento['total'] - $orcamento['planejado'] ); ?></td>
-
-				</tr>				
+				
 				</tbody>
             </table>
           </div> 
