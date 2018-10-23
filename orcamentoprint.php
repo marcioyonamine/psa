@@ -211,13 +211,14 @@ body{
 
 				</tbody>
             </table>
-			<style>
 		<?php for ($i = 0; $i < count($programa); $i++){ ?>
 			
 				<p>"label": "<?php echo $programa[$i]['programa']?>",
 				"value": <?php echo $programa[$i]['valor'] ?></p>
 			
 		<?php } ?>
+			<style>
+
 			
 			
 .bar {
