@@ -2199,7 +2199,8 @@ function orcamentoTotal($ano){
 	$total_con = 0;
 	$total_des = 0;
 	$total_sup = 0;
-	$total_res = 0;
+	$total_anu = 0;
+	$total_rev = 0;
 	$total_tot = 0;
 	$total_pla = 0;
 	$total_lib = 0;
@@ -2212,7 +2213,9 @@ function orcamentoTotal($ano){
 			$total_con = $total_con + $orc['contigenciado'];
 			$total_des = $total_des + $orc['descontigenciado'];
 			$total_sup = $total_sup + $orc['suplementado'];
+			$total_anu = $total_anu + $orc['anulado'];
 			$total_lib = $total_lib + $orc['liberado'];
+			$total_rev = $total_rev + $orc['revisado'];
 			$total_pla = $total_pla + $orc['planejado'];
 			$total_anul = $total_anul + $orc['anulado'];	
 				//$total_res = $total_res;
@@ -2229,10 +2232,11 @@ function orcamentoTotal($ano){
 		'contigenciado' => $total_con,
 		'descontigenciado' => $total_des,
 		'suplementado' => $total_sup,
+		'anulado' => $total_anu,
 		'liberado' => $total_lib,
+		'revisado' => $total_pla,
 		'planejado' => $total_pla,
-		'total' => $total_tot,
-		'anulado' => $total_anul
+		'total' => $total_tot
 		
 		);
 		return $x;

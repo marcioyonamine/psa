@@ -24,7 +24,7 @@ body{
 }
 </style>
 <div>
-            <table border= "1" class="table table-striped">
+            <table border= "1" class="table table-striped" width='100%'>
               <thead>
                 <tr>
 				<th></th>
@@ -49,6 +49,15 @@ body{
 				<td><?php echo dinheiroParaBr($orcamento['suplementado']); ?></td>
 				</tr>
 				<tr>
+				<td>Anulado</td>
+				<td><?php echo dinheiroParaBr($orcamento['anulado']); ?></td>
+				</tr>
+				<tr>
+				<td>Revisado</td>
+				<td><?php echo dinheiroParaBr($orcamento['revisado']); ?></td>
+				</tr>
+
+				<tr>
 				<td>Liberado</td>
 				<td><?php echo dinheiroParaBr($orcamento['liberado']); ?></td>
 				</tr>
@@ -56,13 +65,9 @@ body{
 				<td>Planejado</td>
 				<td><?php echo dinheiroParaBr($orcamento['planejado']); ?></td>
 				</tr>
-								<tr>
-				<td>Executado</td>
-				<td></td>
-				</tr>
 				<tr>
 				<td>Saldo </td>
-				<td><?php echo dinheiroParaBr($orcamento['total']); ?></td>
+				<td><?php echo dinheiroParaBr($orcamento['revisado'] - $orcamento['liberado']); ?></td>
 				<td></td>
 				</tr>
 				<tr>
@@ -74,6 +79,8 @@ body{
             </table>
           </div> 
 		  </div>
+		  
+	<br /><br />	  
 
 		
 		
@@ -233,7 +240,7 @@ body{
 <div id="pieChart" align="center"></div>
 <table border = '1' width='100%'>
 <tr>
-<th></th>
+
 <th>Programa</th>
 <th>Valor Planejado</th>
 <th>Valor Executado</th>
@@ -246,7 +253,6 @@ body{
 		for ($i = 0; $i < count($programa); $i++){ 
 		?>
 			<tr>
-			<td><?php echo $programa[$i]['id']; ?></td>
 			<td><?php echo ($programa[$i]['programa']);?></td>
 			<td align='right'><?php 
 			
@@ -263,7 +269,6 @@ body{
 			</tr>
 		<?php } ?>
 		<tr>
-		<td></td>
 		<td></td>
 		<td align='right'><?php echo dinheiroParaBr($tot_pla); ?></td>
 		<td align='right'><?php echo dinheiroParaBr($tot_exe); ?></td>
