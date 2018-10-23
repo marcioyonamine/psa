@@ -209,15 +209,24 @@ function select($id,$sel){
 //retorna valor xxx,xx para xxx.xx
 function dinheiroDeBr($valor)
 {
-	$valor = str_ireplace(".","",$valor);
-	$valor = str_ireplace(",",".",$valor);
-	return $valor;
+	if($valor == NULL){
+		return 0;	
+	}else{
+		$valor = str_ireplace(".","",$valor);
+		$valor = str_ireplace(",",".",$valor);
+		return $valor;
+	}
+
 }
 //retorna valor xxx.xx para xxx,xx
 function dinheiroParaBr($valor)
 { 
-	$valor = number_format($valor, 2, ',', '.');
-	return $valor;
+	if($valor == NULL){
+		return 0;	
+	}else{
+		$valor = number_format($valor, 2, ',', '.');
+		return $valor;
+	}
 }
 
 // retorna datatime sem hora
