@@ -248,12 +248,12 @@ body{
 			<tr>
 			<td><?php echo $programa[$i]['id']; ?></td>
 			<td><?php echo ($programa[$i]['programa']);?></td>
-			<td align='left'><?php 
+			<td align='right'><?php 
 			
 			echo dinheiroParaBr($programa[$i]['valor']);
 			$tot_pla = $tot_pla + $programa[$i]['valor'];
 			?></td>
-			<td align='left'><?php 
+			<td align='right'><?php 
 			
 			echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
 			$tot_exe = $tot_exe + somaPrograma($programa[$i]['id']);
@@ -265,8 +265,8 @@ body{
 		<tr>
 		<td></td>
 		<td></td>
-		<td align='left'><?php echo dinheiroParaBr($tot_pla); ?></td>
-		<td align='left'><?php echo dinheiroParaBr($tot_exe); ?></td>
+		<td align='right'><?php echo dinheiroParaBr($tot_pla); ?></td>
+		<td align='right'><?php echo dinheiroParaBr($tot_exe); ?></td>
 		
 		</tr>
 		
