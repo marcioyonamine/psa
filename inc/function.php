@@ -2456,3 +2456,20 @@ function producao($idEvento){
 }
 
 
+
+function somaPrograma($id){
+	global $wpdb;
+	$total = 0;
+	$sql_evento = "SELECT valor FROM sc_contratacao WHERE (idEvento IN(SELECT idEvento FROM sc_evento WHERE idPrograma = '$id' AND publicado = '1') OR idAtividade IN(SELECT id FROM sc_atividade WHERE idAtividade = '$id' AND publicado = '1')) AND nLiberacao <> ''";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+
+	for($i = 0; $i < count($evento); $i++){
+		$total = $total + $evento['valor'];
+	}
+
+	return $total;
+
+
+
+	
+}

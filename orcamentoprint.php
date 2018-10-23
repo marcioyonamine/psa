@@ -244,6 +244,8 @@ body{
 			<td><?php echo $programa[$i]['id']?></td>
 			<td><?php echo ($programa[$i]['programa'])?></td>
 			<td><?php echo dinheiroParaBr($programa[$i]['valor']) ?></td>
+			<td><?php echo somaPrograma($programa[$i]['id']) ?></td>
+
 			<td>
 			<?php 
 			
