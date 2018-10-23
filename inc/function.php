@@ -1062,6 +1062,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'liberado' => $valor_lib,
 	'planejado' => $valor_pla,
 	'anulado' => $valor_anul,
+	'revisado' => ($val['valor']  - $valor_cont + $valor_desc + $valor_supl - $valor_anul), 
 	'projeto' =>  $val['projeto'],
 	'ficha' => $val['ficha']
 
