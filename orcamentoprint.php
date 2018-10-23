@@ -74,7 +74,7 @@ body{
             </table>
           </div> 
 		  </div>
-<div id="pieChart" align="center"></div>
+
 		
 		
 		
@@ -211,12 +211,7 @@ body{
 
 				</tbody>
             </table>
-		<?php for ($i = 0; $i < count($programa); $i++){ ?>
-			
-				<p>"label": "<?php echo $programa[$i]['programa']?>",
-				"value": <?php echo $programa[$i]['valor'] ?></p>
-			
-		<?php } ?>
+
 			<style>
 
 			
@@ -234,6 +229,27 @@ body{
 }
 
 </style>
+<div id="pieChart" align="center"></div>
+<table>
+<tr>
+<th>Programa</th>
+<th>Valor Planejado</th>
+<th>Valor Executado</th>
+</tr>
+
+		<?php for ($i = 0; $i < count($programa); $i++){ ?>
+			<tr>
+			<td><?php echo $programa[$i]['programa']?></td>
+			<td><?php echo $programa[$i]['valor'] ?></td>
+			<td></td>
+			</tr>
+		<?php } ?>
+<tr>
+
+</tr>
+
+</table>
+
 			<script src="https://d3js.org/d3.v4.js"></script>
 <script src="visual/d3/d3pie.js"></script>
 <script>
