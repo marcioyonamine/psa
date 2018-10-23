@@ -130,7 +130,7 @@ body{
 					<td></td>
 					<td><?php echo $res_projeto[$k]['tipo'] ?></td>
 					
-					<td><?php echo $res_orc['obs']; ?></td>
+					<td><?php echo if(isset($res_orc['obs'])){echo $res_orc_['obs'];}; ?></td>
 									<td><?php 
 									if($pro_json['responsavel'] != NULL){
 										$pro_json['responsavel'];
@@ -170,7 +170,13 @@ body{
 							);
 						}
 						?>
-					</td>				
+					</td>
+
+					<td>
+					<?php $v = somaProjeto($res_programa[$k]['id_tipo']); 
+					echo dinheiroParaBr($v);
+					?>
+					</td>		
 
 					</tr>
 					<?php } 
