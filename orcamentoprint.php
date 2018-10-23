@@ -194,6 +194,7 @@ body{
 				<td></td>				
 
 				<?php 
+				$programa[$i]['id'] = $res[$i]['id_tipo'];
 				$programa[$i]['programa'] = $res_programa[$i]['tipo'];
 				$programa[$i]['valor'] = $total_programa;
 				?>
@@ -232,6 +233,7 @@ body{
 <div id="pieChart" align="center"></div>
 <table border = '1' width='100%'>
 <tr>
+<th></th>
 <th>Programa</th>
 <th>Valor Planejado</th>
 <th>Valor Executado</th>
@@ -239,9 +241,17 @@ body{
 
 		<?php for ($i = 0; $i < count($programa); $i++){ ?>
 			<tr>
+			<td><?php echo $programa[$i]['id']?></td>
 			<td><?php echo ($programa[$i]['programa'])?></td>
 			<td><?php echo dinheiroParaBr($programa[$i]['valor']) ?></td>
-			<td></td>
+			<td>
+			<?php 
+			
+			
+			?>
+			
+			
+			</td>
 			</tr>
 		<?php } ?>
 <tr>
