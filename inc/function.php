@@ -2464,7 +2464,7 @@ function somaPrograma($id){
 	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
 
 	for($i = 0; $i < count($evento); $i++){
-		$total = $total + $evento['valor'];
+		$total = $total + $evento[$i]['valor'];
 	}
 
 	return $total;
