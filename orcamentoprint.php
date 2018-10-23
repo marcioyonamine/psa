@@ -173,8 +173,8 @@ body{
 					</td>
 
 					<td>
-					<?php //$v = somaProjeto($res_programa[$k]['id_tipo']); 
-					//echo dinheiroParaBr($v);
+					<?php $v = somaProjeto($res_projeto[$k]['id_tipo']); 
+					echo dinheiroParaBr($v);
 					?>
 					</td>		
 
