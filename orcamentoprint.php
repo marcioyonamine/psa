@@ -239,13 +239,26 @@ body{
 <th>Valor Executado</th>
 </tr>
 
-		<?php for ($i = 0; $i < count($programa); $i++){ ?>
+		<?php 
+		$tot_pla = 0;
+		$tot_exe = 0;
+
+		for ($i = 0; $i < count($programa); $i++){ 
+		?>
 			<tr>
 			<td><?php echo $programa[$i]['id']?></td>
 			<td><?php echo ($programa[$i]['programa'])?></td>
-			<td><?php echo dinheiroParaBr($programa[$i]['valor']) ?></td>
-			<td><?php echo dinheiroParaBr(somaPrograma($programa[$i]['id'])) ?></td>
-
+			<td style='align:left;'><?php 
+			
+			echo dinheiroParaBr($programa[$i]['valor']);
+			$tot_pla = $tot_pla + $programa[$i]['valor'];
+			?></td>
+			<td style='align:left;'><?php 
+			
+			echo dinheiroParaBr(somaPrograma($programa[$i]['id'])) 
+			$tot_exe = $tot_exe + somaPrograma($programa[$i]['id'];
+			?></td>
+			
 			<td>
 			<?php 
 			
@@ -256,6 +269,14 @@ body{
 			</td>
 			</tr>
 		<?php } ?>
+		<tr>
+		<td></td>
+		<td></td>
+		<td style='align:left;'><?php echo dinheiroParaBr($tot_pla) ?></td>
+		<td style='align:left;'><?php echo dinheiroParaBr($tot_exe) ?></td>
+		
+		</tr>
+		
 <tr>
 
 </tr>
