@@ -239,8 +239,8 @@ body{
 
 		<?php for ($i = 0; $i < count($programa); $i++){ ?>
 			<tr>
-			<td><?php echo dinheiroParaBr($programa[$i]['programa'])?></td>
-			<td><?php echo $programa[$i]['valor'] ?></td>
+			<td><?php echo ($programa[$i]['programa'])?></td>
+			<td><?php echo dinheiroParaBr($programa[$i]['valor']) ?></td>
 			<td></td>
 			</tr>
 		<?php } ?>
