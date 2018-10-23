@@ -194,7 +194,7 @@ body{
 				<td></td>				
 
 				<?php 
-				$programa[$i]['id'] = $res[$i]['id_tipo'];
+				$programa[$i]['id'] = $res_programa[$i]['id_tipo'];
 				$programa[$i]['programa'] = $res_programa[$i]['tipo'];
 				$programa[$i]['valor'] = $total_programa;
 				?>
