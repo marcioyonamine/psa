@@ -255,7 +255,7 @@ body{
 			?></td>
 			<td style='align:left;'><?php 
 			
-			echo dinheiroParaBr(somaPrograma($programa[$i]['id'])) 
+			echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
 			$tot_exe = $tot_exe + somaPrograma($programa[$i]['id'];
 			?></td>
 			
