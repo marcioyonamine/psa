@@ -19,6 +19,14 @@ if(isset($_GET['ano'])){
 $orcamento = orcamentoTotal($ano);
 $projeto = array();
 $w = 0;
+
+$_600_1116 = giap(600,1116); 
+$_600_1117 = giap(600,1117); 
+$_600_1118 = giap(600,1118); 
+$_600_1119 = giap(600,1119); 
+
+$pessoal = $_600_1116['v_op_baixado'] + $_600_1117['v_op_baixado'] + $_600_1118['v_op_baixado'] + $_600_1119['v_op_baixado'];
+
 ?>
 <style>
 body{
@@ -29,6 +37,7 @@ body{
 	
 	
 }
+
 </style>
 <div>
             <table border= "1" class="table table-striped" width='100%'>
@@ -61,16 +70,16 @@ body{
 				</tr>
 
 				<tr>
-				<td>Liberado (sem lançamentos de folha de pagamento)</td>
-				<td><?php echo dinheiroParaBr($orcamento['liberado']); ?></td>
+				<td>Liberado</td>
+				<td><?php echo dinheiroParaBr($orcamento['liberado'] - $pessoal); ?></td>
 				</tr>
 								<tr>
 				<td>Planejado</td>
 				<td><?php echo dinheiroParaBr($orcamento['planejado']); ?></td>
 				</tr>
 				<tr>
-				<td>Saldo (sem lançamentos de folha de pagamento) </td>
-				<td><?php echo dinheiroParaBr($orcamento['revisado'] - $orcamento['liberado']); ?></td>
+				<td>Saldo</td>
+				<td><?php echo dinheiroParaBr($orcamento['revisado'] - $orcamento['liberado'] - $pessoal); ?></td>
 				</tr>
 				
 				</tbody>

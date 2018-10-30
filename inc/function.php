@@ -2507,3 +2507,33 @@ function somaProjeto($id){
 	
 	return $total;
 }
+
+function giap($projeto,$ficha){
+	global $wpdb;
+	$sql = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND projeto = '$projeto'";
+	$c = $wpdb->get_results($sql,ARRAY_A);
+	$a = array(
+	'v_empenho' => 0,
+	'v_estorno' => 0,
+	'v_anulado' => 0,
+	'v_n_processado' => 0,
+	'v_processado' => 0,
+	'v_op' => 0,
+	'v_op_baixado' => 0,
+	'v_saldo' => 0
+	);
+	
+	for($i = 0; $i < count($c); $i++){
+	$a['v_empenho'] = $a['v_empenho'] + $c[$i]['v_empenho'];
+	$a['v_estorno'] = $a['v_estorno'] + $c[$i]['v_estorno'];
+	$a['v_anulado'] = $a['v_anulado'] + $c[$i]['v_anulado'];
+	$a['v_n_processado'] = $a['v_n_processado'] + $c[$i]['v_n_processado'];
+	$a['v_processado'] = $a['v_processado'] + $c[$i]['v_processado'];
+	$a['v_op'] = $a['v_op'] + $c[$i]['v_op'];
+	$a['v_op_baixado'] =  $a['v_op_baixado'] + $c[$i]['v_op_baixado'];
+	$a['v_saldo'] = $a['v_saldo'] + $c[$i]['v_saldo'];
+	}
+	
+	return $a;
+	
+}
