@@ -1022,7 +1022,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	
 	// liberado
 	
-	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND nLibercao <> '' AND publicado = '1'";
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND publicado = '1'";
 	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
 	$valor_lib = 0;
 	for($i = 0; $i < count($lib); $i++){
@@ -2212,7 +2212,7 @@ function orcamentoTotal($ano){
 	$total_lib = 0;
 	$total_anul = 0;
 		for($i = 0; $i < count($res); $i++){
-		$orc = orcamento(orcamento($res[$i]['id']);
+		$orc = orcamento($res[$i]['id']);
 			$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'] - $orc['anulado'];
 					
 			$total_orc = $total_orc + $orc['total'];
@@ -2483,6 +2483,8 @@ function somaPrograma($id){
 	for($i = 0; $i < count($evento); $i++){
 		$total = $total + $evento[$i]['valor'];
 	}
+	
+	
 	return $total;
 }
 
@@ -2507,11 +2509,17 @@ function somaProjeto($id){
 	return $total;
 }
 
-function giap($projeto,$ficha){
+function giap($projeto,$ficha,$folha = FALSE){
+	if($projeto == 600 AND $folha == TRUE){
+		$f = " AND nProcesso = '43313' ";		
+	}else{
+		$f = "";
+	}
+
 
 
 	global $wpdb;
-	$sql = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND projeto = '$projeto'" ;
+	$sql = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND projeto = '$projeto' $f";
 	$c = $wpdb->get_results($sql,ARRAY_A);
 	$a = array(
 	'v_empenho' => 0,
