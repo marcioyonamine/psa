@@ -1034,7 +1034,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	$sql_lib2 = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND nLiberacao <> '' AND publicado = '1' AND idAtividade IN(SELECT id FROM sc_atividade WHERE publicado = '1')";
 	$lib2 = $wpdb->get_results($sql_lib2,ARRAY_A);
 	for($k = 0; $k < count($lib2); $k++){
-		$valor_lib = $valor_lib + $lib[$k]['valor'];	
+		$valor_lib = $valor_lib + $lib2[$k]['valor'];	
 	}
 	
 	
