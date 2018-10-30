@@ -275,9 +275,9 @@ body{
 			$tot_pla = $tot_pla + $programa[$i]['valor'];
 			?></td>
 			<td align='right'><?php 
-				
-					echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
-					$tot_exe = $tot_exe + somaPrograma($programa[$i]['id']);
+					$e = somaPrograma($programa[$i]['id']);
+					echo dinheiroParaBr($e['total'])." / ".$e['contador']; 
+					$tot_exe = $tot_exe + $e['total'];
 				
 				
 			

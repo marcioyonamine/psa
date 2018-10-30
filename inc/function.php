@@ -2505,8 +2505,9 @@ function somaPrograma($id){
 	
 	}
 	
-	
-	return $total;
+	$x['total'] = $total;
+	$x['contador'] = count($evento) + count($atividade);
+	return $x;
 }
 
 function somaProjeto($id){
