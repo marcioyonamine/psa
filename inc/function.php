@@ -2469,7 +2469,7 @@ function producao($idEvento){
 function somaPrograma($id){
 	global $wpdb;
 	$total = 0;
-	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''";
+	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idPrograma = '$id' AND publicado = '1' AND dataEnvio IS NOT NULL) AND nLiberacao <> ''";
 	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
 
 	for($i = 0; $i < count($evento); $i++){
