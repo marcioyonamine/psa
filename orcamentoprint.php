@@ -100,7 +100,7 @@ body{
               </thead>
               <tbody>
 				<?php 
-				$programa = array();
+				$programa = array(); // Programa
 				$sel_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa'";
 				$res_programa = $wpdb->get_results($sel_programa,ARRAY_A);
 				for($i = 0; $i < count($res_programa); $i++){
@@ -118,7 +118,7 @@ body{
 				
 
 				</tr>
-					<?php 
+					<?php // Projeto
 					$sel_projeto = "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto' AND publicado = '1'";
 					$res_projeto = $wpdb->get_results($sel_projeto,ARRAY_A);
 					//var_dump($res_projeto);	
@@ -132,9 +132,13 @@ body{
 					<td></td>
 					<td><?php echo $res_projeto[$k]['tipo'] ?></td>
 					
-					<td><?php if(isset($res_orc['obs'])){echo $res_orc['obs'];}; ?></td>
-									<td><?php 
-									if($pro_json['responsavel'] != NULL){
+					<td><?php 
+					$sql_orc = "SELECT valor,obs,idPai FROM sc_orcamento WHERE planejamento ='".$res_projeto[$k]['id_tipo']."' AND publicado = '1'";
+						$res_orc = $wpdb->get_row($sql_orc,ARRAY_A);
+					
+					if(isset($res_orc['obs'])){echo $res_orc['obs'];}; ?></td>
+					<td><?php 
+							if($pro_json['responsavel'] != NULL){
 										$pro_json['responsavel'];
 										$userwp = get_userdata($pro_json['responsavel']);
 										if($userwp){
@@ -145,8 +149,7 @@ body{
 				<td><?php  if(isset($orc['projeto'])){echo $orc['projeto']; } ?> / <?php if(isset($orc['ficha'])){echo $orc['ficha'];} ?></td>				
 				<td><?php  if(isset($orc['descricao'])){echo $orc['descricao']; } ?></td><td>
 					<?php 
-						$sql_orc = "SELECT valor,obs,idPai FROM sc_orcamento WHERE planejamento ='".$res_projeto[$k]['id_tipo']."' AND publicado = '1'";
-						$res_orc = $wpdb->get_row($sql_orc,ARRAY_A);
+						
 						
 						if($res_orc['idPai'] != NULL){
 							$orc = recuperaDados("sc_orcamento",$res_orc['idPai'],"id");
