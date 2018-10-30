@@ -2481,7 +2481,7 @@ function somaPrograma($id){
 	$atividade = $wpdb->get_results($sql_atividade,ARRAY_A);
 
 	for($k = 0; $i < count($atividade); $k++){
-		$total = $total + $atividade[$i]['valor'];
+		$total = $total + $atividade[$k]['valor'];
 	}
 	
 	
