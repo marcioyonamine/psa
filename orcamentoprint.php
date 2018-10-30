@@ -281,14 +281,12 @@ body{
 			$tot_pla = $tot_pla + $programa[$i]['valor'];
 			?></td>
 			<td align='right'><?php 
-				if($programa[$i]['programa'] != 'PESSOAL (Folha de Pagamento)' ){
+				
 					echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
 					$tot_exe = $tot_exe + somaPrograma($programa[$i]['id']);
-				}else{
-					echo dinheiroParaBr(somaPrograma($programa[$i]['id'])+$pessoal); 
-					$tot_exe = $tot_exe + somaPrograma($programa[$i]['id'])+$pessoal;
 				
-			}
+				
+			
 			?></td>
 			
 
