@@ -269,7 +269,7 @@ body{
 
 		<?php 
 		$tot_pla = 0;
-		$tot_exe = $pessoal;
+		$tot_exe = 0;
 
 		for ($i = 0; $i < count($programa); $i++){ 
 		?>
@@ -281,9 +281,17 @@ body{
 			$tot_pla = $tot_pla + $programa[$i]['valor'];
 			?></td>
 			<td align='right'><?php 
-			
-			echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
-			$tot_exe = $tot_exe + somaPrograma($programa[$i]['id']);
+			if($programa[$i]['programa'] == 'PESSOAL (Folha de Pagamento)' ){
+				$tot_exe = $tot_exe + $pessoal;
+			}
+				if(){}
+					echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
+					$tot_exe = $tot_exe + somaPrograma($programa[$i]['id']);
+				}else{
+					echo dinheiroParaBr(somaPrograma($programa[$i]['id'])+$pessoal); 
+					$tot_exe = $tot_exe + somaPrograma($programa[$i]['id'])+$pessoal;
+				
+			}
 			?></td>
 			
 
