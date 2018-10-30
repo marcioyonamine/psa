@@ -284,7 +284,7 @@ body{
 			if($programa[$i]['programa'] == 'PESSOAL (Folha de Pagamento)' ){
 				$tot_exe = $tot_exe + $pessoal;
 			}
-				if(){}
+				if($programa[$i]['programa'] == 'PESSOAL (Folha de Pagamento)' ){
 					echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
 					$tot_exe = $tot_exe + somaPrograma($programa[$i]['id']);
 				}else{
