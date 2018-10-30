@@ -71,7 +71,7 @@ body{
 
 				<tr>
 				<td>Liberado</td>
-				<td><?php echo dinheiroParaBr($orcamento['liberado'] - $pessoal); ?></td>
+				<td><?php echo dinheiroParaBr($orcamento['liberado'] + $pessoal); ?></td>
 				</tr>
 								<tr>
 				<td>Planejado</td>
