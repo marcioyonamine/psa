@@ -2507,7 +2507,7 @@ function somaProjeto($id){
 	return $total;
 }
 
-function giap($projeto,$ficha,$folha = FALSE){
+function giap($projeto,$ficha){
 	if($projeto == 600 AND $folha == TRUE){
 		$f = " AND nProcesso = '43313' ";		
 	}else{
