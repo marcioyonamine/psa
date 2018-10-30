@@ -269,7 +269,7 @@ body{
 
 		<?php 
 		$tot_pla = 0;
-		$tot_exe = 0;
+		$tot_exe = $pessoal;
 
 		for ($i = 0; $i < count($programa); $i++){ 
 		?>
