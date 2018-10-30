@@ -2485,14 +2485,14 @@ function producao($idEvento){
 function somaPrograma($id){
 	global $wpdb;
 	$total = 0;
-	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idPrograma = '$id' AND publicado = '1' AND dataEnvio IS NOT NULL AND cancelamento = 0) AND nLiberacao <> '' AND publicado ='1'";
+	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idPrograma = '$id' AND publicado = '1' AND dataEnvio IS NOT NULL AND cancelamento = 0) AND nLiberacao <> '' AND liberado <> '0000-00-00' AND publicado ='1'";
 	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
 
 	for($i = 0; $i < count($evento); $i++){
 		$total = $total + $evento[$i]['valor'];
 	}
 
-	$sql_atividade = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''";
+	$sql_atividade = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''  AND liberado <> '0000-00-00' ";
 	$atividade = $wpdb->get_results($sql_atividade,ARRAY_A);
 
 	for($k = 0; $k < count($atividade); $k++){
