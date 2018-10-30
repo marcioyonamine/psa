@@ -124,6 +124,10 @@ function somarDatas($data,$dias){
 	return $data_final;
 }
 
+function ultimoDiaMes($ano,$mes){
+	return date("t", mktime(0,0,0,$mes,'01',$ano));
+}
+
 function recuperaDados($tabela,$idEvento,$campo){ //retorna uma array com os dados de qualquer tabela. serve apenas para 1 registro.
 	global $wpdb;
 	$sql = "SELECT * FROM $tabela WHERE $campo = '$idEvento' LIMIT 0,1";
@@ -557,7 +561,8 @@ function evento($id){
 		'release' => $res['releaseCom'],
 		'status' => $status,
 		'usuario' => '',
-		'sub' => '',
+		'responsavel' => $usercon,
+		'idMapas' =>  $res['mapas'],
 		'envio' => '',
 		'periodo' => $periodo,
 		'local' => $local,
@@ -2234,7 +2239,7 @@ function orcamentoTotal($ano){
 		'suplementado' => $total_sup,
 		'anulado' => $total_anu,
 		'liberado' => $total_lib,
-		'revisado' => $total_pla,
+		'revisado' => $total_rev,
 		'planejado' => $total_pla,
 		'total' => $total_tot
 		
