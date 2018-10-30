@@ -281,9 +281,6 @@ body{
 			$tot_pla = $tot_pla + $programa[$i]['valor'];
 			?></td>
 			<td align='right'><?php 
-			if($programa[$i]['programa'] == 'PESSOAL (Folha de Pagamento)' ){
-				$tot_exe = $tot_exe + $pessoal;
-			}
 				if($programa[$i]['programa'] != 'PESSOAL (Folha de Pagamento)' ){
 					echo dinheiroParaBr(somaPrograma($programa[$i]['id'])); 
 					$tot_exe = $tot_exe + somaPrograma($programa[$i]['id']);
