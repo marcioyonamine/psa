@@ -1022,13 +1022,22 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	
 	// liberado
 	
-	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND nLiberacao <> '' AND publicado = '1'";
+	//evento
+	
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND nLiberacao <> '' AND publicado = '1' AND idEvento IN(SELECT idEvento FROM sc_evento WHERE cancelamento = 0 AND dataEnvio IS NOT NULL AND publicado = '1')";
 	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
 	$valor_lib = 0;
 	for($i = 0; $i < count($lib); $i++){
 		$valor_lib = $valor_lib + $lib[$i]['valor'];	
 	}
 
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND nLiberacao <> '' AND publicado = '1' AND idAtividade IN(SELECT id FROM sc_atividade WHERE publicado = '1')";
+	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
+	for($i = 0; $i < count($lib); $i++){
+		$valor_lib = $valor_lib + $lib[$i]['valor'];	
+	}
+	
+	
 	//planejado 
 	
 	$valor_pla_pf = 0;
