@@ -2494,7 +2494,7 @@ function somaPrograma($id){
 		
 	}
 
-	$sql_atividade = "SELECT valor,idPedidoContratacao FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''  AND liberado <> '0000-00-00' AND publicado = '1' ";
+	$sql_atividade = "SELECT valor,idPedidoContratacao FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''  AND liberado <> '0000-00-00' AND publicado ='1' ";
 	$atividade = $wpdb->get_results($sql_atividade,ARRAY_A);
 
 	for($k = 0; $k < count($atividade); $k++){
@@ -2509,7 +2509,7 @@ function somaPrograma($id){
 	
 	$x['total'] = $total;
 	$x['contador'] = count($evento) + count($atividade);
-	$x['idPedido'] = 
+
 	return $x;
 }
 
