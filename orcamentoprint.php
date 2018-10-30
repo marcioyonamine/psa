@@ -20,13 +20,13 @@ $orcamento = orcamentoTotal($ano);
 $projeto = array();
 $w = 0;
 
-$_600_1116 = giap(600,1116); 
-$_600_1117 = giap(600,1117); 
-$_600_1118 = giap(600,1118); 
-$_600_1119 = giap(600,1119); 
+$_600_1116 = giap(600,1116,TRUE); 
+$_600_1117 = giap(600,1117,TRUE); 
+$_600_1118 = giap(600,1118,TRUE); 
+$_600_1119 = giap(600,1119,TRUE); 
 
 $pessoal = $_600_1116['v_op_baixado'] + $_600_1117['v_op_baixado'] + $_600_1118['v_op_baixado'] + $_600_1119['v_op_baixado'];
-
+echo $pessoal;
 ?>
 <style>
 body{
