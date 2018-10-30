@@ -2242,6 +2242,12 @@ function orcamentoTotal($ano){
 			} // fim do for	
 			
 			$sal_pla = $total_tot - $total_pla;
+			
+		$total_lib = $total_lib + projeto600();
+
+	
+			
+			
 		$x = array(
 		'orcamento' => $total_orc,
 		'contigenciado' => $total_con,
@@ -2565,4 +2571,13 @@ function giap($projeto,$ficha,$folha = FALSE){
 	
 	return $a;
 	
+}
+
+function projeto600(){
+		$_600_1116 = giap(600,1116); 
+		$_600_1117 = giap(600,1117); 
+		$_600_1118 = giap(600,1118); 
+		$_600_1119 = giap(600,1119); 
+		$pessoal = $_600_1116['v_op_baixado'] + $_600_1117['v_op_baixado'] + $_600_1118['v_op_baixado'] + $_600_1119['v_op_baixado'];
+		return $pessoal;
 }
