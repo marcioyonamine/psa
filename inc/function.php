@@ -2508,16 +2508,10 @@ function somaProjeto($id){
 }
 
 function giap($projeto,$ficha){
-	if($projeto == 600 AND $folha == TRUE){
-		$f = " AND nProcesso = '43313' ";		
-	}else{
-		$f = "";
-	}
-
 
 
 	global $wpdb;
-	$sql = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND projeto = '$projeto' $f";
+	$sql = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND projeto = '$projeto'" ;
 	$c = $wpdb->get_results($sql,ARRAY_A);
 	$a = array(
 	'v_empenho' => 0,
