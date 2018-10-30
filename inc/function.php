@@ -2477,11 +2477,11 @@ function somaPrograma($id){
 		$total = $total + $evento[$i]['valor'];
 	}
 
-	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''";
-	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+	$sql_atividade = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''";
+	$atividade = $wpdb->get_results($sql_atividade,ARRAY_A);
 
-	for($i = 0; $i < count($evento); $i++){
-		$total = $total + $evento[$i]['valor'];
+	for($k = 0; $i < count($atividade); $k++){
+		$total = $total + $atividade[$i]['valor'];
 	}
 	
 	
