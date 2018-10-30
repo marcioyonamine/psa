@@ -264,6 +264,7 @@ body{
 		<?php 
 		$tot_pla = 0;
 		$tot_exe = 0;
+		$tot_con = 0;
 
 		for ($i = 0; $i < count($programa); $i++){ 
 		?>
@@ -278,6 +279,7 @@ body{
 					$e = somaPrograma($programa[$i]['id']);
 					echo dinheiroParaBr($e['total'])." / ".$e['contador']; 
 					$tot_exe = $tot_exe + $e['total'];
+					$tot_con = $tot_con + $e['contador'];
 				
 				
 			
@@ -289,7 +291,7 @@ body{
 		<tr>
 		<td></td>
 		<td align='right'><?php echo dinheiroParaBr($tot_pla); ?></td>
-		<td align='right'><?php echo dinheiroParaBr($tot_exe); ?></td>
+		<td align='right'><?php echo dinheiroParaBr($tot_exe)." / ".$tot_con; ?></td>
 		
 		</tr>
 		
