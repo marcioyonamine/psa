@@ -2476,7 +2476,7 @@ function somaPrograma($id){
 		$total = $total + $evento[$i]['valor'];
 	}
 
-	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1' AND dataEnvio IS NOT NULL) AND nLiberacao <> ''";
+	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''";
 	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
 
 	for($i = 0; $i < count($evento); $i++){
