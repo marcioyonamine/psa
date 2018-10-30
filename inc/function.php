@@ -2212,7 +2212,7 @@ function orcamentoTotal($ano){
 	$total_lib = 0;
 	$total_anul = 0;
 		for($i = 0; $i < count($res); $i++){
-		$orc = orcamento($res[$i]['id']);
+		$orc = orcamento(orcamento($res[$i]['id']);
 			$total = $orc['total'] - $orc['contigenciado'] + $orc['descontigenciado'] + $orc['suplementado'] - $orc['liberado'] - $orc['anulado'];
 					
 			$total_orc = $total_orc + $orc['total'];
