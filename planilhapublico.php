@@ -51,11 +51,11 @@ body{
 // busca no calendário
 $sql = "SELECT DISTINCT idEvento, idLocal FROM sc_agenda WHERE idLocal <> '0' AND data >= '".$ano."-".$mes."-01' AND data <= '".$ano."-".$mes."-".$ultimo_dia."' ORDER BY idEvento";
 $e = $wpdb->get_results($sql,ARRAY_A);
-
+$m = array();
 for($i = 0; $i < count($e); $i++){
 $evento = evento($e[$i]['idEvento']);
 $local = tipo($e[$i]['idLocal']);
-$m = array();
+
 ?>
 <tr>
 	<td><?php echo $evento['idMapas']; ?></td>
@@ -185,6 +185,10 @@ $url = $url_mapas."event/findByLocation";
 
 
 
-
+<?php 
+echo "<pre>";
+var_dump($m);
+echo "</pre>";
+?>
 
 
