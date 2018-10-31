@@ -19,8 +19,6 @@ if(isset($_GET['ano'])){
 $orcamento = orcamentoTotal($ano);
 $projeto = array();
 $w = 0;
-
-
 ?>
 <style>
 body{
@@ -277,7 +275,7 @@ body{
 			?></td>
 			<td align='right'><?php 
 					$e = somaPrograma($programa[$i]['id']);
-					echo dinheiroParaBr($e['total'])." / ".$e['contador']; 
+					echo dinheiroParaBr($e['total']); 
 					$tot_exe = $tot_exe + $e['total'];
 					$tot_con = $tot_con + $e['contador'];
 				
@@ -291,7 +289,7 @@ body{
 		<tr>
 		<td></td>
 		<td align='right'><?php echo dinheiroParaBr($tot_pla); ?></td>
-		<td align='right'><?php echo dinheiroParaBr($tot_exe)." / ".$tot_con; ?></td>
+		<td align='right'><?php echo dinheiroParaBr($tot_exe); ?></td>
 		
 		</tr>
 		

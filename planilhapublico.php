@@ -55,7 +55,7 @@ $e = $wpdb->get_results($sql,ARRAY_A);
 for($i = 0; $i < count($e); $i++){
 $evento = evento($e[$i]['idEvento']);
 $local = tipo($e[$i]['idLocal']);
-
+$m = array();
 ?>
 <tr>
 	<td><?php echo $evento['idMapas']; ?></td>
@@ -71,7 +71,7 @@ $local = tipo($e[$i]['idLocal']);
 </tr>
 
 <?php 	
-	
+	array_push($m,$evento['idMapas']);
 }
 
 ?>
@@ -89,12 +89,102 @@ $local = tipo($e[$i]['idLocal']);
 
 </tr>
 
+<?php 
+$url_mapas = "http://culturaz.santoandre.sp.gov.br/api/";
+$url = $url_mapas."event/findByLocation";
+
+		$inicio = $ano."-".$mes."-01";
+		$fim = $ano."-".$mes."-".$ultimo_dia;
+
+			$n_semana = date('w', strtotime($inicio));
+			$url_mapas = "http://culturaz.santoandre.sp.gov.br/api/";
+			$url = $url_mapas."event/findByLocation";
+			$data = array(
+				"@from" => $inicio,
+				"@to" => $fim,
+				"@select" => "id, name, occurrences",
+				"@seals" => "1,2,3"
+			);
+			
+			
+			$e = chamaAPI($url,$data);
+			
+			
+
+			for($i = 0; $i < count($e); $i++){
+
+				
+				for($k = 0; $k < count($e[$i]['occurrences']); $k++){
+					$data_o = array(
+						"@select" => "space,_startsAt,rule",
+						"@seals" => "1,2,3",
+						"id" => "EQ(".$e[$i]['occurrences'][$k].")"
+					);
+					
+					$o = chamaAPI($url_mapas."eventOccurrence/find",$data_o);
+
+			//echo "<pre>";
+			//var_dump($o);
+			//echo "</pre>";
+					
+					
+					$data_l = array(
+						"@select" =>  "name",
+						"id" => "EQ(".$o[0]['space'].")"
+					);
+
+					$l = chamaAPI($url_mapas."space/find",$data_l);
+					$b = false;
+					for($t = 0; $t < 7; $t++){
+						if(isset($o[0]['rule']['day'][$t]) AND $t == $n_semana){
+							$b = true;
+						}
+					}	
+					if($b == true OR $o[0]['rule']['frequency'] == 'once'){
+						if(!in_array($e[$i]['id'],$m)){		
+							echo "<tr>";
+							echo "<td>".$e[$i]['id']."<td>";
+							echo "<td>".$e[$i]['name']."</td>";
+							echo "<td>".$l[0]['name']." - ".substr(substr($o[0]['_startsAt']['date'],0,-10),11)."</td>";
+							echo "<td></td><td></td><td></td>";
+							echo "</tr>";
+						}
+					}
+				}
+				
+				
+			}
+			
+			echo "<br />";
+			
+			//echo "<pre>";
+			//var_dump($e);
+			//echo "</pre>";
+			/*
+			$sql = "SELECT * FROM sc_agenda WHERE data = '".$inicio."' ORDER BY hora ASC";
+			$id_evento = $wpdb->get_results($sql,ARRAY_A);
+			$titulo = "";
+			for($i =0; $i < count($id_evento); $i++){
+				$evento = evento($id_evento[$i]['idEvento']);
+				$local = tipo($id_evento[$i]['idLocal']);
+				echo $evento['titulo']." - ".substr($id_evento[$i]['hora'],0,-3)."<br />";
+				echo $local['tipo']."<br /><br />";
+				
+			}
+		
+			echo "<pre>";
+			var_dump($e);
+			echo "</pre>";
+				*/
+			
 
 
-
-
-
+?>
 
 </table>
+
+
+
+
 
 
