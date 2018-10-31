@@ -141,7 +141,7 @@ $url = $url_mapas."event/findByLocation";
 						}
 					}	
 					if($b == true OR $o[0]['rule']['frequency'] == 'once'){
-						if(!in_array($e[$i]['id'],$m)){		
+						if(in_array($e[$i]['id'],$m) == FALSE){		
 							echo "<tr>";
 							echo "<td>".$e[$i]['id']."<td>";
 							echo "<td>".$e[$i]['name']."</td>";
