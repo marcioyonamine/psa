@@ -20,6 +20,9 @@
             <li class="nav-item">
               <a class="nav-link" href="aprovacao.php">Listar Meus Eventos para Aprovação</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="aprovacao.php?p=aprovados">Listar Meus Eventos Aprovados</a>
+            </li>
 			<li>
               <a class="nav-link" href="aprovacao.php">Listar Meus Eventos</a>
             </li>
