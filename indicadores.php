@@ -1332,7 +1332,7 @@ $k = 1;
 						$ocorrencia = ocorrencia($ocor[$i]['idOcorrencia']);
 						$local = " (".$ocorrencia['local'].")";
 					}else{
-						$local = ""
+						$local = "";
 					}
 				?>
 				<tr>
