@@ -52,7 +52,7 @@ for($i = 1; $i < count($e); $i++){
 	
 	if($e[$i]['bartira'] != 0 OR $e[$i]['bartira'] != '' ){
 		$evento = evento($e[$i]['bartira']);
-		$evento_rec = recuperaDados("sc_evento",$e[$i]['bartira'],$idEvento);
+		$evento_rec = recuperaDados("sc_evento",$e[$i]['bartira'],"idEvento");
 	}
 	
 	
