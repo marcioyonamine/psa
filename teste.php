@@ -45,7 +45,8 @@ for($i = 1; $i < count($e); $i++){
 	'programa' => '',
 	'autor' => '',
 	'linguagem' => '',
-	'periodo' => ''
+	'periodo' => 
+		array('legivel' => ''),
 	
 	
 	);
