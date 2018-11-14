@@ -577,7 +577,7 @@ function evento($id){
 		'dataEnvio' => $res['dataEnvio'],
 		'previsto' => $res['previsto'],
 		'artista_local' => $res['artista_local'],
-		'cidade' => $res['cidade']
+		'cidade' => $res['cidade'],
 		'descricao' => $res['descricao']
 	);
 

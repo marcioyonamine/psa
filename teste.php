@@ -6,9 +6,96 @@
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
           <h1>Ambiente teste</h1>
+<?php 
 
+// Carrega todos os eventos da tabela temp_outubro 
+$sql = "SELECT * FROM `temp_outubro` WHERE publico <> ''";
+$e = $wpdb->get_results($sql,ARRAY_A);
+
+
+?>
+
+<table border='1'>
+<tr>
+<th>DATA</th>
+<th>HORA</th>
+<th>EQUIPAMENTOS CULTURAIS OU DE LAZER</th>
+<th>OUTROS LOCAIS</th>
+<th>BAIRRO</th>
+<th>PROJETO</th>
+<th>NOME DO EVENTO</th>
+<th>NOME DA ATRAÇÃO PRINCIPAL</th>
+<th>LINGUAGEM</th>
+<th>SEGMENTO/TIP</th>
+<th>Nº DE GRUPOS/AGENTES CULTURAIS E DE LAZER</th>
+<th>SELECIONADOS POR CONVOCATÓRIA/EDITAL?</th>
+<th>A AÇÃO CONTOU COM ARTISTAS DA CIDADE?</th>
+<th>SE SIM, QUANTOS INDIVÍDUOS?</th>
+<th>AÇÃO REALIZADA EM PARCERIA?</th>
+<th>PARCEIRO</th>
+<th>PÚBLICO</th>
+<th>GASTOS COM CONTRATAÇÃO DE PESSOAL para esta ação específica(em R$)</th>
+<th>GASTOS COM ESTRUTURA para esta ação específica (em R$)</th>
+
+
+</tr>
+<?php 
+for($i = 1; $i < count($e); $i++){
+	if($e[$i]['bartira'] != 0){
+		$evento = evento($e[$i]['bartira']);
+	}
+	
+	
+	?>
+	<tr>
+	<td><?php ?> </td>
+	<td><?php echo $e[$i]['local'] ?> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td><?php echo $e[$i]['evento'] ?></td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+
+	<td><?php echo $e[$i]['publico'] ?> </td>
+	<td> </td>
+	<td> </td>
+
+	<tr>
+	
+	
+<?php
+	
+}
+
+
+?>
+
+
+</table>
+
+<?php 
+
+echo count($e);
+echo "<br />";
+var_dump($e);
+
+?>		  
+		  
+		  
 		  <?php //echo exibeHoje();?>
 <?php 
+/*
+
+
 	$dias = opcaoDados("sistema",0);
 
 	echo "<pre>";
@@ -17,7 +104,6 @@
 	
 $hoje = somarDatas(date('Y-m-d'),$dias['dias']);
 echo $hoje;
-/*
 function ultimoDiaMes($m,$y){
 
 	return $y."-".$m."-".cal_days_in_month(CAL_GREGORIAN, $m , $y);
