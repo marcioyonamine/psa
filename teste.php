@@ -41,6 +41,13 @@ $e = $wpdb->get_results($sql,ARRAY_A);
 </tr>
 <?php 
 for($i = 1; $i < count($e); $i++){
+	$evento = array(
+	'programa' => '',
+	'autor' => ''
+	
+	
+	);
+	
 	if($e[$i]['bartira'] != 0){
 		$evento = evento($e[$i]['bartira']);
 	}
@@ -49,14 +56,14 @@ for($i = 1; $i < count($e); $i++){
 	?>
 	<tr>
 	<td><?php ?> </td>
+	<td> </td>
 	<td><?php echo $e[$i]['local'] ?> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td> </td>
 	<td><?php echo $e[$i]['evento'] ?></td>
-	<td> </td>
-	<td> </td>
+	<td><?php echo $evento['autor'] ?></td>
+	<td> <?php echo $evento['linguagem'] ?></td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
