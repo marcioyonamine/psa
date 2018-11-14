@@ -250,7 +250,7 @@ $(function() {
 						<div class="col-md-offset-2 col-md-8">
 							<label>Tipo de Público</label>
 							<select class="form-control" name="tipo" id="inputSubject" ><option>Selecione</option>
-							<option value="1">Geral</option>
+							<option value="1"  selected >Geral</option>
 							<option value="2">Específico</option>
 							</select>
 						</div>
@@ -277,7 +277,7 @@ $(function() {
 						<div class="col-md-offset-2 col-md-8">
 							<label>Tipo de Contagem</label>
 							<select class="form-control" name="contagem" id="inputSubject" ><option>Selecione</option>
-							<option value="1">Número total (absoluto)</option>
+							<option value="1"  selected >Número total (absoluto)</option>
 							<option value="2">Média Geral (por dia)</option>
 							</select>
 						</div>
@@ -1241,28 +1241,6 @@ if(isset($_POST['apagar'])){
 <?php 
 case "listarevento":
 
-/*
-array(9) {
-  ["idEvento"]=>
-  string(3) "121"
-  ["tipo"]=>
-  string(1) "1"
-  ["periodoInicio"]=>
-  string(10) "06/06/2018"
-  ["periodoFim"]=>
-  string(0) ""
-  ["ndias"]=>
-  string(0) ""
-  ["contagem"]=>
-  string(1) "1"
-  ["valor"]=>
-  string(3) "300"
-  ["relato"]=>
-  string(8) "teste123"
-  ["inserir_evento"]=>
-  string(1) "1"
-}
-*/
 
 if(isset($_POST['apagar'])){
 	$sql_update = "UPDATE sc_indicadores SET publicado = '0' WHERE id = '".$_POST['apagar']."'";
@@ -1350,10 +1328,16 @@ $k = 1;
 				<?php
 				for($i = 0; $i < count($ocor); $i++){
 					$evento = evento($ocor[$i]['idEvento']);
+					if($ocor[$i]['idOcorrencia'] != 0){
+						$ocorrencia = ocorrencia($ocor[$i]['idOcorrencia']);
+						$local = " (".$ocorrencia['local'].")";
+					}else{
+						$local = "";
+					}
 				?>
 				<tr>
 					<td><?php echo $k; $k++; ?></td>	
-                  <td><?php echo $evento['titulo'];  ?></td>
+                  <td><?php echo $evento['titulo'].$local;  ?></td>
                   <td><?php echo exibirDataBr($ocor[$i]['periodoInicio']); ?><?php if($ocor[$i]['periodoFim'] != '0000-00-00'){ echo " a ".exibirDataBr($ocor[$i]['periodoFim']);} ?></td>
                   <td><?php echo $ocor[$i]['valor']; if($ocor[$i]['contagem'] == 1){echo " (total)";}else{echo " (média/dia)";}  
 				  $total = $total + $ocor[$i]['valor'];

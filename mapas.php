@@ -35,6 +35,103 @@ if(isset($_POST['enviar'])){  // envia
 	}
 	
 }
+
+	if(isset($_POST['publicar'])){
+			$meta = metausuario($user->ID);	
+		require "MapasSDK/vendor/autoload.php"; //carrega o sdk
+		$url_mapas = $GLOBALS['url_mapas'];
+		$chave01 = $meta['chave01'];
+		$chave02 = $meta['chave02'];
+		$chave03 = $GLOBALS['chave03'];
+
+		$mapas = new MapasSDK\MapasSDK(
+			$url_mapas,
+			$chave01,
+			$chave02,
+			$chave03
+		);
+
+		$event = evento($_POST['publicar']);
+		
+	//instancia o objeto
+	
+	$new_event = $mapas->createEntity('event', [
+    'name' => $event['titulo'],
+    'shortDescription' => substr($event['sinopse'], 0, 400),
+	'longDescription' => $event['descricao'],
+    'terms' => [
+        'linguagem' => [$event['linguagem']]
+    ],
+    'classificacaoEtaria' => $event['faixa_etaria'],
+	]);	
+	
+	$new_event = converterObjParaArray($new_event);
+
+	if($new_event['id'] > 0){
+		// Atualiza evento
+		$new_event['id'];
+		$sql_upd = "UPDATE sc_evento SET mapas = '".$new_event['id']."' WHERE idEvento = '".$_SESSION['id']."'";
+		$wpdb->query($sql_upd);
+
+		// acontecendo uma única vez no dia 28 de Setembro de 2017 às 12:00 com duração de 120min e preço Gratuíto
+		$oc = $event['mapas']['ocorrencia'];
+		
+		
+		for($i = 0; $i < count($oc); $i++){
+			
+			
+			$oc_le = ocorrencia($event['mapas']['ocorrencia']['idOcorrencia']);
+			
+
+			if($oc[$i]['frequency'] == 'once'){	
+			$occurrence = $mapas->apiPost('eventOccurrence/create',[
+				'eventId' => $new_event['id'],
+				'spaceId' => $oc[$i]['spaceId'],
+				'startsAt' => $oc[$i]['startsAt'],
+				'duration' => $oc[$i]['duration'],
+				// 'endsAt' => '14:00',
+				'frequency' => $oc[$i]['frequency'],
+				'startsOn' => $oc[$i]['startsOn'],
+				'until' => '',
+				'description' => $oc[$i]['description'],
+				'price' => $oc[$i]['price']
+			]);
+
+			}else{
+			// acontecendo Toda seg, qua e sex de 1 a 30 de setembro de 2017 às 10:00
+
+
+				$occurrence = $mapas->apiPost('eventOccurrence/create',[
+				'eventId' => $new_event['id'],
+				'spaceId' => $oc[$i]['spaceId'],
+				'startsAt' => $oc[$i]['startsAt'],
+				'duration' => $oc[$i]['duration'],
+				// 'endsAt' => '12:00',
+				'frequency' => $oc[$i]['frequency'],
+				'startsOn' => $oc[$i]['startsOn'],
+				'until' => $oc[$i]['until'],
+				'day' => $oc[$i]['day'],
+				'description' => $oc[$i]['description'],
+				'price' => $oc[$i]['price']
+			]);
+;
+
+			}
+
+		}
+		
+
+		
+		
+	} //if ok criar evento
+	
+	
+	
+
+	}// fim publicar
+
+
+
 if(isset($_SESSION['id'])){
 	unset($_SESSION['id']);
 }
@@ -211,6 +308,7 @@ case "editar":
 		$linguagem    = $_POST["linguagem"];
 		$faixaEtaria    = $_POST["faixaEtaria"];
 		$sinopse    = addslashes($_POST["sinopse"]);
+		$descricao    = addslashes($_POST["descricao"]);
 		if(isset($_POST['subEvento'])){
 			$subEvento = $_POST['subEvento'];
 		}else{
@@ -252,7 +350,9 @@ case "editar":
 		`idLinguagem` = '$linguagem',
 		`nomeEvento` = '$nomeEvento',
 		`faixaEtaria` = '$faixaEtaria',
-		`sinopse` = '$sinopse'
+		`sinopse` = '$sinopse',
+		`descricao` = '$descricao'
+		
 		WHERE `idEvento` = '$atualizar';
 		";
 		$atual = $wpdb->query($sql_atualizar);
@@ -261,9 +361,9 @@ case "editar":
 		$_SESSION['id'] = $evento['idEvento'];
 		
 		if($atual == 1){
-			$mensagem = "Evento atualizado com sucesso.";
+			$mensagem = alerta("Evento atualizado com sucesso.","success");
 		}else{
-			$mensagem = "Erro ao atualizar.";
+			$mensagem = alerta("Erro ao atualizar.","warning");
 		}
 
 	}
@@ -287,7 +387,7 @@ case "editar":
 	$new_event = $mapas->createEntity('event', [
     'name' => $event['titulo'],
     'shortDescription' => substr($event['sinopse'], 0, 400),
-	'longDescription' => $event['sinopse'],
+	'longDescription' => $event['descricao'],
     'terms' => [
         'linguagem' => [$event['linguagem']]
     ],
@@ -400,11 +500,6 @@ case "editar":
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?p=editar" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-2">
-							<input type="checkbox" name="planejamento" id="subEvento" <?php checar($evento['planejamento']) ?>/><label style="padding:0 10px 0 5px;"> Evento em planejamento?</label>
-						</div>
-					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2">
@@ -434,7 +529,12 @@ case "editar":
 							<textarea name="sinopse" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php echo $evento["sinopse"] ?></textarea>
 						</div> 
 					</div>
-
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<label>Descrição Longa </label>
+							<textarea name="descricao" class="form-control" rows="10" placeholder="Texto para divulgação e sob editoria da area de comunicação. Não ultrapassar 400 caracteres."><?php echo $evento["descricao"] ?></textarea>
+						</div> 
+					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<input type="hidden" name="atualizar" value="<?php echo $evento['idEvento']; ?>" />
@@ -444,9 +544,9 @@ case "editar":
 						</div>
 					</div>
 				</form>
-				<?php if($event['mapas']['id'] == 0){ ?>
+				<?php if($evento['mapas'] == 0){ ?>
 				
-				<form method="POST" action="?p=editar" class="form-horizontal" role="form">				
+				<form method="POST" action="?" class="form-horizontal" role="form">				
 				<div class="form-group">
 						<div class="col-md-offset-2">
 							<input type="hidden" name="publicar" value="<?php echo $evento['idEvento']; ?>" />
@@ -454,7 +554,7 @@ case "editar":
 							?>
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Publicar Mapas Culturais">
 							<?php } else { ?>
-							<a href="<?php echo $GLOBALS['url_mapas']."evento/".$event['mapas']['id']; ?>" class="btn btn-theme btn-lg btn-block" target="_blank">Acessar Mapas Culturais</a> 
+							<a href="<?php echo $GLOBALS['url_mapas']."evento/".$evento['mapas']; ?>" class="btn btn-theme btn-lg btn-block" target="_blank">Acessar Mapas Culturais</a> 
 							<?php } ?>
 						</div>
 				</form>	</div>

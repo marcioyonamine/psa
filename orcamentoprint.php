@@ -9,7 +9,14 @@ if(!is_user_logged_in()): // Impede acesso de pessoas não autorizadas
 endif;
 //Carrega os arquivos de funções
 require "inc/function.php";
-$orcamento = orcamentoTotal(2018);
+
+if(isset($_GET['ano'])){
+	$ano = $_GET['ano'];
+}else{
+	$ano = date('Y');
+}
+
+$orcamento = orcamentoTotal($ano);
 $projeto = array();
 $w = 0;
 ?>
@@ -22,14 +29,11 @@ body{
 	
 	
 }
+
 </style>
 <div>
-            <table border= "1" class="table table-striped">
+            <table border= "1" class="table table-striped" width='100%'>
               <thead>
-                <tr>
-				<th></th>
-				<th></th>
-     			</tr>
               </thead>
               <tbody>
 				<tr>
@@ -49,6 +53,15 @@ body{
 				<td><?php echo dinheiroParaBr($orcamento['suplementado']); ?></td>
 				</tr>
 				<tr>
+				<td>Anulado</td>
+				<td><?php echo dinheiroParaBr($orcamento['anulado']); ?></td>
+				</tr>
+				<tr>
+				<td>Revisado</td>
+				<td><?php echo dinheiroParaBr($orcamento['revisado']); ?></td>
+				</tr>
+
+				<tr>
 				<td>Liberado</td>
 				<td><?php echo dinheiroParaBr($orcamento['liberado']); ?></td>
 				</tr>
@@ -56,25 +69,18 @@ body{
 				<td>Planejado</td>
 				<td><?php echo dinheiroParaBr($orcamento['planejado']); ?></td>
 				</tr>
-								<tr>
-				<td>Executado</td>
-				<td></td>
-				</tr>
 				<tr>
-				<td>Saldo </td>
-				<td><?php echo dinheiroParaBr($orcamento['total']); ?></td>
-				<td></td>
+				<td>Saldo</td>
+				<td><?php echo dinheiroParaBr($orcamento['revisado'] - $orcamento['liberado']); ?></td>
 				</tr>
-				<tr>
-				<td>Saldo Planejado</td>
-				<td><?php echo dinheiroParaBr($orcamento['total'] - $orcamento['planejado'] ); ?></td>
-
-				</tr>				
+				
 				</tbody>
             </table>
           </div> 
 		  </div>
-<div id="pieChart" align="center"></div>
+		  
+	<br /><br />	  <br /><br />
+
 		
 		
 		
@@ -84,17 +90,18 @@ body{
                 <tr>
 				<th width="25%">Programa</th>
 				<th>Projeto</th>
-				<th>Valor</th>
+
 				<th width="30%">Nota</th>
 				<th>Responsável</th>
 				<th>Projeto/Ficha</th>
 				<th width="15%">Descrição</th>
-
+				<th>Valor planejado</th>
+				<th>Valor liberado</th>
      			</tr>
               </thead>
               <tbody>
 				<?php 
-				$programa = array();
+				$programa = array(); // Programa
 				$sel_programa = "SELECT * FROM sc_tipo WHERE abreviatura = 'programa'";
 				$res_programa = $wpdb->get_results($sel_programa,ARRAY_A);
 				for($i = 0; $i < count($res_programa); $i++){
@@ -107,11 +114,13 @@ body{
 				<td></td>				
 				<td></td>				
 				<td></td>				
-				<td></td>				
+				<td></td>		
+<td></td>				
+				
 
 				</tr>
-					<?php 
-					$sel_projeto = "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto'";
+					<?php // Projeto
+					$sel_projeto = "SELECT * FROM sc_tipo WHERE abreviatura = 'projeto' AND publicado = '1'";
 					$res_projeto = $wpdb->get_results($sel_projeto,ARRAY_A);
 					//var_dump($res_projeto);	
 					for($k = 0; $k < count($res_projeto); $k++){
@@ -123,10 +132,25 @@ body{
 					<tr>
 					<td></td>
 					<td><?php echo $res_projeto[$k]['tipo'] ?></td>
-					<td>
-					<?php 
-						$sql_orc = "SELECT valor,obs,idPai FROM sc_orcamento WHERE planejamento ='".$res_projeto[$k]['id_tipo']."' AND publicado ='1'";
+					
+					<td><?php 
+					$sql_orc = "SELECT valor,obs,idPai FROM sc_orcamento WHERE planejamento ='".$res_projeto[$k]['id_tipo']."' AND publicado = '1'";
 						$res_orc = $wpdb->get_row($sql_orc,ARRAY_A);
+					
+					if(isset($res_orc['obs'])){echo $res_orc['obs'];}; ?></td>
+					<td><?php 
+							if($pro_json['responsavel'] != NULL){
+										$pro_json['responsavel'];
+										$userwp = get_userdata($pro_json['responsavel']);
+										if($userwp){
+										echo $userwp->first_name."".$userwp->last_name; //var_dump($orc); 
+										}
+									}
+									?></td>				
+				<td><?php  if(isset($orc['projeto'])){echo $orc['projeto']; } ?> / <?php if(isset($orc['ficha'])){echo $orc['ficha'];} ?></td>				
+				<td><?php  if(isset($orc['descricao'])){echo $orc['descricao']; } ?></td><td>
+					<?php 
+						
 						
 						if($res_orc['idPai'] != NULL){
 							$orc = recuperaDados("sc_orcamento",$res_orc['idPai'],"id");
@@ -153,18 +177,13 @@ body{
 						}
 						?>
 					</td>
-					<td><?php echo $res_orc['obs']; ?></td>
-									<td><?php 
-									if($pro_json['responsavel'] != NULL){
-										$pro_json['responsavel'];
-										$userwp = get_userdata($pro_json['responsavel']);
-										if($userwp){
-										echo $userwp->first_name."".$userwp->last_name; //var_dump($orc); 
-										}
-									}
-									?></td>				
-				<td><?php  if(isset($orc['projeto'])){echo $orc['projeto']; } ?> / <?php if(isset($orc['ficha'])){echo $orc['ficha'];} ?></td>				
-				<td><?php  if(isset($orc['descricao'])){echo $orc['descricao']; } ?></td>				
+
+					<td>
+					<?php 
+					$v = somaProjeto($res_projeto[$k]['id_tipo']);
+					echo dinheiroParaBr($v);
+					?>
+					</td>		
 
 					</tr>
 					<?php } 
@@ -191,15 +210,17 @@ body{
 				<td></td>
 				<td></td>				
 				<td></td>				
-				<td></td>				
+				<td></td>	
+<td></td>				
 
 				<?php 
+				$programa[$i]['id'] = $res_programa[$i]['id_tipo'];
 				$programa[$i]['programa'] = $res_programa[$i]['tipo'];
 				$programa[$i]['valor'] = $total_programa;
 				?>
 				</tr>
 				<tr>
-				<td height="50px" colspan="7"></td>
+				<td height="50px" colspan="8"></td>
 
 
 				</tr>
@@ -211,8 +232,11 @@ body{
 
 				</tbody>
             </table>
+
 			<style>
 
+			
+			
 .bar {
   fill: steelblue;
 }
@@ -226,6 +250,55 @@ body{
 }
 
 </style>
+<div id="pieChart" align="center"></div>
+<table border = '1' width='100%'>
+<tr>
+
+<th>Programa</th>
+<th>Valor Planejado</th>
+<th>Valor Executado</th>
+</tr>
+
+		<?php 
+		$tot_pla = 0;
+		$tot_exe = 0;
+		$tot_con = 0;
+
+		for ($i = 0; $i < count($programa); $i++){ 
+		?>
+			<tr>
+			<td><?php echo ($programa[$i]['programa']);?></td>
+			<td align='right'><?php 
+			
+			echo dinheiroParaBr($programa[$i]['valor']);
+			$tot_pla = $tot_pla + $programa[$i]['valor'];
+			?></td>
+			<td align='right'><?php 
+					$e = somaPrograma($programa[$i]['id']);
+					echo dinheiroParaBr($e['total']); 
+					$tot_exe = $tot_exe + $e['total'];
+					$tot_con = $tot_con + $e['contador'];
+				
+				
+			
+			?></td>
+			
+
+			</tr>
+		<?php } ?>
+		<tr>
+		<td></td>
+		<td align='right'><?php echo dinheiroParaBr($tot_pla); ?></td>
+		<td align='right'><?php echo dinheiroParaBr($tot_exe); ?></td>
+		
+		</tr>
+		
+<tr>
+
+</tr>
+
+</table>
+
 			<script src="https://d3js.org/d3.v4.js"></script>
 <script src="visual/d3/d3pie.js"></script>
 <script>
@@ -308,3 +381,5 @@ var pie = new d3pie("pieChart", {
 	}
 });
 </script>
+
+

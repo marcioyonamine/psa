@@ -248,7 +248,7 @@ $evento = evento($_SESSION['id']);
 			<div class="col-md-offset-1 col-md-10">
 			<h3>Pendências</h3>
 			<?php $pendencia = verificaEvento($_SESSION['id']);
-			if($pendencia['erros'] == 0){
+			if($pendencia['erros'] == 0 ){
 				echo "<p>Não há pendencias.</p>";
 				if($evento['dataEnvio'] == NULL){
 				?>
@@ -262,6 +262,8 @@ $evento = evento($_SESSION['id']);
 				echo "<h4>Evento enviado ao sistema.</h4>";	
 					
 				}
+
+
 				
 			}else{
 				echo "<p>".$pendencia['relatorio']."</p>";		
@@ -315,7 +317,7 @@ $evento = evento($_SESSION['id']);
 		</div>
 </section>
 
- 
+ <br /><br />
 	 
 <?php 	 
 break;	 

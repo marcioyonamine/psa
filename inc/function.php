@@ -124,6 +124,10 @@ function somarDatas($data,$dias){
 	return $data_final;
 }
 
+function ultimoDiaMes($ano,$mes){
+	return date("t", mktime(0,0,0,$mes,'01',$ano));
+}
+
 function recuperaDados($tabela,$idEvento,$campo){ //retorna uma array com os dados de qualquer tabela. serve apenas para 1 registro.
 	global $wpdb;
 	$sql = "SELECT * FROM $tabela WHERE $campo = '$idEvento' LIMIT 0,1";
@@ -209,15 +213,24 @@ function select($id,$sel){
 //retorna valor xxx,xx para xxx.xx
 function dinheiroDeBr($valor)
 {
-	$valor = str_ireplace(".","",$valor);
-	$valor = str_ireplace(",",".",$valor);
-	return $valor;
+	if($valor == NULL){
+		return 0;	
+	}else{
+		$valor = str_ireplace(".","",$valor);
+		$valor = str_ireplace(",",".",$valor);
+		return $valor;
+	}
+
 }
 //retorna valor xxx.xx para xxx,xx
 function dinheiroParaBr($valor)
 { 
-	$valor = number_format($valor, 2, ',', '.');
-	return $valor;
+	if($valor == NULL){
+		return 0;	
+	}else{
+		$valor = number_format($valor, 2, ',', '.');
+		return $valor;
+	}
 }
 
 // retorna datatime sem hora
@@ -536,6 +549,7 @@ function evento($id){
 	
 	$evento = array(
 		'titulo' => $res['nomeEvento'],
+		'idTipo' => $res['idTipo'],
 		'programa' => $programa['tipo'],
 		'projeto' => $projeto['tipo'],
 		'linguagem' => $linguagem['tipo'],
@@ -547,7 +561,8 @@ function evento($id){
 		'release' => $res['releaseCom'],
 		'status' => $status,
 		'usuario' => '',
-		'sub' => '',
+		'responsavel' => $usercon,
+		'idMapas' =>  $res['mapas'],
 		'envio' => '',
 		'periodo' => $periodo,
 		'local' => $local,
@@ -563,6 +578,7 @@ function evento($id){
 		'previsto' => $res['previsto'],
 		'artista_local' => $res['artista_local'],
 		'cidade' => $res['cidade']
+		'descricao' => $res['descricao']
 	);
 
 	
@@ -571,7 +587,7 @@ function evento($id){
 		'id' => $res['mapas'],
 		'name' => $res['nomeEvento'],
 		'shortDescription' => substr($res['sinopse'],0,390)."...",
-		'longDescription' => $res['releaseCom'],
+		'longDescription' => $res['descricao'],
 		'classificaoEtaria' => $etaria['tipo'],
 	);
 	
@@ -591,7 +607,12 @@ function evento($id){
 			$evento['mapas']['ocorrencia'][$i]['startsAt'] = substr($res_oc[$i]['horaInicio'],0,5);
 			$evento['mapas']['ocorrencia'][$i]['duration'] = $res_oc[$i]['duracao'];
 			$evento['mapas']['ocorrencia'][$i]['until'] = '';
-			$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			if($oc_legivel['descricao'] == ''){
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			}else{
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['descricao'];
+				
+			}
 			if($res_oc[$i]['valorIngresso'] == 0){
 				$evento['mapas']['ocorrencia'][$i]['price'] = "Grátis";
 			}else{
@@ -604,7 +625,12 @@ function evento($id){
 			$evento['mapas']['ocorrencia'][$i]['startsAt'] = substr($res_oc[$i]['horaInicio'],0,5);
 			$evento['mapas']['ocorrencia'][$i]['duration'] = $res_oc[$i]['duracao'];
 			$evento['mapas']['ocorrencia'][$i]['until'] = $res_oc[$i]['dataFinal'];
-			$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			if($oc_legivel['descricao'] == ''){
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['data'];
+			}else{
+				$evento['mapas']['ocorrencia'][$i]['description'] = $oc_legivel['descricao'];
+				
+			}
 			if($res_oc[$i]['valorIngresso'] == 0){
 				$evento['mapas']['ocorrencia'][$i]['price'] = "Grátis";
 			}else{
@@ -639,6 +665,7 @@ function evento($id){
 			
 		}
 	}
+	
 	
 	return $evento;
 }
@@ -749,7 +776,8 @@ function ocorrencia($id){
 	$ocorrencia = array(
 		'tipo' => $tipo,
 		'data' =>  $data,
-		'local' => $local['tipo']
+		'local' => $local['tipo'],
+		'descricao' => $oc['descricao']
 	);
 	
 	return $ocorrencia;
@@ -994,13 +1022,23 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 		
 	
 	// liberado
-	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND publicado = '1'";
+	
+	//evento
+	$valor_lib = 0;	
+	$sql_lib = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND nLiberacao <> '' AND publicado = '1' AND idEvento IN(SELECT idEvento FROM sc_evento WHERE cancelamento = 0 AND dataEnvio IS NOT NULL AND publicado = '1')";
 	$lib = $wpdb->get_results($sql_lib,ARRAY_A);
-	$valor_lib = 0;
+
 	for($i = 0; $i < count($lib); $i++){
 		$valor_lib = $valor_lib + $lib[$i]['valor'];	
 	}
 
+	$sql_lib2 = "SELECT valor FROM sc_contratacao WHERE dotacao = '$id' AND liberado <> '0000-00-00' AND nLiberacao <> '' AND publicado = '1' AND idAtividade IN(SELECT id FROM sc_atividade WHERE publicado = '1')";
+	$lib2 = $wpdb->get_results($sql_lib2,ARRAY_A);
+	for($k = 0; $k < count($lib2); $k++){
+		$valor_lib = $valor_lib + $lib2[$k]['valor'];	
+	}
+	
+	
 	//planejado 
 	
 	$valor_pla_pf = 0;
@@ -1049,6 +1087,7 @@ function orcamento($id,$fim = NULL,$inicio = NULL){
 	'liberado' => $valor_lib,
 	'planejado' => $valor_pla,
 	'anulado' => $valor_anul,
+	'revisado' => ($val['valor']  - $valor_cont + $valor_desc + $valor_supl - $valor_anul), 
 	'projeto' =>  $val['projeto'],
 	'ficha' => $val['ficha']
 
@@ -1236,7 +1275,7 @@ function listaPedidos($id,$tipo){ //lista os pedidos de contratação de determi
 
 function periodo($id){ //retorna o período
 	global $wpdb;
-	$sql = "SELECT dataInicio, dataFinal FROM sc_ocorrencia WHERE publicado = '1' AND idEvento = '$id' ORDER BY dataInicio ASC";
+	$sql = "SELECT dataInicio, dataFinal, horaInicio FROM sc_ocorrencia WHERE publicado = '1' AND idEvento = '$id' ORDER BY dataInicio ASC";
 	$res = $wpdb->get_results($sql,ARRAY_A);
 
 	$x = array();
@@ -1249,6 +1288,7 @@ function periodo($id){ //retorna o período
 		$x['inicio'] = $res[0]['dataInicio'];
 		$x['final'] = $res[0]['dataInicio'];
 		$x['legivel'] = exibirDataBr($res[0]['dataInicio']);
+		$x['horario'] = $res[0]['horaInicio'];
 	}else{ // temporadas ou multiplas ocorrencias
 		if(count($res) == 1){ // se for apenas uma ocorrência
 			$x['bool'] = TRUE;
@@ -1307,7 +1347,7 @@ function retornaPedido($id){
 	if($res_tipo['idEvento'] != 0){
 	
 	
-	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo, nLiberacao, nProcesso,  sc_evento.dataEnvio  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
+	$sql = "SELECT valor, tipoPessoa, idPessoa, sc_evento.idEvento, idResponsavel, dotacao, valor, formaPagamento, empenhado, liberado, parcelas, observacao, integrantesGrupo, nLiberacao, nProcesso,  sc_evento.dataEnvio, sc_evento.descricao  FROM sc_contratacao, sc_evento WHERE idPedidoContratacao = '$id' AND sc_evento.idEvento = sc_contratacao.idEvento ";
 	$res = $wpdb->get_row($sql,ARRAY_A);
 	$pessoa = retornaPessoa($res['idPessoa'],$res['tipoPessoa']);
 	$objeto = evento($res['idEvento']);
@@ -1397,6 +1437,7 @@ function retornaPedido($id){
 	$x['nLiberacao'] = $res['nLiberacao'];
 	$x['nProcesso'] = $res['nProcesso'];
 	$x['dataEnvio'] = $res['dataEnvio'];
+	$x['descricao'] = $res['descricao'];
 	return $x;
 	}
 	
@@ -1707,7 +1748,7 @@ function verificaEvento($idEvento){
 	// Trava de data
 	$periodo = periodo($idEvento);
 	$dias = opcaoDados("sistema",0);
-	$hoje30 = somarDatas(date('Y-m-d'),"+30");
+	$hoje30 = somarDatas(date('Y-m-d'),$dias['dias']);
 	
 
 
@@ -1749,8 +1790,8 @@ function verificaEvento($idEvento){
 			} 
 		}
 			//echo $hoje30." - ".$periodo['inicio'];
-
-		if(strtotime($hoje30) > strtotime($periodo['inicio'])){
+			$tipo = opcaoDados("sistema",0);
+		if((strtotime($hoje30) > strtotime($periodo['inicio'])) AND !in_array($evento['idTipo'],$dias['tipo'])){ //700 reunião fechada, 57 reunião, 710 okupa cultura
 			$relatorio .= "O início do evento está a menos de ".$dias['dias']." dias de hoje. Atualize a data do evento para que o sistema permita a mudança de status ou peça para o diretor de sua divisão para fazê-lo.<br />";
 			$r++;	
 		}
@@ -2174,7 +2215,8 @@ function orcamentoTotal($ano){
 	$total_con = 0;
 	$total_des = 0;
 	$total_sup = 0;
-	$total_res = 0;
+	$total_anu = 0;
+	$total_rev = 0;
 	$total_tot = 0;
 	$total_pla = 0;
 	$total_lib = 0;
@@ -2187,7 +2229,9 @@ function orcamentoTotal($ano){
 			$total_con = $total_con + $orc['contigenciado'];
 			$total_des = $total_des + $orc['descontigenciado'];
 			$total_sup = $total_sup + $orc['suplementado'];
+			$total_anu = $total_anu + $orc['anulado'];
 			$total_lib = $total_lib + $orc['liberado'];
+			$total_rev = $total_rev + $orc['revisado'];
 			$total_pla = $total_pla + $orc['planejado'];
 			$total_anul = $total_anul + $orc['anulado'];	
 				//$total_res = $total_res;
@@ -2199,15 +2243,22 @@ function orcamentoTotal($ano){
 			} // fim do for	
 			
 			$sal_pla = $total_tot - $total_pla;
+			
+		$total_lib = $total_lib + projeto600();
+
+	
+			
+			
 		$x = array(
 		'orcamento' => $total_orc,
 		'contigenciado' => $total_con,
 		'descontigenciado' => $total_des,
 		'suplementado' => $total_sup,
+		'anulado' => $total_anu,
 		'liberado' => $total_lib,
+		'revisado' => $total_rev,
 		'planejado' => $total_pla,
-		'total' => $total_tot,
-		'anulado' => $total_anul
+		'total' => $total_tot
 		
 		);
 		return $x;
@@ -2431,3 +2482,102 @@ function producao($idEvento){
 }
 
 
+
+function somaPrograma($id){
+	global $wpdb;
+	$total = 0;
+	$idPed = array();
+	$sql_evento = "SELECT valor,idPedidoContratacao FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idPrograma = '$id' AND publicado = '1' AND dataEnvio IS NOT NULL AND cancelamento = 0) AND nLiberacao <> '' AND liberado <> '0000-00-00' AND publicado ='1'";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+
+	for($i = 0; $i < count($evento); $i++){
+		$total = $total + $evento[$i]['valor'];
+		
+	}
+
+	$sql_atividade = "SELECT valor,idPedidoContratacao FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idPrograma = '$id' AND publicado = '1') AND nLiberacao <> ''  AND liberado <> '0000-00-00' AND publicado ='1' ";
+	$atividade = $wpdb->get_results($sql_atividade,ARRAY_A);
+
+	for($k = 0; $k < count($atividade); $k++){
+		$total = $total + $atividade[$k]['valor'];
+	}
+	
+	if($id == 383){
+	
+		$total = $total + projeto600();
+	
+	}
+	
+	$x['total'] = $total;
+	$x['contador'] = count($evento) + count($atividade);
+
+	return $x;
+}
+
+function somaProjeto($id){
+		global $wpdb;
+	$total = 0;
+	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idEvento IN(SELECT idEvento FROM sc_evento WHERE idProjeto = '$id' AND publicado = '1' AND cancelamento = 0 AND dataEnvio IS NOT NULL) AND nLiberacao <> ''";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+
+	for($i = 0; $i < count($evento); $i++){
+		$total = $total + $evento[$i]['valor'];
+	}
+
+	$sql_evento = "SELECT valor FROM sc_contratacao WHERE idAtividade IN(SELECT id FROM sc_atividade WHERE idProjeto = '$id' AND publicado = '1') AND nLiberacao <> ''";
+	$evento = $wpdb->get_results($sql_evento,ARRAY_A);
+
+	for($i = 0; $i < count($evento); $i++){
+		$total = $total + $evento[$i]['valor'];
+	}
+	
+	
+	return $total;
+}
+
+function giap($projeto,$ficha,$folha = FALSE){
+	if($projeto == 600 AND $folha == TRUE){
+		$f = " AND nProcesso = '43313' ";		
+	}else{
+		$f = "";
+	}
+
+
+
+	global $wpdb;
+	$sql = "SELECT * FROM sc_contabil WHERE ficha = '$ficha' AND projeto = '$projeto' $f";
+	$c = $wpdb->get_results($sql,ARRAY_A);
+	$a = array(
+	'v_empenho' => 0,
+	'v_estorno' => 0,
+	'v_anulado' => 0,
+	'v_n_processado' => 0,
+	'v_processado' => 0,
+	'v_op' => 0,
+	'v_op_baixado' => 0,
+	'v_saldo' => 0
+	);
+	
+	for($i = 0; $i < count($c); $i++){
+	$a['v_empenho'] = $a['v_empenho'] + $c[$i]['v_empenho'];
+	$a['v_estorno'] = $a['v_estorno'] + $c[$i]['v_estorno'];
+	$a['v_anulado'] = $a['v_anulado'] + $c[$i]['v_anulado'];
+	$a['v_n_processado'] = $a['v_n_processado'] + $c[$i]['v_n_processado'];
+	$a['v_processado'] = $a['v_processado'] + $c[$i]['v_processado'];
+	$a['v_op'] = $a['v_op'] + $c[$i]['v_op'];
+	$a['v_op_baixado'] =  $a['v_op_baixado'] + $c[$i]['v_op_baixado'];
+	$a['v_saldo'] = $a['v_saldo'] + $c[$i]['v_saldo'];
+	}
+	
+	return $a;
+	
+}
+
+function projeto600(){
+		$_600_1116 = giap(600,1116); 
+		$_600_1117 = giap(600,1117); 
+		$_600_1118 = giap(600,1118); 
+		$_600_1119 = giap(600,1119); 
+		$pessoal = $_600_1116['v_op_baixado'] + $_600_1117['v_op_baixado'] + $_600_1118['v_op_baixado'] + $_600_1119['v_op_baixado'];
+		return $pessoal;
+}
