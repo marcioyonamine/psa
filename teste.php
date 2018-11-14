@@ -58,7 +58,7 @@ for($i = 1; $i < count($e); $i++){
 	
 	?>
 	<tr>
-	<td><?php echo $evento['periodo']; ?> </td>
+	<td><?php echo $evento['periodo']['legivel']; ?> </td>
 	<td> </td>
 	<td><?php echo $e[$i]['local'] ?> </td>
 	<td> </td>
