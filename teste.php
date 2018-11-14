@@ -15,7 +15,7 @@ $e = $wpdb->get_results($sql,ARRAY_A);
 
 ?>
 
-<table border='1'>
+<table >
 <tr>
 <th>DATA</th>
 <th>HORA</th>
