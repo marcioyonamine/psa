@@ -43,19 +43,22 @@ $e = $wpdb->get_results($sql,ARRAY_A);
 for($i = 1; $i < count($e); $i++){
 	$evento = array(
 	'programa' => '',
-	'autor' => ''
+	'autor' => '',
+	'linguagem' => '',
+	'periodo' => ''
 	
 	
 	);
 	
-	if($e[$i]['bartira'] != 0){
+	if($e[$i]['bartira'] != 0 OR $e[$i]['bartira'] != '' ){
 		$evento = evento($e[$i]['bartira']);
+		$evento_rec = recuperaDados("sc_evento",$e[$i]['bartira'],$idEvento);
 	}
 	
 	
 	?>
 	<tr>
-	<td><?php ?> </td>
+	<td><?php echo $evento['periodo']; ?> </td>
 	<td> </td>
 	<td><?php echo $e[$i]['local'] ?> </td>
 	<td> </td>
@@ -64,7 +67,7 @@ for($i = 1; $i < count($e); $i++){
 	<td><?php echo $e[$i]['evento'] ?></td>
 	<td><?php echo $evento['autor'] ?></td>
 	<td> <?php echo $evento['linguagem'] ?></td>
-	<td> </td>
+	<td> <?php echo $evento['programa'] ?></td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
