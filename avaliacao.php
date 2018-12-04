@@ -32,7 +32,7 @@ if(isset($_POST['gravar'])){
 					}else{
 						$mensagem = "<div class='alert alert-warning'><strong>Não há lançamentos novos.</strong></div>"	;
 					}
-				atualizaNota($inscricao);
+				atualizaNota($inscricao,$_GET['edital']);
 			}
 		}
 	// passa função de valor máximo
