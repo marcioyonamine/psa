@@ -34,7 +34,7 @@
               <a class="nav-link" href="indicadores.php?p=listarevento">Listar Relatório Eventos</a>
 		    </li>
             <li class="nav-item">
-              <a class="nav-link" href="indicadores.php?p=inserirevento">Inserir Realtório Eventos</a>
+              <a class="nav-link" href="indicadores.php?p=inserirevento">Inserir Relatório Eventos</a>
 		    </li>
     
           </ul>
