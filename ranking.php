@@ -151,10 +151,7 @@ $(function() {
 				<td><?php echo $res_json['Título']; ?></td>
 				  <td><?php echo somaNotas($json['inscricao'],$user->ID,$_GET['edital']); ?></td>
                   <td>
-				  <form method="POST" action="avaliacao.php?edital=<?php echo $_GET['edital'] ?>" class="form-horizontal" role="form">
-							<input type="hidden" name="carregar" value="<?php echo $json['inscricao']; ?>" />
-							<input type="submit" class="btn btn-theme btn-sm btn-block" value="Avaliar">
-							</form></td>
+				 </td>
 					</tr>
 				<?php 
 					$k++;
