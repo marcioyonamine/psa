@@ -39,8 +39,8 @@ switch($p){
               <thead>
                 <tr>
 					<th>CulturAZ</th>
-					<th>Título</th>
-                    <th>Proponente</th>
+					<th>Proponente</th>
+                    <th>Título</th>
                   <th>Nota</th>
 					<th></th>
 				  </tr>

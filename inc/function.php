@@ -1971,7 +1971,7 @@ function atualizaNota($inscricao){
 	if($numero != 0){
 	
 		for($k = 0; $k < $numero; $k++){
-			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],273);		
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],423);		
 			$nota_total = $nota_total + $nota[$k];
 		}
 	

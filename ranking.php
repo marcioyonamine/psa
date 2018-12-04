@@ -70,7 +70,7 @@ $(function() {
 
           <p>Para ter acesso aos detalhes dos projetos, é necessário que esteja logado no CulturAZ e que faça parte da equipe de pareceristas. <a href="http://culturaz.santoandre.sp.gov.br/autenticacao/" target="_blanck">Clique para logar</a></p>
 		  <p>
-		  <?php 
+		  <?php /*
 		  if(isset($_GET['filtro'])){
 			  $f = $_GET['filtro'];
 		  }else{
@@ -85,6 +85,7 @@ $(function() {
 				  echo $res_fil[$i]['filtro']." | ";
 			  }
 		  }
+		  */
 		  ?>
 		  
 		  </p>
@@ -98,15 +99,10 @@ $(function() {
             <table class="table table-striped">
               <thead>
                 <tr>
-				<th>#</th>
+					<th>CulturAZ</th>
+					<th>Proponente</th>
+                    <th>Título</th>
                   <th>Nota</th>
-				<th>CulturAZ</th>
-					<th>Título</th>
-                    <th>Proponente</th>
-					<th>Cat</th>
-                  <th>Área</th>
-                  <th>Valor</th>
-
 					<th></th>
 				  </tr>
               </thead>
