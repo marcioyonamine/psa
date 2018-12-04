@@ -1991,7 +1991,7 @@ function atualizaNota($inscricao,$edital){
 		$wpdb->query($update_ranking);
 		
 	}else{
-		$insert_ranking = "INSERT INTO `ava_ranking` (`id`, `inscricao`, `nota`, `edital`, `discrepancia`, `filtro`, `revisao`) VALUES (NULL, '$inscricao', '$nota_total', '$edital', '', '', '');"
+		$insert_ranking = "INSERT INTO `ava_ranking` (`id`, `inscricao`, `nota`, `edital`, `discrepancia`, `filtro`, `revisao`) VALUES (NULL, '$inscricao', '$nota_total', '$edital', '', '', '');";
 		$wpdb->query($insert_ranking);
 	}
 	
