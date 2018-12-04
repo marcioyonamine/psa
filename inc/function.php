@@ -1984,7 +1984,7 @@ function atualizaNota($inscricao,$edital){
 	
 	
 	//atualiza ranking
-	$ver_ranking = "SELECT nota FROM ava_ranking WHERE inscricao = '$isncricao'";
+	$ver_ranking = "SELECT nota FROM ava_ranking WHERE inscricao = '$inscricao'";
 	$query_ranking = $wpdb->get_results($ver_ranking,ARRAY_A);
 	if(count($query_ranking) > 0){
 		$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
