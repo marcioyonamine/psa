@@ -1959,7 +1959,7 @@ function retornaAnotacao($inscricao,$usuario,$edital = NULL){
 	return $res_obs['anotacao'];
 }
 
-function atualizaNota($inscricao){
+function atualizaNota($inscricao,$edital){
 	global $wpdb;
 	$nota_total = 0;	
 	
@@ -1971,7 +1971,7 @@ function atualizaNota($inscricao){
 	if($numero != 0){
 	
 		for($k = 0; $k < $numero; $k++){
-			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],423);		
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],$edital);		
 			$nota_total = $nota_total + $nota[$k];
 		}
 	
@@ -1984,8 +1984,17 @@ function atualizaNota($inscricao){
 	
 	
 	//atualiza ranking
-	$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
-	$wpdb->query($update_ranking);
+	$ver_ranking = "SELECT nota FROM ava_ranking WHERE inscricao = '$isncricao'";
+	$query_ranking = $wpdb->get_results($ver_ranking,ARRAY_A);
+	if(count($query_ranking) > 0){
+		$update_ranking = "UPDATE ava_ranking SET nota = '$nota_total', discrepancia = '$discrepancia' WHERE inscricao = '$inscricao'";
+		$wpdb->query($update_ranking);
+		
+	}else{
+		$insert_ranking = "INSERT INTO `ava_ranking` (`id`, `inscricao`, `nota`, `edital`, `discrepancia`, `filtro`, `revisao`) VALUES (NULL, '$inscricao', '$nota_total', '$edital', '', '', '');"
+		$wpdb->query($insert_ranking);
+	}
+	
 	}
 }
 
