@@ -22,9 +22,6 @@ $_GET['grupos'] é o número de grupos ou integrantes (divido por)
 		$x = opcaoDados($tipo,$id);
 		
 		$g = $x['edital'][1];
-		echo "O grupo selecionado é ".$g."<br />";
-		
-		var_dump($x);
 		
 		$id_mapas = $_GET['id_mapas'];
 		
