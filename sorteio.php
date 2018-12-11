@@ -1,3 +1,13 @@
+<?php 
+/* sorteio das inscrições entre os julgadores
+
+$_GET['id_mapas'] é o id do Mapas Culturais
+$_GET['grupos'] é o número de grupos ou integrantes (divido por)
+
+*/
+
+?>
+
 <?php include "header.php"; ?>
 
   <body>
@@ -34,8 +44,6 @@ if($sobra > 0){
 	$numero_quantidade = $numero_quantidade + 1;
 	
 }
-echo "sobra : $sobra.<br />";
-//var_dump($res_sel);
 
 $input = array();
 $output = array();
@@ -64,10 +72,7 @@ $input = shuffle_assoc($input);
 $input = array_chunk($input,$numero_quantidade);
  
  
-echo "ultimo input<br />"; 
-echo "<pre>";
-var_dump($input); 
-echo "</pre>";
+
 
 /*
 for($w = 1;$w <= $numero_grupo; $w++){ //roda a quantidade grupos
@@ -105,14 +110,12 @@ $y = json_decode($sel['avaliadores'],true);
 
 
 
-echo "<br />Minhas inscrições são:<br />";
-var_dump($y[$g]);
+
 echo "<br />Total:".count($y[0]);
 echo "<br />Total:".count($y[1]);
 echo "<br />Total:".count($y[2]);
 echo "<br />Total:".count($y[3]);
 echo "<br />";
-var_dump($output);
 
 ?>
         </main>
