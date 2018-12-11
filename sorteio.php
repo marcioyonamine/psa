@@ -15,7 +15,7 @@ $_GET['grupos'] é o número de grupos ou integrantes (divido por)
   <?php include "menu/me_inicio.php"; ?>
  
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-          <h1>Ambiente teste</h1>
+          <h1>Sorteio</h1>
 		<?php 
 		$tipo = 'usuario';
 		$id = 1;
@@ -95,6 +95,8 @@ $x = $x."}";
 
 $x = json_encode($input);
 
+
+
 $sql_insert_grupo = "UPDATE ava_edital SET avaliadores = '$x' WHERE id_mapas = '".$_GET['id_mapas']."'";
 $insert = $wpdb->query($sql_insert_grupo);
 
@@ -113,6 +115,10 @@ echo "<br />Total:".count($y[1]);
 echo "<br />Total:".count($y[2]);
 echo "<br />Total:".count($y[3]);
 echo "<br />";
+
+echo "<pre>";
+var_dump($input);
+echo "</pre>";
 
 ?>
         </main>
