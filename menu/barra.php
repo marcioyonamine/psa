@@ -10,9 +10,9 @@
           <li class="nav-item">
             <a class="nav-link" href="index.php">Início</a>
           </li>
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="nav-link" href="agenda.php">Calendário/agenda</a>
-          </li>
+          </li>-->
          <li class="nav-item">
             <a class="nav-link" href="../wp-admin">WP-Admin</a>
           </li>
