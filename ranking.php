@@ -154,7 +154,7 @@ $(function() {
 				<td><?php echo $res_json['Título']; ?></td>
 				<td><?php if(isset($nota[0]['nota'])){ echo $nota[0]['nota']; } ?></td>
 				<td><?php if(isset($nota[1]['nota'])){ echo $nota[1]['nota']; } ?></td>
-				<td><?php echo $res[$i]['inscricao']; ?></td>
+				<td><?php echo $res[$i]['nota']; ?></td>
                   <td>
 				 </td>
 					</tr>
