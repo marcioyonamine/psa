@@ -40,7 +40,7 @@
             </li>-->
 			<?php 
 		
-			$peruser = array(2,1,5,6,7,53,15);
+			$peruser = array(1,132,134,133,26,84,79);
 			if(in_array($user->ID,$peruser)){ ?>
             <li class="nav-item">
               <a class="nav-link" href="ranking.php?edital=423"> Ranking Territórios 2019</a>
