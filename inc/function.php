@@ -2079,14 +2079,14 @@ function nota($inscricao){
 	$nota_total = 0;	
 	$x = array();
 	
-	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '349'";
+	$sql_pareceristas = "SELECT DISTINCT usuario FROM ava_nota WHERE inscricao = '$inscricao' AND edital = '423'";
 	$query_pareceristas = $wpdb->get_results($sql_pareceristas,ARRAY_A);
 	$numero = count($query_pareceristas);
 	
 	if($numero != 0){
 	
 		for($k = 0; $k < $numero; $k++){
-			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],349);		
+			$nota[$k] = somaNotas($inscricao,$query_pareceristas[$k]['usuario'],423);		
 			$nota_total = $nota_total + $nota[$k];
 			$x['pareceristas'][$k]['usuario'] = $query_pareceristas[$k]['usuario'];
 			$x['pareceristas'][$k]['nota'] = $nota[$k];
