@@ -149,7 +149,7 @@ $(function() {
 
                   <td><?php echo $res_json['Agente responsável pela inscrição - Nome completo ou Razão Social']; ?></td>
 				<td><?php echo $res_json['Título']; ?></td>
-				  <td><?php echo somaNotas($json['inscricao'],$user->ID,$_GET['edital']); ?></td>
+				  <td><?php echo $res[$i]['inscricao']; ?></td>
                   <td>
 				 </td>
 					</tr>
