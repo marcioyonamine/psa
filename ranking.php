@@ -102,7 +102,10 @@ $(function() {
 					<th>CulturAZ</th>
 					<th>Proponente</th>
                     <th>Título</th>
-                  <th>Nota</th>
+					<th>Nota01</th>
+					<th>Nota02</th>
+
+					<th>Nota Final</th>
 					<th></th>
 				  </tr>
               </thead>
@@ -141,7 +144,7 @@ $(function() {
 					$sel = "SELECT descricao,inscricao FROM ava_inscricao WHERE inscricao = '$id_insc'";	
 					$json = $wpdb->get_row($sel,ARRAY_A);	
 					$res_json = converterObjParaArray(json_decode(($json['descricao'])));
-
+					$nota = nota($res[$i]['inscricao']);
 
 				?>	
     			 <tr>
@@ -149,7 +152,9 @@ $(function() {
 
                   <td><?php echo $res_json['Agente responsável pela inscrição - Nome completo ou Razão Social']; ?></td>
 				<td><?php echo $res_json['Título']; ?></td>
-				  <td><?php echo somaNotas($json['inscricao'],$user->ID,$_GET['edital']); ?></td>
+				<td><?php if(isset($nota['pareceristas'][0]['nota'])){ echo $nota['pareceristas'][0]['nota']; } ?></td>
+				<td><?php if(isset($nota['pareceristas'][1]['nota'])){ echo $nota['pareceristas'][1]['nota']; } ?></td>
+				<td><?php echo $res[$i]['nota']; //var_dump($nota);?></td>
                   <td>
 				 </td>
 					</tr>
